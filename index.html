@@ -1,106 +1,215 @@
-<!-- 
-  本代码由 便宜技术博猫 创建
-  技术支持 QQ:2420083841 www.azpay.cn
-  严禁反编译、逆向等任何形式的侵权行为，违者将追究法律责任
- -->
 <!DOCTYPE html>
-<html lang="">
+<!--使用了https://github.com/atisawd/boxicons-->
+<html lang="ZH-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>风也温柔 | KAYGB</title>
-    <meta name="description" content="这里是kaygb的个人主页，目前站长仍在学习中，每天抽出时间来看书学习，励志成为一个技术很牛的程序员。">
-    <meta name="keywords" content="kaygb,风也温柔,个人主页,程序员">
-    <link rel="icon" type="image/ico" href="//gravatar.loli.net/avatar/4cc893d113dd74ceca73f9863f2c5446/">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="description" content="这里是白色羽毛~本小站只是网络上的搬运工！不妨点进来康康？"><!-- 网站内容 -->
+  <meta name="keywords" content="白色羽毛,PICACG,哔咔,ACG,下载,资源,白羽,iwara,i站,爬虫"> <!-- 网站搜索关键词 -->
+  <title>白色羽毛 -- 网络上的搬运工</title>
+  <div style="visibility: hidden;"><script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1279097766&web_id=1279097766"></script></div><!--cnzz的-->
+  <!-- Favicons -->
+  <link href="./favicon.ico" rel="icon">
+  <link href="./favicon.ico" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+
+  <!-- Vendor CSS Files -->
+  <link href="./static/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./static/css/icofont.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/icofont.css">
+  <link href="./static/css/owl.carousel.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> 
+  <link href="./static/css/venobox.css" rel="stylesheet">
+  <!--js files-->
+  <script src="./static/js/jquery-1.11.1.min.js"></script>
+
+  <!-- Template Main CSS File -->
+  <link href="./static/css/style.css" rel="stylesheet">
+  <link href="https://at.alicdn.com/t/font_954744_g42joo6uzdr.css" rel="stylesheet">
+  <script src="./static/js/url.js"></script>
+
 
 </head>
 
 <body>
-    <div id="main" class="container">
-        <div class="row my-card justify-content-center">
-            <div class="col-lg-4 photo-bg"></div>
-            <div class="col-lg-8 card">
-                <h1>Hi，我是kaygb，这里是我的主页！</h1>
-                <p>很荣幸您能访问我的网站！ 目前我仍在学习中，每天抽出时间来看书学习，励志成为一个技术很牛的程序员。
-                </p>
-                <p>
-                    我很喜欢的一句话：<br>If the moon smiled, she would resemble you.<br> 如果月亮会笑，那么她一定像你一样美！
+  <script language="javascript" src="./static/js/time.js"></script>  <!--调用运行时间显示-->
+  <!-- ======= Header ======= -->
+  <header id="header" class="header-tops">
+    <div class="container">
+   <!--<h1><a href="index.html">YY.wiki</a></h1> -->
+     <h1><a href="index.html" class="mr-auto"><div style="color:#242527bf;font-size: 30px; text-align: center;">白色羽毛</div></a></h1> 
+      <h2><div class="jz  ys" id="chakhsu"></div></h2>
 
-                </p>
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="#header">首页</a></li>
+		 <!--  <li><a href="#about">关于</a></li> -->
+          <li><a href="#download">下载</a></li>
+         <!--  <li><a href="#portfolio">Soft</a></li> -->
+          <li><a href="#contact">关于</a></li>
+          <li><a onclick="qqqun()" href="javascript:void(0)">群聊</a></li>
+		  <li></li>
+        </ul>
+      </nav><!-- .nav-menu -->
 
-                <p>Catch me:</p>
-                <div class="row">
-                    <button id="kaygb-blog" class="btn btn-primary col-lg-4">BLOG</button>
-                    <a href="//eas1.cn" id="kaygb-blog-a" target="_blank" class="btn btn-primary col-lg-4">BLOG</a>
-                    <a href="https://github.com/kaygb/kaygb/tree/master/v3" target="_blank" class="btn btn-secondary col-lg-4">GitHub</a>
-                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=i@eas1.cn" target="_blank" id="kaygb-mail-a" class="btn btn-success col-lg-4">Send a Mail</a>
-                    <button id="kaygb-mail" class="btn btn-success col-lg-4">Send a Mail</button>
-                </div>
-
-
-                <h4 class="mt-4">or, keep your eyes on</h4>
-                <ul class="social mt-1">
-                    <li><a href="https://weibo.com/u/5223004318"><i class="fab fa-weibo " aria-hidden="true"></i></a></li>
-                    <li><a href="https://github.com/kaygb"><i class="fab fa-github" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-telegram" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-zhihu" aria-hidden="true"></i></a></li>
-                </ul>
-                <footer>
-                    <p>Copyright 2018 - Now <a href="https://www.azpay.cn" target="_blank">便宜技术猫</a>
-                        <br> 鸣谢：
-                        <a href="https://www.xgjxw6.com/" target="_blank" rel="nofollow">中国免网</a>
-                        <a href="https://console.upyun.com/register/?invite=r1FdZxBoH" target="_blank" rel="nofollow"><img src="https://cdn.jsdelivr.net/gh/kaygb/blog-images/img/20200320214011.png" style="width:50px;"></a>
-
-                    </p>
-                    </p>
-
-                </footer>
-            </div>
-        </div>
+      <div class="social-links" target="target">
+        <a href="javascript:void(0)" onclick="qqemail()" class="facebook"><i class="zm zm-youxiang"></i></a>
+        <a onclick="qqqun()" class="facebook" href="javascript:void(0)"><i class="zm zm-QQ"></i></a>
+        <a href="javascript:void(0)" class="google-plus"><i class="zm zm-weixin"></i></a>
+        <a href="https://github.com/1665169869/ACG-download-Web"><i class="bx bxl-github"></i></a>
+        <a href="https://twitter.com/baiyu1665169869" class="twitter"><i class="bx bxl-twitter"></i></a>
+		
+		
+      </div>  
+      <p id="bginfo" class="d-lg-block">本小站已运行天数：<a class="one-pan-link-mark"><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span> <!--显示网站运行时间--></a>(*╹▽╹*)</p>
 
     </div>
-    <div id="aplayer" class="aplayer" data-order="random" data-id="20173709" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-volume="0.8"></div>
-    <!-- aplayer -->
+  </header><!-- End Header -->
 
 
+  <!-- ======= About Section ======= -->
 
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script>
-    <!-- end_aplayer -->
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script defer src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kaygb/kaygb@master/layer/layer.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kaygb/kaygb@master/js/v3.js"></script>
-    <script>
-        //弹出一个页面层
-        $('#kaygb-blog').on('click', function() {
-            layer.open({
-                type: 2,
-                title: '风也温柔',
-                shadeClose: true,
-                shade: false,
-                maxmin: true, //开启最大化最小化按钮
-                area: ['80%', '100%'],
-                content: '//eas1.cn/'
-            });
-        });
-        $('#kaygb-mail').on('click', function() {
-            layer.open({
-                type: 2,
-                title: '风也温柔',
-                shadeClose: true,
-                shade: false,
-                maxmin: true, //开启最大化最小化按钮
-                area: ['80%', '100%'],
-                content: '//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=i@eas1.cn'
-            });
-        });
-    </script>
+  <!-- ======= Contact Section ======= -->
+  <section id="contact" class="contact">
+    <div class="container">
 
+      <div style="font-size:26px;">
+        <h3>关于</h3>
+        <h4 class="bx bx-phone-call">联系我们</h4>
+        <br>
+        <p class="bx bx-envelope" style="font-size:20px;"><a onclick="qqemail()">1665169869@qq.com</a></p>
+        <p class="zm zm-QQ" style="font-size:20px;">QQ:1665169869</p>
+      </div>
+
+      <div class="row mt-2">
+
+        <div class="col-md-6 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bx-envelope"></i>
+            <h3>Email</h3>
+            <p class="social-links"><a onclick="qqemail()" href="javascript:void(0)" title="发送邮件">1665169869@qq.com</a></p>
+          </div>  
+        </div>
+
+        <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bx-link-external"></i>
+            <h3>外部链接</h3>
+            <div class="social-links" title="外部链接">
+              <a href="https://www.baiyu.fun" class="twitter">www.baiyu.fun</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-4 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bxl-twitter"></i>
+            <h3>Twitter</h3>
+            <p class="social-links"><a href="https://twitter.com/baiyu1665169869" class="twitter" title="推特">1449977277</a></p>
+          </div>
+        </div>
+        <div class="col-md-6 mt-4 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bx-link-alt"></i>
+            <h3>BILIBILI</h3>
+            <p class="social-links"><a href="https://space.bilibili.com/67823957" title="哔哩哔哩">67823957</a></p>
+          </div>
+        </div>
+      </div>
+
+      <form action="forms/contact.php" method="post" role="form" class="php-email-form mt-4">
+     闲聊群： 1026529014 <br>
+     原作者：千玄（24982360） 二次修改：白羽（1665169869）
+      </form>
+
+    </div>
+  </section><!-- End Contact Section -->
+
+  <!-- ======= Contact Section ======= -->
+  <section id="download" class="contact">
+    <div class="container">
+
+      <div style="font-size:26px;">
+        <h3 class="bx bx-download">下载中心</h3>
+        <p style="font-size:20px;">欢迎投稿到邮箱</p>
+      </div>
+
+      <div class="row mt-2">
+
+        <div class="col-md-6 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bx-cloud-download"></i>
+            <h3>Iwara爬虫</h3>
+            <p class="social-links">
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABHklEQVR4AY2QRUJYMQAFU3fX81SOUMPd/R6wxp0CB8B1zxJ3Z4O75g0J7vBdZpL3Yoi57rjnDsUYuWvsfeIe+i9R5mbBX4l7oChDiCHqHolPrxdi7+GvDwg1Sv9Adbp6m5gbuV7w9H2FGWX9dBwgCThH+LhxDxVz3z/EP8bRmd/ZXgOwe/6QPS+4GKGGCEP0PQUZkt8y0y3A7nK8nWvp0Zzf6qqlv135ASqJBGT3gIsCcb4cpdEA0tGoa/Mg0EXBlcPlTnii6S6A3W1Py3LVZuTo6PsusRJfsTQj0BEqpKsElzv+Bf8T6G7Q9rrgYoyLQsZX9bUASCBJIIT27DUzdDcAPvT51bCuiexVAqA9JCHusHlBSHcXGOsAkL2jsA/8zVeWqgInggAAAABJRU5ErkJggg==" alt="">
+              <a target="target" href="https://whitefeathers.lanzoui.com/b0bqht0yd">&nbsp蓝奏云</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bx-cloud-download"></i>
+            <h3>待定</h3>
+            <p class="social-links">待定</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-4 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bx-cloud-download"></i>
+            <h3>待定</h3>
+            <p>待定</p>
+          </div>
+        </div>
+        <div class="col-md-6 mt-4 d-flex align-items-stretch">
+          <div class="info-box">
+            <i class="bx bx-cloud-download"></i>
+            <h3>待定</h3>
+            <p>待定</p>
+          </div>
+        </div>
+      </div>
+      <form action="forms/contact.php" method="post" role="form" class="php-email-form mt-4">
+      神秘软件下载：
+      <div id="down_click"><a id="btlogin" class="bx bxl-android" onclick="picacg()" href="javascript:void(0)">PicACG</a></div>
+      <div id="down_click"><a id="btlogin" class="bx bxl-android" onclick="iwara()" href="javascript:void(0)">Iwara</a></div>
+      </form>
+    </div>
+  </section><!-- End Contact Section -->
+
+<!-- 
+底部，由于影响美观我就删除了，需要的话自己下一下
+如果有什么建议可以联系我 Q 24982360
+ -->
+<!-- <div class="credits">
+    Designed byCollect from <a href="#" title="yy.wiki" target="_blank">YY.wiki</a>
+  </div> -->
+  <!-- Vendor JS Files -->
+  <script src="static/js/jquery.min.js"></script>
+  <script src="https://www.yy.wiki/static/js/bootstrap.bundle.min.js"></script>
+  <script src="static/js/jquery.easing.min.js"></script>
+  <script src="static/js/validate.js"></script>
+  <script src="static/js/jquery.waypoints.min.js"></script>
+  <script src="static/js/counterup.min.js"></script>
+  <script src="static/js/owl.carousel.min.js"></script>
+  <script src="static/js/isotope.pkgd.min.js"></script>
+  <script src="static/js/venobox.min.js"></script>
+  <!-- Template Main JS File -->
+  <script src="static/js/main.js"></script>
+  <!-- 音乐播放器 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+    <div class="aplayer" data-id="751610297" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"data-volume="0.35" style="color: #000;background: unset;"></div> <!--data-id="填写网易云歌单ID"-->
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script>
+
+ 
+  <script src="./static/js/text-effect.js"></script>
+	</div> 
+<div class="dwn-dm-bottom" id="dwn-dm-bottom"> <!--弹幕必备的div--></div>
+<script type="text/javascript" src="./static/js/barrage.js"> //这里是弹幕</script>
+</body>
+
+<script src="./static/js/effect.js"></script>
 </html>
