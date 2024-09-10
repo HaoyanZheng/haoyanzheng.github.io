@@ -10,8 +10,8 @@
     (function f(win, doc) {
         var danmArrayTop = []; //15个 同时
         var danmArrayBottom = []; //15个 同时
-        var danmMoveDuration = 35;
-        var movPx = 5;
+        var danmMoveDuration = 40;
+        var movPx = 2;
         var startPosition = Math.ceil(Math.random() * 100);
         var topContainer = null;
         var bottomContainer = null;
@@ -57,7 +57,7 @@
             }
         }
         function moveDanm() {
-            if(createDanmDuration>=3600){
+            if(createDanmDuration>=20000){
                 createDanm();
                 createDanmDuration=0;
             }
