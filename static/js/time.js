@@ -1,6 +1,6 @@
 var now = new Date();
 function createtime(){
-    var grt= new Date("07/15/2020 00:00:00");/*---这里是网站的启用时间--*/
+    var grt= new Date("09/10/20255 00:00:00");/*---这里是网站的启用时间--*/
     now.setTime(now.getTime()+250);
     days = (now - grt ) / 1000 / 60 / 60 / 24;
     dnum = Math.floor(days);
