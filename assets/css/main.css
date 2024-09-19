@@ -68,12 +68,13 @@ body {
 }
 
 html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent vertical and horizontal scrolling */
   touch-action: manipulation; /* Prevent zooming on touch devices */
 }
 
-html, body {
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
 
 a {
   color: var(--accent-color);
@@ -775,6 +776,12 @@ section,
 
 .hero .social-links a:hover {
   background-color: var(--accent-color);
+}
+
+#hero {
+  height: 100vh; /* Full viewport height */
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
