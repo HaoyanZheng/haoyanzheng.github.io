@@ -49,11 +49,30 @@
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
 
+
 body {
   color: var(--default-color);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
   background-color: var(--background-color);
   font-family: var(--default-font);
   user-select:none; /*网页禁止选择复制/
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll; /* Ensure smooth scrolling on mobile */
+  }
+}
+
+html, body {
+  touch-action: manipulation; /* Prevent zooming on touch devices */
+}
+
+html, body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 a {
