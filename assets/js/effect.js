@@ -2,6 +2,7 @@ var system = {};
 var p = navigator.platform;       
 system.win = p.indexOf("Win") == 0;  
 system.mac = p.indexOf("Mac") == 0;  
+system.linux = p.indexOf("Linux") == 0;
 if (system.win || system.mac || system.xll) { //如果是电脑跳转到
   !function() {
     function n(n, e, t) {
