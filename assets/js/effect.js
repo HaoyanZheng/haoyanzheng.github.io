@@ -17,7 +17,7 @@ if (system.win || system.mac || system.linux) { //如果是电脑跳转到
         i = t[o - 1];
       return {
         l: o,
-        z: n(i, "zIndex", 9999), // Increased z-index to 9999
+        z: n(i, "zIndex", 0), // Increased z-index to 9999
         o: n(i, "opacity", .5),
         c: n(i, "color", "0,0,0"),
         n: n(i, "count", 99)
