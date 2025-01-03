@@ -1,0 +1,41 @@
+/*! 
+* @package IcoFont 
+* @version 1.0.1 
+* @author IcoFont https://icofont.com 
+* @copyright Copyright (c) 2015 - 2018 IcoFont 
+* @license - https://icofont.com/license/
+*/
+@font-face {
+    font-family: IcoFont;
+    font-weight: 400;
+    font-style: Regular;
+    src: url(../fonts/icofont.woff2) format("woff2"), 
+    url(../fonts/icofont.woff) format("woff"),
+    url(../fonts/icofont.svg) format("svg"),
+    url("https://icofont.com/icofont/fonts/icofont.eot") format('embedded-opentype'),
+    url("https://icofont.com/icofont/fonts/icofont.ttf");
+}
+
+[class*=" icofont-"],
+[class^=icofont-] {
+    font-family: IcoFont !important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    line-height: 1;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased
+}
+
+.icofont-navigation-menu:before {
+    content: "\efa2"
+}
+
+.icofont-close:before {
+    content: "\eee4"
+}
