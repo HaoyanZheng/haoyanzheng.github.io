@@ -7,17 +7,17 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #000000; /* Background color for the entire website, including individual sections */
-  --default-color: #fafafa; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
+  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+  --default-color: #000000; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #000000; /* Color for headings, subheadings and title throughout the website */
   --accent-color: rgba(0,123,255,.5); /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #1a1a1a; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --surface-color: #e5e5e5; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #000000; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #fafafa;  /* The default color of the main navmenu links */
+  --nav-color: #000000;  /* The default color of the main navmenu links */
   --nav-hover-color: rgba(0,123,255,.5); /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #1a1a1a; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: rgba(0,0,0,.3); /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
@@ -178,13 +178,13 @@ h6 {
 }
 
 .scrolled .header {
-  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0 18px rgba(255, 255, 255, 0.1);
 }
 
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
-  --background-color: rgba(0, 0, 0, 0.8);
+  --background-color: rgba(255, 255, 255, 0.8);
 }
 
 /*--------------------------------------------------------------
@@ -279,7 +279,7 @@ h6 {
     transition: 0.3s;
     border-radius: 4px;
     z-index: 99;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.1);
   }
 
   .navmenu .dropdown ul li {
@@ -323,6 +323,10 @@ h6 {
   }
 }
 
+body.anime-page .navmenu a {
+  color: #ffffff; /* Black for Home Page */
+}
+
 /* Mobile Navigation */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
@@ -354,6 +358,7 @@ h6 {
     transition: 0.3s;
     z-index: 9998;
   }
+ 
 
   .navmenu a,
   .navmenu a:focus {
