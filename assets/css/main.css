@@ -1,28 +1,40 @@
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Poppins", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
-  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #000000; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #000000; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: rgba(0,123,255,.5); /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #e5e5e5; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #000000; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+:root {
+  --background-color: #ffffff;
+  /* Background color for the entire website, including individual sections */
+  --default-color: #000000;
+  /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #000000;
+  /* Color for headings, subheadings and title throughout the website */
+  --accent-color: rgba(0, 123, 255, .5);
+  /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --surface-color: #e5e5e5;
+  /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --contrast-color: #000000;
+  /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #000000;  /* The default color of the main navmenu links */
-  --nav-hover-color: rgba(0,123,255,.5); /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #1a1a1a; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: rgba(0,0,0,.3); /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #fafafa; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: rgba(0,123,255,.5); /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-color: #000000;
+  /* The default color of the main navmenu links */
+  --nav-hover-color: rgba(0, 123, 255, .5);
+  /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #1a1a1a;
+  /* Used as the background color for mobile navigation menu */
+  --nav-dropdown-background-color: rgba(0, 0, 0, .3);
+  /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #fafafa;
+  /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: rgba(0, 123, 255, .5);
+  /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -58,21 +70,25 @@ body {
   overflow-x: hidden;
   background-color: var(--background-color);
   font-family: var(--default-font);
-  user-select:none; /*网页禁止选择复制/
+  user-select: none;
+  /*网页禁止选择复制/
 }
 
 @media (max-width: 768px) {
   body {
     background-attachment: scroll; /* Ensure smooth scrolling on mobile */
-  }
+}
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Prevent vertical and horizontal scrolling */
-  touch-action: manipulation; /* Prevent zooming on touch devices */
+  overflow: hidden;
+  /* Prevent vertical and horizontal scrolling */
+  touch-action: manipulation;
+  /* Prevent zooming on touch devices */
 }
 
 
@@ -230,7 +246,8 @@ h6 {
     white-space: nowrap;
     transition: 0.3s;
     position: relative;
-    text-decoration: none; /* Remove default underline */
+    text-decoration: none;
+    /* Remove default underline */
   }
 
   .navmenu a i,
@@ -324,7 +341,8 @@ h6 {
 }
 
 body.anime-page .navmenu a {
-  color: #ffffff; /* Black for Home Page */
+  color: #ffffff;
+  /* Black for Home Page */
 }
 
 /* Mobile Navigation */
@@ -358,7 +376,7 @@ body.anime-page .navmenu a {
     transition: 0.3s;
     z-index: 9998;
   }
- 
+
 
   .navmenu a,
   .navmenu a:focus {
@@ -727,13 +745,15 @@ section,
 
 .hero h2 {
   margin: 0;
-  font-size: 64px; /* Heading 1 */
+  font-size: 64px;
+  /* Heading 1 */
   font-weight: 700;
 }
 
 .hero p {
   margin: 5px 0 0 0;
-  font-size: 26px; /* text effect */ 
+  font-size: 26px;
+  /* text effect */
 }
 
 .hero p span {
@@ -743,17 +763,22 @@ section,
 
 .hero p2 {
   margin: 5px 0 0 5px;
-  font-size: 12px; /* text effect */
+  font-size: 12px;
+  /* text effect */
 }
 
 .hero p2 {
-  color: inherit; /* Inherit the color from the parent element */
-  text-decoration: none; /* Remove default underline */
+  color: inherit;
+  /* Inherit the color from the parent element */
+  text-decoration: none;
+  /* Remove default underline */
 }
 
 .hero p2 a {
-  color: inherit; /* Inherit the color from the parent element */
-  text-decoration: none; /* Remove default underline */
+  color: inherit;
+  /* Inherit the color from the parent element */
+  text-decoration: none;
+  /* Remove default underline */
 }
 
 .custom-color {
@@ -784,7 +809,8 @@ section,
 }
 
 #hero {
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
+  /* Full viewport height */
   margin: 0;
   padding: 0;
 }
@@ -1541,7 +1567,7 @@ section,
 
 ::-webkit-scrollbar-thumb {
   background-color: #aaaaaa;
-  
+
   -webkit-border-radius: 2em;
   -moz-border-radius: 2em;
   border-radius: 2em
@@ -1553,16 +1579,19 @@ section,
   position: fixed;
   z-index: 1;
 }
-.dwn-dm-top, .dwn-dm-bottom {
+
+.dwn-dm-top,
+.dwn-dm-bottom {
   overflow: hidden;
   width: 100%;
   height: 14rem;
   box-sizing: border-box;
-/*    padding: 1.5rem 0;*/
-  z-index:1;
+  /*    padding: 1.5rem 0;*/
+  z-index: 1;
 }
+
 .dan-m-span {
-  user-select:none;
+  user-select: none;
   transition: right 30ms;
   font-weight: bold;
   color: white;
@@ -1575,21 +1604,23 @@ section,
 
 #down_click {
   margin-top: 32px;
-  height:40px;
+  height: 40px;
 }
+
 #down_click a {
-  text-decoration:none;
-  color:#f2f2f2;
-  background: rgba(236,18,120,1);
+  text-decoration: none;
+  color: #f2f2f2;
+  background: rgba(236, 18, 120, 1);
   padding: 20px 50px 20px 50px;
   font-size: 20px;
-  font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
-  font-weight:bold;
+  font-family: 微软雅黑, 宋体, Arial, Helvetica, Verdana, sans-serif;
+  font-weight: bold;
   border-radius: 5px;
   -webkit-transition: all linear 0.30s;
-  -moz-transition:all linear 0.30s;
-  transition:all linear 0.30s;
+  -moz-transition: all linear 0.30s;
+  transition: all linear 0.30s;
 }
+
 #down_click a:hover {
   background: #d35776;
 }

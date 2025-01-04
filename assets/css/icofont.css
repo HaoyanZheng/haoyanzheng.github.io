@@ -6,19 +6,18 @@
 * @license - https://icofont.com/license/
 */
 
-@font-face
-{
- 
+@font-face {
+
   font-family: "IcoFont";
   font-weight: normal;
   font-style: "Regular";
   src: url(../fonts/icofont.woff2) format("woff2"),
-  url(../fonts/icofont.woff) format("woff"),
+    url(../fonts/icofont.woff) format("woff"),
 
 }
 
-[class^="icofont-"], [class*=" icofont-"]
-{
+[class^="icofont-"],
+[class*=" icofont-"] {
   font-family: 'IcoFont' !important;
   speak: none;
   font-style: normal;
@@ -29,16 +28,15 @@
   word-wrap: normal;
   direction: ltr;
   line-height: 1;
-/* Better Font Rendering =========== */
+  /* Better Font Rendering =========== */
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
 }
 
-.icofont-close:before
-{
+.icofont-close:before {
   content: "\eee4";
 }
 
 .icofont-navigation-menu:before {
-    content: "\efa2"
+  content: "\efa2"
 }
