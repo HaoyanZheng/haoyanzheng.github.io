@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-
   <title>男神你好美的小站ヾ(≧▽≦*)o</title>
   <meta name="description" content="男神你好美的小站">
   <meta name="keywords" content="男神你好美">
@@ -15,6 +14,8 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
@@ -31,72 +32,31 @@
   <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/css/venobox.css" rel="stylesheet">
 
-  <!--js files-->
+  <!-- JS Files -->
   <script src="assets/js/jquery-1.11.1.min.js"></script>
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
   <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
   <link href="https://at.alicdn.com/t/font_954744_g42joo6uzdr.css" rel="stylesheet">
   <script src="assets/js/url.js"></script>
   <!-- <script src="https://fastly.jsdelivr.net/gh/HaoyanZheng/live2d-widget@latest/autoload.js"></script> -->
 
-
+  <link rel="stylesheet" href="assets/css/APlayer.min.css">
+  <script src="assets/js/APlayer.min.js"></script>
 </head>
 
 <body class="anime-page">
 
-  <!--显示运行时间-->
+  <!-- 显示运行时间 -->
   <script language="javascript" src="assets/js/time.js"></script>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <!-- <h1 class="sitename">Haoyan Zheng</h1> -->
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="resume.html">Resume</a></li>
-          <li><a href="services.html">Achievement</a></li>
-          <li><a href="projects.html">Project</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="part1.html">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                    class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header>
+  <!-- Placeholder for the dynamically loaded header -->
+  <div id="header-container"></div>
 
   <main class="main">
 
     <!-- Hero Section -->
-
     <section id="hero" class="hero section dark-background">
 
       <img src="assets/img/bg.jpeg" alt="" data-aos="fade-in" style="filter: brightness(50%);">
@@ -111,7 +71,7 @@
           <a href="#"><i class="bi bi-instagram"></i></a>
           <a href="#"><i class="bi bi-linkedin"></i></a>
         </div>
-        <!--显示网站运行时间-->
+        <!-- 显示网站运行时间 -->
         <p2>
           <span class="custom-color">本小站已运行天数：还没开始运行呢！！纯属娱乐：</span>
           <a class="one-pan-link-mark">
@@ -148,7 +108,7 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js" defer></script>
 
-  <!--底部-->
+  <!-- 底部 -->
   <!-- Vendor JS Files -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/jquery.easing.min.js"></script>
@@ -160,14 +120,12 @@
   <script src="assets/js/venobox.min.js"></script>
 
   <!-- 音乐播放器 -->
-  <link rel="stylesheet" href="assets/css/APlayer.min.css">
   <div class="aplayer" data-id="12580927696" data-server="netease" data-type="playlist" data-fixed="true"
     data-autoplay="false" data-volume="0.35" style="color: #000;background: unset;"></div> <!--data-id="填写网易云歌单ID"-->
 
-  <script src="assets/js/APlayer.min.js"></script>
   <script src="assets/js/Meting.min.js"></script>
 
-  <!--弹幕必备的div-->
+  <!-- 弹幕必备的div -->
   <div class="dwn-dm-bottom" id="dwn-dm-bottom"></div>
   <script type="text/javascript" src="assets/js/barrage.js"> //这里是弹幕</script>
   <script src="live2d-widget/autoload.js"></script>
