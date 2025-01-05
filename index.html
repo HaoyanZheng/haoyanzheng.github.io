@@ -50,27 +50,10 @@
 
 <body class="about-page">
 
-  <div id="header-placeholder"></div>
+  <!--显示运行时间-->
+  <script language="javascript" src="assets/js/time.js"></script>
 
-  <script>
-    console.log('Attempting to load header...');
-    fetch('header.html')
-      .then(response => {
-        if (!response.ok) {
-          console.error(`Failed to load header: ${response.status} ${response.statusText}`);
-          throw new Error(`Failed to load header`);
-        }
-        return response.text();
-      })
-      .then(data => {
-        console.log('Header loaded successfully');
-        document.getElementById('header-placeholder').innerHTML = data;
-      })
-      .catch(error => {
-        console.error('Error loading header:', error);
-      });
-  </script>
-
+  {% include header.html %}
 
   <main class="main">
 

@@ -1,0 +1,23 @@
+# Site settings
+title: Haoyan Zheng
+description: Personal website for Haoyan Zheng
+baseurl: "" # Leave blank for GitHub Pages with a user or organization site
+url: "https://yourusername.github.io" # Replace with your GitHub Pages URL
+
+# Build settings
+theme: minima # Optional, remove if you're not using a Jekyll theme
+markdown: kramdown
+plugins:
+  - jekyll-include-cache # Optional, for better include performance
+
+# Exclude files from the build
+exclude:
+  - README.md
+  - node_modules
+  - Gemfile
+  - Gemfile.lock
+
+# Include additional directories or files
+include:
+  - _includes
+  - _layouts
