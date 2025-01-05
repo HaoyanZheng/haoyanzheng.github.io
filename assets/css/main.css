@@ -71,7 +71,7 @@ body {
   background-color: var(--background-color);
   font-family: var(--default-font);
   user-select: none;
-  /*网页禁止选择复制/
+  /*网页禁止选择复制*/
 }
 
 @media (max-width: 768px) {
