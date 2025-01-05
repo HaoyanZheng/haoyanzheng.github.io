@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="ZH-CN">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-
+  
   <title>Haoyan Zheng</title>
   <meta name="description" content="Haoyan Zheng">
   <meta name="keywords" content="Haoyan Zheng">
-
-  <!-- Favicons -->
-  <!-- link href="assets/img/favicon.png" rel="icon" -->
-  <!-- link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" -->
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
@@ -33,79 +27,44 @@
   <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/css/venobox.css" rel="stylesheet">
 
-  <!--js files-->
-  <script src="assets/js/jquery-1.11.1.min.js"></script>
-
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
-  <link href="https://at.alicdn.com/t/font_954744_g42joo6uzdr.css" rel="stylesheet">
+  <!-- Load jQuery (Only Once) -->
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous">
+  </script>
+
+  <!-- Script to Load Header -->
+  <script>
+    $(document).ready(function () {
+      // Loads the contents of header.html into #header-container
+      $("#header-container").load("header.html");
+    });
+  </script>
+
+  <!-- Additional Scripts -->
   <script src="assets/js/url.js"></script>
-  <!-- <script src="https://fastly.jsdelivr.net/gh/HaoyanZheng/live2d-widget@latest/autoload.js"></script> -->
-
-
 </head>
 
 <body class="about-page">
 
   <!--显示运行时间-->
-  <script language="javascript" src="assets/js/time.js"></script>
+  <script src="assets/js/time.js"></script>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <!-- <h1 class="sitename">Haoyan Zheng</h1> -->
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="resume.html">Resume</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="portfolio.html">Portfolio</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="part1.html">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                    class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header>
+  <!-- Placeholder where the header.html will be injected -->
+  <div id="header-container"></div>
 
   <main class="main">
-
     <!-- Hero Section -->
-
-
     <section id="hero" class="hero section">
       <div class="container" data-aos="zoom-out" data-aos-delay="100" style="position: relative;">
-        <!-- Add the image above the text -->
+        <!-- Profile Image -->
         <img src="assets/img/profile-img.jpg" alt="Haoyan Zheng"
           style="display: block; max-width: 300px; margin: 0 0 10px 0; border-radius: 50%; position: relative; left: 0;">
-        <!-- Text and social links -->
+        <!-- Name + Link -->
         <h2 style="margin-left: 0;">
           <a href="anime.html" style="text-decoration: none; color: inherit;">
             Haoyan Zheng
@@ -116,17 +75,22 @@
           Hi! I'm a 3rd year Robotics Engineering student at the University of Toronto,
           interested in interactive robotics, data analytics, and public health.
         </p>
+        <!-- Social links -->
         <div class="social-links" style="margin-left: 0;">
-          <a href="https://github.com/haoyanzheng" target="_blank" rel="noopener noreferrer"><i
-              class="bi bi-github"></i></a>
-          <a href="https://www.linkedin.com/in/harveyzheng/" target="_blank" rel="noopener noreferrer"><i
-              class="bi bi-linkedin"></i></a>
-          <a href="https://www.instagram.com/zheng.harvey" target="_blank" rel="noopener noreferrer"><i
-              class="bi bi-instagram"></i></a>
-          <a href="mailto:h.zheng@mail.utoronto.ca" target="_blank" rel="noopener noreferrer"><i
-              class="bi bi-envelope"></i></a>
+          <a href="https://github.com/haoyanzheng" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/harveyzheng/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a href="https://www.instagram.com/zheng.harvey" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a href="mailto:h.zheng@mail.utoronto.ca" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-envelope"></i>
+          </a>
         </div>
-        <!-- Add the Resume Box -->
+        <!-- Resume Button -->
         <div style="margin-top: 20px;">
           <a href="assets/resume.pdf" target="_blank"
             style="display: inline-block; background-color: #000000; color: #ffffff; text-decoration: none; padding: 25px 50px; font-size: 16px; font-weight: bold; border-radius: 5px;">
@@ -135,17 +99,13 @@
         </div>
       </div>
     </section>
-
-
-
-
     <!-- /Hero Section -->
-
   </main>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -165,10 +125,7 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
-  <!--底部-->
-  <!-- Vendor JS Files -->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="https://www.yy.wiki/static/js/bootstrap.bundle.min.js"></script>
+  <!-- Additional JS Files / Plugins -->
   <script src="assets/js/jquery.easing.min.js"></script>
   <script src="assets/js/validate.js"></script>
   <script src="assets/js/jquery.waypoints.min.js"></script>
@@ -176,11 +133,11 @@
   <script src="assets/js/owl.carousel.min.js"></script>
   <script src="assets/js/isotope.pkgd.min.js"></script>
   <script src="assets/js/venobox.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script>
 
-</body>
-<script src="assets/js/effect.js"></script>
+  <!-- Custom Effects / Scripts -->
+  <script src="assets/js/effect.js"></script>
 
+</body>
 </html>
