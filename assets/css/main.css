@@ -85,7 +85,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   /* Prevent vertical and horizontal scrolling */
   touch-action: manipulation;
   /* Prevent zooming on touch devices */

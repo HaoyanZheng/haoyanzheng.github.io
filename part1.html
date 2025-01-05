@@ -83,41 +83,18 @@
 </head>
 
 <body class="about-page">
-  <!-- Header -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-        <h1 class="sitename">ESC190 Notes</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="resume.html">Resume</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="portfolio.html">Portfolio</a></li>
-          <li class="dropdown">
-            <a href="#" class="active"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="part1.html">Dropdown 1</a></li>
-              <li class="dropdown">
-                <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-    </div>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      const response = await fetch('header.html');
+      const text = await response.text();
+      const headerDiv = document.createElement('div');
+      headerDiv.innerHTML = text;
+      document.body.insertBefore(headerDiv, document.body.firstChild);
+    });
+  </script>
+  <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
   </header>
 
   <!-- Main Content -->
@@ -986,7 +963,8 @@ int main()
             like in the definition of <code>arr1</code>.</li>
           <li>If we forget to include the null character when defining it explicitly as an array, i.e. for
             <code>arr3</code>, then the program doesn't know when to stop. When printing (and other operations), it will
-            only stop once it reaches a null character. On my machine, the output was <code>abcuvw</code>.</li>
+            only stop once it reaches a null character. On my machine, the output was <code>abcuvw</code>.
+          </li>
         </ol>
         Alternatively, we can define arrays (and strings) without specifying a size via:<br><br>
         <pre><code class="language-C">char arr[] = {'x', 'y', 'z', '\0'};</code></pre>
@@ -1196,7 +1174,8 @@ int main()
             which value lives at that address, which happens to be 0.</li>
           <li><code>*(&a)</code> will always give <code>a</code> since it first determines the address of <code>a</code>
             and then the dereference operator tells the program to go to the value stored at that address, which is
-            <code>a</code>.</li>
+            <code>a</code>.
+          </li>
           <li><code>&(0)</code> makes no sense since we cannot take the address of a value that is not a variable.</li>
         </ol>
 
@@ -1237,12 +1216,14 @@ int main()
           <li>Initializing a pointer like <code>int *p_a = 0;</code> is a common thing to do, but we can't do anything
             since <code>0</code> is not a valid address</li>
           <li>Instead, we can use <code>malloc</code> to free up space in memory and store that address in
-            <code>p_a</code></li>
+            <code>p_a</code>
+          </li>
           <li>If we later store a different address in <code>p_a</code> (without freeing first), then the address of the
             memory allocated by <code>malloc</code> will be lost, which can lead to memory leaks.</li>
           <li>To prevent memory leaks, we need to free the memory before reassigning it. If <code>free(p_a)</code> at
             the very end of the program, it will cause a crash because it will attempt to free the memory at the address
-            <code>&b</code> instead, which wasn't created using <code>malloc</code>.</li>
+            <code>&b</code> instead, which wasn't created using <code>malloc</code>.
+          </li>
           <li>If we tried to run <code>p_a++;</code> after the <code>malloc</code> instead, it will crash, since we only
             allocated enough memory for a single integer.</li>
         </ol>
@@ -1323,7 +1304,8 @@ int main()
         common shortcuts:
         <ol>
           <li><code>str++</code> puts <code>str + 1</code> into <code>str</code>, the value of <code>*str</code> is
-            <code>str[0]</code></li>
+            <code>str[0]</code>
+          </li>
           <li><code>*++a</code> means first increment <code>a</code> then access <code>*a</code></li>
           <li><code>a++ = a + 1</code> is undefined behaviour</li>
         </ol>
@@ -1442,7 +1424,8 @@ int main()
         <ol>
           <li>Note that <code>&(*p_arr)[i]</code> is equivalent to the expression <code>*p_arr + i</code>. We can
             interpret this as: <code>*p_arr</code> is the address of the actual array, then we want to access element
-            <code>i</code> and then get its address.</li>
+            <code>i</code> and then get its address.
+          </li>
           <li>The reason why we pass in <code>int *p_n</code> as well is so that we can write down the length of this
             array to some variable stored outside of the function's local frame.</li>
         </ol>
@@ -1818,12 +1801,14 @@ int main()
           <li>Open up a terminal and make sure you are in the correct directory. To do so, you can type <code>ls</code>
             or <code>dir</code> to see subfolders and you can move between them by typing <code>cd folderName</code>. To
             go back, you can type <code>cd ..</code>. To see the full path of where you currently are, you can type
-            <code>pwd</code>.</li>
+            <code>pwd</code>.
+          </li>
           <li>Now type <code>gcc -Wall -std=c99 -o myprogram filename.c</code>. Here, <code>-Wall</code> tells the
             compiler to show all warnings, <code>-std=c99</code> tells the compiler to use the C99 standard, and
             <code>-o myprogram</code> tells the compiler to output the program as <code>myprogram</code>. You can name
             the program whatever you want, but it's good to name it something that is descriptive of what it does. On
-            Windows, you will need to name it <code>myprogram.exe</code> instead.</li>
+            Windows, you will need to name it <code>myprogram.exe</code> instead.
+          </li>
           </li>
           <li>On Linux or Mac, you can run the program by typing <code>./myprogram</code>. On Windows, you can run the
             program by typing <code>./myprogram.exe</code>.</li>
