@@ -10,26 +10,11 @@
   "use strict";
 
   /**
-   * Load the header dynamically and initialize related scripts
-   */
-  async function loadHeader() {
-    try {
-      const response = await fetch('header.html');
-      if (!response.ok) throw new Error('Network response was not ok');
-      const headerHTML = await response.text();
-      document.getElementById('header-container').innerHTML = headerHTML;
-
-      // After header is loaded, initialize header-related functionalities
-      initializeHeaderFeatures();
-    } catch (error) {
-      console.error('Failed to load header:', error);
-    }
-  }
-
-  /**
    * Initialize all header-related features
    */
   function initializeHeaderFeatures() {
+    console.log('Initializing header features...'); // Debugging log
+
     /**
      * Apply .scrolled class to the body as the page is scrolled down
      */
@@ -49,11 +34,13 @@
      * Mobile nav toggle
      */
     const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+    console.log('Mobile Nav Toggle Button:', mobileNavToggleBtn); // Debugging log
 
     function mobileNavToggle() {
       document.querySelector('body').classList.toggle('mobile-nav-active');
       mobileNavToggleBtn.classList.toggle('bi-list');
       mobileNavToggleBtn.classList.toggle('bi-x');
+      console.log('Mobile Nav Toggled'); // Debugging log
     }
 
     if (mobileNavToggleBtn) {
@@ -82,6 +69,7 @@
         this.parentNode.classList.toggle('active');
         this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
         e.stopImmediatePropagation();
+        console.log('Dropdown toggled'); // Debugging log
       });
     });
   }
@@ -97,6 +85,7 @@
   if (preloader) {
     window.addEventListener('load', () => {
       preloader.remove();
+      console.log('Preloader removed'); // Debugging log
     });
   }
 
@@ -118,6 +107,7 @@
         top: 0,
         behavior: 'smooth'
       });
+      console.log('Scroll to top'); // Debugging log
     });
 
     window.addEventListener('load', toggleScrollTop);
@@ -134,6 +124,7 @@
       once: true,
       mirror: false
     });
+    console.log('AOS Initialized'); // Debugging log
   }
   window.addEventListener('load', aosInit);
 
@@ -151,12 +142,14 @@
       backSpeed: 50,
       backDelay: 2000
     });
+    console.log('Typed.js Initialized'); // Debugging log
   }
 
   /**
    * Initiate Pure Counter
    */
   new PureCounter();
+  console.log('PureCounter Initialized'); // Debugging log
 
   /**
    * Animate the skills items on reveal
@@ -171,6 +164,7 @@
         progress.forEach(el => {
           el.style.width = el.getAttribute('aria-valuenow') + '%';
         });
+        console.log('Skills Animation Triggered'); // Debugging log
       }
     });
   });
@@ -189,6 +183,7 @@
       } else {
         new Swiper(swiperElement, config);
       }
+      console.log('Swiper Initialized'); // Debugging log
     });
   }
 
@@ -200,6 +195,7 @@
   const glightbox = GLightbox({
     selector: '.glightbox'
   });
+  console.log('GLightbox Initialized'); // Debugging log
 
   /**
    * Init isotope layout and filters
@@ -217,6 +213,7 @@
         filter: filter,
         sortBy: sort
       });
+      console.log('Isotope Initialized'); // Debugging log
     });
 
     isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
@@ -229,14 +226,15 @@
         if (typeof aosInit === 'function') {
           aosInit();
         }
+        console.log('Isotope Filter Applied'); // Debugging log
       }, false);
     });
 
   });
 
   /**
-   * Load the header after defining all functions
+   * Initialize header features after DOM is fully loaded
    */
-  document.addEventListener('DOMContentLoaded', loadHeader);
+  document.addEventListener('DOMContentLoaded', initializeHeaderFeatures);
 
 })();
