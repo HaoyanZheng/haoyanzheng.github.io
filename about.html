@@ -39,8 +39,10 @@
         if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
         const headerHTML = await response.text();
         document.querySelector('#header').outerHTML = headerHTML;
+
+        // Initialize header features only once
         if (typeof initializeHeaderFeatures === 'function') {
-          initializeHeaderFeatures(); // Ensure features are initialized
+          initializeHeaderFeatures();
         } else {
           console.error('initializeHeaderFeatures is not defined.');
         }
@@ -49,9 +51,6 @@
       }
     });
   </script>
-
-  <!-- Mobile Nav Toggle Icon -->
-  <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
   </header>
 
   <script>
