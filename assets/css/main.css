@@ -29,7 +29,7 @@
   /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #1a1a1a;
   /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: rgba(0, 0, 0, .3);
+  --nav-dropdown-background-color: rgba(0, 0, 0, .4);
   /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #fafafa;
   /* Used for navigation links of the dropdown items in the navigation menu. */
@@ -1622,4 +1622,13 @@ section,
 
 #down_click a:hover {
   background: #d35776;
+}
+
+/* In your main.css or a custom .css file */
+.sticky-sidebar {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 70px; /* or whatever offset you need */
+  height: calc(100vh - 70px); /* optional: force a height so the content doesn't overflow weirdly */
+  overflow-y: auto; /* optional, if you want scrolling within the sidebar */
 }

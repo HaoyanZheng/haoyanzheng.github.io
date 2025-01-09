@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>ESC190 Lecture Notes</title>
+  <meta name="description" content="ESC190 Lecture Notes">
+  <meta name="keywords" content="C Programming, Lecture Notes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <!-- These are already included in main.css, but if you want to be safe: -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files (Bootstrap, Icons, AOS, etc.) -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Additional CSS (TOC, highlight.js) -->
+  <link href="https://afeld.github.io/bootstrap-toc/bootstrap-toc.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet">
+
+  <!-- Main CSS File (same as about.html uses) -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Optional: If you have local overrides, put them here. 
+       But keep them minimal to avoid conflicts. -->
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://afeld.github.io/bootstrap-toc/bootstrap-toc.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    // Initialize syntax highlighting
+    hljs.highlightAll();
+  </script>
+</head>
+
+<body class="about-page">
+  <!-- We use the same 'about-page' class to get consistent styling -->
+
+  <!-- Header dynamically loaded -->
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+
+  <!-- Load header and initialize features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('header.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#header').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
+    });
+  </script>
+
+  <!-- Mobile Nav Toggle Icon -->
+  <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+  </header>
+
+  <!-- Main Content
+       Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
+       (Alternatively, you can do .mt-5 pt-5 or a custom style.)
+  -->
+  <div class="container" style="width: 1400px; margin-top: 0px;">
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-5">
+      <div class="row">
+        <!-- Table of Contents -->
+        <aside class="col-md-3 bg-light p-3 sticky-sidebar">
+          <nav id="toc" class="toc" data-toggle="toc"></nav>
+        </aside>
+
+        <!-- Content Section -->
+        <main class="col-md-9">
+          <h1 id="-esc190-lecture-notes">ESC190 Lecture Notes: Part 1<br> Introduction to C</h1>
+          <h1 id="L10">L10: Memory Model for Structures and Header Files</h1>
+
+          <h2 id="L10-Review">Structure Padding</h2>
+          Suppose we have the following code,<br><br>
+          <pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+typedef struct student1{
+  char name[5];
+  int f;
+} student1;
+
+
+int main()
+{
+  student1 s1;
+  printf("%lu, %lu, %lu\n", (unsigned long)(&s1),
+                         (unsigned long)(&(s1.name)),
+                         (unsigned long)(&(s1.f)));
+  printf("%lu\n", (unsigned long)sizeof(s1));
+  return 0;
+}
+</code></pre>
+          On my computer, this outputs: <br><br>
+          <pre><code>140728275508316, 140728275508316, 140728275508324
+12</code></pre>
+          These are big numbers, but note the following observations:
+          <ol>
+            <li>
+              The first two numbers are the same. That is, the address of <code>s1</code> corresponds to the address of
+              <code>s1.name.</code>
+            </li>
+            <li>
+              The address of <code>s1.f</code> is 8 bytes after the address of <code>s1.name</code>, which should only
+              take 3 bytes. Why is this the case? This is because the compiler is trying to align the data in memory. In
+              this case, it is trying to align the data to 4 bytes. This process is known as structure padding.
+            </li>
+            <li>
+              The total size of the structure is \(5+3+4=12\) bytes, where 5 comes from the string, the 4 comes from the
+              integer, and there are 3 empty bytes.
+            </li>
+          </ol>
+          <h2 id="L10-Examples">More Examples</h2>
+          Let's work through what the memory table looks like for the following code,<br><br>
+          <pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+typedef struct student2
+{
+  char *name;
+  int f;
+} student2;
+
+void set_name2a(student2 s)
+{
+  strcpy(s.name,"abc"); // s.name needs to be valid address
+}
+
+int main()
+{
+    student2 s2;
+    // s2.name = (char *)malloc(5*sizeof(char));
+    set_name2a(s2);
+    printf("%s\n", s2.name);
+}
+</code></pre>
+          If we run this code as is (with the line commented out), then the program will crash, even though we are
+          changing the name of the student in a similar way as the previous lecture. The difference is that there will
+          be
+          a segmentation fault. When we write <code>student2 s2;</code> it creates a struct, but <code>s.name</code> is
+          just some random address, so we can't write <code>"abc"</code> to it!<br><br>
+
+          If we uncomment the line, then the program will run, since we have allocated enough space for the string and
+          we
+          can set <code>s2.name</code> to the address of this memory block.<br><br>
+          <h2 id="L10-Exercises">Some Exercises</h2>
+          Here are a few exercises, which tests your understanding of structures and pointers, based off of some
+          previous
+          examples. Don't cheat!
+          <div class="card">
+            <h3 class="card-header">Exercise 1</h5>
+              <div class="card-body">
+                Consider the following code. What's going to happen?
+                <ol type="a">
+                  <li>Nothing happens.</li>
+                  <li>It crashes.</li>
+                  <li>The name gets changed to <code>"abc"</code></li>
+                </ol>
+
+                <pre><code class="language-C">#include &lt;stdio.h&gt
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+typedef struct student1
+{
+  char name[5];
+  int f;
+} student1;
+
+void set_name1a(student1 s)
+{
+  strcpy(s.name,"abc");
+}
+
+int main()
+{
+    student1 s1;
+    set_name1a(s1);
+}
+</code></pre>
+                <p>
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#L3Example" role="button"
+                    aria-expanded="false" aria-controls="L3Example">
+                    Show Solution
+                  </a>
+                </p>
+                <div class="collapse" id="L3Example">
+                  <div class="card card-body">
+                    <p>The answer is (a) nothing happens! If we have an <code>s1</code> and pass it into a function,
+                      everything gets copied. So all <code>set_name1a(s1)</code> does is change what the string is in
+                      the
+                      copy of <code>s1</code> that is passed into the function. The original <code>s1</code> is
+                      unchanged.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+          </div>
+          <div class="card">
+            <h3 class="card-header">Exercise 2</h5>
+              <div class="card-body">
+                Consider the following code. What's going to happen?
+                <ol type="a">
+                  <li>Nothing happens.</li>
+                  <li>It crashes.</li>
+                  <li>The name gets changed to <code>"abc"</code></li>
+                </ol>
+
+                <pre><code class="language-C">#include &lt;stdio.h&gt
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+typedef struct student2
+{
+  char *name;
+  int f;
+} student1;
+
+void set_name2b(student2 s)
+{
+  s.name = (char *)malloc(5);
+  strcpy(s.name,"abc");
+}
+
+int main()
+{
+    student2 s2;
+    set_name2b(s2);
+}
+</code></pre>
+                <p>
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#L3Example" role="button"
+                    aria-expanded="false" aria-controls="L3Example">
+                    Show Solution
+                  </a>
+                </p>
+                <div class="collapse" id="L3Example">
+                  <div class="card card-body">
+                    <p>Trick question! None of the above is true. While nothing may seem to happen, there is a memory
+                      leak. See Lecture 9, section "Pointers in Structures" for a more thorough discussion of why this
+                      is
+                      the case.</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <h2 id="L10-project-help">Header Files and Command Line</h2>
+          First, how do we run C code through command line?
+          <ol>
+            <li>Open up a terminal and make sure you are in the correct directory. To do so, you can type
+              <code>ls</code>
+              or <code>dir</code> to see subfolders and you can move between them by typing <code>cd folderName</code>.
+              To
+              go back, you can type <code>cd ..</code>. To see the full path of where you currently are, you can type
+              <code>pwd</code>.
+            </li>
+            <li>Now type <code>gcc -Wall -std=c99 -o myprogram filename.c</code>. Here, <code>-Wall</code> tells the
+              compiler to show all warnings, <code>-std=c99</code> tells the compiler to use the C99 standard, and
+              <code>-o myprogram</code> tells the compiler to output the program as <code>myprogram</code>. You can name
+              the program whatever you want, but it's good to name it something that is descriptive of what it does. On
+              Windows, you will need to name it <code>myprogram.exe</code> instead.
+            </li>
+            </li>
+            <li>On Linux or Mac, you can run the program by typing <code>./myprogram</code>. On Windows, you can run the
+              program by typing <code>./myprogram.exe</code>.</li>
+          </ol>
+          Next, how do we use header files? Header files are a way to organize code. We can put all of our function and
+          struct declarations in a header file, and then include it in our main program. This way, we can keep our code
+          organized and we don't have to worry about forgetting to include a function or struct declaration in our main
+          program. To do this, we can create a file called <code>my_struct.h</code> and put all of our declarations in
+          there. Then, we can include it in our main program by typing <code>#include "my_strct.h"</code>.<br><br>
+
+          <h1 id="L11">L11+ Onwards</h1>
+
+          <div class="alert alert-info">
+            <strong>Key Point:</strong> Social norms are the unwritten rules of behavior that are considered acceptable
+            in a group or society.
+          </div>
+
+          <div class="alert alert-warning">
+            <strong>Critical Note:</strong> Deviance is socially constructed and varies across cultures and time
+            periods.
+          </div>
+
+          <div class="alert alert-success">
+            <strong>Good to Know:</strong> Durkheim's work on anomie provides a foundational understanding of societal
+            cohesion.
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Quick Summary
+            </div>
+            <div class="card-body">
+              <ul>
+                <li><strong>Definition:</strong> Sociology is the study of human social relationships and institutions.
+                </li>
+                <li><strong>Key Focus:</strong> Understanding how societal structures influence behavior.</li>
+                <li><strong>Theories:</strong> Functionalism, Conflict Theory, Symbolic Interactionism.</li>
+              </ul>
+            </div>
+          </div>
+
+          <br>
+          <div class="alert alert-secondary">
+            <strong>Did You Know?</strong> The term "sociology" was coined by Auguste Comte in 1838, inspired by the
+            Greek word "socius" (companion) and "logos" (study).
+          </div>
+
+          <div class="card border-info mb-3">
+            <div class="card-header bg-info text-white">Case Study: The Civil Rights Movement</div>
+            <div class="card-body">
+              <p>The Civil Rights Movement in the United States is a prime example of how collective action can lead to
+                social change.</p>
+              <ul>
+                <li><strong>Conflict Theory:</strong> Highlights the power struggles between oppressed groups and
+                  dominant classes.</li>
+                <li><strong>Symbolic Interactionism:</strong> Examines how symbols (e.g., "I Have a Dream" speech)
+                  united activists.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1"
+                  aria-expanded="true" aria-controls="collapse1">
+                  What is Sociology?
+                </button>
+              </h2>
+              <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Sociology is the study of human social relationships, structures, and institutions.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                  Who is the father of Sociology?
+                </button>
+              </h2>
+              <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Auguste Comte is often considered the father of sociology.
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Pros of Functionalism</th>
+                <th>Cons of Functionalism</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Helps understand societal stability.</td>
+                <td>Overlooks power dynamics and inequality.</td>
+              </tr>
+              <tr>
+                <td>Emphasizes interdependence of institutions.</td>
+                <td>Too focused on order and neglects change.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="text-center">
+            <img src="assets/img/services.jpg" alt="Sociological Theories" class="img-fluid mb-3">
+            <p class="text-muted">Figure: Relationships Between Sociological Theories</p>
+          </div>
+          
+          <div class="alert alert-danger">
+            <h5>Challenge:</h5>
+            <p>How would you apply symbolic interactionism to explain the role of social media in modern society?</p>
+          </div>
+          
+          <br><br><br><br><br>
+      </div>
+    </div>
+
+</body>
+
+</html>
