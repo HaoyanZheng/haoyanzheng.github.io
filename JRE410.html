@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>The Arts and Science of Relationships: Understanding Human Needs</title>
+  <meta name="description" content="ESC190 Lecture Notes">
+  <meta name="keywords" content="C Programming, Lecture Notes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <!-- These are already included in main.css, but if you want to be safe: -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files (Bootstrap, Icons, AOS, etc.) -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Additional CSS (TOC, highlight.js) -->
+  <link href="https://afeld.github.io/bootstrap-toc/bootstrap-toc.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet">
+
+  <!-- Main CSS File (same as about.html uses) -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Optional: If you have local overrides, put them here. 
+       But keep them minimal to avoid conflicts. -->
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://afeld.github.io/bootstrap-toc/bootstrap-toc.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    // Initialize syntax highlighting
+    hljs.highlightAll();
+  </script>
+</head>
+
+<body class="about-page">
+  <!-- We use the same 'about-page' class to get consistent styling -->
+
+  <!-- Header dynamically loaded -->
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+
+  <!-- Load header and initialize features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('header.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#header').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
+    });
+  </script>
+  </header>
+
+  <!-- Main Content
+       Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
+       (Alternatively, you can do .mt-5 pt-5 or a custom style.)
+  -->
+  <div class="container" style="width: 1400px; margin-top: 0px;">
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-5">
+      <div class="row">
+        <!-- Table of Contents -->
+        <aside class="col-md-3 bg-light p-3 sticky-sidebar">
+          <nav id="toc" class="toc" data-toggle="toc"></nav>
+        </aside>
+
+        <!-- Content Section -->
+        <main class="col-md-9">
+          <h1 id="-esc190-lecture-notes">JRE410H1: Markets and Competitive Strategy</h1>
+          <h1 id="L1">Lecture 1: Relationship in Our Lives</h1>
+          Strategies: competitive moves & business approaches that management uses
+          1. Where are we now
+          2. Where do we want to go
+          3. how will we get There
+
+          Goal:
+          sustained competitive advantage resulting in superior long-run profitability
+
+          Business model:
+          compelling value apposition for the customer
+          favorable economics (profitable)
+          superior execution
+
+
+          <h1 id="L2">Lecture 2: Relationship in Our Lives</h1>
+          Answering "where are we now involves"
+          <div class="alert alert-secondary">
+            <strong>External analysis:</strong> company industry and competitive environment.
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Reasons</strong> for performing external analysis
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>decide whether to enter environment</li>
+                <ol type="1">
+                  <li>iPhone</li>
+                </ol>
+                <li>decide whether to extricate firm from environment</li>
+                <ol type="1">
+                  <li>Nokia</li>
+                </ol>
+                <li>position firm to succeed in given industry</li>
+                <ol type="1">
+                  <li>RIM</li>
+                </ol>
+                <li>assess the effect of a major change, e.g. tech standard</li>
+                <ol type="1">
+                  <li>Qualcomm</li>
+                </ol>
+                <li>attempt to change the rules, e.g. lobbying for deregulation</li>
+                <ol type="1">
+                  <li>Wind(Freedom) / Verizon</li>
+                </ol>
+              </ul>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="alert alert-secondary">
+            <strong>Internal analysis:</strong> company's resources capabilities and competitiveness.
+          </div>
+
+          <div class="text-center">
+            <img src="assets/img/coursera/understanding_human_needs/Needs_vs_wants.png" alt="Sociological Theories"
+              class="img-fluid mb-3">
+            <p class="text-muted">Figure 1: Comparison of Needs and Wants</p>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Need: </strong> Required for life
+            </div>
+            <div class="card-body">
+              <ul>
+                <li><strong>Physical/Biological</strong>: Oxygen, water, food, stimulation, activity, rest, physical
+                  safety.</li>
+                <li><strong>Psychological</strong>: Security, pleasure, comfort, identity, self-esteem, achievement.
+                </li>
+                <li><strong>Social</strong>: Affiliation, intimacy, acceptance, community</li>
+              </ul>
+            </div>
+          </div>
+
+
+          What are the industry's dominant economic traits:
+          buyers
+          rivals
+          products
+          costs
+
+          What are the nature and strength of the industry's competitive forces?
+          5-forces model:
+          power of suppliers > rivalry among existing competitors (sellers) > power of buyers
+          threat of substitutes <> rivalry among oun existing competitors <> threat of new entrants
+
+              how & why is a level of industry profitability achieved?
+              what will affect the future profitability of the industry
+              provide the insight
+
+          What forces are driving industry change?
+          what market positions do industry rivals occupy?
+          What strategic moves are rivals likely to make next?
+          what are the key success factors of the industry?
+          dose the industry outlook offer good prospects for profitability?
+
+              `
+
+</body>
+<br><br><br><br><br>
+
+</html>
+</body>

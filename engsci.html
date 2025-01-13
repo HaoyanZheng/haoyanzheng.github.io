@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Coursera Course Notes</title>
+  <meta name="description" content="ESC190 Lecture Notes">
+  <meta name="keywords" content="C Programming, Lecture Notes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <!-- These are already included in main.css, but if you want to be safe: -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files (Bootstrap, Icons, AOS, etc.) -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Additional CSS (TOC, highlight.js) -->
+  <link href="https://afeld.github.io/bootstrap-toc/bootstrap-toc.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet">
+
+  <!-- Main CSS File (same as about.html uses) -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Optional: If you have local overrides, put them here. 
+       But keep them minimal to avoid conflicts. -->
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://afeld.github.io/bootstrap-toc/bootstrap-toc.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    // Initialize syntax highlighting
+    hljs.highlightAll();
+  </script>
+</head>
+
+<body class="about-page">
+  <!-- We use the same 'about-page' class to get consistent styling -->
+
+  <!-- Header dynamically loaded -->
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+
+  <!-- Load header and initialize features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('header.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#header').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
+    });
+  </script>
+  </header>
+
+  <!-- Main Content
+       Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
+       (Alternatively, you can do .mt-5 pt-5 or a custom style.)
+  -->
+  <div class="container" style="width: 1400px; margin-top: 0px;">
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-5">
+      <div class="row">
+        <!-- Table of Contents -->
+        <aside class="col-md-3 bg-light p-3 sticky-sidebar">
+          <nav id="toc" class="toc" data-toggle="toc"></nav>
+        </aside>
+
+        <!-- Content Section -->
+        <main class="col-md-9">
+          <h1 id="-esc190-lecture-notes">UT EngSci Notes
+          <h1 id="1">1: <a href="JRE410.html">JRE410H1: Markets and Competitive Strategy</a></h1>
+          <h1 id="2"></h1>
+         
+</body>
+
+</html>
