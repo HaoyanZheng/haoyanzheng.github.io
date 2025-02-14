@@ -348,7 +348,7 @@ body.anime-page .navmenu a {
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
     color: var(--nav-color);
-    font-size: 28px;
+    font-size: 40px;
     line-height: 0;
     margin-right: 10px;
     cursor: pointer;
@@ -451,7 +451,7 @@ body.anime-page .navmenu a {
   .mobile-nav-active .mobile-nav-toggle {
     color: #fff;
     position: absolute;
-    font-size: 32px;
+    font-size: 40px;
     top: 15px;
     right: 15px;
     margin-right: 0;
