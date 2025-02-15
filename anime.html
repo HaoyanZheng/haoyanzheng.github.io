@@ -139,11 +139,25 @@
   <script src="assets/js/isotope.pkgd.min.js"></script>
   <script src="assets/js/venobox.min.js"></script>
 
-  <!-- 音乐播放器 -->
-  <div class="aplayer" data-id="12580927696" data-server="netease" data-type="playlist" data-fixed="true"
-    data-autoplay="false" data-volume="0.35" style="color: #000;background: unset;"></div> <!--data-id="填写网易云歌单ID"-->
 
-  <script src="assets/js/Meting.min.js"></script>
+  <div id='aplayer'></div>
+  <script>
+      var ap = new APlayer
+      ({
+          element: document.getElementById('aplayer'),
+          showlrc: true,
+          fixed: true,
+          mini: true,
+          audio: {
+              title: '半岛盒',
+              author: '周杰伦',
+              url: 'D:/Program Files/JiJiDown/Download/1.mp3',
+              lrc: 'C:/Users/17851/Downloads/%E9%85%B7%E6%AD%8C%E8%AF%8D%20kugeci.com_%E7%9B%97%E5%A2%93%E7%AC%94%E8%AE%B0%C2%B7%E5%8D%81%E5%B9%B4%E4%BA%BA%E9%97%B4.lrc',
+              pic: 'https://echeverra.cn/wp-content/uploads/2022/05/周杰伦-半岛铁盒-mp3-image.png'
+          }
+      });
+      ap.init();
+  </script>
 
   <!-- 弹幕必备的div -->
   <div class="dwn-dm-bottom" id="dwn-dm-bottom"></div>
