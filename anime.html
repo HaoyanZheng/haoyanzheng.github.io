@@ -139,26 +139,35 @@
   <script src="assets/js/isotope.pkgd.min.js"></script>
   <script src="assets/js/venobox.min.js"></script>
 
-
   <div id='aplayer'></div>
   <script>
-      var ap = new APlayer
-      ({
+      var ap = new APlayer({
           element: document.getElementById('aplayer'),
           showlrc: true,
           fixed: true,
           mini: true,
-          audio: {
-              title: '《盗墓笔记·十年人间》- DJ',
-              author: '李常超',
-              url: 'https://haoyanzheng.github.io/assets/music/十年人间.mp3',
-              lrc: 'https://haoyanzheng.github.io/assets/music/十年人间.lrc',
-              pic: 'https://haoyanzheng.github.io/assets/music/十年人间.jpg'
-          },
+          audio: [
+              {
+                  title: '《盗墓笔记·十年人间》- DJ',
+                  author: '李常超',
+                  url: 'https://haoyanzheng.github.io/assets/music/十年人间.mp3',
+                  lrc: 'https://haoyanzheng.github.io/assets/music/十年人间.lrc',
+                  pic: 'https://haoyanzheng.github.io/assets/music/十年人间.jpg'
+              },
+              {
+                  title: '',
+                  author: '',
+              },
+              {
+                  title: '',
+                  author: '',
+              }
+          ],
           lrcType: 3
       });
       ap.init();
   </script>
+  
 
   <!-- 弹幕必备的div -->
   <div class="dwn-dm-bottom" id="dwn-dm-bottom"></div>
