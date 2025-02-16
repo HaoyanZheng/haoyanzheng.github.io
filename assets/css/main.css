@@ -80,11 +80,22 @@ body {
 }
 }
 
+/* On large (desktop) screens, pin the sidebar and allow it to scroll within the viewport */
+@media (min-width: 992px) {
+  .sticky-sidebar {
+    position: sticky;           /* “sticks” when scrolling */
+    top: 80px;                  /* or whatever header height you need */
+    max-height: calc(100vh - 80px); /* ensure we can scroll it */
+    overflow-y: auto;
+  }
+}
+
+/* On small (mobile/tablet) screens, let it flow with the page */
 @media (max-width: 991px) {
   .sticky-sidebar {
     position: static !important;
     top: auto !important;
-    height: auto !important;
+    max-height: none !important;
     overflow-y: visible !important;
   }
 }
