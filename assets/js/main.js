@@ -117,20 +117,23 @@
     }
 
     // Hide mobile nav on same-page/hash links
-    document.querySelectorAll("#navmenu a").forEach((navmenu) => {
-      navmenu.addEventListener("click", () => {
-        if (document.querySelector(".mobile-nav-active")) {
-          mobileNavToggle();
+    document.querySelectorAll("#navmenu a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const parentLi = link.closest("li");
+        // If this <li> has class="dropdown", it's a parent link
+        if (parentLi && parentLi.classList.contains("dropdown")) {
+          e.preventDefault(); // Don’t navigate away
+          // Toggle that dropdown’s 'active' class
+          parentLi.classList.toggle("active");
+          // Show/hide the nested <ul>
+          const subMenu = parentLi.querySelector("ul");
+          if (subMenu) subMenu.classList.toggle("dropdown-active");
+        } else {
+          // Otherwise, it’s a normal link => close the mobile nav
+          if (document.querySelector(".mobile-nav-active")) {
+            mobileNavToggle();
+          }
         }
-      });
-    });
-
-    // Toggle mobile nav dropdowns
-    document.querySelectorAll(".navmenu .toggle-dropdown").forEach((navmenu) => {
-      navmenu.addEventListener("click", function (e) {
-        e.preventDefault();
-        this.parentNode.classList.toggle("active");
-        this.parentNode.nextElementSibling.classList.toggle("dropdown-active");
       });
     });
   }

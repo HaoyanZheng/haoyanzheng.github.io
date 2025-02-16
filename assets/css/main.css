@@ -80,6 +80,16 @@ body {
 }
 }
 
+@media (max-width: 991px) {
+  .sticky-sidebar {
+    position: static !important;
+    top: auto !important;
+    height: auto !important;
+    overflow-y: visible !important;
+  }
+}
+
+
 html,
 body {
   height: 100%;
@@ -1622,13 +1632,4 @@ section,
 
 #down_click a:hover {
   background: #d35776;
-}
-
-/* In your main.css or a custom .css file */
-.sticky-sidebar {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 70px; /* or whatever offset you need */
-  height: calc(100vh - 70px); /* optional: force a height so the content doesn't overflow weirdly */
-  overflow-y: auto; /* optional, if you want scrolling within the sidebar */
 }

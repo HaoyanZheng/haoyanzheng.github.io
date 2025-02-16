@@ -59,8 +59,10 @@
         if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
         const headerHTML = await response.text();
         document.querySelector('#header').outerHTML = headerHTML;
+
+        // Initialize header features only once
         if (typeof initializeHeaderFeatures === 'function') {
-          initializeHeaderFeatures(); // Ensure features are initialized
+          initializeHeaderFeatures();
         } else {
           console.error('initializeHeaderFeatures is not defined.');
         }
@@ -75,7 +77,7 @@
        Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
        (Alternatively, you can do .mt-5 pt-5 or a custom style.)
   -->
-  <div class="container" style="width: 1400px; margin-top: 0px;">
+  <div class="container custom-container" style="margin-top: 0px;">
 
     <!-- Main Content -->
     <div class="container-fluid mt-5 pt-5">
@@ -193,14 +195,14 @@
               SSLD translates problems by
             </div>
             <div class="card-body">
-                <ol type="1">
-                  <li>assess the problem</li>
-                  <li>undertand needs</li>
-                  <li>set realistic goals</li>
-                  <li>develop stategies and skills to attain goals</li>
-                  <li>expanded range of options allows increased capacity to deal with
-                    problems in life, addressing needs, and solving problems</li>
-                </ol>
+              <ol type="1">
+                <li>assess the problem</li>
+                <li>undertand needs</li>
+                <li>set realistic goals</li>
+                <li>develop stategies and skills to attain goals</li>
+                <li>expanded range of options allows increased capacity to deal with
+                  problems in life, addressing needs, and solving problems</li>
+              </ol>
             </div>
           </div>
 
@@ -226,18 +228,18 @@
               3 levels of Circumstances:
             </div>
             <div class="card-body">
-                <ol type="1">
-                  <li><strong>Macro Level:</strong> global.
-                    <br>major global events, historic demography associated
-                    with one's generation.
-                  </li>
-                  <li><strong>Mezzo Level:</strong> regional/local.
-                    <br>sociocultral reality (social circle, reference groups, cultural values).
-                  </li>
-                  <li><strong>Micro Level:</strong> personal.
-                    <br>employment status, health condition, life stage, relationship status.
-                  </li>
-                </ol>
+              <ol type="1">
+                <li><strong>Macro Level:</strong> global.
+                  <br>major global events, historic demography associated
+                  with one's generation.
+                </li>
+                <li><strong>Mezzo Level:</strong> regional/local.
+                  <br>sociocultral reality (social circle, reference groups, cultural values).
+                </li>
+                <li><strong>Micro Level:</strong> personal.
+                  <br>employment status, health condition, life stage, relationship status.
+                </li>
+              </ol>
             </div>
           </div>
 
@@ -247,14 +249,15 @@
               3 types of characteristics:
             </div>
             <div class="card-body">
-                <ol type="1">
-                  <li><strong>Physical: </strong> height, body type, ethinicity, gender
-                  </li>
-                  <li><strong>Psychological</strong> personality, values, worldview, preferences, emotional and behavioural patterns
-                  </li>
-                  <li><strong>Socialcultural:</strong> lifestyle, cultural practice, religious practice
-                  </li>
-                </ol>
+              <ol type="1">
+                <li><strong>Physical: </strong> height, body type, ethinicity, gender
+                </li>
+                <li><strong>Psychological</strong> personality, values, worldview, preferences, emotional and
+                  behavioural patterns
+                </li>
+                <li><strong>Socialcultural:</strong> lifestyle, cultural practice, religious practice
+                </li>
+              </ol>
             </div>
           </div>
 
@@ -264,19 +267,22 @@
               3 levels of Circumstances:
             </div>
             <div class="card-body">
-                <ol type="1">
-                  <li><strong>Physical: </strong> height, body type, ethinicity, gender
-                  </li>
-                  <li><strong>Psychological</strong> personality, values, worldview, preferences, emotional and behavioural patterns
-                  </li>
-                  <li><strong>Socialcultural:</strong> lifestyle, cultural practice, religious practice
-                  </li>
-                </ol>
+              <ol type="1">
+                <li><strong>Physical: </strong> height, body type, ethinicity, gender
+                </li>
+                <li><strong>Psychological</strong> personality, values, worldview, preferences, emotional and
+                  behavioural patterns
+                </li>
+                <li><strong>Socialcultural:</strong> lifestyle, cultural practice, religious practice
+                </li>
+              </ol>
             </div>
           </div>
+
+          <!-- Main JS File -->
+          <script src="assets/js/main.js" defer></script>
 
 </body>
 <br><br><br><br><br>
 
 </html>
-</body>
