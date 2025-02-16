@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>JRE410H1: Markets and Competitive Strategy</title>
+  <meta name="description" content="ESC190 Lecture Notes">
+  <meta name="keywords" content="C Programming, Lecture Notes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <!-- These are already included in main.css, but if you want to be safe: -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files (Bootstrap, Icons, AOS, etc.) -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Additional CSS (TOC, highlight.js) -->
+  <link href="https://afeld.github.io/bootstrap-toc/bootstrap-toc.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet">
+
+  <!-- Main CSS File (same as about.html uses) -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Optional: If you have local overrides, put them here. 
+       But keep them minimal to avoid conflicts. -->
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://afeld.github.io/bootstrap-toc/bootstrap-toc.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    // Initialize syntax highlighting
+    hljs.highlightAll();
+  </script>
+</head>
+
+<body class="about-page">
+  <!-- We use the same 'about-page' class to get consistent styling -->
+
+  <!-- Header dynamically loaded -->
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+
+  <!-- Load header and initialize features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('header.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#header').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
+    });
+  </script>
+  </header>
+
+  <!-- Main Content
+       Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
+       (Alternatively, you can do .mt-5 pt-5 or a custom style.)
+  -->
+  <div class="container" style="width: 1400px; margin-top: 0px;">
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-5">
+      <div class="row">
+        <!-- Table of Contents -->
+        <aside class="col-md-3 bg-light p-3 sticky-sidebar">
+          <nav id="toc" class="toc" data-toggle="toc"></nav>
+        </aside>
+
+
+
+        <!-- Content Section -->
+        <main class="col-md-9">
+          <h1 id="-esc190-lecture-notes">ESEC 2023:</h1>
+          <h1 id="L1">Manmeet</h1>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Hatchery Team</strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Hatchery: initial money</li>
+                <li>Build something customers really want</li>
+                <li>Listen to your customers</li>
+                <li>Move fast</li>
+                <li>Pick the right team</li>
+              </ul>
+            </div>
+          </div>
+
+          <h1 id="L2">Christine</h1>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Hatchery Team</strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Close telescopes - accuracy but not clear</li>
+                <li>Far telescopes - clear but not good at distinguishing fake objects</li>
+                <li>The region of star formation cannot be seen clearly in molecular gas. We observe it at different
+                  wavelength to get a good understanding.</li>
+                <li>We can look at different parts of star formation</li>
+                <li>Alma looks at the gas cloud</li>
+                <li>Hobble look at young stars formed 10 millions years ago</li>
+              </ul>
+            </div>
+          </div>
+
+          <h1 id="L3">Stephane</h1>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong></strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Got fired and rebuilt myself. </li>
+                <li>Have confidence yourself after any dramatic event. </li>
+                <li>Start by assuming it’s my fault (what could you do better). </li>
+                <li>Took him a year to recover.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert alert-secondary">
+            There are ABCDEF Round of money raising.
+          </div>
+
+          <div class="alert alert-secondary">
+            Listens to both sides of an opinion.
+          </div>
+
+          <div class="alert alert-secondary">
+            Keep everything really simple.
+          </div>
+
+          <div class="alert alert-secondary">
+            There’s always a solution.
+          </div>
+
+          <div class="alert alert-secondary">
+            Learn from failures, run into tough groups and deal with the problem. Not everyone agrees with what you do.
+          </div>
+
+          <div class="alert alert-secondary">
+            Find goal and tie it with team values.
+          </div>
+
+          <div class="alert alert-secondary">
+            Telling MBA players something you are not expert in. Trickle small new ideas and positive feedback loop.
+          </div>
+
+          <div class="alert alert-secondary">
+            Growing and invoking as an individual after graduation. Start with small one thing at a time.
+          </div>
+
+          <div class="alert alert-secondary">
+            Don’t close doors for other things. Use engineering as a tool to open up the path to what you want to do.
+          </div>
+
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Decision Making</strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>List decisions out because it forces you to think through. </li>
+                <li>But never look back at your decision. It’s the best decision ever in the work after you made it.
+                </li>
+                <li>Any decision you are now is a good decision. </li>
+                <li>Especially for this program you are in. Even if you are wrong, you have plenty of time in the
+                  future.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Decision Making</strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Making a decision, it could not be final. But it’s better than not making decisions. </li>
+                <li>If you struggle, do the best decision you can do now. </li>
+                <li>Don’t worry about useless future. </li>
+                <li>Being in engineering, you get exposed to so many careers. </li>
+                <li>Keep your mind open, make your best decisions.</li>
+              </ul>
+            </div>
+          </div>
+
+
+          <div class="alert alert-secondary">
+            No. 1. Think big! Push yourself. Take risks. Think big.
+          </div>
+
+          <div class="alert alert-secondary">
+            Everything will work out.
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Time Management</strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Make time management decision according to priority. </li>
+                <li> Find out where your time is wasted. Where do you spend your time?</li>
+                <li> You have so many things you want to do. You have to give something out to do something you want.
+                </li>
+                <li> Time management is only balancing.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert alert-secondary">
+            Hyper organized, think about what I can do now every 15 minutes. Schedule everything.
+          </div>
+
+          <div class="alert alert-secondary">
+            Don’t do things you don’t want to do.
+          </div>
+
+
+
+          <h1 id="L4">Eric</h1>
+          <div class="alert alert-secondary">
+            Aerospace Engineering had no practical skill, only technical skill.
+          </div>
+
+          <div class="alert alert-secondary">
+            Be ready to act as if you are going to fail.
+          </div>
+
+
+
+
+</body>
+<br><br><br><br><br>
+
+</html>
+</body>

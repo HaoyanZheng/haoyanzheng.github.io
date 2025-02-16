@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>JRE410H1: Markets and Competitive Strategy</title>
+  <meta name="description" content="ESC190 Lecture Notes">
+  <meta name="keywords" content="C Programming, Lecture Notes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <!-- These are already included in main.css, but if you want to be safe: -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files (Bootstrap, Icons, AOS, etc.) -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Additional CSS (TOC, highlight.js) -->
+  <link href="https://afeld.github.io/bootstrap-toc/bootstrap-toc.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet">
+
+  <!-- Main CSS File (same as about.html uses) -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Optional: If you have local overrides, put them here. 
+       But keep them minimal to avoid conflicts. -->
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://afeld.github.io/bootstrap-toc/bootstrap-toc.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    // Initialize syntax highlighting
+    hljs.highlightAll();
+  </script>
+</head>
+
+<body class="about-page">
+  <!-- We use the same 'about-page' class to get consistent styling -->
+
+  <!-- Header dynamically loaded -->
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+
+  <!-- Load header and initialize features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('header.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#header').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
+    });
+  </script>
+  </header>
+
+  <!-- Main Content
+       Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
+       (Alternatively, you can do .mt-5 pt-5 or a custom style.)
+  -->
+  <div class="container" style="width: 1400px; margin-top: 0px;">
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-5">
+      <div class="row">
+        <!-- Table of Contents -->
+        <aside class="col-md-3 bg-light p-3 sticky-sidebar">
+          <nav id="toc" class="toc" data-toggle="toc"></nav>
+        </aside>
+
+        <!-- Content Section -->
+        <main class="col-md-9">
+          <h1 id="-esc190-lecture-notes">ESEC 2024:</h1>
+          <h1 id="L1">Raffaello D’ Andrea</h1>
+
+          <div class="alert alert-secondary">
+            <strong></strong> EngSci class size now is more than doubled compared to 9T1.
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Non-linear career path: </strong>Graduated HS in 2001, ten years of education before EngSci
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Curiosity about science since young.</li>
+                <li>1987 - 1988: EngSci robotics capstone project.</li>
+                <li>PEY: telecommunication board, northern.</li>
+                <li>PhD Caltech, co-author with bob behken, astronomer at SpaceX 3 years ago</li>
+                <li>2002: Robocup winner</li>
+                <li>2003 - 2012: Kiva systems, initial cost 17000</li>
+                <li>Biggest warehouse has 4000 kiva</li>
+                <li>2012: Jeff bought kiva</li>
+                <li>5 years after acquisition, saving 2.5 billion (pitchbook) for amazon</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert alert-secondary">
+            <strong></strong> Successful is about timing.
+          </div>
+
+          <div class="alert alert-secondary">
+            <strong></strong> The team of founders was connected through colleagues.
+          </div>
+
+          <div class="alert alert-secondary">
+            <strong></strong> Kiva was not started too late or too early, many environmental factors are out of our
+            control.
+          </div>
+
+          <div class="alert alert-secondary">
+            <strong></strong> During a Ted talk, someone unplugged the electricity and he was on the stage for 23s while bill gates, etc.
+            are watching.
+          </div>
+
+          <div class="alert alert-secondary">
+            <strong></strong> The team of founders was connected through colleagues.
+          </div>
+
+          <div class="alert alert-secondary">
+            <strong></strong> The team of founders was connected through colleagues.
+          </div>
+
+
+
+
+
+          New company Verity: 2013 bring autonomous robots indoor
+          Market: entertainment world
+          Apolog, china
+          2019 chunwan
+          Celine dion courage world tour 2019
+
+          Founded 2014 - 140 people, many with PhD from the same lab
+          First product: 2021 1 million
+          2023: 19 million
+
+          Financing:
+          Total raised 93m
+          Series b 47 m
+          Series b post-money valuation 97 m
+
+          You cannot do it by yourself but a group of team members with background and skills.
+
+          Even though exciting, there has been few successes in robotics entrepreneurship.
+          1. Assembly line robots
+          2. Rumba - home cleaner, only successful robot 20 years ago
+          3. Kiva - over 20 companies work but this is the only big one
+          4. Verity - unsure yet
+
+          Really diffucult to make change in the robotics syste, / autonomous systems
+
+          Need to study dynamics:
+          Life motion: animals
+          Inanimate motion: tides, often predicable
+
+          Perceiving the world - algorithms - back to world
+
+          Demo:
+          Cuboid
+
+          If science were a religion, the trinity would be newton, Einstein, maxwell
+          Maxwell - united electricity, light, founder of control theory
+          Special relativity can be derived from maxwell equations
+
+          Maxwell’s demon
+
+          If you want to use magic, there’s always something yo have to pay.
+          This is why its so hard to achieve,
+          Earth contracts to success.
+          Balance between stable or unstable
+
+          The more connection you have the more thing scan go wrong
+
+          Currently technology: a single problem cases whole system to break down
+
+          Put self in positions where failure is not an option
+
+          Demo:
+
+          Future of cyberphysical systems:
+          Fractals
+          4.5 Mb -> 75Kb, x60 compression
+          The whole video can be created by mathematical expression,
+          Engineeering - top-down
+          We have a problem, and we go solving it
+          Another way to do design:
+          50000 genes, bottom-up,
+          There’s no process of designing 50000 lines of code,
+          It’s through. Evolution
+
+          Bottom-up generates all the complexity
+          But top-down is almost impossible to mimic
+
+          Future of robotics / AI, 100 years:
+          Current design:
+          Directed, ideally deterministic, short time scale, inherently fragile
+
+          Bottom-up:
+          Undirected, unpredictable, long-time scales, inherently robust
+
+          Bridge them together,
+          Otherwise there will be more fragile
+
+          I hate technology,
+          I don’t believe in home automation because i build these things and i know the limitation
+
+          I don’t have a clue how to figure this out, i am too old, but you might have.
+
+          Q: indoor autonomous flights
+          A: indoor: ultra wide band - sensing by sound
+          Outdoor: “inside-out system”
+
+          Q: how EngSci paid the way in research and academia
+          A: Fundamentals, all of them except one are EngSci students, now they don;t use the knowledge
+          But EngSci teaches how to solve problems/ do team projects
+
+          Q: favorite class in undergrad?
+          A: complex variables. Amazing how find pi/ solving fluid variables in complex plane. I like a lot of courses.
+          I enjoyed ECO102 macroeconomics.
+
+          Q: having opportunities in connection, how to maintain connection for opportunities later?
+          A: i am a horrible networker. I am a intervert. Follow my passion, be good at what i do, then people approach
+          you.
+          It will be different for everyone. This is the way for me.
+
+          Q: for kiva, did opportunity fot warehouse or robotics come first?
+          A: teammate’s idea for home grocery delivery, but company went bankrupt. I didn’t know anything about
+          distribution system. When i listened to his idea, I thought it was barely doable. I am often contacted by
+          ideas. I determine the doability. This is one of the ideas I
+
+          Business idea from mic. I figure out the way of doing it.
+
+          Q: failure is not an option but we learned fail quiockly
+          A: fialture is not an option in real cases.
+          If i go to PhD and say robotics demo needs to be ready in 5 mins, they do it. This is not possible in
+          anywhere.
+          You need constraint on building to be productive.
+          So that they do experiment as that ar Walsh working
+
+          Focus on skills that are robust.
+
+          A lot of the word from research is theorical text/ videos but not actually into practice
+
+          Q: major challenge in home robot system?
+          A: making robust system reliable, every home is unique. Look at the problem and look for the simplist way,
+          Economics for home robotics is challenging, people do not want to pay 5000.
+
+          Q: Maxwell demon?
+          A: time reversibility is the problem
+          Most of the physics laws are time reversible.
+          Demon is a single way, only allows high velocity particle pass by but not allow it to go back
+
+          Q: turn idea to business, good idea to make impact?
+          A: solve someone’s problem, provides values, (fashion is unpredictable, therefore show company is
+          unpredictable)
+          There’s no shortcut, have to be honest, most is a leap of faith, from experience that guessed this might be
+          doable, barely, and embarked
+
+          Q: piece to self in the back
+          A: I don’t know. I don’t think i would change anything
+
+          Q: maintain personal experiments during h undergrad ?
+          A: i am very goal-orientaed. I want to come first in class, i was busy, i had girlfriends, 3 sports team, but
+          not time for my experimentation. I didn’t have spare time durin gunderad. Don;;t just work on one thing, work
+          on at least 2 if not 3, if we get stuck, don’t keep beating your head, put it aside and come back later.
+          Having social life, playing sports, and diving into knowledge the 3 are great balance.
+
+          <h1 id="L1">Jeremy Wang</h1>
+
+          Ribbit, 1.3 millions contract with federal government
+          Last 8 years: automated plane services, CTO of a drone company, worked on. Conducting survey, inspecting
+          inftureture, search and rescue planes.
+
+          Theres so few electronics can be fit into.
+
+          We modified an actual plane to an autonomous with 2 other EngSci graduates
+
+          System engineering process:
+          Increasing detail:
+          Customer need - operational requirments - system requirements - system architecture- subsystems - components
+
+          Increasing integration:
+          Unit test - Integration test - flight test
+
+          Today’s topic:
+          Customer need: Nain, NL: 14 000 km north of Toronto, on the coast
+          17000 population, supply can only be flew in, there’s no road,
+          Extremely expensive grocery - want to change
+
+          10% Canada wide after tax income go to grocery
+          25% in northern Canada
+
+          Autonomy in aircraft:
+          More cargo capacity, higher utilization
+
+          Airline:
+          More unit revenue, total revenue,
+          Route and schedule flexibility
+
+          Airline customers:
+          Fast and reliable,
+          More markets and destinations,
+          Increase market share,
+
+          Operations:
+
+          Mission phases and states:
+
+          Software development cycle:
+          Develop - unit test - simulation test- hardware test - light test
+
+          7000 hr simulation and 2000 flight
+
+          Flight testing:
+
+          Advice:
+          Mother rural part of china,
+          Father from India
+          Both parents are hard working
+          First generation high school graduate and university
+          Struggle of becoming adult is not to loose the creativity.
+          Parents wants him to go to STEM or become a doctor.
+          He wanted to have a stable job and make income.
+          First year asking deep life question, where do i fit into this world
+          There’s too much to learn in first and second year so there’s no time for creativity but i can just kept on
+          going to next semester.
+          Involved with UTAT, enjoyed and it was nice for mental health
+          Ribbit is like a design team with a bigger funding.
+
+          6 pieces of advide:
+          1. Grades are not destiny: ECE159: 59%. It wakened my idea that grades are just supportive to your learning,
+          it doesn’t represent the engineering design
+          2. Be a B+/A- student with A+ attitude. I decided to achieve 70+ and just put my time into other time i enjoy.
+          I skipped a lot of classes in 3rd and 4th year.
+          3. Join or start an extracurricular.
+          4. Grow people skills
+          5. Tune your Pareto curve (80 - 20 rule) focus on your most strength, grades are like diminishing return curve
+          6. Take care of yourself and others
+
+          I didn’t eat well, sleep well or go to gym in EngSci.
+
+          At the moment i graduate EngSci, i started to appreciate everything in life. My happiest moment is when my
+          wife gets home every day. What makes you happy is the small things.
+
+          It is hard to ask big questions when you are down the trenches.
+
+          But when you graduate, people care about your job performance.
+          The more you interact with others.
+
+          Eventually, you find something that makes you happy that you cannot describe.
+          Stay away from the numbers - money and evaluation are like constraints.
+
+          Q: manage time between EngSci and design team
+          A: first and second year are for trying your time management and balance for those.
+
+          Q: central challenges for atonomous
+          A: 2 ways of navigating: visual/ air traffic controller
+
+          Q: which application has the most potential
+          A:
+
+          A: propulsion team
+          At this stage, you don’t know wha you know; you don’t know what you don’t know
+
+          This should be information gathering stage.
+
+          A: did you do PEY?
+          PEY was on drone op[eration and manufacture
+
+          Q: grad school - what’s the most important in application
+          A: the things that count in life aren’t countable
+          EngSci gives you the knowledge critically, the most important is to have an critical conversation about the
+          research.
+
+          Funding plays a big role, decision making also varies for University.
+          In Waterloo, prof have power for that.
+
+          Q: has anyone told you this is not going to work?
+          A: hardest process are presenting to investors. They do not have technical background. We might fail in the
+          future and it’s okay. We don’t really think about people making questions, we just do it. We pitched to 300
+          investors and eventually one made the investment.
+
+
+          NESERC PGSD:
+          Academic excellence 30%
+          Research ability and potential 50%
+          Communication. Interpersonal and leadership 20%
+
+          <h1 id="L3">Lunch & Learn</h1>
+
+          For an enterprise, the central knowledge/ technology is the key.
+
+          Q: is it possible to be in both entrepreneurship and academia at the same time?
+
+          Andrea: If you are surrounded by a good group of people, it is possible to do academia and entrepreneurship.
+          However, entrepreneurs wouldn’t believed this 30 years ago.
+
+          Willerth: Look for long term sustainability and balance between life and work.
+
+          Q: why do you want to do a PhD/ entrepreneur.
+          Weedbrook: I had the habit of reading business biography during high school. I went into studying physics
+          because I enjoyed learning. During PhD, I decided to see if it’s time to commercialize it. It’s always a
+          question when you want to start it and the best time to start it.
+
+          During 2004, there was a different environment and no where to get support from people with academic or
+          professional experience.
+
+          Willerth: I knew I wanted to become a Prof since 5. I also always connect with industry to know the most
+          recent trend of development and technology.
+
+          Have normal friends that are not high achieving as you so that you realize your position relatively and adjust
+          your emotional mind.
+
+          Weedbrook: PhD in quantum physics is not the one for you if you like social interactions. Through life, you
+          get more understanding of who you are. Friends and network are the key.
+
+          Andrea: You should do PhD if you are excited about the material not if you need a degree.
+
+          I am an optimistic. People who are not optimistic would never start a company.
+          At the same time you have to be a realist. You evaluate the situation objectively and react accordingly.
+
+          Being optimistic is the belief that you will eventually make it.
+          I never stress. If things do not work out and I worked my best, it’s fine.
+
+          Willerth: Try on things and see what others do.
+
+          Weedbrook: When I was young I thought everything is about death, later then you will realize it’s not. In some
+          cases it doesn’t really matter.
+
+          Andrea: You should always be excited about what you are doing. Follow your passion. If something doesn’t work
+          out, just try something else.
+          Back in second year EngSci I was deciding between EE/AERO/Physics, now I think nothing in my life would have
+          changed if I chose another major. I would still follow my passion and do what I am doing now.
+
+          Weedbrook: When you were kid, what did you really enjoy doing? I dont know how you determine what you really
+          like. It was natural for me.
+
+          Willerth: I was excited about the history and biology at 6. It’s about what you like to read, what you like
+          doing during spare time.
+
+          Willerth: I recommend student clubs, involved in research, work in different labs, keep trying things. When
+          people say they don’t know what they like, and you ask them, what have you tried, they answer, tried nothing.
+          Think: do I want to live that life?
+
+          Weedbrook: Never give up, there’s always something you excel on. But most people just tries something once on
+          the surface without reflecting or really thinking about it.
+
+          Andrea: I knew I wanted to PhD in study control. I never knew I wanted to be Prof. During mid 90s I
+          interviewed McKinsey (business consulting, hired PhD at cal tech) and eventually decided to be Prof. I think I
+          would also enjoy life if I chose the other path. Never look back on the past or the decisions you made.
+
+          Weedbrook: Even if you good at something, but you don’t like it, it could be a waste of time.
+
+          Willerth: It’s awesome to be a big city like this to have many conferences from various companies. Keep your
+          options open. Try involved in clubs, etc.
+
+          Q: what do you do for fun?
+
+          Willerth: I watch Netflix, build car models.
+
+          Weedbrook: I do Netflix when only I need to switch off brain when I am exhausted. My whole life is dedicated
+          to this job. I have no friend no family.
+
+          Andrea: I am a big fan of PE, I go to mountains and oceans. I have a lot of thought when I am in nature. I
+          love reading science fiction.
+
+          Willerth: Movie of three body problem.
+
+          Andrea: really interesting.
+
+          Andrea: When I do research, I never think about real-life applications. But when I am in business, I look for
+          the simplest most elegant way of solving problem.
+
+          Be goal-oriented rather than being right. Those companies that value the right words or standards more than
+          completing goals are probably not successful.
+
+          Weedbrook: Physics teaches you how to think and solve problems. It is important to be able to express your
+          idea clearly. When you do a PhD you are the expert in your field, but you have to explain your work to the
+          general public in plain language for them to understand.
+
+          Q: It is possible to stay happy while doing work, or do you have to sacrifice happiness for working?
+
+          Weedbrook: For me, happiness and work is the same thing. They do not depend on one another. You go back to the
+          fundamental values. Not every day is great, but I enjoy doing it.
+
+          Willerth: When I graduate from university, I go running every morning. I no longer pull all-nighters. I value
+          sustainable work-life habits.
+
+          Andrea: I didn’t pull all nighter during undergrad. I started doing it during PhD.
+
+          <h1 id="L4">CHARISTIAN WEEDBROOK</h1>
+
+          Qubit: similar to 0 and 1 but you can have superposition. You can have 0 and 1 at the same time with
+          probability.
+          Traditional: sometimes 0 flips to 1
+          Quantum: phase error: phase 0 + phase i 1, the values and phase can be corrupted at the same time. Quantum is
+          more challenging.
+
+          Million qubits and full tolerance on error by 2028. That’s when quantum computers would be possible to be more
+          popular and commercialized.
+
+          8 values at Xanadu?
+          First 2 values:
+          1. Wake up everyday and enjoy what you do.
+          2. Learn everyday
+
+          Learn about yourself. Treat yourself as a third person and think “what does that person like”. Then think do i
+          like this job? Take steps and reevaluate every half-year. Try your best, give your best attitude. If doesn’t
+          success, just keep trying. Life is difficult for everyone. Read books. That’s how I end up here.
+
+          <h1 id="L5">Olugbenga olubanjo (Nigeria)</h1>
+
+
+          Starting:
+          This used to be my stats class.
+
+          Personal timeline:
+
+          Background:
+          600+ m African without electricity
+
+          Research:
+
+          Prototype:
+          With friends in ECE, Mech
+
+          Solution:
+          Founded Reeddi
+
+          People always like to help if they see progression.
+
+          Asked for support/ funding to almost everyone I know. Cold emailing with about 10% reply rate.
+
+          I wasn’t really sure if the prototype would work, i was thinking if it does not work, i would go find a job.
+
+          “I need funding to move from this idea to prototype, can i get some funding.” The funding is usually thousands
+          of dollars.
+
+          Friends in Nigeria said it would not work in Nigeria due to weather reasons, but still supported in funding.
+
+          From a mass production of 590, we proved it was working, unique design.
+
+          2 were taken to Nigeria. Portable unit first exploded. We realized safety protocol is ended.
+
+          Success:
+          Currently serves 3000 individuals and businesses
+          Various world awards.
+
+          Simple technical problem can change people’s lives.
+
+          Difference:
+          Deeply understood the problem
+          Innovated on both technology and business model
+          Very patient and commutable with failure
+          Stay lean
+          Made our work a learning project
+
+          Personal motivation, what IFs
+          Resources at hand
+          Experiment & learn
+          Fail fast and move forward
+
+          Ideas of making change in other fields:
+          Reeddi, tempown, carry, loyaone, open school.
+
+          Q: making integration of umbrella with battery. How to connect with situation in nigeria?
+          A: family
+
+          Q: moments when you feel idea do not work out/ dark moments how to move foward
+          A: I was lucky enough to have it work. I always enjoy reading autobiographies of entrepreneurs and see the
+          challenges they faced.
+
+          I was in masters and able to lean back to academic when enterprise do not work out. Always have back up plan
+          2-3 projects at a time.
+
+          Q: decide between infrastructure vs portable electric source change
+          A: I want do something achievable instead of needing to get license, potencies, etc. from the government.
+          Infrastructure needs billions of money.
+
+          Q: bureaucratic issues?
+          A: once you try to solve all the problem, you end up solving no problems. So I just wanted to solve the ones
+          that doable for me. I wanted to avoid complication. Luckily, VP talked about the invention and commented us.
+
+          Q: anything you would do differently?
+          A: i would not file a patent and spend the $15,000 on prototyping. I want something that actually works rather
+          than a patent.
+
+          Q: Original product is people borrow battery and buy electricity. I also see solar panels.
+          A: We went to Nigeria to solve problem for low-income people. Some rich people want to purchase a whole
+          system.
+
+          Q: the hardest step for business is coming up with an unique idea
+          A: we had many ideas from engineering. We weren’t sure if something would or would not work. We made the
+          prototype and throw it into the market and reflect, make changes on the feedback. We improve from unexpected
+          behaviors, question and feedbacks. You would not be able to think of those accidents and what people would do.
+
+          Q:
+          A: biggest worry: revenue doesn’t supply the expenditure.
+          Use math to calculate cost and revenue. Be efficient in production.
+
+          Q: current projects?
+          A: we think ourselves as kids trying to learn.
+
+          Q: has theft been a problem?
+          A: we added GPS which was not enough. We added annoying alarm sound. We also collect national ID. Worst case
+          we used the police and he returned it.
+
+          Q: development of distribution network?
+          A: connection with distribution companies
+
+          Q: going out of Nigeria?
+          A: we are. I was in 6 countries last year. Kenya, South Africa, the population of Nigeria is massive, so the
+          market is easier. Every new region is unique with regulations and needs effort. We need to expand.
+
+</body>
+<br><br><br><br><br>
+
+</html>
+</body>
