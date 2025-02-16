@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>JRE410H1: Markets and Competitive Strategy</title>
+  <meta name="description" content="ESC190 Lecture Notes">
+  <meta name="keywords" content="C Programming, Lecture Notes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <!-- These are already included in main.css, but if you want to be safe: -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files (Bootstrap, Icons, AOS, etc.) -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Additional CSS (TOC, highlight.js) -->
+  <link href="https://afeld.github.io/bootstrap-toc/bootstrap-toc.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet">
+
+  <!-- Main CSS File (same as about.html uses) -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Optional: If you have local overrides, put them here. 
+       But keep them minimal to avoid conflicts. -->
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://afeld.github.io/bootstrap-toc/bootstrap-toc.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    // Initialize syntax highlighting
+    hljs.highlightAll();
+  </script>
+</head>
+
+<body class="about-page">
+  <!-- We use the same 'about-page' class to get consistent styling -->
+
+  <!-- Header dynamically loaded -->
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+
+  <!-- Load header and initialize features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('header.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#header').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
+    });
+  </script>
+  </header>
+
+  <!-- Main Content
+       Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
+       (Alternatively, you can do .mt-5 pt-5 or a custom style.)
+  -->
+  <div class="container" style="width: 1400px; margin-top: 0px;">
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-5 pt-5">
+      <div class="row">
+        <!-- Table of Contents -->
+        <aside class="col-md-3 bg-light p-3 sticky-sidebar">
+          <nav id="toc" class="toc" data-toggle="toc"></nav>
+        </aside>
+
+        <!-- Content Section -->
+        <main class="col-md-9">
+          <h1 id="-esc190-lecture-notes">ESEC 2025:</h1>
+          <h1 id="L1">Tristan</h1>
+
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong></strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>2011 - 2015 University of Toronto, Aerospace major + Robotics minor</li>
+                <li>2015 - 2020 Imperial College of London Ph.D.</li>
+                <li>2020 - 2022 Imperial College of London PostDoc</li>
+                <li>2022 - Boston Dynamics </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Non-linear career path: </strong>Graduated HS in 2001, ten years of education before EngSci
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Terrible at math, scored 62/100 BC math provincial exam </li>
+                <li>2002 - 2007 B.Sc. in Economics, University of Victoria</li>
+                <li>2007 - 2008 M.Sc. Queens University</li>
+                <li>2009 - 2011 worked at BC Health Service: Interior Health</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert alert-secondary">
+            <strong></strong>In application round of 2012, applied but got rejected from EngSci. Very supportive wife
+            suggested calling director of admission. The director didn't believe he really wanted to do it. Eventually
+            he was re-evaluated and admitted.
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>Boston Dynamics </strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Founded in 1992</li>
+                <li>As a research branch at MIT in mobile robots</li>
+                <li>Now acquired and 80% owned by Hyundai</li>
+                <li>700+ employees</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <strong>3 main robot platforms: </strong>
+            </div>
+            <div class="card-body">
+              <ul>
+                <li><strong>Spot: </strong>Autonomous Data Collection and inspection
+                  safety.</li>
+                <li><strong>Atlas: </strong>Humanoid. Heavy lifting and manipulation.
+                </li>
+                <li><strong>Stretch: </strong>R&D platform, not for sale
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          UTIAS supervised by Angela Schoellig, she just became professor and Graduated.
+          Summer research intern for 2 years. 2013 - 2014.
+          Thesis: real-time motion generation for aerial vehicle in response to musical signals.
+          Angela knows Stefan Leutenegger just became professor at ICL. (The most critical part.)
+
+          Supervisor: andrew Davison and stefan Leutenegger Thesis: robust mu
+
+          2025 of Atlas: generalization of application for different factories
+
+          robot's dataset is orders of magnitudes behind Llama and GPT
+
+          state of maturity: Controls> state estimation > planning
+
+          There are many ways to contribute
+
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1"
+                  aria-expanded="true" aria-controls="collapse1">
+                  What is impact of funding on research at Boston Dynamics?
+                </button>
+              </h2>
+              <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  After Elon Musk expressed his interest and investments in robotics, Hyundai poured money into Boston
+                  Dynamics which really sped up the development of Atlas. (But more pressure came with the money.)
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                  What is important in Grad applications?
+                </button>
+              </h2>
+              <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  References is the key. Taking on a Ph.D. student impacts professor's career. It is risky for them and
+                  a good reference letter clears up some of the risk.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                  Why do we research humanoid robots instead of wheeled robots?
+                </button>
+              </h2>
+              <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  There are design reasons for robot to have legs. It is ergonomic when picking up weights and
+                  navigating terrain.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                  How does working at Boston Dynamics compared to a grad lab?
+                </button>
+              </h2>
+              <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="faq4"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  The research focus is similar but Boston Dynamics has less appetite for risk and projects need to show
+                  progress early. The scale of projects offered by industries are incomparable. Atlas project would not
+                  be possible at a university. It is a trade off between freedom and scale.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                  What kind of intern do you like?
+                </button>
+              </h2>
+              <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="faq5"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Despite who the intern is, we need to put in lots of effort of making them useful.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                  Concerned about Chinese Research in robotics?
+                </button>
+              </h2>
+              <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="faq6"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  The robotics industry is still developing. Not concerned about China. Larger market creates more job
+                  opportunities and more trained staff members.
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <br>
+
+          <h1 id="L2">Lunch & Learn:</h1>
+
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq7">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7"
+                  aria-expanded="true" aria-controls="collapse1">
+                  How does Stanford sustainability compare to EngSci?
+                </button>
+              </h2>
+              <div id="collapse7" class="accordion-collapse collapse show" aria-labelledby="faq7"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Stanford invites start-up founders to talks consisting of over 200 people.
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <br>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              3 levels of Circumstances:
+            </div>
+            <div class="card-body">
+              <ol type="1">
+                <li><strong>Macro Level:</strong> global.
+                  <br>major global events, historic demography associated
+                  with one's generation.
+                </li>
+                <li><strong>Mezzo Level:</strong> regional/local.
+                  <br>sociocultral reality (social circle, reference groups, cultural values).
+                </li>
+                <li><strong>Micro Level:</strong> personal.
+                  <br>employment status, health condition, life stage, relationship status.
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Consulting:
+            </div>
+            <div class="card-body">
+              <ol type="1">
+                <li><strong>Business/management consulting: </strong>
+                  pwc, McKinsey, BCG: CEO level work.
+                </li>
+                <li><strong>Technical consulting: </strong>
+                  Deloitte
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="alert alert-secondary">
+            Aim to test one hypothesis every summer/ semester. See what works and what your interests are.
+          </div>
+
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="faq8">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8"
+                  aria-expanded="true" aria-controls="collapse1">
+                  Favorite book?
+                </button>
+              </h2>
+              <div id="collapse8" class="accordion-collapse collapse show" aria-labelledby="faq8"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  When breath becomes air.
+                  Power of geography - discusses 9 regions in the world and how they evolved, developed society and
+                  become the way they are now.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion" id="faqAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="faq9">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9"
+                    aria-expanded="true" aria-controls="collapse1">
+                    What was the biggest challenge you had?
+                  </button>
+                </h2>
+                <div id="collapse9" class="accordion-collapse collapse show" aria-labelledby="faq9"
+                  data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Making connections and promoting myself when I first went into consulting industry. Brace the
+                    difficulty and it will benefit you in long run.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="faq10">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapse10" aria-expanded="true" aria-controls="collapse10">
+                      How different is engineering and business?
+                    </button>
+                  </h2>
+                  <div id="collapse10" class="accordion-collapse collapse show" aria-labelledby="faq10"
+                    data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      Best founders know customers's problems better than the customers themselves do. Whereas engineers
+                      just rush to finish projects.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion" id="faqAccordion">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq11">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse11" aria-expanded="true" aria-controls="collapse11">
+                        What's the biggest failure you had?
+                      </button>
+                    </h2>
+                    <div id="collapse11" class="accordion-collapse collapse show" aria-labelledby="faq11"
+                      data-bs-parent="#faqAccordion">
+                      <div class="accordion-body">
+                        A: I was nearly failing several courses in EngSci. I had low GPA which made me feel afraid of
+                        losing of career opportunities and decision space.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="faq12">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#collapse12" aria-expanded="true" aria-controls="collapse12">
+                          How is finance different from research?
+                        </button>
+                      </h2>
+                      <div id="collapse12" class="accordion-collapse collapse show" aria-labelledby="faq12"
+                        data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                          Sharon: Finance is very fast-paced in making money compared to research.
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="accordion" id="faqAccordion">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq13">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse13" aria-expanded="true" aria-controls="collapse13">
+                            Q: Suggestions for networking?
+                          </button>
+                        </h2>
+                        <div id="collapse13" class="accordion-collapse collapse show" aria-labelledby="faq13"
+                          data-bs-parent="#faqAccordion">
+                          <div class="accordion-body">
+                            Malik: If you are curious, you will naturally meet new people.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="faq14">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#collapse14" aria-expanded="true" aria-controls="collapse14">
+                              Tips for decision making?
+                            </button>
+                          </h2>
+                          <div id="collapse14" class="accordion-collapse collapse show" aria-labelledby="faq14"
+                            data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                              Malik: I want to have long-lasting effect for the society and benefit multiple
+                              generations.
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="accordion" id="faqAccordion">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq15">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse15" aria-expanded="true" aria-controls="collapse15">
+                                How is real world different from EngSci?
+                              </button>
+                            </h2>
+                            <div id="collapse15" class="accordion-collapse collapse show" aria-labelledby="faq15"
+                              data-bs-parent="#faqAccordion">
+                              <div class="accordion-body">
+                                Malik: Technical analysis doesn't always win the day.
+                                Sharon: Any workplace has politics.
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <br>
+
+                        <div class="alert alert-secondary">
+                          60-70% of failure in start-ups is when engineers try to fit technology into problem that does
+                          not suit
+                        </div>
+
+                        <div class="card">
+                          <div class="card-header bg-primary text-white">
+                            <strong>Investors look for </strong>
+                          </div>
+                          <div class="card-body">
+                            <ul>
+                              <li><strong></strong>Is there a market</li>
+                              <li><strong></strong>Is the design a good market fit?</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        <h1 id="L3">Jenny</h1>
+
+
+                        <div class="card">
+                          <div class="card-header bg-primary text-white">
+                            <strong></strong>
+                          </div>
+                          <div class="card-body">
+                            <ul>
+                              <li>born in china</li>
+                              <li>moved to UK at 10</li>
+                              <li>then EngSci</li>
+                              <li>then princeton Ph.D.</li>
+                              <li>then USA bay area</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        Ph.D.: defining problems and picking what problems wto solve
+                        EngSci: solving problems
+
+                        It is only hardships that make you grow.
+                        The only constant in life is change.
+
+                        What do you look for in interns?
+                        Comfort with change and ability to grow.
+
+                        McKinsey evolutes interviewee's problem solving skill by giving a real scenario and evaluating
+                        your
+                        responses.
+
+                        Go deep on what did you face how did you feel and why you made certain decisions.
+                        This can be verified through reference checks.
+
+                        All options are great if you give same effort and dedication.
+
+                        How EngSci influences your career?
+                        EngSci is super super hard. Every single professor has high expectations. It teaches the breath
+                        to
+                        solve
+                        so
+                        many problems.
+
+
+                        McKinsey started on using AI consulting 1-2 year ago.
+
+                        How did you start Ergeon?
+                        1. raise venture capital
+                        a. build a team of amazing people
+                        b. opportunity to learn
+
+                        <h1 id="L4">Sharon</h1>
+                        Engineering program manager @ Apple
+                        1T5 Biomedical System Engineering
+                        Quantitative analyst CPP (portfolio strategist)
+                        Bay area -> data scientist @ start up
+                        2022 -> Apple
+                        LLM, longitudinal analysis
+                        unexpected turns in career journey can lead to enormous opportunities
+
+                        MSF can be transferred into from any major, but biomedical eng requires unique education.
+
+                        I spent summer before reading and learning about finance.
+                        So that I could get into the position.
+
+                        More about showing initiative and
+
+                        best opportunities are the ones pushing you out of your comfort zone
+                        growth happens when you are unsure but still willing to take a leap
+
+                        Tech -> go to bay area hub for innovation, endless opportunities
+                        Joined ETHOS start up
+
+
+                        Q: how do you stand out for apple applications?
+                        I cold messaged manager on linkedin - I have skill set and passion
+                        Then i got an interview the next monday
+                        Always shape your story to set yourself paart from othets
+
+                        Q: 
+                  
+</body>
+<br><br><br><br><br>
+
+</html>
+</body>
