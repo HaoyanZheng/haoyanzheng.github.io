@@ -53,25 +53,6 @@
   </script>
   </header>
 
-  <script>
-    window.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const response = await fetch('header.html');
-        const text = await response.text();
-        const headerDiv = document.createElement('div');
-        headerDiv.innerHTML = text;
-        document.body.insertBefore(headerDiv, document.body.firstChild);
-
-        console.log("Header loaded"); // Debugging log
-        // Ensure scripts run after header is added
-        initializeHeaderFeatures(); // Initialize header features, including highlightCurrentPage
-      } catch (error) {
-        console.error("Error loading header:", error);
-      }
-    });
-  </script>
-
-
   <main class="main">
 
     <!-- Page Title -->
