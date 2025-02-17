@@ -31,24 +31,24 @@
       if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
       const headerHTML = await response.text();
       document.querySelector('#header').outerHTML = headerHTML;
-  
+
       // Initialize header-related features
       initializeHeaderFeatures();
-  
+
       // Initialize Isotope after the header is loaded
       initIsotopeLayout();
     } catch (error) {
       console.error('Error loading header:', error);
     }
   }
-  
+
   // Call Isotope initialization separately
   function initIsotopeLayout() {
     document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
       let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
       let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
       let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
-  
+
       let initIsotope;
       imagesLoaded(isotopeItem.querySelector('.isotope-container'), function () {
         initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
@@ -58,7 +58,7 @@
           sortBy: sort,
         });
       });
-  
+
       isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
         filters.addEventListener('click', function () {
           isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
@@ -120,22 +120,41 @@
     document.querySelectorAll("#navmenu a").forEach((link) => {
       link.addEventListener("click", (e) => {
         const parentLi = link.closest("li");
-        // If this <li> has class="dropdown", it's a parent link
-        if (parentLi && parentLi.classList.contains("dropdown")) {
-          e.preventDefault(); // Don’t navigate away
-          // Toggle that dropdown’s 'active' class
+
+        // Is it the top-level dropdown item? (Notes)
+        // Check two things:
+        //  1) It's in an <li class="dropdown">
+        //  2) Its href is "#" (dummy link)
+        if (
+          parentLi &&
+          parentLi.classList.contains("dropdown") &&
+          link.getAttribute("href") === "#"
+        ) {
+          // Prevent navigation and toggle
+          e.preventDefault();
           parentLi.classList.toggle("active");
+
           // Show/hide the nested <ul>
           const subMenu = parentLi.querySelector("ul");
           if (subMenu) subMenu.classList.toggle("dropdown-active");
+
         } else {
-          // Otherwise, it’s a normal link => close the mobile nav
+          // Otherwise, it's either a normal top-level link 
+          // or a sub-item link within the dropdown
+          // => let it navigate, but close mobile nav if open
           if (document.querySelector(".mobile-nav-active")) {
-            mobileNavToggle();
+            // close mobile nav
+            document.querySelector("body").classList.remove("mobile-nav-active");
+            const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
+            if (mobileNavToggleBtn) {
+              mobileNavToggleBtn.classList.add("bi-list");
+              mobileNavToggleBtn.classList.remove("bi-x");
+            }
           }
         }
       });
     });
+
   }
 
   /**
