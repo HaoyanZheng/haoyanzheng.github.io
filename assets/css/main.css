@@ -1597,8 +1597,9 @@ section,
 .dwn-dm-bottom {
   bottom: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 10000; /* Increase from 1 to 10000 so it sits above the mobile menu */
 }
+
 
 .dwn-dm-top,
 .dwn-dm-bottom {
