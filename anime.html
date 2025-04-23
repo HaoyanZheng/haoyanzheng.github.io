@@ -52,16 +52,16 @@
   <script language="javascript" src="assets/js/time.js"></script>
 
   <!-- Header dynamically loaded -->
-  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+  <header id="headerme" class="header d-flex align-items-center fixed-top"></header>
 
   <!-- Load header and initialize features -->
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       try {
-        const response = await fetch('header.html');
+        const response = await fetch('headerme.html');
         if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
         const headerHTML = await response.text();
-        document.querySelector('#header').outerHTML = headerHTML;
+        document.querySelector('#headerme').outerHTML = headerHTML;
         if (typeof initializeHeaderFeatures === 'function') {
           initializeHeaderFeatures(); // Ensure features are initialized
         } else {
@@ -81,7 +81,11 @@
       <img src="assets/img/bg.jpeg" alt="" data-aos="fade-in" style="filter: brightness(50%);">
 
       <div class="container" data-aos="zoom-out" data-aos-delay="100">
-        <h2>男神你好美</h2>
+        <h2>
+          <a href="index.html" style="text-decoration: none; color: inherit;">
+            男神你好美
+          </a>
+        </h2>
         <p><span class="typed" data-typed-items="别让等待 成为遗憾, 常回家看看"></span><span
             class="typed-cursor typed-cursor--blink"></span></p>
         <div class="social-links">
@@ -140,36 +144,36 @@
 
   <div id='aplayer'></div>
   <script>
-      var ap = new APlayer({
-          element: document.getElementById('aplayer'),
-          showlrc: true,
-          fixed: true,
-          mini: true,
-          audio: [
-              {
-                  title: '十年人间',
-                  author: '李常超',
-                  url: 'https://haoyanzheng.github.io/assets/music/十年人间.mp3',
-                  lrc: 'https://haoyanzheng.github.io/assets/music/十年人间.lrc',
-                  pic: 'https://haoyanzheng.github.io/assets/music/十年人间.jpg'
-              },
-              {
-                title: '天下',
-                  author: '王杰',
-                  url: 'https://haoyanzheng.github.io/assets/music/天下.mp3',
-                  lrc: 'https://haoyanzheng.github.io/assets/music/天下.lrc',
-                  pic: 'https://haoyanzheng.github.io/assets/music/天下.jpg'
-              },
-              {
-                  title: '',
-                  author: '',
-              }
-          ],
-          lrcType: 3
-      });
-      ap.init();
+    var ap = new APlayer({
+      element: document.getElementById('aplayer'),
+      showlrc: true,
+      fixed: true,
+      mini: true,
+      audio: [
+        {
+          title: '十年人间',
+          author: '李常超',
+          url: 'https://haoyanzheng.github.io/assets/music/十年人间.mp3',
+          lrc: 'https://haoyanzheng.github.io/assets/music/十年人间.lrc',
+          pic: 'https://haoyanzheng.github.io/assets/music/十年人间.jpg'
+        },
+        {
+          title: '天下',
+          author: '王杰',
+          url: 'https://haoyanzheng.github.io/assets/music/天下.mp3',
+          lrc: 'https://haoyanzheng.github.io/assets/music/天下.lrc',
+          pic: 'https://haoyanzheng.github.io/assets/music/天下.jpg'
+        },
+        {
+          title: '',
+          author: '',
+        }
+      ],
+      lrcType: 3
+    });
+    ap.init();
   </script>
-  
+
 
   <!-- 弹幕必备的div -->
   <div class="dwn-dm-bottom" id="dwn-dm-bottom"></div>
