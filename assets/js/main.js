@@ -104,29 +104,56 @@
     document.addEventListener("scroll", toggleScrolled);
     window.addEventListener("load", toggleScrolled);
 
-    // Mobile nav toggle (applies to all headers)
-    document.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.body.classList.toggle('mobile-nav-active');
-        btn.classList.toggle('bi-list');
-        btn.classList.toggle('bi-x');
-      });
-    });
-    // Hide mobile nav on link click & handle dropdowns
-    document.querySelectorAll('nav.navmenu a').forEach(link => {
-      link.addEventListener('click', e => {
-        const dropdownLi = link.closest('li.dropdown');
-        if (dropdownLi && link.getAttribute('href') === '#') {
+    /**
+     * Mobile nav toggle
+     */
+    const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
+    function mobileNavToggle() {
+      document.querySelector("body").classList.toggle("mobile-nav-active");
+      if (mobileNavToggleBtn) {
+        mobileNavToggleBtn.classList.toggle("bi-list");
+        mobileNavToggleBtn.classList.toggle("bi-x");
+      }
+    }
+    if (mobileNavToggleBtn) {
+      mobileNavToggleBtn.addEventListener("click", mobileNavToggle);
+    }
+
+    // Hide mobile nav on same-page/hash links
+    document.querySelectorAll("#navmenu a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const parentLi = link.closest("li");
+
+        // Is it the top-level dropdown item? (Notes)
+        // Check two things:
+        //  1) It's in an <li class="dropdown">
+        //  2) Its href is "#" (dummy link)
+        if (
+          parentLi &&
+          parentLi.classList.contains("dropdown") &&
+          link.getAttribute("href") === "#"
+        ) {
+          // Prevent navigation and toggle
           e.preventDefault();
-          dropdownLi.classList.toggle('active');
-          dropdownLi.querySelector('ul')
-            .classList.toggle('dropdown-active');
-        } else if (document.body.classList.contains('mobile-nav-active')) {
-          document.body.classList.remove('mobile-nav-active');
-          document.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
-            btn.classList.add('bi-list');
-            btn.classList.remove('bi-x');
-          });
+          parentLi.classList.toggle("active");
+
+          // Show/hide the nested <ul>
+          const subMenu = parentLi.querySelector("ul");
+          if (subMenu) subMenu.classList.toggle("dropdown-active");
+
+        } else {
+          // Otherwise, it's either a normal top-level link 
+          // or a sub-item link within the dropdown
+          // => let it navigate, but close mobile nav if open
+          if (document.querySelector(".mobile-nav-active")) {
+            // close mobile nav
+            document.querySelector("body").classList.remove("mobile-nav-active");
+            const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
+            if (mobileNavToggleBtn) {
+              mobileNavToggleBtn.classList.add("bi-list");
+              mobileNavToggleBtn.classList.remove("bi-x");
+            }
+          }
         }
       });
     });
