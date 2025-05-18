@@ -39,8 +39,6 @@
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://afeld.github.io/bootstrap-toc/bootstrap-toc.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
   <script>
     // Initialize syntax highlighting
     hljs.highlightAll();
@@ -71,7 +69,7 @@
       }
     });
   </script>
-
+  
   <!-- Main Content
        Use a standard .container to limit width, plus some top margin so content doesn't hide under the fixed header.
        (Alternatively, you can do .mt-5 pt-5 or a custom style.)
@@ -88,208 +86,8 @@
 
         <!-- Content Section -->
         <main class="col-md-9">
-          <h1 id="-esc190-lecture-notes"></h1>
-
-          <h1 id="-relationships"><a
-              href="https://learn.oracle.com/ols/course/mysql-80-for-database-administrators/88356/88858">MySQL 8.0
-              Database Admin Professional</a></h1>
-          <h1 id="M2">2. Installing and Upgrading MySQL</h1>
-          <h2 id="M2.1">2.1 Installing and Upgrading MySQL</h2>
-
-          Installing MySQL form Downloaded Packages
-          RPM: red hat package manager: rpm -ivh packagename.rpm
-          APT: advanced packaging tools: dpkg -i packagename.deb
-
-          Required packages: Server, common, client
-          Optional packages: Devel, embedded-compat, libs, libs-compat, test, router
-
-          Installating on DEB: sudo dpkg -i mysql-{common, community-client, client, community-server, server}_*deb
-          Starting service for first time on RPM: service mysqld start or systemctl
-
-          Installing using package manager
-          RPM:
-          yum install mysql-community-server
-          yum install mysql-workbench
-          APT:
-          apt-get install mysql-community-server
-          apt-get install mysql-workbench
-
-          Adding yum repository
-          yum localinstall mysql180-community-release-e17-3.noarch.rpm
-
-          Adding apt repository
-          dpkg -i mysql-apt-config_0.8.12-1-all.deb
-
-          Quiz - Which method must you create data directory manually?
-          1. Binary Archive installation for Linux (installation from source code) - Yes
-          2. DEB installation for Linux - Automatic
-          3. MySQL installer for Windows - Automatic
-          4. RPM installation for Linux - Automatic
-
-          Linux
-          /var/lib/MySQL:
-          /usr/sbin: mysqld server
-          /usr/bin: MySQL and other client programs and scripts
-          /var/lib/mysql-files
-          /etc: my.cnf configuration
-          /var/log/MySQL: mysqld.log erorr log
-          /usr/lib/systemd/system: mysqld.service single instance systemd startup script, mysqld@.service multi-instance
-          systemd startup script
-          /var/lib/mysql-keyring
-
-          MySQLd: server process, can be launched manually to debug server
-          $ mysqld --user=MySQL --datadir=/var/lib/MySQL --socket=/tmp/MySQL.sock
-
-          Installation programs:
-          mysql_secure_installation: security program that enables initial secure configuration
-          mysql_tzinfo_to_sql: create sql script containing host's time zone information
-          mysql_upgrade: automatically verifies database contents and verify compatibility with current SQL version
-
-          Utility programs:
-          mysql_config_editor: Manages login paths to simplify connection from command-line clients to MySQL server
-          store user, password, host options in option file .Mylogin.cnf
-          # MySQL --login-path=admin or # MySQL -L=admin
-
-          mysqlbinlog: reads and replays contents of binary log (used for system recovery)
-          mysqldumpslow: reads and summarizes contents of slow query log (see loading time)
-          MySQL_ssl_rsa_setup: creates TLS keys and certificates
-          ibd2sdi: extracts serialized dictionary information (SDI) from InnoDB tablespace files
-
-          Command-line client programs:
-          MySQL
-          mysqladmin
-          mysqldump
-          mysqlimport
-          mysqlslap: emulation
-          mysqlshow
-          mysqlcheck
-          mysqlsh
-
-          MAC: mandatory access control
-
-          change password: # MySQL --user=root --password
-
-          Quiz - Which is valid to change password?
-          1. specify a new password in /etc/my.cnf (Linux) or my.ini(Windows) - not perferable, needs to be hard coded
-          2. Issue a mysqladmin ... password command at the command line - Yes
-          3. launch MySQL with MySQL --initialize command - No
-          4. log into MySQL with ALTER USER - Yes
-
-          Quiz 2:
-          mysql_config_editor:
-          1. enables users to store authentication credentials in the .mylogin.cnf file
-          2. manages login paths to connect command-line clients to MySQL server
-
-          Skill Check:
-          # systemctl enable MySQL.service:
-          makes mysqld start automatically at reboot
-
-          # lm -s/opt/mysql* /usr/local/MySQL:
-          create symbolic link to extracted directory of SQL
-
-          RPM installation process:
-          1. registers system startup scripts for MySQL services
-          2. sets up MySQL user and group in OS
-
-          mysqladmin -uroot -p -shutdown: stop MySQL server
-          mysqladmin --login-path=admin shutdown: stop MySQL server using admin login path
-          mysqladmin -uroot -p flush-hosts: flushes all infomraiton in host cache
-          mysqladmin -uroot -p stop-slave: stop replication slave process
-
-          pid-file=/var/run/MySQLd/MySQL.pid: specifies locaton of PID file
-          export PATH=$PATH:/usr/local/MySQL/bin: add to ~/.bashrc to include /usr/local/MySQL/bin in executable search
-          path
-          ExecStart=/usr/local/MySQL/bin -- defaultsfile = etc/my.cnf --daemonize:
-
-          <h1 id="M3">3. Understanding MySQL Architecture</h1>
-          <h2 id="M3.1">3.1 Understanding MySQL Architecture</h2>
-
-          <div class="text-center">
-            <img src="assets/img/coursera/Admin Professional/Architecture.png" alt="Sociological Theories"
-              class="img-fluid mb-3">
-            <p class="text-muted">Figure 1: Architecture</p>
-          </div>
-
-          <h2 id="M1.8">Module 1.8 N3C: Characteristics</h2>
-          <div class="card">
-            <div class="card-header bg-primary text-white">
-              Terminology
-            </div>
-            <div class="card-body">
-              <ol type="1">
-                <li><strong>Host: </strong> physical machine or virtual machine including hardware configuration, OS,
-                  and network address.
-                </li>
-                <li><strong>MySQL Server Software: </strong> mysqld, server number and features
-                </li>
-                <li><strong>MySQL server instance:</strong> a mysqld server process that manages data directory
-                  (multiple instances can run on single host)
-                </li>
-              </ol>
-            </div>
-          </div>
-
-          Local and Remote protocol: TCP/IP: Transmission Control Protocol/ Internet Protocol
-          Default TCP port number: 3306 for MySQL classic protocol (server port)
-          33060: MySQL X Protocol (server mysqlx_port)
-          33062: Administrative connection using MySQL classic protocol (server admin_port)
-          Example:
-          <pre><code class="language-sql">mysql --host=mysqlhost1 --user=root --password
-</code></pre>
-          Shortened version: -h for host, -P for port number, -p for password
-          <pre><code class="language-sql">mysql -h 192.168.1.8 -P 3309 -uroot -p 
-</code></pre>
-
-          Local protocol in Linux: --socket
-          Inter-process communication, form one end of a bidirectional commmunuication link between 2 processes on the
-          same machine.
-          server creates a socket file on the local system with socket and mysqlx_socket options
-          Best connection type for Linux
-          Example using /var/lib/mysql/mysql.sock:
-          <pre><code class="language-sql">mysql -S /var/lib/mysql/mysql.sock -uroot -p
-</code></pre>
-          Example using default socket file /tmp/mysql.sock:
-          <pre><code class="language-sql">mysql -uroot -p
-</code></pre>
-          If no host specified, mysql assumes -h localhost when you specify --host=hostname except when
-          --host=localhost, IP address for connection is 127.0.0.1 or ::1
-          Example: specify TCP explicitly:
-          <pre><code class="language-sql">mysql -h localhost --protocol=tcp -uroot -p
-</code></pre>
-          Example: specify localhost IPP explicitly:
-          <pre><code class="language-sql">mysql -h 127.0.0.1 -uroot -p
-            mysql -h ::1 -uroot -p
-</code></pre>
-          MySQL assumes TCP protocol
-
-          Local 
-          <div class="text-center">
-            <img src="assets/img/coursera/Admin Professional/Server_Process.png" alt="Sociological Theories"
-              class="img-fluid mb-3">
-            <p class="text-muted">Figure 2: Connection Layer</p>
-          </div>
-
-          <div class="text-center">
-            <img src="assets/img/coursera/Admin Professional/Connection_Protocols.png" alt="Sociological Theories"
-              class="img-fluid mb-3">
-            <p class="text-muted">Figure 3: Connection Protocols</p>
-          </div>
-
-
-
-          <h1 id="M4">4. Configuring MySQL</h1>
-          <h1 id="M5">5. Monitoring MySQL</h1>
-          <h1 id="M6">6. Managing MySQL Users</h1>
-          <h1 id="M7">7. Securing MySQL</h1>
-          <h1 id="M8">8. Maintaining a Stable System</h1>
-          <h1 id="M9">9. Optimizing Query Performance</h1>
-          <h1 id="M10">10. Choosing a Backup Strategy</h1>
-          <h1 id="M11">11. Performing Backups</h1>
-          <h1 id="M12">12. Configuring a Replication Topology</h1>
-          <h1 id="M13">13. Administering a Replication Topology</h1>
-          <h1 id="M14">14. Achieving High Availability with MySQL InnoDB Cluster</h1>
-
-
+          <h1 id="-esc190-lecture-notes">MySQL 8.0 Database Admin Professional</h1>
+          
 </body>
 <br><br><br><br><br>
 
