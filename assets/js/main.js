@@ -26,20 +26,21 @@
    * Load the header from an external file (header.html)
    */
   async function loadHeader() {
-    // pick whichever placeholder exists
-    const placeholder = document.querySelector('#header') || document.querySelector('#headerme');
-    if (!placeholder) return;
+    // 1) detect the header placeholder
+    const headerElem = document.querySelector('#header') || document.querySelector('#headerme');
+    if (!headerElem) return;
 
-    // choose which file to fetch
-    const file = placeholder.id === 'headerme' ? 'headerme.html' : 'header.html';
+    // 2) pick the right file to fetch
+    const fileToLoad = headerElem.id === 'headerme' ? 'headerme.html' : 'header.html';
 
     try {
-      const response = await fetch(file);
-      if (!response.ok) throw new Error(`Failed to load ${file}: ${response.statusText}`);
+      const response = await fetch(fileToLoad);
+      if (!response.ok) throw new Error(`Failed to load ${fileToLoad}: ${response.statusText}`);
       const headerHTML = await response.text();
-      placeholder.outerHTML = headerHTML;
+
+      // 3) inject & initialize
+      headerElem.outerHTML = headerHTML;
       initializeHeaderFeatures();
-      initIsotopeLayout();
     } catch (error) {
       console.error('Error loading header:', error);
     }
@@ -91,7 +92,7 @@
      */
     function toggleScrolled() {
       const selectBody = document.querySelector("body");
-      const selectHeader = document.querySelector('#header') || document.querySelector('#headerme');
+      const selectHeader = document.querySelector("#header");
       if (
         !selectHeader.classList.contains("scroll-up-sticky") &&
         !selectHeader.classList.contains("sticky-top") &&
@@ -104,7 +105,9 @@
     document.addEventListener("scroll", toggleScrolled);
     window.addEventListener("load", toggleScrolled);
 
-    // Mobile nav toggle (applies to all headers)
+    /**
+     * Mobile nav toggle (applies to all headers)
+     */
     document.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
       btn.addEventListener('click', () => {
         document.body.classList.toggle('mobile-nav-active');
@@ -112,6 +115,7 @@
         btn.classList.toggle('bi-x');
       });
     });
+
     // Hide mobile nav on link click & handle dropdowns
     document.querySelectorAll('nav.navmenu a').forEach(link => {
       link.addEventListener('click', e => {
