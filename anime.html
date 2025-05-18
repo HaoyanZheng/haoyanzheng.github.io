@@ -54,6 +54,25 @@
   <!-- Header dynamically loaded -->
   <header id="headerme" class="header d-flex align-items-center fixed-top"></header>
 
+  <!-- Load header and initialize features -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('headerme.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#headerme').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
+    });
+  </script>
+
   <main class="main">
 
     <!-- Hero Section -->

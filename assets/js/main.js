@@ -26,21 +26,17 @@
    * Load the header from an external file (header.html)
    */
   async function loadHeader() {
-    // 1) detect the header placeholder
-    const headerElem = document.querySelector('#header') || document.querySelector('#headerme');
-    if (!headerElem) return;
-
-    // 2) pick the right file to fetch
-    const fileToLoad = headerElem.id === 'headerme' ? 'headerme.html' : 'header.html';
-
     try {
-      const response = await fetch(fileToLoad);
-      if (!response.ok) throw new Error(`Failed to load ${fileToLoad}: ${response.statusText}`);
+      const response = await fetch('header.html');
+      if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
       const headerHTML = await response.text();
+      document.querySelector('#header').outerHTML = headerHTML;
 
-      // 3) inject & initialize
-      headerElem.outerHTML = headerHTML;
+      // Initialize header-related features
       initializeHeaderFeatures();
+
+      // Initialize Isotope after the header is loaded
+      initIsotopeLayout();
     } catch (error) {
       console.error('Error loading header:', error);
     }
