@@ -27,7 +27,11 @@
    */
   async function loadHeader() {
     try {
-      const response = await fetch('header.html');
+      // pick the right header file based on page
+      const headerFile = document.body.classList.contains('anime-page')
+        ? 'headerme.html'
+        : 'header.html';
+      const response = await fetch(headerFile);
       if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
       const headerHTML = await response.text();
       document.querySelector('#header').outerHTML = headerHTML;

@@ -54,25 +54,6 @@
   <!-- Header dynamically loaded -->
   <header id="header" class="header d-flex align-items-center fixed-top"></header>
 
-  <!-- Load header and initialize features -->
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const r = await fetch('headerme.html');
-      const html = await r.text();
-      document.querySelector('#header').outerHTML = html;
-
-      // re‑attach mobile toggle handler
-      document.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
-        btn.addEventListener('click', e => {
-          document.body.classList.toggle('mobile-nav-active');
-          btn.classList.toggle('bi-list');
-          btn.classList.toggle('bi-x');
-        });
-      });
-    });
-  </script>
-
-
   <!-- Main JS File -->
   <script src="assets/js/main.js" defer></script>
 
