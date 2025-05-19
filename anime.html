@@ -52,29 +52,26 @@
   <script language="javascript" src="assets/js/time.js"></script>
 
   <!-- Header dynamically loaded -->
-  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+  <header id="headerme" class="header d-flex align-items-center fixed-top"></header>
 
   <!-- Load header and initialize features -->
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      const r = await fetch('headerme.html');
-      const html = await r.text();
-      document.querySelector('#header').outerHTML = html;
-
-      // re‑attach mobile toggle handler
-      document.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
-        btn.addEventListener('click', e => {
-          document.body.classList.toggle('mobile-nav-active');
-          btn.classList.toggle('bi-list');
-          btn.classList.toggle('bi-x');
-        });
-      });
+      try {
+        const response = await fetch('headerme.html');
+        if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
+        const headerHTML = await response.text();
+        document.querySelector('#headerme').outerHTML = headerHTML;
+        if (typeof initializeHeaderFeatures === 'function') {
+          initializeHeaderFeatures(); // Ensure features are initialized
+        } else {
+          console.error('initializeHeaderFeatures is not defined.');
+        }
+      } catch (error) {
+        console.error('Error loading header:', error);
+      }
     });
   </script>
-
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js" defer></script>
 
   <main class="main">
 
@@ -130,6 +127,9 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js" defer></script>
 
   <!-- 底部 -->
   <!-- Vendor JS Files -->
