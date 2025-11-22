@@ -2,6 +2,8 @@ title: "Haoyan's Blog"
 description: "Daily French news & notes"
 theme: minima
 
-# 让 blog 在 /blog 路径下
-baseurl: "/blog"
 url: "https://haoyanzheng.github.io"
+baseurl: ""   # 这里改成空，不要 "/blog"
+
+# 所有文章固定生成到 /blog/年/月/日/标题.html
+permalink: /blog/:year/:month/:day/:title.html
