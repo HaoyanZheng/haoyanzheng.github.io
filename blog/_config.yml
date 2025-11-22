@@ -1,0 +1,7 @@
+title: "Haoyan's Blog"
+description: "Daily French news & notes"
+theme: minima
+
+# 让 blog 在 /blog 路径下
+baseurl: "/blog"
+url: "https://haoyanzheng.github.io"
