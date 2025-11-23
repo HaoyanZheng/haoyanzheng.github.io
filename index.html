@@ -50,7 +50,7 @@
 
   <!--显示运行时间-->
   <script language="javascript" src="assets/js/time.js"></script>
-  
+
   <!-- Header dynamically loaded -->
   <header id="header" class="header d-flex align-items-center fixed-top"></header>
 
@@ -105,12 +105,36 @@
               class="bi bi-envelope"></i></a>
         </div>
         <!-- Add the Resume Box -->
-        <div style="margin-top: 20px;">
-          <a href="assets/resume.pdf" target="_blank"
-            style="display: inline-block; background-color: #000000; color: #ffffff; text-decoration: none; padding: 25px 50px; font-size: 16px; font-weight: bold; border-radius: 5px;">
+        <div style="
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+">
+          <!-- Primary -->
+          <a href="assets/resume.pdf" target="_blank" style="
+      display:inline-block; background:#000; color:#fff;
+      text-decoration:none; padding:18px 40px;
+      font-size:18px; font-weight:600; border-radius:8px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);
+      transition:transform 0.15s ease, box-shadow 0.15s ease;
+     ">
             Resume >>
           </a>
+
+          <!-- Secondary / Outline -->
+          <a href="/blog/" target="_blank" style="
+      display:inline-block; background:#fff; color:#000;
+      text-decoration:none; padding:18px 40px;
+      font-size:18px; font-weight:600; border-radius:8px;
+      border:2px solid #000;
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+      transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+     ">
+            News >>
+          </a>
         </div>
+
       </div>
     </section>
 
