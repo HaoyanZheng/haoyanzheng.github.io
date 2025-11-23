@@ -1,7 +1,5 @@
 ---
 layout: home
-title: "Blog"
+title: "每日关注天下大事。运筹帷幄之中，决胜千里之外。"
 permalink: /blog/
 ---
-
-这里是我的每日法语新闻 + 笔记。
