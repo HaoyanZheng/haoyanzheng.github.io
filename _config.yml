@@ -11,4 +11,4 @@ permalink: /blog/:year/:month/:day/:title.html
 # ⬇⬇⬇ 新增这一段：告诉主题，导航栏要显示哪些“主页面”
 header_pages:
   - blog/news.md   # /news/，显示新闻类文章
-  - blog/tcfx.md   # /tcfx/，显示 TCF 备考文章
+  - blog/tcf.md   # /tcf/，显示 TCF 备考文章
