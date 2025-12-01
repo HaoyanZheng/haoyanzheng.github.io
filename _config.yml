@@ -3,7 +3,12 @@ description: "Daily French Channel 2 news & notes"
 theme: minima
 
 url: "https://haoyanzheng.github.io"
-baseurl: ""   # 这里改成空，不要 "/blog"
+baseurl: ""   # 保持空
 
-# 所有文章固定生成到 /blog/年/月/日/标题.html
+# 文章网址还是走 /blog/年/月/日/标题.html，不影响你有多个“主页面”
 permalink: /blog/:year/:month/:day/:title.html
+
+# ⬇⬇⬇ 新增这一段：告诉主题，导航栏要显示哪些“主页面”
+header_pages:
+  - blog/news.md   # /news/，显示新闻类文章
+  - blog/tcfx.md   # /tcfx/，显示 TCF 备考文章
