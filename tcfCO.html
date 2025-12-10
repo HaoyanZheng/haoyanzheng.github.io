@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <title>TCF – Compréhension orale</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark">
     <style>
         * {
             box-sizing: border-box;
@@ -143,7 +144,41 @@
 
         .question-text {
             margin-bottom: 16px;
-            font-size: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.9);
+            /* 深色卡片 */
+            max-height: 260px;
+            /* 文字太长时内部滚动 */
+            overflow-y: auto;
+            white-space: normal;
+            /* 交给 JS 分段，不再用 pre-line */
+        }
+
+        /* 每句法语 */
+        .qt-fr {
+            font-size: 16px;
+            line-height: 1.7;
+            font-weight: 500;
+            color: #e5e7eb;
+            margin-bottom: 2px;
+        }
+
+        /* 对应的中文翻译 */
+        .qt-cn {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+
+        /* 最后一组（题干）额外强调：上面加一条线、稍微加粗 */
+        .qt-question {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(148, 163, 184, 0.5);
+            font-weight: 600;
+            color: #f9fafb;
         }
 
         .choices {
@@ -154,6 +189,8 @@
         }
 
         .choice {
+            font-size: 15px;
+            line-height: 1.6;
             border: 1px solid #d0d7e2;
             border-radius: 24px;
             padding: 10px 14px;
@@ -278,6 +315,95 @@
             white-space: pre-line;
             /* ← 加这一行 */
         }
+
+        /* ---- Dark mode 自动样式：跟随系统夜间模式 ---- */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #060814;
+                color: #e5e7eb;
+            }
+
+            .topbar {
+                background: #0b3a7a;
+                color: #e5e7eb;
+            }
+
+            .page-wrap {
+                background: #111827;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+            }
+
+            .exam-hero-text {
+                color: #d1d5db;
+            }
+
+            .exam-card {
+                background: #111827;
+                border-color: #2563eb;
+            }
+
+            .exam-card:hover {
+                background: #1f2937;
+                box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9);
+            }
+
+            .exam-card-label {
+                color: #bfdbfe;
+            }
+
+            .exam-card-sub {
+                color: #9ca3af;
+            }
+
+            .question-text {
+                color: #e5e7eb;
+            }
+
+            .choice {
+                background: #0b1120;
+                border-color: #374151;
+                color: #e5e7eb;
+            }
+
+            .choice.selected {
+                background: #1e3a8a;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.7);
+            }
+
+            .btn {
+                background: #1e3a8a;
+                color: #e5e7eb;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+            }
+
+            .btn:disabled {
+                background: #1f2937;
+                color: #6b7280;
+                box-shadow: none;
+            }
+
+            .index-title {
+                color: #9ca3af;
+            }
+
+            .index-btn {
+                background: #0b1120;
+                border-color: #374151;
+                color: #e5e7eb;
+            }
+
+            .index-btn.active {
+                background: #2563eb;
+                border-color: #3b82f6;
+                color: #f9fafb;
+            }
+
+            .index-btn.answered {
+                background: #064e3b;
+                border-color: #22c55e;
+            }
+        }
     </style>
 </head>
 
@@ -350,319 +476,947 @@
                         id: 1,
                         audio: "assets/tcfCO/T1Q1.wav",
                         text: `Écoutez les 4 propositions, choisissez celle qui correspond à l'image.
-                        听四个选项，选择与图片相符的一项。`,
+                               听四个选项，选择与图片相符的一项。`,
                         choices: [
-                            "Asseyez-vous. Je vous en prie.\n坐吧，您内。"
+                            `Asseyez-vous. Je vous en prie.
+                            坐吧，您内。`
                         ]
                     },
                     {
                         id: 2,
                         audio: "assets/tcfCO/T1Q2.wav",
-                        text: "Écoutez les 4 propositions, choisissez celle qui correspond à l'image.\n听四个选项，选择与图片相符的一项。",
+                        text: `Écoutez les 4 propositions, choisissez celle qui correspond à l'image.
+                               听四个选项，选择与图片相符的一项。`,
                         choices: [
-                            "Vous pouvez laisser vos bagages là.\n你可以把你行李放那儿。"
+                            `Vous pouvez laisser vos bagages là.
+                            你可以把你行李放那儿。`
                         ]
                     },
                     {
                         id: 3,
                         audio: "assets/tcfCO/T1Q3.wav",
-                        text: "Comment allez-vous à votre travail ?\n您怎么去上班？",
+                        text: `Comment allez-vous à votre travail ?
+                        您怎么去上班？`,
                         choices: [
-                            "A pied.\n走着去。"
+                            `A pied.
+                            走着去。`
                         ]
                     },
                     {
                         id: 4,
                         audio: "assets/tcfCO/T1Q4.wav",
-                        text: "Je ne sais pas utiliser la photocopieuse. Tu peux m'aider ?\n我不儿道这打印机咋使，救救！",
+                        text: `Je ne sais pas utiliser la photocopieuse. Tu peux m'aider ?
+                               我不儿道这打印机咋使，救救！`,
                         choices: [
-                            "Regarde, je vais te montrer.\n看我操作！"
+                            `Regarde, je vais te montrer.
+                            看我操作！`
                         ]
                     },
                     {
                         id: 5,
                         audio: "assets/tcfCO/T1Q5.wav",
-                        text: "Cette année, c'est décidé. Nous allons faire du ski pendant les vacances de noël. Tu nous accompagnes ?\n今年决定好了。我们圣诞节假期去滑雪。你来一起不？",
+                        text: `Cette année, c'est décidé.
+                        今年决定好了。
+                        Nous allons faire du ski pendant les vacances de noël.
+                        我们圣诞节假期去滑雪。
+                        Tu nous accompagnes ?
+                        你来一起不？`,
                         choices: [
-                            "Bonne idée. J'adore la neige.\n主意真棒。我喜欢雪。"
+                            `Bonne idée. J'adore la neige.
+                            主意真棒。我喜欢雪。`
                         ]
                     },
                     {
                         id: 6,
                         audio: "assets/tcfCO/T1Q6.wav",
-                        text: "Salut Sylvie, ça va ? Tu as l'air fatiguée. Quand est-ce que tu pars en vacances ?\n哟，希尔维亚，最近咋样？你看着累了。啥时候去度假？",
+                        text: `Salut Sylvie, ça va ?
+                        哟，希尔维亚，最近咋样？
+                        Tu as l'air fatiguée. 
+                        你看着累了。
+                        Quand est-ce que tu pars en vacances ?
+                        啥时候去度假？`,
                         choices: [
-                            "J'ai mon vol mardi prochain.\n我下周三的飞机。"
+                            `J'ai mon vol mardi prochain.
+                            我下周三的飞机。`
                         ]
                     },
                     {
                         id: 7,
                         audio: "assets/tcfCO/T1Q7.wav",
-                        text: "Qui a écrit ce roman policier ?\n此侦探书乃何人所作？",
+                        text: `Qui a écrit ce roman policier ?
+                        此侦探书乃何人所作？`,
                         choices: [
-                            "C'est un jeune auteur.\n一个年轻作家。"
+                            `C'est un jeune auteur.
+                            一个年轻作家。`
                         ]
                     },
                     {
                         id: 8,
                         audio: "assets/tcfCO/T1Q8.wav",
-                        text: "Pour le souper de ce soir avec tes parents, qu'est-ce que tu penses d'un poulet aux champignons?\n今晚和你父母一起吃晚饭，蘑菇鸡你觉得怎么样？",
+                        text: `Pour le souper de ce soir avec tes parents, qu'est-ce que tu penses d'un poulet aux champignons?
+                        今晚和你父母一起吃晚饭，蘑菇鸡你觉得怎么样？`,
                         choices: [
-                            "Ce sera parfait avec du riz.\n就着米饭一起吃，味儿真足！"
+                            `Ce sera parfait avec du riz.
+                            就着米饭一起吃着得劲儿，喝着爽，味儿真足！`
                         ]
                     },
                     {
                         id: 9,
                         audio: "assets/tcfCO/T1Q9.wav",
-                        text: "Bonjour, monsieur. Vous pouvez m'aider, s'il vous plaît ? Je cherche une boîte pour poster ce courrier. Ah, allez à la poste. C'est à gauche, juste après le cinéma. Ou alors, il y en a une de l'autre côté, près du métro, en face de la pharmacie. Ah, parfait. Merci. Que veut faire cette femme ? 您好，先生。您能帮我一下吗？我在找一个邮筒来寄这封信。啊，去邮局吧。在左边，就在电影院后面。或者，在另一边，在地铁旁边，对面是药店，那儿也有一个。啊，太好了，谢谢。这位女士想做什么？",
+                        text: `Bonjour, monsieur. Vous pouvez m'aider, s'il vous plaît ?
+                        您好，先生。您能帮我一下吗？
+                        Je cherche une boîte pour poster ce courrier.
+                        我在找一个邮筒来寄这封信。
+                        Ah, allez à la poste. C'est à gauche, juste après le cinéma.
+                        啊，去邮局吧。在左边，就在电影院后面。
+                        Ou alors, il y en a une de l'autre côté, près du métro, en face de la pharmacie.
+                        或者，在另一边，在地铁旁边，对面是药店，那儿也有一个。
+                        Ah, parfait. Merci. 
+                        啊，太好了，谢谢。
+                        Que veut faire cette femme ?
+                        这位女士想做什么？`,
                         choices: [
-                            ""
+                            `Envoyer une lettre.
+                            寄信。`
                         ]
                     },
                     {
                         id: 10,
                         audio: "assets/tcfCO/T1Q10.wav",
-                        text: "",
+                        text: `Salut Laura. Tu fais un drôle de tête. Tu ne te sens pas bien ?
+                        嗨，劳拉。你脸色怪怪的。你感觉不舒服吗？
+                        Non. Je pense que je n'ai pas réussi mon examen d'histoire. Je n'ai pas pu réviser. 
+                        不。我觉得我历史考试没考好。我没能复习。
+                        Samedi, je suis allée au cinéma et dimanche, j'ai joué au tennis. 
+                        星期六我去看了电影，星期天我打了网球。
+                        Tu pouvais travailler le soir. 
+                        你本来可以在晚上学习的。
+                        Mais j'étais beaucoup trop fatiguée. 
+                        但我实在太累了。
+                        De quoi Laura a-t-elle peur ?`,
                         choices: [
-                            ""
+                            `D'avoir une mauvaise note.
+                            怕自己得一个坏分数。`
                         ]
                     },
                     {
                         id: 11,
                         audio: "assets/tcfCO/T1Q11.wav",
-                        text: "",
+                        text: `Léo, comment ça va depuis que tu es dans ta nouvelle maison ?
+                               莱奥，自从你搬进新家以后，怎么样？
+                               Ça va, ça va, mais je n'ai pas encore internet.
+                               还行还行，但是我现在还没有上网。
+                               Mince alors ! Et est-ce que ton téléphone fixe marche, au moins ?
+                               哎呀，那可糟了！那你的座机电话至少能用吗？
+                               Oui, mais je n'en ai pas vraiment besoin. Je viens de m'acheter un ordinateur tout neuf, mais sans internet. Je ne peux pas travailler et contacter mes clients.
+                               能用，但我其实不太需要它。我刚给自己买了一台全新的电脑，但是没有网络，我没办法工作，也没办法联系我的客户。
+                               Je comprends. Tu as vu quelqu'un pour arranger ça ?
+                               我明白。你有找人来解决这件事吗？
+                               Qu'est-ce qui est difficile pour Léo ?
+                               对莱奥来说，什么事很困难？`,
                         choices: [
-                            ""
+                            `La communication avec ses clients.
+                             和客户联系这件事。`
                         ]
                     },
                     {
                         id: 12,
                         audio: "assets/tcfCO/T1Q12.wav",
-                        text: "",
+                        text: `Ça te dirait d'aller voir Liberté ce soir ? La séance est à 20h.
+                        今晚去看《自由》这部片子怎么样？这一场是晚上八点。 
+                        D'accord, mais pas à 20h. C'est l'heure où je quitte le travail. 
+                        好啊，不过不能八点，那是我下班的时间。 
+                        Allons voir Séraphine alors. Il passe à 21h. 
+                        那就去看《塞拉芬》吧，它是九点开场。
+                        Je l'ai déjà vue. 
+                        我已经看过了。 
+                        Et pourquoi pas l'arbre ? 
+                        那要不要看《那棵树》？
+                        Il n'est pas encore sorti.
+                        它还没上映呢。
+                        De quoi parlent ces deux personnes ?
+                        这两个人在谈什么？`,
                         choices: [
-                            ""
+                            `De cinéma.
+                            关于电影。`
                         ]
                     },
                     {
                         id: 13,
                         audio: "assets/tcfCO/T1Q13.wav",
-                        text: "",
+                        text: `Allô, bonjour, M. Didier à l'appareil. 
+                        喂，您好，这里是迪迪耶先生。 
+                        Je téléphone au sujet de la livraison des articles dont la référence est 433JS.
+                        我打电话是关于编号为433JS的那些商品的送货事宜。 
+                        S'il n'est pas trop tard, j'aimerais ajouter deux ordinateurs supplémentaires.
+                        如果还不算太晚的话，我想再加两台电脑。 
+                        Il n'y a aucun problème, ce sera fait.
+                        完全没问题，会照办的。 
+                        Pourquoi M. Didier appelle-t-il ? 
+                        迪迪耶先生为什么打电话？`,
                         choices: [
-                            ""
+                            `Pour modifier une commande.
+                            为了修改一份订单。`
                         ]
                     },
                     {
                         id: 14,
                         audio: "assets/tcfCO/T1Q14.wav",
-                        text: "",
+                        text: `Bonjour. Votre professeur de mathématiques a téléphoné. 
+                        你好。你们的数学老师打了电话。
+                        Il a un problème personnel et ne viendra pas aujourd'hui. 
+                        他有个人原因，今天不会来上课。
+                        Il sera là pour votre prochain cours vendredi après-midi de 14h30 à 17h30. 
+                        他会在你们下一节课时来，也就是周五下午2点半到5点半。
+                        Je reste avec vous dans la salle jusqu'à 10h.
+                        我会和你们一起在教室里待到10点。
+                        Faites ce que vous voulez, mais en silence. 
+                        你们想做什么都可以，但必须保持安静。
+                        Qu'apprennent les élèves de cette classe ?
+                        这个班的学生得知了什么？
+                        `,
                         choices: [
-                            ""
+                            `L'annulation d'un cours.
+                            一节课被取消。`
                         ]
                     },
                     {
                         id: 15,
                         audio: "assets/tcfCO/T1Q15.wav",
-                        text: "",
+                        text: `Bonjour Anne-Marie. Bonjour Nicolas.
+    你好，安娜-玛丽。你好，尼古拉。
+    Vous êtes de Limoges ; vous habitez là, mais vous êtes en vacances ici en Auvergne.
+    您们来自利摩日，平时住在那里，现在在奥弗涅这边度假。
+    Absolument.
+    对，没错。
+    Ça vous arrive souvent de venir dans la région voisine ?
+    你们经常来这邻近的地区吗？
+    Oh oui, nous aimons beaucoup la région, nous venons très souvent.
+    哦，是的，我们非常喜欢这个地区，很常来。
+    Que faites-vous ? Vous louez un gîte, vous allez chez l'habitant ?
+    那你们怎么住？租乡间小屋还是住在当地人家里？
+    Oui, on loue un gîte, oui.
+    我们租的是乡间小屋。
+    Gîte rural ?
+    农家乐那种乡间小屋吗？
+    Oui, c'est très intéressant parce qu'on connaît des gens comme ça, qui nous aident à découvrir des choses qu'on ne connaîtrait pas autrement.
+    对，非常有意思，这样我们能认识当地人，他们会帮我们发现很多否则不会发现的东西。
+    Pourquoi Anne-Marie se trouve-t-elle en Auvergne ?
+    安娜-玛丽为什么会在奥弗涅？`,
                         choices: [
-                            ""
+                            `Elle passe ses congés dans la région.
+        她在这个地区度假。`
                         ]
                     },
                     {
                         id: 16,
                         audio: "assets/tcfCO/T1Q16.wav",
-                        text: "",
+                        text: `Je m'appelle Pascale.
+    我叫帕斯卡勒。
+    Ça fait quatre ans que je travaille dans une école maternelle.
+    我在一所幼儿园工作已经四年了。
+    Je suis chargée d'aider les enseignants dans la classe.
+    我的工作是协助老师在班里带孩子。
+    Alors, le plus dans le métier pour moi, c'est les relations avec les enseignants et les enfants.
+    对我来说，这个工作最好的一点是和老师、孩子之间的关系。
+    Ça, on a vraiment beaucoup de chance à ce niveau-là, surtout avec les enfants.
+    在这方面我们真的很幸运，特别是和孩子在一起。
+    Les côtés négatifs du métier, je dirais peut-être les journées un peu longues, dans le bruit, parce que les enfants sont quand même en général bruyants.
+    这个职业的缺点嘛，大概就是每天时间有点长，而且环境比较吵，因为孩子们一般都很吵。
+    Qu'apprécie Pascale dans son métier ?
+    帕斯卡勒最喜欢她工作中的哪一点？`,
                         choices: [
-                            ""
+                            `Le contact avec les élèves.
+        和孩子在一起的接触与相处。`
                         ]
                     },
                     {
                         id: 17,
                         audio: "assets/tcfCO/T1Q17.wav",
-                        text: "",
+                        text: `Allô ? Pourrais-je parler au directeur des ressources humaines ?
+    喂？我可以和人力资源部主任说话吗？
+    Le directeur est actuellement en réunion, mais je peux lui transmettre un message ?
+    主任现在正在开会，不过我可以帮您转达留言。
+    Je souhaite savoir s'il a bien reçu ma candidature pour le poste d'ingénieur.
+    我想知道他有没有收到我应聘工程师岗位的材料。
+    Je lui ai envoyé mon CV et ma lettre de motivation il y a deux semaines et je n'ai pas reçu de réponse.
+    我两周前给他寄了简历和求职信，到现在还没收到回复。
+    Donnez-moi votre nom, s'il vous plaît, et je lui dirai de vous recontacter.
+    请把您的名字告诉我，我会让他回电联系您。
+    Quel est l'objet de cet appel ?
+    这通电话的目的是什么？`,
                         choices: [
-                            ""
+                            `Vérifier si un courrier est bien arrivé.
+        确认自己的材料是不是已经送到。`
                         ]
                     },
                     {
                         id: 18,
                         audio: "assets/tcfCO/T1Q18.wav",
-                        text: "",
+                        text: `Est-ce que tu achètes des vêtements sur Internet ?
+    你会在网上买衣服吗？
+    Oui, souvent. Les prix sont vraiment intéressants.
+    会啊，经常买，价格真的很划算。
+    Moi, j'ai eu une mauvaise expérience l'autre jour.
+    我前几天有一次不太好的经历。
+    J'ai commandé un pantalon, mais ils ont commis une erreur.
+    我订了一条裤子，但他们搞错了。
+    Ils m'ont envoyé un modèle complètement différent.
+    他们给我寄来的是完全不同的款式。
+    J'ai réussi à le rendre, mais c'était compliqué.
+    虽然最后退货成功了，但是过程很麻烦。
+    Finalement, je préfère les boutiques. Au moins, on sait ce qu'on achète.
+    最后我还是更喜欢实体店，起码你清楚自己买的是什么。
+    Tu n'as pas eu de chance.
+    你运气确实不好。
+    Qu'est-ce qui déplaît à la jeune femme dans les achats en ligne ?
+    这位年轻女性对网购不满意的地方是什么？`,
                         choices: [
-                            ""
+                            `Les difficultés en cas d'échange.
+        一旦要退换货就非常麻烦。`
                         ]
                     },
                     {
                         id: 19,
                         audio: "assets/tcfCO/T1Q19.wav",
-                        text: "",
+                        text: `Oh, j'ai commencé dans l'entreprise, cela fait quand même 30 ans,
+    我进这家公司的时候，那都已经是三十年前的事了，
+    à l'époque où on ne s'embarrassait pas avec le recrutement.
+    那时候招聘一点也不复杂。
+    Je me souviens, dès le soir où j'ai fini ma formation, mon patron de stage m'a proposé de rester,
+    我还记得，我一结束培训，当晚实习老板就让我留下来工作，
+    et pour mes copains de formation, pareil.
+    我那些一起培训的同学也是一样。
+    Ah, c'est sûr, on n'embauche plus si facilement.
+    啊，现在肯定没这么容易进公司了。
+    Maintenant, je suis un ancien, je dois recruter les jeunes qui arrivent,
+    现在我成了老员工，需要招聘新来的年轻人，
+    et je trouve ça incroyable.
+    我觉得变化太不可思议了。
+    Ils accumulent les diplômes, ont fait plein de stages, sont cinquante à postuler.
+    他们学历一个接一个，实习经历一大堆，动不动就有五十个人来应聘。
+    Cela ne doit pas être drôle.
+    这可一点也不好受。
+    Que constate cet employé ?
+    这位员工发现了什么变化？`,
                         choices: [
-                            ""
+                            `Les conditions de recrutement sont plus difficiles aujourd'hui.
+        现在的招聘条件比过去难多了。`
                         ]
                     },
                     {
                         id: 20,
                         audio: "assets/tcfCO/T1Q20.wav",
-                        text: "",
+                        text: `Bonjour monsieur, je cherche le dernier livre de Michel Tellier sur la France rurale du XIXe siècle.
+    您好先生，我想找米歇尔·特利耶写的那本关于十九世纪法国乡村的最新著作。
+    Oui, attendez un moment, je demande à mon collègue.
+    好的，请稍等一下，我去问一下同事。
+    Bien, en fait, il ne nous reste que son dernier roman.
+    好的，其实我们现在只有他最新的小说。
+    L'ouvrage que vous cherchez est en rupture de stock.
+    您要找的那本书目前缺货了。
+    Nous en recevrons quelques-uns dans deux semaines, je peux vous en garder un si vous voulez.
+    再过两周我们会进一批，如果您愿意，我可以给您留一本。
+    Oui, très bien, merci. Je reviendrai, gardez-m'en un.
+    好啊，非常感谢。我会再来的，请帮我留一本。
+    Voilà madame, c'est noté. Merci beaucoup, à bientôt.
+    好的女士，记下来了。非常感谢，再见。
+    Que propose le vendeur à la cliente ?
+    售货员给这位顾客提出了什么建议？`,
                         choices: [
-                            ""
+                            `De réserver un livre.
+        先帮她预订一本书。`
                         ]
                     },
                     {
                         id: 21,
                         audio: "assets/tcfCO/T1Q21.wav",
-                        text: "",
+                        text: `Quel froid ce matin !
+    今早真冷啊！
+    Oui, mais au moins il y a du soleil.
+    是，不过好歹今天有太阳。
+    C'est sûr, à côté d'hier, la pluie toute la journée, c'était l'horreur.
+    和昨天比起来就好多了，昨天一整天都在下雨，太糟糕了。
+    Ah oui, j'aime mieux ce froid sec.
+    没错，我还是更喜欢这种干冷的天气。
+    Quel temps fait-il aujourd'hui ?
+    今天的天气怎么样？`,
                         choices: [
-                            ""
+                            `Il fait plus beau qu'hier.
+        比昨天好得多，天气更好了。`
                         ]
                     },
                     {
                         id: 22,
                         audio: "assets/tcfCO/T1Q22.wav",
-                        text: "",
+                        text: `Sylvie, qu'est-ce qui vous plaît plus particulièrement dans votre travail ?
+    西尔维，您在工作中最喜欢的部分是什么？
+    En tant que responsable multimédia, je suis également conceptrice de formation en ligne,
+    作为多媒体负责人，我也负责设计线上培训课程，
+    formatrice de formateurs et enseignante de français langue étrangère.
+    还培训其他老师，并教法语作为外语。
+    C'est ce dernier point qui m'attire.
+    最吸引我的就是最后这一点。
+    Un de mes centres d'intérêt en français langue étrangère concerne
+    在法语作为外语方面，我特别感兴趣的一点是：
+    le développement d'une politique linguistique en faveur du français comme langue de communication
+    推动一种语言政策，把法语当作交流用语，
+    et pas seulement comme symbole d'une certaine culture et du pays des droits de l'homme
+    而不只是某种文化、某个“人权之国”的象征，
+    ou comme langue de l'amour.
+    也不只是“爱情语言”的形象。
+    J'essaie de montrer que l'apprentissage des langues est une passerelle entre les peuples et les cultures.
+    我努力向大家展示，学语言是各民族、各文化之间的一座桥梁。
+    Quel objectif Sylvie poursuit-elle en enseignant le français langue étrangère ?
+    西尔维在教法语作为外语时，希望达成什么目标？`,
                         choices: [
-                            ""
+                            `La promotion d'un moyen d'échanges entre les différentes nationalités.
+        把法语推广成不同民族之间交流的工具。`
                         ]
                     },
                     {
                         id: 23,
                         audio: "assets/tcfCO/T1Q23.wav",
-                        text: "",
+                        text: `Bonjour à tous. Aujourd'hui, nous recevons Philippe Bouchard, sociologue,
+    大家好。今天我们请到的是社会学家菲利普·布沙尔，
+    qui publie Les grands enfants chez papa et maman.
+    他刚出版了一本书《大孩子们留在爸妈家》。
+    Bonjour Philippe Bouchard.
+    您好，菲利普·布沙尔。
+    Dans votre livre, vous dites que les jeunes filles partent plus vite de chez elles que les garçons.
+    在您的书里，您说女孩比男孩更早离开父母家。
+    Comment l'expliquez-vous ?
+    您怎么解释这一点？
+    Elles sont plus précoces que les garçons.
+    她们比男孩成熟得更早。
+    Elles sont plus mûres et entrent plus vite dans les conflits avec leurs parents.
+    她们心智更成熟，也更早和父母产生各种冲突。
+    Et qu'est-ce qui provoque ces conflits ?
+    那这些冲突一般是因为什么引起的呢？
+    Ils sont de toute nature, de l'habillement à l'argent de poche en passant par le programme télé.
+    各种各样的事情都会引发，从穿衣打扮到零用钱，再到看什么电视节目。
+    Elles ont plus de disputes avec leurs parents au sujet de leur petite amie.
+    她们在交男朋友方面也更容易和父母争吵。
+    Elles sont donc plus pressées de partir de la maison, de devenir plus indépendantes.
+    所以她们更急于搬出家门，变得更独立。
+    Pourquoi les filles partent-elles de la maison plus tôt que les garçons ?
+    为什么女孩比男孩更早离开父母家？`,
                         choices: [
-                            ""
+                            `Elles se rebellent très vite face à l'autorité familiale au quotidien.
+        她们在日常生活中更快地反抗家庭权威。`
                         ]
                     },
                     {
                         id: 24,
                         audio: "assets/tcfCO/T1Q24.wav",
-                        text: "",
+                        text: `Bonjour monsieur, puis-je vous renseigner ?
+    您好先生，我可以为您提供一些信息吗？
+    Bonjour, je souhaiterais visiter le sud de la France avec mon épouse.
+    您好，我想和妻子一起去法国南部旅行。
+    Eh bien, nous pouvons vous proposer un séjour sur la Côte d'Azur.
+    好的，我们可以给您推荐一个蔚蓝海岸的旅行行程。
+    Vous pourriez acheter un forfait qui comprend le transport aller-retour,
+    您可以购买一个套餐，里面包括往返交通，
+    ainsi que les nuits d'hôtel et les trajets de bus entre les villes.
+    还有酒店住宿，以及城市之间的巴士交通。
+    Voici la brochure du séjour.
+    这是这次行程的宣传手册。
+    Je vais en parler à ma femme et je reviendrai demain. Merci.
+    我回去和我太太商量一下，明天再来。谢谢。
+    Quelle est l'intention de cette personne ?
+    这位男士的打算是什么？`,
                         choices: [
-                            ""
+                            `Découvrir une région de France.
+        去了解法国的一个地区。`
                         ]
                     },
                     {
                         id: 25,
                         audio: "assets/tcfCO/T1Q25.wav",
-                        text: "",
+                        text: `Dis-moi, Paul, c'est quoi la pêche blanche au Québec ?
+    保罗，跟我说说，在魁北克什么是“白色钓鱼”（冰上钓鱼）啊？
+    On l'appelle blanche parce qu'on pêche l'hiver à la ligne
+    之所以叫“白色”，是因为冬天在冰雪上用鱼线钓鱼，
+    en creusant des trous dans la glace des lacs et des rivières gelées.
+    要在结冰的湖面或河面上打洞。
+    Mais vous, vous devez geler et attendre le poisson sans bouger.
+    可你们不是得冻着不动，一直等鱼上钩吗？
+    Non, car chaque pêcheur se protège du froid en installant une cabane en bois au-dessus des trous.
+    不会的，因为每个渔民都会在洞上面搭一间木屋来挡风御寒。
+    C'est une pêche d'intérieur ?
+    这不就变成“室内钓鱼”了吗？
+    En quelque sorte. En tout cas, le poisson est bien frais.
+    某种程度上可以这么说吧。不管怎样，鱼是非常新鲜的。
+    Pourquoi les pêcheurs utilisent-ils une cabane ?
+    渔民为什么要搭一间小木屋？`,
                         choices: [
-                            ""
+                            `Pour se réchauffer.
+        为了取暖、抵御寒冷。`
                         ]
                     },
                     {
                         id: 26,
                         audio: "assets/tcfCO/T1Q26.wav",
-                        text: "",
+                        text: `Claudine, je vous dis un grand bonjour.
+    克洛丁，先跟您问个好。
+    Bonjour Nicolas.
+    你好，尼古拉。
+    Vous avez beaucoup, beaucoup d'activités, beaucoup de passions artistiques,
+    您现在有很多很多活动，也有不少艺术爱好，
+    vous faites du soutien scolaire, vous êtes écrivain public.
+    您做课业辅导，还当公众写手（代写文书）。
+    Oui, oui, écoutez, j'essaie d'occuper mes journées par des activités qui me plaisent,
+    是的，是的，我就是想用自己喜欢的活动把一天填满，
+    étant donné que je suis à la retraite maintenant
+    因为我现在已经退休了，
+    et que, voilà, j'adore l'art, et puis j'aime bien les enfants, j'aime bien la nature,
+    而且我很喜欢艺术，也喜欢孩子，喜欢大自然，
+    voilà, la lecture, tout ce que je peux faire maintenant que j'ai du temps.
+    还喜欢阅读，总之现在有时间就做我喜欢的一切。
+    Pourquoi Claudine a-t-elle autant d'activités ?
+    克洛丁为什么会有这么多活动？`,
                         choices: [
-                            ""
+                            `Elle a arrêté d'exercer sa profession.
+        因为她已经退休，不再从事原来的工作了。`
                         ]
                     },
                     {
                         id: 27,
                         audio: "assets/tcfCO/T1Q27.wav",
-                        text: "",
+                        text: `C'était bien, hein ?
+    电影挺不错的，是吧？
+    Quel acteur, ce type ! Il joue comme un dieu, non ?
+    这演员真厉害，演得像神一样，是不是？
+    Tu exagères un peu, mais oui, c'est surtout le scénario qui était original, pour une fois.
+    你有点夸张，不过确实，这次主要是剧本新颖。
+    Oui, ça change un peu.
+    是啊，跟平时的不太一样。
+    Y'a que la musique, un rien mélo, qui m'a ennuyé.
+    就是音乐有点太煽情，有点烦。
+    C'est vrai, moi aussi.
+    确实，我也这么觉得。
+    Mais les dialogues ! Tu as remarqué comme ils sonnaient juste, eux ?
+    不过台词！你注意到那些台词多自然、多贴切吗？
+    Ça faisait l'équilibre.
+    正好把整体平衡了一下。
+    C'est quand même important, la bande sonore dans un film.
+    不过一部电影里配乐还是很重要的。
+    Oui, tu as raison. Ils auraient pu la soigner davantage.
+    是，你说得对，他们本可以在音乐上再下点功夫。
+    Qu'est-ce que les deux amis n'ont pas beaucoup apprécié dans le film ?
+    这两位朋友对电影中哪一点不太满意？`,
                         choices: [
-                            ""
+                            `La musique.
+        电影的音乐。`
                         ]
                     },
                     {
                         id: 28,
                         audio: "assets/tcfCO/T1Q28.wav",
-                        text: "",
+                        text: `Pouvez-vous me parler de votre expérience aux États-Unis ? Est-ce que ça vous a plu ?
+    您能跟我们说说您在美国的经历吗？您喜欢那段时间吗？
+    Oui, beaucoup. Je suis restée là-bas un an.
+    很喜欢。我在那里待了一年。
+    J'étais l'assistante d'une institutrice dans une école maternelle.
+    我在一所幼儿园里做一位女老师的助教。
+    C'était votre premier long séjour à l'étranger ?
+    这是您第一次在国外长期待着吗？
+    Aussi long, oui, mais je suis déjà partie plusieurs fois en Grande-Bretagne pendant les mois d'été.
+    这么长的是第一次，不过我以前暑假去英国待过好几次。
+    Nous avons de la famille à Londres.
+    我们在伦敦有亲戚。
+    Vous n'avez donc pas de difficultés pour communiquer en anglais ?
+    那您用英语交流就没有什么困难了？
+    Non, je suis parfaitement bilingue.
+    是的，我完全是双语水平。
+    Qu'apprend-on sur cette jeune femme ?
+    关于这位年轻女性，我们得知了什么？`,
                         choices: [
-                            ""
+                            `Elle a travaillé avec une institutrice américaine.
+        她曾在美国和一位小学（幼儿园）女教师一起工作。`
                         ]
                     },
                     {
                         id: 29,
                         audio: "assets/tcfCO/T1Q29.wav",
-                        text: "",
+                        text: `La vieille dame de fer, dans tous ses états,
+    这位“老铁娘子”（埃菲尔铁塔）被重新想象出各种形态，
+    ou comment les jeunes se sont mesurés à cette forme unique qu'est la Tour Eiffel.
+    年轻人如何与这座独一无二的埃菲尔铁塔较量。
+    Pour ce concours, organisé par la Fondation Eiffel, adressé aux élèves des écoles d'architecture,
+    为了这次由埃菲尔基金会举办、面向建筑学院学生的竞赛，
+    la consigne était de rêver.
+    要求就是尽情去做梦、去想象。
+    Concevoir un édifice de très grande hauteur sur le Champ-de-Mars à Paris,
+    他们要在巴黎战神广场上设计一座超高建筑，
+    à distance, à côté ou à la place de la Tour Eiffel.
+    可以和埃菲尔铁塔隔着一段距离，靠在旁边，甚至直接取而代之。
+    Trois étudiants suppriment donc carrément la tour.
+    有三名学生干脆把塔“删掉”了。
+    À la place, ils y construisent un aéroport vertical,
+    他们要在原地建一座垂直机场，
+    ou creusent un puits de lumière avec de vastes plateaux.
+    或挖一个采光井，配上巨大的平台。
+    D'autres choisissent de la rendre habitable en comblant ses vides par des baies de couleurs
+    还有人选择把塔变成可居住空间，在空隙处嵌入彩色窗格，
+    ou la dotent d'un jardin suspendu.
+    或者给它加上空中花园。
+    De quoi traite ce reportage ?
+    这则报道讲的是什么？`,
                         choices: [
-                            ""
+                            `D'un appel à projets imaginaires.
+        关于一个征集想象力建筑方案的活动。`
                         ]
                     },
                     {
                         id: 30,
                         audio: "assets/tcfCO/T1Q30.wav",
-                        text: "",
+                        text: `C'est le plus grand site archéologique du monde.
+    这是世界上最大的考古遗址之一。
+    Sur une superficie de 44 hectares, il accueille chaque année 2,5 millions de visiteurs.
+    在 44 公顷的面积上，每年接待 250 万游客。
+    C'est sa chance, mais c'est aussi son malheur,
+    这既是它的幸运，也是它的不幸，
+    car Pompéi, à une vingtaine de kilomètres de Naples, est en péril.
+    因为位于那不勒斯附近二十多公里外的庞贝正处在危险之中。
+    L'Italie, qui se présente comme l'héritière du plus grand patrimoine de l'humanité,
+    自称继承了人类最伟大文化遗产的意大利，
+    a bien tenté d'en prendre soin,
+    的确尝试过好好保护这里，
+    mais ces dernières années, des effondrements à répétition nous montrent
+    但这些年不断发生的坍塌表明，
+    que l'on a franchi la frontière de l'urgence.
+    情况已经到了非常紧急的地步。
+    C'est l'Europe qui s'émeut de l'état de quasi-abandon dans lequel se retrouve le site.
+    现在整个欧洲都为这个几乎被遗弃的遗址状况而震惊。
+    Tout concourt à un laisser-aller dramatique,
+    各种因素加在一起，导致状况不断恶化，
+    sans oublier l'inconscience des visiteurs,
+    更别提那些不自觉的游客，
+    qui se conduisent souvent dans ces ruines millénaires comme dans un vulgaire parc d'attractions.
+    他们常常把这几千年的遗迹当成普通游乐园对待。
+    Dans ce reportage sur le site historique de Pompéi, qu'apprend-on ?
+    在这则关于庞贝古城的报道中，我们了解到什么？`,
                         choices: [
-                            ""
+                            `L'attitude des touristes accélère sa dégradation.
+        游客的行为正在加速遗址的破坏。`
                         ]
                     },
                     {
                         id: 31,
                         audio: "assets/tcfCO/T1Q31.wav",
-                        text: "",
+                        text: `Je suis un marcheur, et mes vacances se passent à marcher
+    我是一个“行路人”，我的假期基本都用来走路旅行，
+    parce que ça me permet de réfléchir.
+    因为步行能让我思考。
+    Le rythme de la marche est musical pour les oreilles,
+    行走的节奏听起来像是一种音乐，
+    éblouissant pour les paysages,
+    眼前的风景也让人目眩神迷，
+    et les médecins m'ont démontré que l'activité musculaire permettait d'éviter des fractures des os importants,
+    医生还向我证明，肌肉活动可以预防重要骨骼骨折，
+    et que la vieillesse doit marcher.
+    老了以后也必须多走路。
+    Je ne marche pas n'importe où, je marche sur des sentiers de grande randonnée,
+    我也不是随便乱走，我走的是长途徒步线路，
+    et j'y ai souvent fait des rencontres vraiment merveilleuses.
+    在路上我常常遇到非常美妙的人和事。
+    On y rencontre à la fois le paysage, les autres, mais on se rencontre aussi soi-même.
+    你既遇见风景，也遇见别人，更重要的是遇见自己。
+    Comment la personne considère-t-elle la marche ?
+    这位说话人是如何看待“走路”这件事的？`,
                         choices: [
-                            ""
+                            `C'est un temps de découverte et d'humanité.
+        它是一个发现世界、也发现自我的时刻。`
                         ]
                     },
                     {
                         id: 32,
                         audio: "assets/tcfCO/T1Q32.wav",
-                        text: "",
+                        text: `Alors, Philippe, est-ce que vous pouvez nous en apprendre plus sur votre établissement ?
+    那么，菲利普，能不能多介绍一下您的店？
+    Quand j'ai récupéré l'endroit, il s'agissait d'un lieu qui était ancien à Montréal, début 19e siècle.
+    我接手这个地方时，它是蒙特利尔一栋十九世纪初的老建筑。
+    J'ai donc gardé ce qui était d'époque
+    所以我保留了当时的原始结构，
+    et j'ai rajouté une touche moderne, design,
+    然后加入了一些现代、设计感的元素，
+    pour créer un espace particulier où les styles se mélangent.
+    打造出一个风格混搭、很特别的空间。
+    Comme je suis un passionné de meubles design, j'ai acheté des pièces qui me plaisent
+    因为我很迷恋设计家具，就买了一些自己喜欢的作品摆在这里，
+    et, en plus d'y manger, on peut assister à des soirées musicales.
+    所以大家来这儿不仅可以吃饭，还能参加音乐之夜。
+    On a un DJ très connu internationalement dans le domaine de la musique électronique.
+    我们有一位在电子音乐界国际知名的 DJ。
+    Enfin, étant donné qu'on est dans un lieu très haut de plafond,
+    此外，这里层高很高，
+    j'ai accroché des tableaux, des œuvres contemporaines,
+    我就挂了一些画作、当代艺术作品，
+    mais on organise aussi des expos temporaires.
+    也会不定期举办临时展览。
+    Toutes les formes d'expression nous intéressent.
+    我们对各种形式的艺术表达都感兴趣。
+    Quelle est la particularité de l'établissement de Philippe ?
+    菲利普这家店有什么特别之处？`,
                         choices: [
-                            ""
+                            `C'est à la fois un restaurant et une galerie d'art.
+        它既是餐厅，又是艺术画廊。`
                         ]
                     },
                     {
                         id: 33,
                         audio: "assets/tcfCO/T1Q33.wav",
-                        text: "",
+                        text: `Le biomimétisme, c'est en fait s'inspirer du vivant, de la nature
+    所谓仿生学，其实就是从生命、从自然中汲取灵感，
+    pour concevoir de nouvelles technologies, pour innover.
+    用来设计新技术、进行创新。
+    Le monde du vivant a de nombreuses choses à nous apprendre,
+    生物世界有太多东西可以教给我们，
+    imiter la nature car c'est la plus durable, la plus économique et la plus rationnelle,
+    模仿自然，因为自然是最可持续、最经济、最合理的系统，
+    mais jusqu'à quel point ?
+    但我们应该模仿到什么程度呢？
+    Gauthier Chapelle, bonjour.
+    戈蒂耶·沙佩勒您好。
+    Bonjour. Vous êtes biologiste, vous avez créé la société BiomimGreenLoop,
+    您是一名生物学家，创立了 BiomimGreenLoop 公司。
+    alors on peut dire que depuis le début, il y a près de 4 milliards d'années,
+    可以说，从最初开始，差不多四十亿年前，
+    la Terre nous offre vraiment cette opportunité ?
+    地球就一直在给我们提供这种机会？
+    Mais oui, disons que par définition la vie s'est maintenue
+    是的，可以说生命自从出现以来，
+    effectivement depuis 3,8 milliards d'années.
+    已经在地球上存在了 38 亿年。
+    On est actuellement entouré d'au moins 8 millions d'espèces
+    如今我们周围至少有八百万个物种，
+    qui ont toutes des leçons à nous donner pour pérenniser notre présence sur Terre.
+    它们都能给我们提供经验，帮助人类在地球上持续生存。
+    En quoi consiste le concept présenté par la société BiomimGreenLoop ?
+    BiomimGreenLoop 公司提出的核心理念是什么？`,
                         choices: [
-                            ""
+                            `À orienter la recherche en prenant la nature comme modèle.
+        以自然为榜样来引导科研和创新。`
                         ]
                     },
                     {
                         id: 34,
                         audio: "assets/tcfCO/T1Q34.wav",
-                        text: "",
+                        text: `Les plus de 60 ans, ils sont près d'un milliard sur la planète,
+    全球六十岁以上的人将近十亿，
+    15 millions en France et ce nombre a vocation à grossir.
+    法国有一千五百万，而且这个数字还在增加。
+    Aujourd'hui, les seniors, c'est 23 % de la population française,
+    目前老年人占法国人口的 23%，
+    bientôt ce sera 30 %,
+    不久之后会达到 30%。
+    des seniors qui voyagent, qui consomment, qui s'équipent.
+    这些老年人会旅行、会消费、会购买各种装备。
+    Des seniors dont la santé vacille aussi et qui entrent dans la dépendance.
+    他们的健康状况也会变差，有些会进入失能或依赖状态。
+    Un marché juteux pour les entreprises
+    这对企业来说是块肥肉市场，
+    et un formidable gisement de croissance et d'emplois
+    也是一个巨大的增长和就业来源，
+    qui n'a pas échappé à Michel Deloney, la ministre déléguée aux personnes âgées.
+    负责老年事务的部长米歇尔·德洛内当然不会忽视这一点。
+    Dans le secteur de l'aide à domicile,
+    在居家护理这个领域，
+    on considère qu'il faut 220 000 emplois de plus d'ici 2020.
+    预计到 2020 年还需要增加 22 万个岗位。
+    Incroyable, aucun autre ministère ne peut proposer autant de champs de croissance.
+    太惊人了，没有哪个部门能提供这么大的增长空间。
+    Dans ce reportage, qu'apprend-on sur les seniors ?
+    在这则报道中，我们了解到关于老年人的什么信息？`,
                         choices: [
-                            ""
+                            `Ils sont à l'origine de créations d'emplois.
+        他们是大量新增就业岗位的来源。`
                         ]
                     },
                     {
                         id: 35,
                         audio: "assets/tcfCO/T1Q35.wav",
-                        text: "",
+                        text: `J'avoue qu'au début, j'étais très décontenancée
+    我得承认，一开始我对有机化妆品很不习惯，
+    par les textures des cosmétiques bio,
+    它们的质地让我很困惑，
+    le shampoing ou le gel douche qui ne mousse pas,
+    比如洗发水、沐浴露都不起泡，
+    ou le dentifrice pâteux qui ne mousse pas non plus.
+    牙膏也是糊状的，也不怎么起泡。
+    Les parfums, par exemple quasi inexistants ou alors très forts aux huiles essentielles,
+    香味也要么几乎没有，要么就是精油味道特别重，
+    m'ont également déstabilisée.
+    这些也让我很不适应。
+    Mais j'avoue que les marques ont fait des progrès considérables depuis,
+    不过不得不说，这些品牌后来进步大了很多，
+    et maintenant je ne remarque plus la différence.
+    现在我已经几乎感觉不到差别了。
+    Au final, je choisis mieux mes produits, et j'en achète moins,
+    总的来说，我会更认真地挑产品，买得也少一点，
+    et donc je dépense moins.
+    所以花的钱也更少。
+    Et surtout, c'est en accord avec mes idées.
+    最重要的是，这和我的理念是一致的。
+    Franchement, à quoi bon manger des fruits et des légumes bio pour notre santé,
+    说真的，如果我们为了健康吃有机蔬果，
+    alléger nos repas en viande pour la planète,
+    为了地球减少吃肉，
+    si l'on continue à se tartiner de crèmes enrichies aux produits chimiques ?
+    却还在往脸上涂满化学添加物的面霜，那又有什么意义呢？
+    Qu'explique cette utilisatrice des produits cosmétiques bio ?
+    这位使用有机化妆品的人在说明什么？`,
                         choices: [
-                            ""
+                            `Ils répondent à ses convictions.
+        这些产品符合她的价值观和理念。`
                         ]
                     },
                     {
                         id: 36,
                         audio: "assets/tcfCO/T1Q36.wav",
-                        text: "",
+                        text: `Les Français plébiscitent l'idée,
+    法国人普遍支持这个主意，
+    la droite et la gauche sont dans l'ensemble plutôt d'accord.
+    右翼和左翼大体上也都表示赞同。
+    Alors, faut-il rendre obligatoire le service civique pour aider nos jeunes ?
+    那么，为了帮助年轻人，公民服务是不是应该变成强制性的呢？
+    Et pour y répondre, je reçois Nadia Belaoui.
+    为了回答这个问题，我们请来了娜迪娅·贝拉乌伊。
+    Aujourd'hui, le service est plébiscité par les jeunes qui le font,
+    现在，参加公民服务的年轻人都非常认可这一制度，
+    puisqu'il fait du bien aux jeunes.
+    因为这对他们确实有好处。
+    Pourquoi ne pas le rendre obligatoire ?
+    那为什么不把它变成义务性的呢？
+    Le service civique fait du bien aux jeunes précisément
+    公民服务之所以对年轻人有益，
+    parce qu'ils ont décidé de rendre un service à la nation.
+    正是因为他们是自己决定要为国家服务的。
+    Ils en sont parfaitement conscients.
+    他们对此非常清楚。
+    Vous savez, on n'a pas idée de remercier quelqu'un
+    要知道，我们一般不会去感谢一个
+    pour un service qu'il n'a pas choisi de rendre.
+    “被迫”做事的人。
+    Que dit Nadia Belaoui au sujet du service civique ?
+    娜迪娅·贝拉乌伊对公民服务有什么看法？`,
                         choices: [
-                            ""
+                            `Le dispositif fonctionne bien tel qu'il est.
+        这个制度现在这样的自愿形式就很好，没有必要强制。`
                         ]
                     },
                     {
                         id: 37,
                         audio: "assets/tcfCO/T1Q37.wav",
-                        text: "",
+                        text: `Camille Claudel restera pour la postérité une élève de Rodin.
+    在后人眼中，卡米耶·克洛岱尔常常被视为罗丹的学生。
+    Elle est exposée dans le musée Auguste Rodin, elle est connue comme telle.
+    她的作品陈列在罗丹博物馆里，人们也多以此身份认识她。
+    Elle a beaucoup reçu de Rodin mais elle s'en est servie
+    她确实从罗丹那里学到了很多，
+    pour créer une œuvre totalement différente.
+    但她用这些东西创造出完全不同的作品。
+    On connaît évidemment la fameuse phrase :
+    我们都知道那句著名的话：
+    « Je lui ai montré où trouver de l'or, mais l'or qu'elle trouvait bien à elle. »
+    “是我告诉她到哪里去找金子，但她找到的金子却完全属于她自己。”
+    C'est très flagrant quand on compare plusieurs œuvres à côté du Penseur
+    把她的一些作品放在《思想者》旁边比较时，这一点就非常明显，
+    qui est, c'est vrai, d'une puissance ramassée, tout en muscles,
+    《思想者》确实是力量内敛、肌肉紧绷，
+    et qui dégage une force presque brute.
+    散发出近乎原始的力量。
+    L'homme penché, lui, est construit comme presque un arbre
+    而她的《弯腰的人》则像一棵树一样构造，
+    dont on voit les nervures, dont on saisit les muscles, les nerfs, l'attitude
+    能看到枝干的纹理、感受到肌肉和神经，以及姿态，
+    et presque plus la pensée que chez le Penseur.
+    甚至比《思想者》更能感受到人物的思考。
+    Sur quoi porte l'intervention ?
+    这段发言主要讲的是什么？`,
                         choices: [
-                            ""
+                            `La relation liant Camille Claudel et Rodin.
+        卡米耶·克洛岱尔与罗丹之间的关系以及艺术上的联系。`
                         ]
                     },
                     {
                         id: 38,
                         audio: "assets/tcfCO/T1Q38.wav",
-                        text: "",
+                        text: `Le Plan Nord mise aussi sur l'appui des populations locales,
+    “北方计划”也指望得到当地居民的支持，
+    notamment celui des Inuits et des Amérindiens,
+    尤其是因纽特人和美洲原住民的支持，
+    que l'on va former aux nouveaux emplois.
+    计划是为他们提供培训，胜任新的工作。
+    Certaines nations, comme celle des Innus, ont des réticences.
+    但有些族群，比如印努人，对此持保留态度。
+    Ce conseiller juridique milite pour que son peuple
+    这位法律顾问正在努力争取，
+    et le gouvernement du Québec signent une entente
+    让他的族人和魁北克政府签署协议，
+    pour sortir les Autochtones de leur dépendance économique.
+    把原住民从经济依赖状态中解救出来。
+    De toute évidence, les retombées économiques pour les communautés autochtones des Innus ne seront pas là, tout simplement.
+    很明显，印努社区根本得不到多少经济收益。
+    Mais je pense que c'est une responsabilité du gouvernement, de l'État québécois également,
+    但我认为，这是政府、也是魁北克省的责任，
+    de s'assurer que les jeunes Innus soient formés
+    要保证年轻的印努人能得到培训，
+    et qu'ils aient accès à des jobs valorisants dans le cadre des projets miniers.
+    在采矿项目中获得体面的工作。
+    Certains environnementalistes ont des réserves
+    一些环保人士也对这个计划有保留意见，
+    face à ce plan qui va faciliter l'exploitation de zones jusqu'alors vierges.
+    因为该计划会促使原本未被开发的地区被开采。
+    Comment réagissent les populations indigènes concernées par ce projet ?
+    受这个项目影响的原住民群体是怎样反应的？`,
                         choices: [
-                            ""
+                            `Elles exigent des garanties réelles et tangibles.
+        他们要求得到真正、具体的保障。`
                         ]
                     },
                     {
                         id: 39,
                         audio: "assets/tcfCO/T1Q39.wav",
-                        text: "",
+                        text: `Alors c'est intéressant parce qu'effectivement on n'est pas
+    这很有意思，因为我们现在讨论的
+    dans un débat politique ou écologique,
+    不是政治或生态层面的争论，
+    on est vraiment sur la question économique
+    而是纯粹的经济问题，
+    et là ça donne un tout autre éclairage justement
+    这就让页岩气问题呈现出完全不同的面貌，
+    et de bonnes réponses à cette question du gaz de schiste.
+    也给关于页岩气的争论带来了新的答案。
+    Oui, tout à fait, en fait on voit aujourd'hui que le débat est très mal posé
+    是的，完全正确，其实现在的讨论方式本身就很有问题，
+    parce que d'un côté on nous parle de gains économiques
+    一方面，人们总是说经济收益会很大、来得很快，
+    qui sont supposés rapides et sûrs
+    而且几乎是“稳稳赚”，
+    et de l'autre un coût environnemental qui maintenant, soi-disant, est sous contrôle
+    另一方面，又有人说环境成本现在 supposedly 已经被控制住了，
+    parce que ça fait longtemps qu'on fait de la fracturation hydraulique
+    因为水力压裂技术已经用了很多年，
+    et qu'on peut voir dans d'autres pays quels sont les effets du gaz de schiste.
+    可以参考其他国家开采页岩气的效果。
+    Mais en réalité, quand on se penche uniquement sur les effets économiques,
+    可实际上，当我们只从经济效果本身去看时，
+    on se rend compte qu'ils ne sont pas aussi élevés
+    就会发现收益并没有宣传中说得那么高，
+    que ceux que nous annoncent les pro-exploitation.
+    远远达不到支持开采的人所宣称的水平。
+    Quel est le constat de l'intervenant sur l'exploitation des gaz de schiste ?
+    这位发言人对页岩气开采得出了什么结论？`,
                         choices: [
-                            ""
+                            `Les sociétés de production en exagèrent la rentabilité.
+        开采企业夸大了页岩气项目的盈利能力。`
                         ]
-                    }
-
-
+                    },
                 ]
             },
+
             {
                 id: "test2",
                 label: "Test 2",
@@ -749,23 +1503,15 @@
             });
         }
 
-        function startExam(idx) {
-            currentExamIndex = idx;
-            currentQuestionIndex = 0;
-
-            const exam = exams[idx];
-            selectedAnswers = new Array(exam.questions.length).fill(null);
-
-            examSelectScreen.style.display = "none";
-            questionScreen.style.display = "block";
-            indexSection.style.display = "block";
-            backIcon.classList.remove("hidden");
-
-            buildQuestionIndexButtons();
-            renderQuestion();
-        }
-
         function exitExam() {
+            // 1. 停止当前音频播放，并回到开头
+            audioPlayer.pause();          // 停止
+            audioPlayer.currentTime = 0;  // 回到 0 秒
+            // 如果你想彻底清空：
+            // audioPlayer.src = "";
+            // audioPlayer.load();
+
+            // 2. 重置状态 & 界面
             currentExamIndex = null;
             currentQuestionIndex = 0;
             indexGridEl.innerHTML = "";
@@ -773,6 +1519,9 @@
             indexSection.style.display = "none";
             examSelectScreen.style.display = "block";
             backIcon.classList.add("hidden");
+
+            // 3. 顶部标题恢复为默认
+            topbarTitle.textContent = "TCF - Compréhension orale";
         }
 
         backIcon.addEventListener("click", exitExam);
@@ -781,6 +1530,35 @@
         function getCurrentExam() {
             return exams[currentExamIndex];
         }
+
+        function renderQuestionText(raw) {
+            questionTextEl.innerHTML = "";
+            if (!raw) return;
+
+            // 按行拆分，去掉空行
+            const lines = raw
+                .split("\n")
+                .map(l => l.trim())
+                .filter(l => l.length > 0);
+
+            const total = lines.length;
+
+            lines.forEach((line, idx) => {
+                const p = document.createElement("p");
+
+                // 奇偶区分：0,2,4... = 法语；1,3,5... = 中文
+                const baseClass = idx % 2 === 0 ? "qt-fr" : "qt-cn";
+
+                // 最后两行视为题干双语对（法语+中文）
+                const isQuestionPair = total >= 2 && idx >= total - 2;
+
+                p.className = baseClass + (isQuestionPair ? " qt-question" : "");
+                p.textContent = line;
+
+                questionTextEl.appendChild(p);
+            });
+        }
+
 
         function renderQuestion() {
             const exam = getCurrentExam();
@@ -809,7 +1587,7 @@
                 audioPlayer.style.display = "none";
             }
 
-            questionTextEl.textContent = q.text;
+            renderQuestionText(q.text || "");
 
             // Choices
             choicesContainer.innerHTML = "";
@@ -911,20 +1689,6 @@
             buildQuestionIndexButtons();
             renderQuestion();
         }
-
-        function exitExam() {
-            currentExamIndex = null;
-            currentQuestionIndex = 0;
-            indexGridEl.innerHTML = "";
-            questionScreen.style.display = "none";
-            indexSection.style.display = "none";
-            examSelectScreen.style.display = "block";
-            backIcon.classList.add("hidden");
-
-            topbarTitle.textContent = "TCF - Compréhension orale"; // NEW
-        }
-
-
 
         /* ---------- PREV / NEXT BUTTONS ---------- */
         prevBtn.addEventListener("click", () => {
