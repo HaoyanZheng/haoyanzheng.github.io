@@ -1416,7 +1416,6 @@
                     },
                 ]
             },
-
             {
                 id: "test2",
                 label: "Test 2",
@@ -1424,18 +1423,965 @@
                 questions: [
                     {
                         id: 1,
-                        audio: "audio/test2/q1.mp3",
-                        text: "Quelle est la météo annoncée pour demain ?",
+                        audio: "assets/tcfCO/T2Q1.wav",
+                        text: `Écoutez les 4 propositions, choisissez celle qui correspond à l'image.
+听四个选项，选择与图片相符的一项。`,
                         choices: [
-                            "Beau temps et chaud.",
-                            "Pluie et vent fort.",
-                            "Neige dans la matinée.",
-                            "Ciel couvert mais sec."
+                            `Je voudrais envoyer cette lettre, s'il vous plaît.
+我想寄这封信，麻烦您。`
+                        ]
+                    },
+                    {
+                        id: 2,
+                        audio: "assets/tcfCO/T2Q2.wav",
+                        text: `Écoutez les 4 propositions, choisissez celle qui correspond à l'image.
+听四个选项，选择与图片相符的一项。`,
+                        choices: [
+                            `Mets ton bonnet tout de suite.
+马上把帽子戴上。`
+                        ]
+                    },
+                    {
+                        id: 3,
+                        audio: "assets/tcfCO/T2Q3.wav",
+                        text: `Je voudrais une table près de la fenêtre.
+我想要一张靠窗的桌子。`,
+                        choices: [
+                            `Je voudrais une table près de la fenêtre.
+我想要一张靠窗的桌子。`
+                        ]
+                    },
+                    {
+                        id: 4,
+                        audio: "assets/tcfCO/T2Q4.wav",
+                        text: `Allô, Anne, je suis libre demain, nous déjeunons ensemble ?
+喂，安娜，我明天有空，我们一起吃午饭吗？`,
+                        choices: [
+                            `Avec plaisir.
+太好了，很乐意。`
+                        ]
+                    },
+                    {
+                        id: 5,
+                        audio: "assets/tcfCO/T2Q5.wav",
+                        text: `Avez-vous entendu quelque chose ?
+您听到什么动静了吗？`,
+                        choices: [
+                            `Oui, je crois.
+嗯，我想是听到了。`
+                        ]
+                    },
+                    {
+                        id: 6,
+                        audio: "assets/tcfCO/T2Q6.wav",
+                        text: `J'ai trouvé un nouveau restaurant. On réserve une table pour deux à midi ? Tu es d'accord ?
+我发现了一家新餐厅。要不要中午订一张两个人的桌子？你同意吗？`,
+                        choices: [
+                            `Désolé, je mange avec mes collègues.
+不好意思，我要和同事一起吃。`
+                        ]
+                    },
+                    {
+                        id: 7,
+                        audio: "assets/tcfCO/T2Q7.wav",
+                        text: `Salut, Charlie. Je prends l'avion jeudi à 4h du matin.
+嗨，查理。我周四早上四点的飞机。
+À cette heure-là, il n'y a pas de transport en commun.
+那个时间没有公共交通。
+Tu pourrais m'emmener à l'aéroport en voiture ?
+你能开车送我去机场吗？`,
+                        choices: [
+                            `Bien sûr. Je passe te prendre chez toi.
+当然。我去你家接你。`
+                        ]
+                    },
+                    {
+                        id: 8,
+                        audio: "assets/tcfCO/T2Q8.wav",
+                        text: `Dimanche, il fera beau. J'aimerais bien faire un peu de sport.
+星期天天气会很好，我想运动一下。
+Tu veux faire du vélo avec moi ?
+你想跟我一起骑车吗？`,
+                        choices: [
+                            `Bonne idée, on pourra aller en forêt.
+好主意，我们可以骑到森林里去。`
+                        ]
+                    },
+                    {
+                        id: 9,
+                        audio: "assets/tcfCO/T2Q9.wav",
+                        text: `Salut Yann. Je fais une fête samedi, tu viens ?
+嗨，扬，我周六要开个派对，你来吗？
+— Ouais super, avec plaisir. Comment on fait pour aller chez toi ?
+——好啊，太好了。怎么去你家？`,
+                        choices: [
+                            `Tu descends au dernier arrêt du bus 78.
+你坐 78 路在最后一站下车。`
+                        ]
+                    },
+                    {
+                        id: 10,
+                        audio: "assets/tcfCO/T2Q10.wav",
+                        text: `À 20h50 sur notre chaîne, participez à notre émission.
+晚上 8 点 50，在本频道参加我们的节目。
+Composez le 01 40 01 01 pour choisir la meilleure chanson francophone de l'année.
+拨打 01 40 01 01，为本年度最佳法语歌曲投票。
+Que doit-on faire pour participer ?
+要参加节目，应该做什么？`,
+                        choices: [
+                            `Téléphoner.
+打电话。`
+                        ]
+                    },
+                    {
+                        id: 11,
+                        audio: "assets/tcfCO/T2Q11.wav",
+                        text: `Mais qu'est-ce qui t'est arrivé, Olivier ? Tu t'es blessé dans une bagarre ?
+奥利维耶，你怎么了？是打架受伤的吗？
+Non, c'est une histoire idiote.
+不是，是件很蠢的事。
+Je suis allé skier avec des copains dans une station près de Montréal.
+我和几个朋友去蒙特利尔附近的一个滑雪场滑雪。
+On a passé la journée à descendre les pistes à toute allure.
+我们一整天都在飞快地滑雪下坡。
+Et c'est comme ça que tu t'es cassé le bras ?
+这样把胳膊摔断的？
+Même pas. Je suis rentré chez moi en voiture,
+还不是。我开车回到家，
+et là j'ai manqué une marche en montant à l'étage.
+上楼的时候少踩了一级台阶，摔了一跤。
+Comment Olivier s'est-il cassé le bras ?
+奥利维耶的胳膊是怎么摔断的？`,
+                        choices: [
+                            `Il est tombé dans son escalier.
+他在自家楼梯上摔下来了。`
+                        ]
+                    },
+                    {
+                        id: 12,
+                        audio: "assets/tcfCO/T2Q12.wav",
+                        text: `Bonjour monsieur, je suis étudiante, je cherche un logement.
+您好先生，我是学生，正在找住的地方。
+Bienvenue chez nous. Est-ce que vous savez comment fonctionne notre association ?
+欢迎您来我们这里。您了解我们协会的运作方式吗？
+Non, pas très bien.
+不太了解。
+Eh bien, vous habitez chez une personne âgée et, en échange,
+我们这边是让您住在一位老年人家里，
+vous lui rendez quelques petits services, faire les courses, préparer le repas
+作为交换，您帮他做一些小事，比如买菜、准备饭菜，
+et surtout lui tenir compagnie.
+最重要的是陪伴他。
+Et combien ça coûte ?
+那这个要多少钱？
+Ça dépend du temps passé auprès de la personne et de ce que vous faites.
+取决于你陪伴他的时间和做的事情。
+Vous payerez un petit loyer si vous assurez seulement une présence certains soirs.
+如果只是某些晚上在场，你只需要付一点点房租。
+Que permet cette association ?
+这个协会能提供什么？`,
+                        choices: [
+                            `De vivre chez quelqu'un.
+让学生住在别人家里。`
+                        ]
+                    },
+                    {
+                        id: 13,
+                        audio: "assets/tcfCO/T2Q13.wav",
+                        text: `Alors, tu as aimé ?
+那么，你喜欢吗？
+Bof, je n'ai pas très bien compris la fin.
+嗯，一般般，我没太看懂结局。
+Ah oui ? Mais enfin, le héros quitte secrètement la France.
+是吗？可最后不是主角秘密离开法国吗？
+Et il part où ?
+那他去哪儿？
+Je ne sais pas, en Espagne, il est espagnol.
+不知道，去西班牙吧，他本来就是西班牙人。
+Alors pourquoi le voit-on rentrer dans cette maison ?
+那为什么我们看到他回到那所房子？
+Pour aller chercher un faux passeport.
+是去拿假护照。
+Tu t'es endormi pendant la séance, toi, non ?
+你是不是放电影的时候睡着了？
+De quoi parlent ces deux personnes ?
+这两个人在讨论什么？`,
+                        choices: [
+                            `Du dernier film qu'elles ont vu.
+她们在聊最近看的那部电影。`
+                        ]
+                    },
+                    {
+                        id: 14,
+                        audio: "assets/tcfCO/T2Q14.wav",
+                        text: `Cette fête de la gastronomie est l'occasion d'évoquer un plaisir
+这个美食节正好让我们谈到一种乐趣，
+que l'on peut partager très tôt en famille,
+一种可以很早就在家庭里分享的乐趣，
+le plaisir de cuisiner à quatre mains, parents et enfants réunis autour d'une même recette.
+就是父母和孩子一起动手做菜的乐趣。
+Cuisiner avec son enfant, c'est une activité à la fois ludique, créative, enrichissante pour un enfant
+和孩子一起做饭是一项既有趣又有创意、还能让孩子获益匪浅的活动，
+puisqu'elle fait appel à tous ses sens
+因为这会调动到他的所有感官，
+et c'est bien entendu un bon moment à passer ensemble.
+当然，这也是一起度过美好时光的机会。
+Selon cette personne, que permet la fête de la gastronomie ?
+在这人看来，美食节能带来什么？`,
+                        choices: [
+                            `Créer l'occasion de se retrouver en famille.
+给家人创造团聚、一起做饭的机会。`
+                        ]
+                    },
+                    {
+                        id: 15,
+                        audio: "assets/tcfCO/T2Q15.wav",
+                        text: `Puis-je déposer mon manteau ?
+我可以把外套寄存一下吗？
+Certainement madame, c'est à votre gauche.
+当然可以，女士，就在您的左边。
+Cette année, c'est gratuit pour les abonnés au théâtre.
+今年剧院的会员寄存是免费的。
+Oh, voilà une bonne nouvelle pour débuter la saison !
+哦，这真是开季的好消息！
+Je vous souhaite une agréable soirée.
+祝您有一个愉快的夜晚。
+Que souhaite faire la femme ?
+这位女士想做什么？`,
+                        choices: [
+                            `Remettre un vêtement au vestiaire.
+把外套寄存在衣帽间。`
+                        ]
+                    },
+                    {
+                        id: 16,
+                        audio: "assets/tcfCO/T2Q16.wav",
+                        text: `Vous désirez ?
+您想要点什么？
+Est-ce que cette veste existe en noir ?
+这件夹克有黑色的吗？
+Je ne l'ai plus. Mais nous avons ce modèle-là, plus classique. Passez-la.
+黑色没有了，但我们有这款，更经典一点。您试试看。
+Oh, elle est trop serrée.
+哦，这件太紧了。
+Non, je vous assure. C'est la tendance cette année de porter les vestes cintrées.
+不会的，相信我。今年流行穿这种修身夹克。
+Je ne pourrai pas mettre de gilet en dessous ?
+那我里面就不能穿毛衣了吗？
+Oh, vous n'en avez pas besoin. C'est de la pure laine, ça tient chaud.
+不需要的，这是纯羊毛的，很保暖。
+Bon, je la prends.
+好吧，那我就要这件。
+Que propose la vendeuse à la cliente ?
+女店员向顾客提出了什么建议？`,
+                        choices: [
+                            `D'essayer un vêtement près du corps.
+试穿一件比较贴身的衣服。`
+                        ]
+                    },
+                    {
+                        id: 17,
+                        audio: "assets/tcfCO/T2Q17.wav",
+                        text: `Vous, en professionnel, qu'est-ce que vous me conseillez pour l'entrée ?
+您是专业的，前厅（入口）您建议我怎么布置？
+Pour l'entrée, Madame Martin, quelque chose de doux, de fleuri, dans les roses peut-être.
+马丁太太，入口处可以用一些柔和、带花色的，比如粉色的东西。
+Ah, ça c'est une bonne idée !
+啊，这主意不错！
+Et pour la pièce principale ?
+那主要的房间呢？
+Là, au contraire, il faut de la lumière. Je pense que du jaune ou du saumon irait bien.
+那里相反需要亮一点的颜色，我觉得黄色或者鲑鱼色会很合适。
+À qui Madame Martin demande-t-elle des conseils ?
+马丁太太是向谁征求建议？`,
+                        choices: [
+                            `À un décorateur.
+向一位室内装潢师。`
+                        ]
+                    },
+                    {
+                        id: 18,
+                        audio: "assets/tcfCO/T2Q18.wav",
+                        text: `Tout le monde rêve de faire de la proximité, d'être proche des auditeurs,
+所有人都希望做“贴近听众”的节目，
+alors quand on est une radio associative, locale, on a plus de facilité.
+那么对于一家地方性的协会电台来说就更容易了。
+Vous, chaque vendredi, vous ouvrez le local à 13h,
+你们每周五下午一点就把电台的地方向公众开放，
+on peut venir avec son panier et on partage en commun le repas.
+大家可以拎着饭篮来，一起吃午饭。
+Tout à fait, et là, pour la fin de l'année, on a donc lancé une invitation
+没错。而且在年底，我们发出邀请，
+à tous ceux qui voudraient venir manger avec nous
+邀请所有想和我们一起吃饭的人，
+et réaliser une émission collective de fin d'année, un petit peu festif.
+共同录制一个年终的集体节目，带点节日气氛。
+Que propose chaque semaine cette radio à ses auditeurs ?
+这家电台每周向听众提供什么？`,
+                        choices: [
+                            `De déjeuner ensemble.
+一起共进午餐。`
+                        ]
+                    },
+                    {
+                        id: 19,
+                        audio: "assets/tcfCO/T2Q19.wav",
+                        text: `Et maintenant, les annonces de Radio Saint-Onge.
+现在是圣翁日电台的广告时间。
+Vous faites du sport dans un club et avez toujours rêvé
+您在俱乐部从事体育运动，
+de faire de votre passion votre métier ?
+并一直梦想把这份爱好变成职业吗？
+Les magasins « Sportez-vous bien » recherchent des vendeurs
+“Sportez-vous bien”连锁店正在招聘销售员，
+qui soient en même temps des sportifs
+要求既是销售，又是真正的运动爱好者，
+pour l'ouverture de leur nouvelle boutique à Saint-Onge-les-Tonges.
+为的是新开在本市的门店服务。
+Si vous êtes intéressé, veuillez déposer votre CV et votre lettre de motivation
+如果您感兴趣，请把简历和求职信
+dans la boutique la plus proche de chez vous ou en ligne sur notre site Internet.
+送到离您最近的门店，或者在我们的网站上投递。
+Quelle est la condition pour répondre à cette annonce ?
+应聘这份工作需要具备什么条件？`,
+                        choices: [
+                            `Pratiquer régulièrement un sport.
+要经常进行体育运动。`
+                        ]
+                    },
+                    {
+                        id: 20,
+                        audio: "assets/tcfCO/T2Q20.wav",
+                        text: `Allô, bonjour. Je suis Madame Leroy.
+喂，你好。我是勒鲁瓦夫人。
+J'ai passé une commande de vêtements par téléphone il y a dix jours,
+十天前我通过电话订购了一些衣服，
+avec une livraison à domicile. Et pourtant, rien n'est arrivé pour l'instant.
+选择的是送货上门，但到现在还什么都没送来。
+Donnez-moi votre numéro client Blanche Maison, s'il vous plaît. Je vais vérifier.
+请把您在“Blanche Maison”的客户号给我，我查一下。
+En effet, la livraison n'a pas été faite. La neige a interrompu le trafic.
+确实还没送。因为下雪，交通中断了。
+Le transporteur ne pourra vous livrer que demain.
+运输公司只能明天给您送货。
+Pourquoi y a-t-il un retard de livraison ?
+为什么这次送货会延迟？`,
+                        choices: [
+                            `La circulation routière est coupée.
+因为道路交通被大雪中断了。`
+                        ]
+                    },
+                    {
+                        id: 21,
+                        audio: "assets/tcfCO/T2Q21.wav",
+                        text: `Régis Solivérès, bonjour.
+雷吉斯·索利韦雷斯，您好。
+Bonjour, bonjour Philippe.
+您好，菲利普。
+Régis, vous vous lancez dans une aventure assez incroyable
+雷吉斯，您要投身一项相当不可思议的冒险，
+qui est de participer à la réalisation d'un film,
+就是参与拍摄一部电影，
+un film avec un réalisateur professionnel, avec des professionnels du cinéma,
+这是一部由专业导演和专业电影人参与的影片，
+il s'appelle François Chailloux.
+导演叫弗朗索瓦·沙伊尤。
+Oui, à l'occasion du festival de Lufon, j'ai rencontré François,
+是的，在吕丰电影节上我认识了他，
+je lui ai dit que je voulais faire un film.
+我对他说我想拍一部电影。
+Quel est le projet de Régis Solivérès et de ses élèves ?
+雷吉斯·索利韦雷斯和他的学生有什么计划？`,
+                        choices: [
+                            `Tourner un film.
+拍一部电影。`
+                        ]
+                    },
+                    {
+                        id: 22,
+                        audio: "assets/tcfCO/T2Q22.wav",
+                        text: `Quand j'étais adolescent, j'avais écrit un long poème à Georges Brassens.
+我还是青少年的时候，给乔治·布拉桑写过一首长诗。
+J'avais fini de le recopier dans le bistrot en face de l'impasse Florimont où il habitait.
+我在他住的弗洛里蒙小巷对面的咖啡馆里抄完了那首诗，
+Et j'étais allé lui porter.
+然后就拿着去找他。
+Sauf qu'il n'habitait plus là depuis des années
+结果他已经好多年不住在那里了，
+et que j'étais assez rassuré qu'il n'habite plus là
+其实我反而松了一口气，
+parce que je ne sais pas ce que je lui aurais raconté.
+因为我都不知道见到他时该说什么。
+Mais je l'avais écrite et je me dis
+不过诗我是写了，我就想，
+que si un jour j'avais reçu un petit mot de Brassens
+如果有一天能收到布拉桑给我的一小张便条，
+me disant « J'ai lu vos chansons et j'aimerais bien vous en parler »,
+上面写着“我读了你的歌，我想和你谈谈”，
+ça m'aurait intéressé.
+那我肯定会非常激动。
+Souhaitait cette personne en allant chez Georges Brassens ?
+这人当初去找乔治·布拉桑，是希望做什么？`,
+                        choices: [
+                            `Lui présenter son travail.
+把自己的作品拿给他看。`
+                        ]
+                    },
+                    {
+                        id: 23,
+                        audio: "assets/tcfCO/T2Q23.wav",
+                        text: `La question du jour, Valérie Cantier : pourquoi l'Établissement français du sang
+今天的问题是：为什么法国血液管理机构
+en appelle-t-il aux étudiants ?
+要向大学生发出呼吁？
+Les jeunes donnent plus facilement leur sang, il faut le savoir,
+年轻人更愿意献血，这一点必须知道，
+ils voient ça comme un premier acte de citoyenneté, un acte solidaire, disent-ils,
+他们觉得这是一种公民行为、团结互助的行动，
+un geste utile, c'est ce qui ressort des sondages.
+是一件“有用的事”，这是问卷调查显示的结果。
+Un donneur sur cinq a entre 18 et 24 ans en France,
+在法国，每五个献血者中就有一个年龄在 18 到 24 岁之间，
+mais souvent ils déclarent ne pas donner parce qu'ils ne sont pas sollicités,
+但他们也常说自己不献血的原因是没人来动员他们，
+pas assez en tout cas, ou bien parce qu'ils ne savent pas où aller.
+至少动员得不够，或者是不知道去哪儿献血。
+Du coup, la semaine prochaine, l'Établissement français du sang lance une campagne
+因此，下周法国血液管理机构要发起一项活动，
+pour mobiliser les étudiants, le slogan : « On est plus qu'amis, on est donneurs de sang ».
+专门动员学生，口号是“我们不仅是朋友，我们还是献血者”。
+Quelle est l'attitude des jeunes face aux dons du sang ?
+年轻人对献血持什么态度？`,
+                        choices: [
+                            `Ils déplorent un manque d'information.
+他们觉得自己缺少相关信息和动员。`
+                        ]
+                    },
+                    {
+                        id: 24,
+                        audio: "assets/tcfCO/T2Q24.wav",
+                        text: `Charlotte, tu as trouvé une place pour te garer ?
+夏洛特，你找到停车位了吗？
+Oui, mais j'ai mis au moins un quart d'heure,
+找到了，但我起码找了十五分钟，
+entre les emplacements réservés et les arrêts minutes.
+不是预留车位就是临时停车位。
+Et tu t'es garée où ?
+那你最后停在哪里？
+Rue Colbert, après l'intersection avec la rue en sens interdit.
+在科尔贝尔街，过了那个单行道交叉口之后。
+Tu as pensé à prendre un ticket de stationnement ?
+你记得去买停车票了吗？
+Non, c'est gratuit dans ce quartier.
+没有，这一带不是免费的吗？
+Plus maintenant, la réglementation vient de changer.
+现在不免费了，规定刚刚改。
+Bon, j'y retourne avant le passage des policiers municipaux.
+那我赶紧回去，在城管来之前。
+Quel est le problème soulevé ?
+他们提到的是什么问题？`,
+                        choices: [
+                            `Le stationnement est devenu payant.
+原本免费的停车现在要收费了。`
+                        ]
+                    },
+                    {
+                        id: 25,
+                        audio: "assets/tcfCO/T2Q25.wav",
+                        text: `Christelle Nolot, directrice d'une salle de cinéma, nous parle du festival
+电影厅负责人克里斯特尔·诺洛来跟我们谈谈
+« Le Printemps du cinéma ».
+“电影之春”这个影展。
+Je décide moi-même des films que nous présentons.
+放映哪些影片是我自己来定的。
+Le but est de proposer le maximum de diversité, qu'il y en ait pour tous les goûts.
+目的就是尽可能提供多样化的影片，让每个人都能找到喜欢的。
+C'est l'occasion de mettre en avant des films qui ont bien marché,
+这也是一个机会，可以重新推出那些口碑不错、
+mais qui n'ont pas assez été exploités.
+却没有足够上映时间的电影。
+Pour les amateurs de cinéma d'auteur,
+对于喜欢作者电影的观众，
+il y a aussi une sélection de quinze films art et essai déjà récompensés.
+我们还有 15 部已经获奖的文艺片精选。
+Qu'est-ce qui est important pour Christelle Nolot ?
+对克里斯特尔·诺洛来说，最重要的是什么？`,
+                        choices: [
+                            `La variété de la programmation.
+放映片单的多样性。`
+                        ]
+                    },
+                    {
+                        id: 26,
+                        audio: "assets/tcfCO/T2Q26.wav",
+                        text: `Camille, à ton arrivée à Québec, dans quel type de logement résidais-tu ?
+卡米耶，你刚到魁北克时住的是什么样的房子？
+J'ai d'abord habité un appartement en colocation, dans le quartier de Montcalm.
+一开始我在蒙卡尔姆区合租了一套公寓。
+Au bout de six mois à peine, j'ai emménagé à deux pas du centre-ville.
+不到六个月，我就搬到离市中心两步路的地方了。
+C'est très simple de trouver un logement ici. Ça se fait en quelques jours.
+在这里找房子很简单，几天就能搞定。
+Hum. Comment as-tu trouvé ton premier appartement ?
+嗯。那你第一套公寓是怎么找到的？
+Avant de quitter la France, sur un site Internet regroupant les annonces de colocation.
+在离开法国之前，通过一个合租信息网站找的。
+Mais je conseille de chercher sur place. Il y a tout ce qu'il faut pour trouver facilement.
+不过我建议在当地再找，这里找房子的工具应有尽有，很容易。
+On peut découvrir le quartier, voir si les pièces sont spacieuses, lumineuses
+可以实地看看社区，看看房间是不是宽敞明亮，
+et surtout bien insonorisées.
+尤其是隔音好不好。
+Ce n'était pas le cas de mon premier logement, malgré le nom du quartier.
+我的第一套房子就不是这样，尽管那个区的名字听起来很好听。
+D'après Camille, quel est le point fort de l'immobilier à Québec ?
+在卡米耶看来，魁北克房产市场最大的优点是什么？`,
+                        choices: [
+                            `La recherche d'un appartement est rapide.
+找公寓的过程很快、很方便。`
+                        ]
+                    },
+                    {
+                        id: 27,
+                        audio: "assets/tcfCO/T2Q27.wav",
+                        text: `Dans toutes les écoles primaires de France,
+在法国所有小学里，
+815 900 élèves du cours élémentaire vont passer des évaluations nationales
+共有 815900 名小学低年级学生要参加全国统一测评，
+en français et mathématiques.
+科目是法语和数学。
+Alors ces évaluations nationales sont-elles utiles ?
+那么，这种全国评估有用吗？
+L'évaluation est un acte quotidien pour tous les enseignants.
+对所有老师来说，评估本来就是每天都在做的事。
+Là, c'est une évaluation institutionnelle
+这里说的是教育部组织的“制度性评估”，
+que propose le ministère de l'Éducation nationale.
+由国家教育部推出。
+Ça a déjà été effectué au mois de janvier pour les élèves du cours moyen
+今年一月份已经给高年级学生做过一次了，
+et, à l'époque, on l'avait d'ailleurs fortement critiquée
+当时就曾受到强烈批评，
+puisque c'était une évaluation qui intervenait au mois de janvier
+因为一月份进行评估时，
+alors qu'une grande partie des programmes n'avaient pas été effectués.
+大部分教学内容还没有上完。
+Pour quelles raisons ces évaluations ont-elles été critiquées ?
+这些评估被批评的原因是什么？`,
+                        choices: [
+                            `Parce qu'elles avaient lieu tôt dans l'année scolaire.
+因为它们在学年中过早进行。`
+                        ]
+                    },
+                    {
+                        id: 28,
+                        audio: "assets/tcfCO/T2Q28.wav",
+                        text: `S'il est normal que des espèces apparaissent et disparaissent au gré de l'évolution,
+在进化过程中，一些物种出现、消失是正常的，
+il est par contre inédit qu'une seule espèce, la nôtre,
+但史无前例的是，只有一个物种——我们人类，
+mette en danger l'existence de l'ensemble du vivant.
+会危及所有生命的存在。
+Les spécialistes sont en effet unanimes pour dire
+专家一致认为，
+que la biodiversité est aujourd'hui menacée par les activités humaines.
+当今的生物多样性正受到人类活动的威胁。
+Une récente étude britannique estime ainsi qu'une plante sur cinq dans le monde est menacée.
+英国最近一项研究估计，世界上每五种植物中就有一种受到威胁。
+L'ONU affirme de son côté que le rythme annuel des disparitions d'espèces
+联合国则指出，如今物种消失的速度
+est désormais cent fois plus élevé que ce qu'il devrait être naturellement.
+已经比自然状态下高了一百倍。
+Il y a donc urgence à réagir pour préserver la vie sur Terre
+因此，必须紧急采取行动，保护地球上的生命，
+et préserver l'existence de notre propre espèce.
+也保护我们人类自己的存在。
+Quel est le sujet de cette émission ?
+这档节目讨论的主题是什么？`,
+                        choices: [
+                            `L'état actuel de la biodiversité.
+当前生物多样性的状况。`
+                        ]
+                    },
+                    {
+                        id: 29,
+                        audio: "assets/tcfCO/T2Q29.wav",
+                        text: `Imagine pouvoir faire le tour du monde
+想象一下，你能环游世界，
+sans avoir à payer pour te loger.
+却不用花钱住旅馆。
+Imagine partager des cultures différentes
+想象你能和不同文化背景的人分享生活，
+avec des guides personnalisés, totalement gratuits.
+还有完全免费的“私人导游”。
+Arrête d'imaginer, ça existe.
+别再只是想象了，这样的东西确实存在。
+Depuis l'an 2000, près de 300 000 personnes l'ont fait,
+自 2000 年以来，已经有近 30 万人这样旅行，
+à bon marché et hors des circuits touristiques programmés,
+既便宜，又不走传统旅游路线，
+grâce à l'hospitalité des membres d'un réseau social
+多亏了一个社交网络成员的热情接待，
+qui s'étend sur les cinq continents.
+这个网络遍布五大洲。
+Son fondateur, jeune étudiant allemand de 22 ans,
+它的创始人是一位 22 岁的德国学生，
+assure que l'objectif final est de promouvoir la paix
+他说最终目标是通过跨文化交流
+par l'échange interculturel.
+来促进和平。
+Que propose ce reportage ?
+这则报道向人们提出了什么样的建议？`,
+                        choices: [
+                            `D'expérimenter une manière différente de voyager.
+尝试一种与众不同的旅行方式。`
+                        ]
+                    },
+                    {
+                        id: 30,
+                        audio: "assets/tcfCO/T2Q30.wav",
+                        text: `L'effet sur l'apprentissage est faible,
+打分对学习效果本身影响不大，
+mais les notes ont d'autres fonctions.
+但分数还有别的作用。
+Elles servent à visibiliser les hiérarchies à l'intérieur de la classe.
+它们能让班级内部的“层级”变得清晰可见。
+Elles servent à savoir exactement à quel niveau se trouvent les élèves.
+它们可以让人准确知道学生处于什么水平。
+Donc, elles donnent une indication très claire.
+因此，它们给出一个非常清楚的指示。
+Ensuite, elles permettent de faire le tri
+其次，它们还可以用来做“筛选”，
+en termes de redoublement ou d'orientation.
+例如决定是否留级、或分流到不同方向。
+Elles permettent aussi une objectification,
+分数还可以把老师对学生的评价
+une réification du jugement qu'on donne de l'élève.
+变成一种看得见、摸得着的“对象”。
+Par exemple, lorsqu'on communique les résultats aux parents,
+比如向家长通报成绩时，
+c'est numérique, c'est vrai, c'est objectif.
+用的是数字，看起来真实又客观。
+Selon le locuteur, à quoi servent des notes à l'école ?
+在这位发言人看来，学校里的分数有什么作用？`,
+                        choices: [
+                            `À créer une échelle lisible de classification des élèves.
+用来建立一个清晰可读的学生分级体系。`
+                        ]
+                    },
+                    {
+                        id: 31,
+                        audio: "assets/tcfCO/T2Q31.wav",
+                        text: `Bonjour. Alors, voilà ma question :
+您好，我的问题是这样的：
+je voudrais savoir comment fonctionne le système des pourboires au Québec,
+我想了解在魁北克小费制度是怎样的，
+car cela varie beaucoup d'un pays à l'autre.
+因为各个国家差别很大。
+Est-ce obligatoire ou non ?
+给小费究竟是强制的还是自愿的？
+Eh bien, c'est une chose courante chez nous
+在我们这里，给小费是很常见的事情，
+de laisser une somme d'argent à quelqu'un
+人们会留一点钱给别人，
+pour le remercier de ses bons services,
+以感谢他/她提供的优质服务，
+car le service n'est pas inclus dans le salaire du personnel.
+因为“服务费”并不包含在员工的工资里。
+Et comment calcule-t-on la somme d'argent qu'on doit laisser ?
+那具体应该给多少呢？
+En général, on doit laisser entre 15 et 20 % de la somme indiquée sur la facture.
+一般来说，要给账单金额的 15% 到 20%。
+C'est une vraie gymnastique, alors, au moment de payer ?
+那结账时候岂不是要做很多心算？
+Non, pas vraiment. Nous autres, Québécois, on est habitués à ce système.
+也没有啦，我们魁北克人已经习惯这个制度了，
+Ça se fait presque automatiquement.
+给多少几乎是下意识就算好了。
+De quoi dépend le montant du pourboire au Québec ?
+在魁北克，小费的金额取决于什么？`,
+                        choices: [
+                            `Du bon vouloir du client.
+取决于顾客自己愿意给多少（按比例算）。`
+                        ]
+                    },
+                    {
+                        id: 32,
+                        audio: "assets/tcfCO/T2Q32.wav",
+                        text: `Longtemps, la copie illégale de produits ne concernait que le domaine du luxe.
+很长一段时间里，假货只出现在奢侈品领域。
+Aujourd'hui, tous les secteurs de l'économie sont atteints par ce phénomène :
+而现在，经济的各个领域都受到这种现象的影响：
+pièces automobiles, prêt-à-porter, jouets ou encore médicaments.
+汽车零件、成衣、玩具，甚至药品。
+La douane française a saisi plus de cinq millions d'articles,
+法国海关查获的假货超过五百万件，
+soit deux fois plus que l'année dernière,
+是去年的两倍，
+et on estime que cette contrefaçon contribue à supprimer
+据估计，这些假货每年
+30 000 emplois en France chaque année.
+会让法国流失三万个就业岗位。
+Quels constats la journaliste fait-elle sur la contrefaçon ?
+这位女记者对假冒产品得出了什么结论？`,
+                        choices: [
+                            `Elle met en danger le marché du travail.
+假货正在威胁就业市场。`
+                        ]
+                    },
+                    {
+                        id: 33,
+                        audio: "assets/tcfCO/T2Q33.wav",
+                        text: `Le monde bouge, partout, trop lentement, certes,
+世界在变化，虽然变化得太慢，
+mais enfin il bouge, même quand on parle de sport féminin.
+但毕竟是在动，哪怕是在谈女子体育的时候。
+Non que nous ne célébrions depuis longtemps nos championnes :
+并不是说我们不会为女冠军欢呼，
+une médaille d'or aux JO n'a pas de sexe,
+奥运会金牌是没有性别的，
+c'est une médaille d'or pour la France, un point c'est tout.
+那是一枚给法国赢来的金牌，仅此而已。
+Mais dès qu'il s'agit de s'intéresser à l'actualité des équipes féminines
+可是，一旦要真正关注女队的新闻、
+de sport collectif et de retransmettre leurs compétitions,
+转播她们的比赛时，
+les médias ont souvent tendance à détourner caméras et micros.
+媒体就往往把镜头和话筒转开了。
+Et quand on scrute d'un peu près les instances dirigeantes des clubs et des fédérations,
+再仔细看看俱乐部和各大联合会的领导层，
+là encore, beaucoup de testostérone et encore bien peu de parité.
+还是男性为主，几乎看不到真正的性别平等。
+Que dénonce cette journaliste ?
+这位女记者在指责什么？`,
+                        choices: [
+                            `Les comportements machistes perdurent dans l'univers sportif.
+大男子主义在体育界依然根深蒂固。`
+                        ]
+                    },
+                    {
+                        id: 34,
+                        audio: "assets/tcfCO/T2Q34.wav",
+                        text: `Dans le cadre du C.R.A.D., je coordonne un projet de recherche
+在 C.R.A.D. 的框架下，我负责协调一个研究项目，
+justement sur l'adaptation du milieu urbain aux changements climatiques.
+研究的正是城市环境如何适应气候变化。
+L'adaptation, ça veut dire non pas l'atténuation nécessairement des gaz à effet de serre,
+所谓“适应”，并不一定是指减少温室气体排放，
+mais plutôt, puisque le climat change, il faut s'y adapter,
+而是说既然气候在改变，我们就得做出适应，
+il faut voir à ce que la ville s'y adapte
+要让城市提前适应这些变化，
+pour anticiper les changements plutôt qu'y réagir
+是要预先规划好，而不是事后被动应对，
+et avoir à payer pour tout ce que ça veut dire,
+否则就得为各种损失埋单，
+comme bris et catastrophes et désorganisation, déstructuration.
+包括破坏、灾难、混乱和结构失衡等。
+Alors, ce qu'on fait, nous, c'est, depuis trois ans,
+所以这三年来，我们所做的就是
+on mène une démarche participative
+开展一项协作式的研究，
+pour savoir sur quoi se fonder
+看看应该依据哪些因素
+pour justement planifier l'adaptation.
+来规划这种适应。
+Sur quoi porte le projet de recherche mentionné par l'intervenant ?
+这位发言人提到的研究项目主要关注什么？`,
+                        choices: [
+                            `Un aménagement territorial en fonction des données météorologiques.
+根据气象与气候数据来规划城市和地区的布局。`
+                        ]
+                    },
+                    {
+                        id: 35,
+                        audio: "assets/tcfCO/T2Q35.wav",
+                        text: `On l'a dit, la culture générale a tous ses défauts,
+我们常说，“通识文化”本身有很多缺陷，
+mais en plus, elle a le défaut d'ignorer les sciences.
+其中一个大问题就是忽视科学。
+Ça, c'est assez facile à faire comme constat.
+这一点其实很容易观察到。
+Oui, assez facile à faire comme constat,
+是的，很容易看出来，
+mais ce qui est déplorable, c'est que ce n'est pas incorporé, cette idée-là, il me semble.
+可悲的是，人们似乎并没有真正把这个认识内化进去。
+C'est-à-dire qu'on peut, aujourd'hui, se prétendre cultivé,
+也就是说，现在一个人可以自称“有文化”，
+et les gens qui parlent de culture générale
+而那些谈论“通识文化”的人，
+sont très souvent, ou typiquement, des humanistes
+往往是有人文、文学背景的人，
+qui ont une culture littéraire,
+他们有丰富的文学修养，
+à être cultivés sans avoir de connaissances scientifiques.
+却可以在几乎不懂科学的情况下被认为“有文化”。
+Et j'irais même jusqu'à dire pire,
+我甚至要说更严重的是，
+en méprisant, ou en trouvant que ça ne pose absolument pas problème
+他们还会轻视科学，或者觉得
+de ne pas avoir de culture scientifique,
+没科学素养一点问题都没有，
+ou, pour prendre un exemple que j'aime beaucoup,
+再举一个我很喜欢的例子，
+en se vantant de ne rien connaître aux mathématiques.
+有人甚至把“我什么数学都不懂”当成值得炫耀的事。
+Et là, je pense que c'est une profonde erreur,
+在我看来，这是一种非常严重的错误，
+et puis le livre se veut une défense passionnée, j'oserais dire,
+这本书可以说是对科学文化的一次热情辩护，
+de l'importance d'incorporer les notions de culture scientifique.
+强调把科学知识纳入文化视野是多么重要。
+Pour l'auteur, de quoi les gens cultivés doivent-ils se rendre compte ?
+在作者看来，自认为“有文化”的人应该意识到什么？`,
+                        choices: [
+                            `De l'absurdité qu'il y a à valoriser leur manque de culture scientifique.
+吹嘘自己缺乏科学素养是一件多么荒谬的事。`
+                        ]
+                    },
+                    {
+                        id: 36,
+                        audio: "assets/tcfCO/T2Q36.wav",
+                        text: `Au milieu des années 70 à Grenoble,
+七十年代中期，在格勒诺布尔，
+un étudiant des Beaux-Arts se convertit à la danse
+一位美院学生因为爱上了一名女舞者，
+par amour pour une danseuse qui deviendra sa muse et sa compagne.
+转而投身舞蹈，那位舞者后来成了他的缪斯和伴侣。
+Après avoir suivi pendant deux ans les cours de Merce Cunningham à New York,
+在纽约跟随默斯·坎宁安上了两年课之后，
+il crée en 1979 le groupe Émile Dubois.
+他在 1979 年创立了“埃米尔·迪布瓦”舞团。
+Groupe, tribu, horde, un désordre
+这是一个像部落、像群体的队伍，
+qui investit des lieux de la ville où on ne s'attendait pas à voir de la danse :
+会跑到城市里各种你完全想不到会看到舞蹈的地方演出：
+piscine vide, carrefour, parc, gymnase…
+空泳池、十字路口、公园、体育馆……
+Les lieux ne sont pas attendus et cette danse-là encore moins.
+这些地方本来就“不合常规”，他们的舞蹈就更出乎意料。
+Quelle est la particularité du groupe Émile Dubois ?
+“埃米尔·迪布瓦”舞团有什么特别之处？`,
+                        choices: [
+                            `Ses spectacles sont donnés dans des sites insolites.
+他们常常在各种意想不到的地方表演。`
+                        ]
+                    },
+                    {
+                        id: 37,
+                        audio: "assets/tcfCO/T2Q37.wav",
+                        text: `Voilà, la question principale, c'est de savoir
+那么，关键问题在于：
+si on va médicaliser la crise d'adolescence ou pas,
+我们要不要把“青春期危机”医学化。
+sachant qu'aujourd'hui le symptôme principal de la crise d'adolescence chez le garçon,
+要知道，如今男孩青春期危机的主要表现，
+c'est le jeu vidéo excessif ou l'internet excessif.
+就是过度玩电子游戏或沉迷上网。
+Donc, si on dit « addiction », on le médicalise,
+如果我们把这称为“成瘾”，就等于把它医学化，
+et ça veut dire tôt ou tard, pas seulement des psychothérapies,
+这迟早会导致不仅仅是心理治疗，
+mais des chimiothérapies pour tous les adolescents joueurs,
+甚至可能对所有爱玩游戏的青少年进行药物治疗，
+alors qu'on sait, encore une fois d'expérience,
+可根据经验我们知道，
+que 99 % arrêtent de jouer à 17 ou 18 ans
+有 99% 的孩子在 17、18 岁时就不再这样玩了，
+parce qu'ils ont fini leur crise d'adolescence,
+因为他们已经度过青春期，
+ils ne sont plus en révolte contre les parents,
+不再跟父母对着干，
+ils sont soucieux de s'intégrer à la société et d'avoir une activité professionnelle.
+开始关心如何融入社会、找工作。
+Donc l'adolescence, on l'accompagne, voilà, ne la pathologisons pas
+所以，青春期我们要做的是陪伴，而不是把它当成病，
+et je suis bien content que l'Académie de médecine ait pris cette position.
+我很高兴医学科学院也持这种立场。
+Que préconise ce spécialiste face à l'engouement des jeunes pour les jeux vidéo ?
+面对青少年迷恋电子游戏，这位专家主张什么？`,
+                        choices: [
+                            `D'attendre que le temps ait fait son œuvre.
+耐心等待时间自然解决问题，不要急着把它医学化。`
+                        ]
+                    },
+                    {
+                        id: 38,
+                        audio: "assets/tcfCO/T2Q38.wav",
+                        text: `Ouvrir une chambre d'hôte, c'est d'abord opter pour un mode de vie bien particulier,
+开民宿，首先是选择一种很特殊的生活方式，
+où vous partagez la vie de votre quotidien
+你会把自己的日常生活
+avec des gens de passage soit toute l'année ou une partie de l'année.
+与旅客分享，可能是一整年，也可能是一部分时间。
+C'est une formule conviviale qui a du succès
+这种亲切的接待方式很受欢迎，
+puisqu'on en compte plus de 110 000 en France.
+法国目前已有超过 11 万家这种民宿。
+Est-ce qu'il y a moins de contraintes pour les gîtes ruraux ?
+那乡间度假屋是不是限制更少？
+Oui, tout à fait. Si vous êtes moins disponible,
+是的。如果你可支配时间没那么多，
+le gîte rural, pour cela, il vous suffit d'être là
+做乡间度假屋的话，只要在客人到达和离开的时侯在场就行，
+à l'arrivée, au départ des vacanciers
+平时度假者住在那里，
+et, en fait, il propose au contraire un logement
+那是一整套独立住房，
+qui est vraiment indépendant du vôtre,
+和你自己的住所完全分开，
+qui est généralement situé à proximité de celui du propriétaire
+通常在房东家附近，
+mais où le vacancier va séjourner en toute autonomie
+但度假者可以完全自主地在那儿居住，
+pendant la semaine ou pour le week-end.
+不管是一周还是一个周末。
+Que peut offrir un propriétaire de gîte rural ?
+乡间度假屋的房东能为客人提供什么？`,
+                        choices: [
+                            `De la tranquillité et de l'intimité.
+安静、独立、私密的住宿环境。`
+                        ]
+                    },
+                    {
+                        id: 39,
+                        audio: "assets/tcfCO/T2Q39.wav",
+                        text: `On part du principe que nos vies contemporaines, étant ce qu'elles sont,
+我们从一个前提出发：以我们现在的生活方式来看，
+peu à peu, si on n'y prend pas garde,
+如果不加注意，
+vont être expulsés de nos journées tous les temps d'attente, de non-action.
+所有等待、什么都不做的“空白时间”都会被从日常生活中赶走。
+On est sans arrêt soit en train de nous engager dans des actions,
+我们要么一直在行动、做事情，
+faire des choses avec nos mains ou avec notre cerveau,
+用双手或大脑忙个不停，
+soit nous nous reposons dans des distractions :
+要么就在各种娱乐中放松：
+on regarde si on a des messages sur Internet,
+看一看有没有新消息，
+on écoute de la musique, on se passe un film,
+听音乐、看电影，
+mais à aucun moment notre cerveau n'entre
+但我们的脑子几乎从不会进入一种非常简单的状态，
+sur un mode très simple qui est d'être là,
+就是只是待着，
+conscient que je suis vivant,
+意识到“我还活着”，
+conscient que j'appartiens à un ordre naturel,
+意识到“我属于这个自然秩序”，
+et juste contempler et ressentir ce phénomène.
+只是单纯地观照和感受这种存在。
+Selon l'intervenant, qu'est-ce qui caractérise nos vies contemporaines ?
+在这位发言人看来，当代生活有什么特点？`,
+                        choices: [
+                            `L'absence de temps morts.
+缺少真正的“空闲片刻”、“发呆时间”。`
                         ]
                     }
-                    // ...ajoutez toutes les questions de Test 2
                 ]
-            },
+            }
+
             {
                 id: "test3",
                 label: "Test 3",
