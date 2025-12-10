@@ -307,7 +307,7 @@
             </div>
 
             <div class="audio-row">
-                <audio id="audioPlayer" controls>
+                <audio id="audioPlayer" controls loop>
                     <source src="" type="audio/mpeg">
                     Votre navigateur ne supporte pas l'élément audio.
                 </audio>
@@ -498,10 +498,18 @@
             // Audio
             if (q.audio) {
                 audioPlayer.style.display = "";
+
                 const fullUrl = new URL(q.audio, window.location.href).href;
                 if (audioPlayer.src !== fullUrl) {
                     audioPlayer.src = q.audio;
+                    audioPlayer.load();  // 重新加载新音频
                 }
+
+                audioPlayer.currentTime = 0;           // 从头开始
+                audioPlayer.play().catch(() => {
+                    // 如果浏览器因为自动播放策略阻止了，就静默忽略；
+                    // 用户点一次播放之后，后面就都能自动播了。
+                });
             } else {
                 audioPlayer.style.display = "none";
             }
