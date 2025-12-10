@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>TCF – Compréhension orale</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* Top bar */
+        .topbar {
+            background: #0059b3;
+            color: #fff;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .topbar-title {
+            margin: 0 auto;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .topbar-back {
+            font-size: 22px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .topbar-back.hidden {
+            visibility: hidden;
+        }
+
+        /* Generic card layout */
+        .page-wrap {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 24px 28px 30px;
+        }
+
+        /* --- Exam selection screen --- */
+        #examSelectScreen {
+            text-align: center;
+        }
+
+        .exam-hero {
+            margin-bottom: 28px;
+        }
+
+        .exam-hero-icon {
+            font-size: 70px;
+            margin-bottom: 8px;
+        }
+
+        .exam-hero-text {
+            font-size: 16px;
+            color: #444;
+        }
+
+        .exam-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .exam-card {
+            width: 110px;
+            height: 110px;
+            border-radius: 18px;
+            border: 2px solid #0c63c7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+            background: #f8fbff;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+            background: #eaf2ff;
+        }
+
+        .exam-card-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0c63c7;
+            margin-bottom: 4px;
+        }
+
+        .exam-card-sub {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* --- Question screen --- */
+        #questionScreen {
+            display: none;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .question-number {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .audio-row {
+            margin: 12px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .audio-row audio {
+            flex: 1 1 260px;
+        }
+
+        .question-text {
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .choice {
+            border: 1px solid #d0d7e2;
+            border-radius: 24px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.15s, box-shadow 0.15s, border-color 0.15s;
+            font-size: 14px;
+        }
+
+        .choice-label {
+            font-weight: 600;
+            margin-right: 8px;
+            min-width: 22px;
+        }
+
+        .choice input {
+            display: none;
+        }
+
+        .choice.selected {
+            background: #eaf2ff;
+            border-color: #0059b3;
+            box-shadow: 0 0 0 1px rgba(0, 89, 179, 0.3);
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            border: none;
+            padding: 10px 30px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            background: #e2efff;
+            color: #0059b3;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .index-wrap {
+            margin: 20px auto 0;
+            max-width: 900px;
+            padding: 0 4px 24px;
+        }
+
+        .index-title {
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .index-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .index-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid #c3ccde;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.1s, border-color 0.1s, color 0.1s, transform 0.1s;
+        }
+
+        .index-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .index-btn.active {
+            background: #0059b3;
+            border-color: #0059b3;
+            color: #fff;
+        }
+
+        .index-btn.answered {
+            background: #eaf6e5;
+            border-color: #53a451;
+        }
+
+        @media (max-width:640px) {
+            .page-wrap {
+                margin: 12px;
+                padding: 18px 16px 22px;
+            }
+        }
+
+        /* 让选项文字里的 \n 变成换行 */
+        .choice span:last-child {
+            white-space: pre-line;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div id="backIcon" class="topbar-back hidden">&larr;</div>
+        <div id="topbarTitle" class="topbar-title">TCF - Compréhension orale</div>
+    </header>
+
+    <main>
+        <!-- EXAM SELECTION -->
+        <section id="examSelectScreen" class="page-wrap">
+            <div class="exam-hero">
+                <div class="exam-hero-icon">🎧</div>
+                <div class="exam-hero-text">
+                    Choisissez le test d'écoute que vous voulez faire.
+                </div>
+            </div>
+            <div id="examGrid" class="exam-grid"></div>
+        </section>
+
+        <!-- QUESTION PLAYER -->
+        <section id="questionScreen" class="page-wrap">
+            <div class="question-header">
+                <div class="question-number" id="questionNumber">Question 1 :</div>
+                <div id="progressText" style="font-size:13px;color:#666;">1 / 40</div>
+            </div>
+
+            <div class="audio-row">
+                <audio id="audioPlayer" controls>
+                    <source src="" type="audio/mpeg">
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+
+            <div class="question-text" id="questionText">
+                Écoutez le document sonore et la question. Choisissez la bonne réponse.
+            </div>
+
+            <div class="choices" id="choicesContainer"></div>
+
+            <div class="bottom-nav">
+                <button class="btn" id="prevBtn">上一题</button>
+                <button class="btn" id="nextBtn">下一题</button>
+            </div>
+        </section>
+
+        <!-- QUESTION INDEX UNDER PLAYER -->
+        <section id="indexSection" class="index-wrap" style="display:none;">
+            <div class="index-title">Questions</div>
+            <div class="index-grid" id="indexGrid"></div>
+        </section>
+    </main>
+
+    <script>
+        /*
+          EXAMS DATA
+          ----------
+          Put all your tests here. Each exam has its own questions array.
+          For real use you will have 39–40 questions per exam.
+          Audio paths are just examples; adapt to your own folder structure.
+        */
+        const exams = [
+            {
+                id: "test1",
+                label: "Test 1",
+                subtitle: "Compréhension orale",
+                questions: [
+                    {
+                        id: 1,
+                        audio: "audio/test1/q1.mp3",
+                        text: "",
+                        choices: [
+                            "Asseyez-vous. Je vous en prie.\n请坐"
+                        ]
+                    },
+                    {
+                        id: 2,
+                        audio: "audio/test1/q2.mp3",
+                        text: "Pourquoi la locataire veut-elle déménager ?",
+                        choices: [
+                            "Le loyer est trop cher.",
+                            "Elle change de travail.",
+                            "Ses voisins font trop de bruit.",
+                            "L'appartement est trop petit."
+                        ]
+                    }
+                    // ...ajoutez ici les questions 3 à 39 pour Test 1
+                ]
+            },
+            {
+                id: "test2",
+                label: "Test 2",
+                subtitle: "Compréhension orale",
+                questions: [
+                    {
+                        id: 1,
+                        audio: "audio/test2/q1.mp3",
+                        text: "Quelle est la météo annoncée pour demain ?",
+                        choices: [
+                            "Beau temps et chaud.",
+                            "Pluie et vent fort.",
+                            "Neige dans la matinée.",
+                            "Ciel couvert mais sec."
+                        ]
+                    }
+                    // ...ajoutez toutes les questions de Test 2
+                ]
+            },
+            {
+                id: "test3",
+                label: "Test 3",
+                subtitle: "Compréhension orale",
+                questions: [
+                    {
+                        id: 1,
+                        audio: "audio/test3/q1.mp3",
+                        text: "Ici, mettez la première question du Test 3.",
+                        choices: [
+                            "Choix A",
+                            "Choix B",
+                            "Choix C",
+                            "Choix D"
+                        ]
+                    }
+                    // ...ajoutez toutes les questions de Test 3
+                ]
+            }
+        ];
+
+        /* ---------- STATE ---------- */
+        let currentExamIndex = null;
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+
+        /* ---------- DOM ELEMENTS ---------- */
+        const examSelectScreen = document.getElementById("examSelectScreen");
+        const questionScreen = document.getElementById("questionScreen");
+        const indexSection = document.getElementById("indexSection");
+
+        const backIcon = document.getElementById("backIcon");
+        const examGrid = document.getElementById("examGrid");
+        const questionNumberEl = document.getElementById("questionNumber");
+        const progressTextEl = document.getElementById("progressText");
+        const questionTextEl = document.getElementById("questionText");
+        const choicesContainer = document.getElementById("choicesContainer");
+        const audioPlayer = document.getElementById("audioPlayer");
+        const indexGridEl = document.getElementById("indexGrid");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const topbarTitle = document.getElementById("topbarTitle");
+
+        const choiceLetters = ["A", "B", "C", "D", "E"];
+
+        /* ---------- EXAM SELECTION ---------- */
+        function buildExamGrid() {
+            exams.forEach((exam, idx) => {
+                const card = document.createElement("div");
+                card.className = "exam-card";
+                card.dataset.index = idx;
+                card.addEventListener("click", () => startExam(idx));
+
+                const label = document.createElement("div");
+                label.className = "exam-card-label";
+                label.textContent = exam.label;
+
+                const sub = document.createElement("div");
+                sub.className = "exam-card-sub";
+                sub.textContent = exam.subtitle || "";
+
+                card.appendChild(label);
+                card.appendChild(sub);
+                examGrid.appendChild(card);
+            });
+        }
+
+        function startExam(idx) {
+            currentExamIndex = idx;
+            currentQuestionIndex = 0;
+
+            const exam = exams[idx];
+            selectedAnswers = new Array(exam.questions.length).fill(null);
+
+            examSelectScreen.style.display = "none";
+            questionScreen.style.display = "block";
+            indexSection.style.display = "block";
+            backIcon.classList.remove("hidden");
+
+            buildQuestionIndexButtons();
+            renderQuestion();
+        }
+
+        function exitExam() {
+            currentExamIndex = null;
+            currentQuestionIndex = 0;
+            indexGridEl.innerHTML = "";
+            questionScreen.style.display = "none";
+            indexSection.style.display = "none";
+            examSelectScreen.style.display = "block";
+            backIcon.classList.add("hidden");
+        }
+
+        backIcon.addEventListener("click", exitExam);
+
+        /* ---------- QUESTION RENDERING ---------- */
+        function getCurrentExam() {
+            return exams[currentExamIndex];
+        }
+
+        function renderQuestion() {
+            const exam = getCurrentExam();
+            const q = exam.questions[currentQuestionIndex];
+            const totalQuestions = exam.questions.length;
+
+            questionNumberEl.textContent = `Question ${q.id} :`;
+            progressTextEl.textContent = `${currentQuestionIndex + 1} / ${totalQuestions}`;
+
+            // Audio
+            if (q.audio) {
+                audioPlayer.style.display = "";
+                const fullUrl = new URL(q.audio, window.location.href).href;
+                if (audioPlayer.src !== fullUrl) {
+                    audioPlayer.src = q.audio;
+                }
+            } else {
+                audioPlayer.style.display = "none";
+            }
+
+            questionTextEl.textContent = q.text;
+
+            // Choices
+            choicesContainer.innerHTML = "";
+            q.choices.forEach((choice, idx) => {
+                const label = document.createElement("label");
+                label.className = "choice";
+                if (selectedAnswers[currentQuestionIndex] === idx) {
+                    label.classList.add("selected");
+                }
+
+                const input = document.createElement("input");
+                input.type = "radio";
+                input.name = "choice";
+                input.value = idx;
+
+                input.addEventListener("change", () => {
+                    selectedAnswers[currentQuestionIndex] = idx;
+                    updateChoiceHighlight();
+                    updateIndexStyles();
+                });
+
+                const spanLetter = document.createElement("span");
+                spanLetter.className = "choice-label";
+                spanLetter.textContent = choiceLetters[idx] + ".";
+
+                const spanText = document.createElement("span");
+                spanText.textContent = " " + choice;
+
+                label.appendChild(input);
+                label.appendChild(spanLetter);
+                label.appendChild(spanText);
+                choicesContainer.appendChild(label);
+            });
+
+            updateIndexStyles();
+
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = currentQuestionIndex === totalQuestions - 1;
+        }
+
+        function updateChoiceHighlight() {
+            const nodes = choicesContainer.querySelectorAll(".choice");
+            nodes.forEach((node, idx) => {
+                node.classList.toggle(
+                    "selected",
+                    selectedAnswers[currentQuestionIndex] === idx
+                );
+            });
+        }
+
+        /* ---------- QUESTION INDEX (1..N) ---------- */
+        function buildQuestionIndexButtons() {
+            indexGridEl.innerHTML = "";
+            const exam = getCurrentExam();
+            const totalQuestions = exam.questions.length;
+
+            for (let i = 0; i < totalQuestions; i++) {
+                const btn = document.createElement("button");
+                btn.className = "index-btn";
+                btn.textContent = i + 1;
+                btn.dataset.index = i;
+                btn.addEventListener("click", () => gotoQuestion(i));
+                indexGridEl.appendChild(btn);
+            }
+            updateIndexStyles();
+        }
+
+        function gotoQuestion(index) {
+            currentQuestionIndex = index;
+            renderQuestion();
+        }
+
+        function updateIndexStyles() {
+            const exam = getCurrentExam();
+            const totalQuestions = exam.questions.length;
+            const buttons = indexGridEl.querySelectorAll(".index-btn");
+
+            buttons.forEach((btn, idx) => {
+                if (idx >= totalQuestions) return;
+                btn.classList.toggle("active", idx === currentQuestionIndex);
+                btn.classList.toggle("answered", selectedAnswers[idx] !== null);
+            });
+        }
+
+        function startExam(idx) {
+            currentExamIndex = idx;
+            currentQuestionIndex = 0;
+
+            const exam = exams[idx];
+            selectedAnswers = new Array(exam.questions.length).fill(null);
+
+            examSelectScreen.style.display = "none";
+            questionScreen.style.display = "block";
+            indexSection.style.display = "block";
+            backIcon.classList.remove("hidden");
+
+            topbarTitle.textContent = `TCF - Compréhension orale - ${exam.label}`; // NEW
+
+            buildQuestionIndexButtons();
+            renderQuestion();
+        }
+
+        function exitExam() {
+            currentExamIndex = null;
+            currentQuestionIndex = 0;
+            indexGridEl.innerHTML = "";
+            questionScreen.style.display = "none";
+            indexSection.style.display = "none";
+            examSelectScreen.style.display = "block";
+            backIcon.classList.add("hidden");
+
+            topbarTitle.textContent = "TCF - Compréhension orale"; // NEW
+        }
+
+
+
+        /* ---------- PREV / NEXT BUTTONS ---------- */
+        prevBtn.addEventListener("click", () => {
+            if (currentExamIndex === null) return;
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        });
+
+        nextBtn.addEventListener("click", () => {
+            if (currentExamIndex === null) return;
+            const exam = getCurrentExam();
+            if (currentQuestionIndex < exam.questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        });
+
+        /* ---------- INIT ---------- */
+        buildExamGrid();
+    </script>
+</body>
+
+</html>
