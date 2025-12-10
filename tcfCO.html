@@ -268,9 +268,15 @@
             }
         }
 
-        /* 让选项文字里的 \n 变成换行 */
         .choice span:last-child {
             white-space: pre-line;
+        }
+
+        .question-text {
+            margin-bottom: 16px;
+            font-size: 15px;
+            white-space: pre-line;
+            /* ← 加这一行 */
         }
     </style>
 </head>
@@ -342,8 +348,8 @@
                 questions: [
                     {
                         id: 1,
-                        audio: "audio/test1/q1.mp3",
-                        text: "",
+                        audio: "assets/tcfCO/",
+                        text: "Écoutez les 4 propositions, choisissez celle qui correspond à l'image.\n听四个选项，选择与图片相符的一项。",
                         choices: [
                             "Asseyez-vous. Je vous en prie.\n请坐"
                         ]
