@@ -155,23 +155,6 @@
             /* 交给 JS 分段，不再用 pre-line */
         }
 
-        /* 每句法语 */
-        .qt-fr {
-            font-size: 20px;
-            line-height: 1.7;
-            font-weight: 500;
-            color: #e5e7eb;
-            margin-bottom: 2px;
-        }
-
-        /* 对应的中文翻译 */
-        .qt-cn {
-            font-size: 18px;
-            line-height: 1.7;
-            color: #9ca3af;
-            margin-bottom: 8px;
-        }
-
         /* 最后一组（题干）额外强调：上面加一条线、稍微加粗 */
         .qt-question {
             margin-top: 8px;
@@ -181,11 +164,31 @@
             color: #f9fafb;
         }
 
-        .choices {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 24px;
+        /* ====== MOBILE / DEFAULT (phone & small screens) ====== */
+        /* 每句法语 */
+        .qt-fr {
+            font-size: 16px;
+            line-height: 1.7;
+            font-weight: 500;
+            color: #e5e7eb;
+            margin-bottom: 2px;
+        }
+
+        /* 对应的中文翻译 */
+        .qt-cn {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+
+        /* 最后一组（题干） */
+        .qt-question {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(148, 163, 184, 0.5);
+            font-weight: 600;
+            color: #f9fafb;
         }
 
         .choice {
@@ -197,7 +200,36 @@
             align-items: center;
             cursor: pointer;
             transition: background 0.15s, box-shadow 0.15s, border-color 0.15s;
-            font-size: 18px;
+            font-size: 14px;
+            /* 手机 14px */
+        }
+
+        /* ====== DESKTOP OVERRIDE (PC, tablets ≥ 900px 宽) ====== */
+        @media (min-width: 900px) {
+            .question-text {
+                max-height: 40vh;
+                /* 利用更多竖向空间，减少滚动 */
+            }
+
+            .qt-fr {
+                font-size: 20px;
+            }
+
+            .qt-cn {
+                font-size: 18px;
+            }
+
+            .choice {
+                font-size: 18px;
+                /* 你想要的 PC 大小 */
+            }
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
         }
 
         .choice-label {
