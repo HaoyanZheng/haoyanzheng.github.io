@@ -2,347 +2,536 @@
 <html lang="fr">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>TCF – Compréhension écrite</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark">
+    <meta charset="UTF-8" />
+    <title>TCF – Compréhension écrite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark">
 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f4f7fb;
-      color: #222;
-    }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
 
-    /* Top bar */
-    .topbar {
-      background: #0059b3;
-      color: #fff;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-    }
-    .topbar-title { margin: 0 auto; font-size: 18px; font-weight: 600; }
-    .topbar-back { font-size: 22px; cursor: pointer; user-select: none; }
-    .topbar-back.hidden { visibility: hidden; }
+        /* Top bar */
+        .topbar {
+            background: #0059b3;
+            color: #fff;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+        }
 
-    /* Generic card layout */
-    .page-wrap {
-      max-width: 900px;
-      margin: 30px auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      padding: 24px 28px 30px;
-    }
+        .topbar-title {
+            margin: 0 auto;
+            font-size: 18px;
+            font-weight: 600;
+        }
 
-    /* --- Exam selection screen --- */
-    #examSelectScreen { text-align: center; }
-    .exam-hero { margin-bottom: 28px; }
-    .exam-hero-icon { font-size: 70px; margin-bottom: 8px; }
-    .exam-hero-text { font-size: 16px; color: #444; }
+        .topbar-back {
+            font-size: 22px;
+            cursor: pointer;
+            user-select: none;
+        }
 
-    .exam-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .exam-card {
-      width: 140px;
-      height: 110px;
-      border-radius: 18px;
-      border: 2px solid #0c63c7;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
-      background: #f8fbff;
-      padding: 8px 10px;
-      text-align: center;
-    }
-    .exam-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-      background: #eaf2ff;
-    }
-    .exam-card-label { font-size: 15px; font-weight: 700; color: #0c63c7; margin-bottom: 4px; }
-    .exam-card-sub { font-size: 12px; color: #666; }
+        .topbar-back.hidden {
+            visibility: hidden;
+        }
 
-    /* --- Reading screen --- */
-    #readingScreen { display: none; }
+        /* Generic card layout */
+        .page-wrap {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 24px 28px 30px;
+        }
 
-    .reading-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-    .reading-title { font-weight: 700; font-size: 16px; }
-    .reading-meta { font-size: 13px; color: #666; }
+        /* --- Exam selection screen --- */
+        #examSelectScreen {
+            text-align: center;
+        }
 
-    .reading-controls {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 12px 0 18px;
-      align-items: center;
+        .exam-hero {
+            margin-bottom: 28px;
+        }
 
-      /* 可读性/可用性：吸顶（不改字体排版，仅提升滚动时可操作性） */
-      position: sticky;
-      top: 56px;
-      z-index: 10;
-      background: rgba(244,247,251,0.92);
-      backdrop-filter: blur(6px);
-      padding: 10px 0;
-    }
+        .exam-hero-icon {
+            font-size: 70px;
+            margin-bottom: 8px;
+        }
 
-    .control-input {
-      flex: 1 1 240px;
-      min-width: 220px;
-      border: 1px solid #d0d7e2;
-      border-radius: 24px;
-      padding: 10px 14px;
-      outline: none;
-      font-size: 14px;
-      background: #fff;
-    }
+        .exam-hero-text {
+            font-size: 16px;
+            color: #444;
+        }
 
-    .btn {
-      border: none;
-      padding: 10px 18px;
-      border-radius: 24px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      background: #e2efff;
-      color: #0059b3;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-      transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
-      white-space: nowrap;
-    }
-    .btn:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
-    }
-    .btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
+        .exam-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
 
-    /* 更清晰的键盘聚焦（只影响颜色/轮廓，不改排版） */
-    .btn:focus-visible, .control-input:focus-visible {
-      outline: 3px solid rgba(12, 99, 199, 0.25);
-      outline-offset: 2px;
-    }
+        .exam-card {
+            width: 140px;
+            height: 110px;
+            border-radius: 18px;
+            border: 2px solid #0c63c7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+            background: #f8fbff;
+            padding: 8px 10px;
+            text-align: center;
+        }
 
-    .q-list { display: flex; flex-direction: column; gap: 14px; }
+        .exam-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+            background: #eaf2ff;
+        }
 
-    .q-card {
-      border: 1px solid #d0d7e2;
-      border-radius: 16px;
-      background: #fff;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-    }
-    .q-card-head {
-      padding: 12px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      background: #f8fbff;
-      border-bottom: 1px solid #e5edf8;
-    }
-    .q-card-num { font-weight: 800; color: #0c63c7; }
-    .q-card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .exam-card-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0c63c7;
+            margin-bottom: 4px;
+        }
 
-    .q-body { padding: 14px 14px 16px; }
+        .exam-card-sub {
+            font-size: 12px;
+            color: #666;
+        }
 
-    /* bilingual content block (LIGHT: 白底黑字) */
-    .q-text {
-      padding: 12px 16px;
-      border-radius: 12px;
+        /* --- Reading screen --- */
+        #readingScreen {
+            display: none;
+        }
 
-      background: #fff;
-      border: 1px solid #e5edf8;
+        .reading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
 
-      max-width: 760px;
-      margin: 0 auto;
+        .reading-title {
+            font-weight: 700;
+            font-size: 16px;
+        }
 
-      overflow-wrap: anywhere;
-      hyphens: auto;
+        .reading-meta {
+            font-size: 13px;
+            color: #666;
+        }
 
-      max-height: none;
-      overflow: visible;
-    }
+        .reading-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 12px 0 18px;
+            align-items: center;
 
-    /* 段落节奏（不改字体，只加间距） */
-    .q-text p { margin: 0 0 10px; }
-    .q-text p:last-child { margin-bottom: 0; }
+            /* 可读性/可用性：吸顶（不改字体排版，仅提升滚动时可操作性） */
+            position: sticky;
+            top: 56px;
+            z-index: 10;
+            background: rgba(244, 247, 251, 0.92);
+            backdrop-filter: blur(6px);
+            padding: 10px 0;
+        }
 
-    /* bilingual lines */
-    .qt-fr {
-      font-size: 16px;
-      line-height: 1.7;
-      font-weight: 500;
-      color: #111827;
-      margin-bottom: 2px;
-    }
-    .qt-cn {
-      font-size: 14px;
-      line-height: 1.7;
-      color: #4b5563;
-      margin-bottom: 10px;
-    }
+        .control-input {
+            flex: 1 1 240px;
+            min-width: 220px;
+            border: 1px solid #d0d7e2;
+            border-radius: 24px;
+            padding: 10px 14px;
+            outline: none;
+            font-size: 14px;
+            background: #fff;
+        }
 
-    /* question pair at the end of each item */
-    .qt-question {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid #cbd5e1;
-      font-weight: 700;
-      color: #111827;
-      background: #f3f7ff;
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
+        .btn {
+            border: none;
+            padding: 10px 18px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            background: #e2efff;
+            color: #0059b3;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+            white-space: nowrap;
+        }
 
-    /* Answer */
-    .answer-wrap {
-      margin-top: 12px;
-      border-radius: 14px;
-      border: 1px solid #d0d7e2;
-      background: #f7fbff;
-      padding: 10px 12px;
-      display: none;
-    }
-    .answer-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: #0c63c7;
-      margin-bottom: 6px;
-    }
-    .ans-fr { font-size: 15px; line-height: 1.7; font-weight: 600; color: #111827; margin-bottom: 4px; }
-    .ans-cn { font-size: 14px; line-height: 1.7; color: #4b5563; }
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+        }
 
-    /* Hide CN toggle */
-    .hide-cn .qt-cn, .hide-cn .ans-cn { display: none !important; }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+            transform: none;
+            box-shadow: none;
+        }
 
-    /* Desktop override */
-    @media (min-width: 900px) {
-      .qt-fr { font-size: 20px; }
-      .qt-cn { font-size: 18px; }
-      .ans-fr { font-size: 18px; }
-      .ans-cn { font-size: 16px; }
-    }
+        /* 更清晰的键盘聚焦（只影响颜色/轮廓，不改排版） */
+        .btn:focus-visible,
+        .control-input:focus-visible {
+            outline: 3px solid rgba(12, 99, 199, 0.25);
+            outline-offset: 2px;
+        }
 
-    @media (max-width:640px) {
-      .page-wrap { margin: 12px; padding: 18px 16px 22px; }
-      .exam-card { width: 46%; min-width: 140px; }
-    }
+        .q-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
 
-    /* ---- Dark mode ---- */
-    @media (prefers-color-scheme: dark) {
-      body { background: #060814; color: #e5e7eb; }
-      .topbar { background: #0b3a7a; color: #e5e7eb; }
-      .page-wrap { background: #111827; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); }
-      .exam-hero-text { color: #d1d5db; }
-      .exam-card { background: #111827; border-color: #2563eb; }
-      .exam-card:hover { background: #1f2937; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9); }
-      .exam-card-label { color: #bfdbfe; }
-      .exam-card-sub { color: #9ca3af; }
+        .q-card {
+            border: 1px solid #d0d7e2;
+            border-radius: 16px;
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        }
 
-      .reading-meta { color: #9ca3af; }
-      .reading-controls { background: rgba(6,8,20,0.75); }
-      .control-input { background: #0b1120; border-color: #374151; color: #e5e7eb; }
-      .btn { background: #1e3a8a; color: #e5e7eb; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); }
+        .q-card-head {
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #f8fbff;
+            border-bottom: 1px solid #e5edf8;
+        }
 
-      .q-card { background: #111827; border-color: #374151; box-shadow: 0 6px 18px rgba(0,0,0,0.55); }
-      .q-card-head { background: #0b1120; border-bottom-color: #1f2937; }
-      .q-card-num { color: #93c5fd; }
+        .q-card-num {
+            font-weight: 800;
+            color: #0c63c7;
+        }
 
-      /* dark: 题目区黑底白字（仅颜色） */
-      .q-text {
-        background: rgba(15, 23, 42, 0.92);
-        border-color: #374151;
-        border-left-color: rgba(147,197,253,0.45);
-      }
-      .qt-fr { color: #e5e7eb; }
-      .qt-cn { color: #9ca3af; }
-      .qt-question {
-        border-top-color: rgba(148, 163, 184, 0.55);
-        color: #f9fafb;
-        background: rgba(59,130,246,0.12);
-      }
+        .q-card-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
 
-      .answer-wrap { background: #0b1120; border-color: #374151; }
-      .answer-title { color: #93c5fd; }
-      .ans-fr { color: #e5e7eb; }
-      .ans-cn { color: #9ca3af; }
-    }
-  </style>
+        .q-body {
+            padding: 14px 14px 16px;
+        }
+
+        /* bilingual content block (LIGHT: 白底黑字) */
+        .q-text {
+            padding: 12px 16px;
+            border-radius: 12px;
+
+            background: #fff;
+            border: 1px solid #e5edf8;
+
+            max-width: 760px;
+            margin: 0 auto;
+
+            overflow-wrap: anywhere;
+            hyphens: auto;
+
+            max-height: none;
+            overflow: visible;
+        }
+
+        /* 段落节奏（不改字体，只加间距） */
+        .q-text p {
+            margin: 0 0 10px;
+        }
+
+        .q-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* bilingual lines */
+        .qt-fr {
+            font-size: 16px;
+            line-height: 1.7;
+            font-weight: 500;
+            color: #111827;
+            margin-bottom: 2px;
+        }
+
+        .qt-cn {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+
+        /* question pair at the end of each item */
+        .qt-question {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #cbd5e1;
+            font-weight: 700;
+            color: #111827;
+            background: #f3f7ff;
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        /* Answer */
+        .answer-wrap {
+            margin-top: 12px;
+            border-radius: 14px;
+            border: 1px solid #d0d7e2;
+            background: #f7fbff;
+            padding: 10px 12px;
+            display: none;
+        }
+
+        .answer-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0c63c7;
+            margin-bottom: 6px;
+        }
+
+        .ans-fr {
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .ans-cn {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #4b5563;
+        }
+
+        /* Hide CN toggle */
+        .hide-cn .qt-cn,
+        .hide-cn .ans-cn {
+            display: none !important;
+        }
+
+        /* Desktop override */
+        @media (min-width: 900px) {
+            .qt-fr {
+                font-size: 20px;
+            }
+
+            .qt-cn {
+                font-size: 18px;
+            }
+
+            .ans-fr {
+                font-size: 18px;
+            }
+
+            .ans-cn {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width:640px) {
+            .page-wrap {
+                margin: 12px;
+                padding: 18px 16px 22px;
+            }
+
+            .exam-card {
+                width: 46%;
+                min-width: 140px;
+            }
+        }
+
+        /* ---- Dark mode ---- */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #060814;
+                color: #e5e7eb;
+            }
+
+            .topbar {
+                background: #0b3a7a;
+                color: #e5e7eb;
+            }
+
+            .page-wrap {
+                background: #111827;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+            }
+
+            .exam-hero-text {
+                color: #d1d5db;
+            }
+
+            .exam-card {
+                background: #111827;
+                border-color: #2563eb;
+            }
+
+            .exam-card:hover {
+                background: #1f2937;
+                box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9);
+            }
+
+            .exam-card-label {
+                color: #bfdbfe;
+            }
+
+            .exam-card-sub {
+                color: #9ca3af;
+            }
+
+            .reading-meta {
+                color: #9ca3af;
+            }
+
+            .reading-controls {
+                background: rgba(6, 8, 20, 0.75);
+            }
+
+            .control-input {
+                background: #0b1120;
+                border-color: #374151;
+                color: #e5e7eb;
+            }
+
+            .btn {
+                background: #1e3a8a;
+                color: #e5e7eb;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+            }
+
+            .q-card {
+                background: #111827;
+                border-color: #374151;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+            }
+
+            .q-card-head {
+                background: #0b1120;
+                border-bottom-color: #1f2937;
+            }
+
+            .q-card-num {
+                color: #93c5fd;
+            }
+
+            /* dark: 题目区黑底白字（仅颜色） */
+            .q-text {
+                background: rgba(15, 23, 42, 0.92);
+                border-color: #374151;
+                border-left-color: rgba(147, 197, 253, 0.45);
+            }
+
+            .qt-fr {
+                color: #e5e7eb;
+            }
+
+            .qt-cn {
+                color: #9ca3af;
+            }
+
+            .qt-question {
+                border-top-color: rgba(148, 163, 184, 0.55);
+                color: #f9fafb;
+                background: rgba(59, 130, 246, 0.12);
+            }
+
+            .answer-wrap {
+                background: #0b1120;
+                border-color: #374151;
+            }
+
+            .answer-title {
+                color: #93c5fd;
+            }
+
+            .ans-fr {
+                color: #e5e7eb;
+            }
+
+            .ans-cn {
+                color: #9ca3af;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div id="backIcon" class="topbar-back hidden">&larr;</div>
-    <div id="topbarTitle" class="topbar-title">TCF - Compréhension écrite</div>
-  </header>
+    <header class="topbar">
+        <div id="backIcon" class="topbar-back hidden">&larr;</div>
+        <div id="topbarTitle" class="topbar-title">TCF - Compréhension écrite</div>
+    </header>
 
-  <main>
-    <!-- EXAM SELECTION -->
-    <section id="examSelectScreen" class="page-wrap">
-      <div class="exam-hero">
-        <div class="exam-hero-icon">📖</div>
-        <div class="exam-hero-text">
-          Choisissez le test de lecture que vous voulez faire.
-        </div>
-      </div>
-      <div id="examGrid" class="exam-grid"></div>
-    </section>
+    <main>
+        <!-- EXAM SELECTION -->
+        <section id="examSelectScreen" class="page-wrap">
+            <div class="exam-hero">
+                <div class="exam-hero-icon">📖</div>
+                <div class="exam-hero-text">
+                    Choisissez le test de lecture que vous voulez faire.
+                </div>
+            </div>
+            <div id="examGrid" class="exam-grid"></div>
+        </section>
 
-    <!-- READING SCREEN -->
-    <section id="readingScreen" class="page-wrap">
-      <div class="reading-header">
-        <div class="reading-title" id="readingTitle">Test</div>
-        <div class="reading-meta" id="readingMeta">39 questions</div>
-      </div>
+        <!-- READING SCREEN -->
+        <section id="readingScreen" class="page-wrap">
+            <div class="reading-header">
+                <div class="reading-title" id="readingTitle">Test</div>
+                <div class="reading-meta" id="readingMeta">39 questions</div>
+            </div>
 
-      <div class="reading-controls">
-        <input id="searchInput" class="control-input" placeholder="Rechercher (FR / 中文)..." />
-        <button class="btn" id="toggleCnBtn">隐藏中文</button>
-        <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
-      </div>
+            <div class="reading-controls">
+                <input id="searchInput" class="control-input" placeholder="Rechercher (FR / 中文)..." />
+                <button class="btn" id="toggleCnBtn">隐藏中文</button>
+                <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
+            </div>
 
-      <div class="q-list" id="questionList"></div>
-    </section>
-  </main>
+            <div class="q-list" id="questionList"></div>
+        </section>
+    </main>
 
-  <script>
-    /*
-      EXAMS DATA
-      ----------
-      One test here (39 items). You can add more tests by pushing more objects into exams[].
-      Each question contains:
-        - id
-        - text: multiline string alternating FR / CN, with the LAST TWO LINES being the Question (FR/CN)
-        - answerFr / answerCn
-    */
+    <script>
+        /*
+          EXAMS DATA
+          ----------
+          One test here (39 items). You can add more tests by pushing more objects into exams[].
+          Each question contains:
+            - id
+            - text: multiline string alternating FR / CN, with the LAST TWO LINES being the Question (FR/CN)
+            - answerFr / answerCn
+        */
 
-    const exams = [
-      {
-        label: "Test 36",
-        subtitle: "Lecture · 39 questions",
-        questions: [
-          {
-            id: 1,
-            text: `Bonjour madame Medina,
+        const exams = [
+            {
+                label: "Test 36",
+                subtitle: "Lecture · 39 questions",
+                questions: [
+                    {
+                        id: 1,
+                        text: `Bonjour madame Medina,
 您好，Medina 女士：
 Sauf erreur, nous n’avons pas reçu le certificat médical et la photocopie de votre carte d’identité pour compléter votre dossier d’inscription au club de judo.
 如无误，我们尚未收到医疗证明以及您的身份证复印件，以便完成您在柔道俱乐部的报名档案。
@@ -352,23 +541,23 @@ La secrétaire.
 秘书敬上。
 Qu’est-ce que madame Medina doit faire ?
 Medina 女士需要做什么？`,
-            answerFr: "Envoyer des documents.",
-            answerCn: "发送/寄送相关材料。"
-          },
-          {
-            id: 2,
-            text: `Message reçu
+                        answerFr: "Envoyer des documents.",
+                        answerCn: "发送/寄送相关材料。"
+                    },
+                    {
+                        id: 2,
+                        text: `Message reçu
 收到的消息：
 J’ai faim. J’achète une pizza ou tu prépares quelque chose ?
 我饿了。我买个披萨，还是你做点什么？
 Que veut la personne ?
 这个人想要什么？`,
-            answerFr: "Manger.",
-            answerCn: "吃东西。"
-          },
-          {
-            id: 3,
-            text: `Pascal,
+                        answerFr: "Manger.",
+                        answerCn: "吃东西。"
+                    },
+                    {
+                        id: 3,
+                        text: `Pascal,
 Pascal：
 Nous sommes en réunion sur la publicité du jus de fruit Koj.
 我们正在开会讨论 Koj 果汁的广告。
@@ -378,12 +567,12 @@ Jean
 Jean
 Où est Jean ?
 Jean 在哪里？`,
-            answerFr: "Dans une entreprise.",
-            answerCn: "在公司里。"
-          },
-          {
-            id: 4,
-            text: `COLLÈGE S. VEIL - CONCERT CHANT ET MUSIQUE POUR TOUS
+                        answerFr: "Dans une entreprise.",
+                        answerCn: "在公司里。"
+                    },
+                    {
+                        id: 4,
+                        text: `COLLÈGE S. VEIL - CONCERT CHANT ET MUSIQUE POUR TOUS
 S. VEIL 初中——“人人可参与”的歌唱与音乐会
 Le 20 mai à 20h00, venez écouter vos enfants et leurs professeurs de musique chanter et jouer de leurs instruments.
 5 月 20 日 20:00，欢迎来听您的孩子和他们的音乐老师唱歌并演奏乐器。
@@ -395,12 +584,12 @@ VENEZ NOMBREUX
 欢迎踊跃参加！
 Qui est invité ?
 邀请的是谁？`,
-            answerFr: "Les familles.",
-            answerCn: "家长/家庭。"
-          },
-          {
-            id: 5,
-            text: `Vous êtes passionné de photographie et vous voulez partager vos créations ?
+                        answerFr: "Les familles.",
+                        answerCn: "家长/家庭。"
+                    },
+                    {
+                        id: 5,
+                        text: `Vous êtes passionné de photographie et vous voulez partager vos créations ?
 你热爱摄影并想分享你的作品吗？
 Inscrivez-vous au Prix du « Petit Reporter » : envoyez une photo sur le thème de l’amitié au club « Images » !
 报名参加“ 小记者 ”摄影奖：把一张以“友谊”为主题的照片发送到“Images”俱乐部！
@@ -410,12 +599,12 @@ Inscriptions : www.clublmages.fr/Prix_PetitReporter
 报名网站：www.clublmages.fr/Prix_PetitReporter
 Que propose le club « Images » ?
 “Images”俱乐部提供什么？`,
-            answerFr: "De participer à un concours.",
-            answerCn: "参加一个比赛/竞赛。"
-          },
-          {
-            id: 6,
-            text: `De : cannelle@lilo.com
+                        answerFr: "De participer à un concours.",
+                        answerCn: "参加一个比赛/竞赛。"
+                    },
+                    {
+                        id: 6,
+                        text: `De : cannelle@lilo.com
 发件人：cannelle@lilo.com
 À : Elke@mail.com
 收件人：Elke@mail.com
@@ -435,12 +624,12 @@ Cannelle
 Cannelle
 Que demande Cannelle à son amie ?
 Cannelle 向朋友提出什么请求？`,
-            answerFr: "De préparer des danses.",
-            answerCn: "准备/安排跳舞。"
-          },
-          {
-            id: 7,
-            text: `Bonjour,
+                        answerFr: "De préparer des danses.",
+                        answerCn: "准备/安排跳舞。"
+                    },
+                    {
+                        id: 7,
+                        text: `Bonjour,
 您好：
 Votre colis vous attend dans votre magasin pendant sept jours.
 您的包裹会在门店为您保留 7 天。
@@ -452,12 +641,12 @@ Merci pour votre confiance.
 感谢您的信任。
 Quelle information donne ce message ?
 这条信息说明了什么？`,
-            answerFr: "La commande est arrivée.",
-            answerCn: "订单/包裹已经到达。"
-          },
-          {
-            id: 8,
-            text: `Vous avez envie d’une expérience de vacances différente ?
+                        answerFr: "La commande est arrivée.",
+                        answerCn: "订单/包裹已经到达。"
+                    },
+                    {
+                        id: 8,
+                        text: `Vous avez envie d’une expérience de vacances différente ?
 你想要一种不同的假期体验吗？
 Vous ne voulez pas dépenser d’argent ?
 你不想花钱吗？
@@ -469,12 +658,12 @@ Pour plus d’informations, rendez-vous sur www.faitescommechezvous.fr.
 更多信息请访问：www.faitescommechezvous.fr
 Qu’est-ce que ce site propose ?
 这个网站提供什么？`,
-            answerFr: "Des échanges de logements.",
-            answerCn: "住房互换/交换住宿。"
-          },
-          {
-            id: 9,
-            text: `Le soin d’origine naturelle « Nuit Sommeil » est étudié pour les peaux fragiles.
+                        answerFr: "Des échanges de logements.",
+                        answerCn: "住房互换/交换住宿。"
+                    },
+                    {
+                        id: 9,
+                        text: `Le soin d’origine naturelle « Nuit Sommeil » est étudié pour les peaux fragiles.
 天然护理产品“夜间睡眠”专为敏感肌研发。
 Il corrige les signes de fatigue et réveille votre visage.
 它能改善疲劳迹象，让面部焕发精神。
@@ -482,23 +671,23 @@ Votre peau est parfaite, même en plein hiver.
 即使在寒冬，你的肌肤也能保持完美状态。
 Qu’est-ce que « Nuit Sommeil » ?
 “夜间睡眠”是什么？`,
-            answerFr: "Une crème de beauté.",
-            answerCn: "一种美容面霜/护肤霜。"
-          },
-          {
-            id: 10,
-            text: `Quand vous cuisinez, prévoyez de grandes quantités et préparez ainsi plusieurs repas en une fois, c’est plus économique.
+                        answerFr: "Une crème de beauté.",
+                        answerCn: "一种美容面霜/护肤霜。"
+                    },
+                    {
+                        id: 10,
+                        text: `Quand vous cuisinez, prévoyez de grandes quantités et préparez ainsi plusieurs repas en une fois, c’est plus économique.
 做饭时可以一次做多一点，这样能一口气准备好几顿，更省钱。
 Pour ne pas manger le même plat deux fois de suite, congelez-en une partie pour un autre jour.
 为避免连续两顿吃同一道菜，可以把一部分冷冻起来留到别的日子吃。
 Qu’est-ce que cet article explique ?
 这篇文章解释了什么？`,
-            answerFr: "Comment faire à manger à bon marché.",
-            answerCn: "如何以更省钱的方式做饭。"
-          },
-          {
-            id: 11,
-            text: `Au mois de mai, les élèves des classes de première du lycée Louise Michel partent une semaine en Angleterre.
+                        answerFr: "Comment faire à manger à bon marché.",
+                        answerCn: "如何以更省钱的方式做饭。"
+                    },
+                    {
+                        id: 11,
+                        text: `Au mois de mai, les élèves des classes de première du lycée Louise Michel partent une semaine en Angleterre.
 5 月，Louise Michel 高中的高一学生将去英国一周。
 Pour payer une partie de leur voyage, ils organisent samedi prochain un concours gastronomique dans le gymnase.
 为了支付部分旅费，他们将于下周六在体育馆举办美食比赛。
@@ -508,23 +697,23 @@ Entrée : 5 euros par personne.
 门票：每人 5 欧元。
 Qu’est-ce que les élèves de première veulent faire ?
 这些高一学生想做什么？`,
-            answerFr: "Gagner de l'argent pour leur séjour.",
-            answerCn: "为他们的旅行筹钱。"
-          },
-          {
-            id: 12,
-            text: `Du 30 décembre au 15 janvier, dans les magasins Jouons à tous les âges, les produits des rayons vélos et jeux vidéo sont à -50 %.
+                        answerFr: "Gagner de l'argent pour leur séjour.",
+                        answerCn: "为他们的旅行筹钱。"
+                    },
+                    {
+                        id: 12,
+                        text: `Du 30 décembre au 15 janvier, dans les magasins Jouons à tous les âges, les produits des rayons vélos et jeux vidéo sont à -50 %.
 12 月 30 日至 1 月 15 日，在“Jouons à tous les âges”商店，自行车和电子游戏区商品全场五折。
 Pour chaque achat, 2 euros seront donnés à « Apprendre mieux à l’école », une association qui s’occupe d’enfants de 6 à 15 ans.
 每笔购买将捐出 2 欧元给“在学校学得更好”协会，该协会帮助 6 到 15 岁儿童。
 Qu’est-ce que cette publicité annonce ?
 这则广告宣布了什么？`,
-            answerFr: "De l'aide pour une association.",
-            answerCn: "为一个协会提供捐助/帮助。"
-          },
-          {
-            id: 13,
-            text: `Selon une étude, les salariés passent chaque jour en moyenne une heure et demie à surfer au bureau et y consacrent un peu plus d’une demi-heure à un usage professionnel, contre 53 minutes à des fins personnelles.
+                        answerFr: "De l'aide pour une association.",
+                        answerCn: "为一个协会提供捐助/帮助。"
+                    },
+                    {
+                        id: 13,
+                        text: `Selon une étude, les salariés passent chaque jour en moyenne une heure et demie à surfer au bureau et y consacrent un peu plus d’une demi-heure à un usage professionnel, contre 53 minutes à des fins personnelles.
 一项研究显示，员工每天平均在办公室上网 1 个半小时，其中略多于半小时用于工作用途，而 53 分钟用于个人用途。
 L’étude chiffre cette « chute de productivité » à 12,4 %.
 研究将这种“生产力下降”量化为 12.4%。
@@ -534,12 +723,12 @@ En comparant les catégories de sites les plus consultés entre 2010 et 2011, on
 对比 2010 与 2011 年最常访问的网站类别可见：在线游戏网站增加 5%，视频类网站增加 3%。
 Qu’apprend-on sur les salariés qui utilisent Internet ?
 关于使用互联网的员工，我们了解到什么？`,
-            answerFr: "Leur rendement au travail diminue.",
-            answerCn: "他们的工作效率/产出下降。"
-          },
-          {
-            id: 14,
-            text: `Adoptées séparément à la naissance, des jumelles indonésiennes se sont retrouvées 29 ans plus tard en Suède.
+                        answerFr: "Leur rendement au travail diminue.",
+                        answerCn: "他们的工作效率/产出下降。"
+                    },
+                    {
+                        id: 14,
+                        text: `Adoptées séparément à la naissance, des jumelles indonésiennes se sont retrouvées 29 ans plus tard en Suède.
 两名印尼双胞胎出生后被分别领养，29 年后在瑞典重逢。
 Elles habitaient à 40 km l’une de l’autre mais ne le savaient pas.
 她们住得相距 40 公里，却彼此不知情。
@@ -551,12 +740,12 @@ Elles sont l’une et l’autre enseignantes !
 两人都是教师！
 Qu’est-ce que ces jumelles ont en commun ?
 这对双胞胎有什么共同点？`,
-            answerFr: "Elles habitent dans le même pays.",
-            answerCn: "她们住在同一个国家。"
-          },
-          {
-            id: 15,
-            text: `Vous pensez qu’il est un peu fou de partir en bateau avec des enfants ?
+                        answerFr: "Elles habitent dans le même pays.",
+                        answerCn: "她们住在同一个国家。"
+                    },
+                    {
+                        id: 15,
+                        text: `Vous pensez qu’il est un peu fou de partir en bateau avec des enfants ?
 你觉得带着孩子坐船出行有点疯狂吗？
 Clément, Marine et leurs deux filles de six et deux ans devraient vous inspirer.
 Clément 和 Marine 以及他们 6 岁和 2 岁的两个女儿会给你启发。
@@ -568,12 +757,12 @@ Tous les quatre ou à plusieurs familles, ils maintiennent le rythme d’une cro
 “与自然、海洋、荒野海岸、海豚持续接触的生活。”Marine 补充道。
 Selon Marine et Clément, que permettent des vacances en bateau ?
 根据 Marine 和 Clément 的说法，乘船度假能带来什么？`,
-            answerFr: "De se reposer et de découvrir le milieu marin.",
-            answerCn: "休息放松并了解/接触海洋环境。"
-          },
-          {
-            id: 16,
-            text: `Au collège, il est possible d’utiliser les appareils numériques que possèdent les élèves et les enseignants.
+                        answerFr: "De se reposer et de découvrir le milieu marin.",
+                        answerCn: "休息放松并了解/接触海洋环境。"
+                    },
+                    {
+                        id: 16,
+                        text: `Au collège, il est possible d’utiliser les appareils numériques que possèdent les élèves et les enseignants.
 在初中，学生和老师可以使用自己拥有的数码设备。
 Un professeur explique qu’il lui arrive d’utiliser son portable en classe lorsque les élèves lui posent des questions auxquelles il n’a pas la réponse.
 一位老师解释说，当学生问到他不会的问题时，他有时会在课堂上用手机查资料。
@@ -585,12 +774,12 @@ Ils peuvent ainsi réaliser qu’un portable ne sert pas seulement à regarder d
 这样他们就能明白：手机不只是用来看视频或给朋友发消息。
 Quelle est l’opinion de cet enseignant sur le portable ?
 这位老师对手机的看法是什么？`,
-            answerFr: "C'est un appui pédagogique supplémentaire.",
-            answerCn: "它是额外的教学辅助工具。"
-          },
-          {
-            id: 17,
-            text: `Le festival de la bande dessinée aura lieu les 6 et 7 février à Paris.
+                        answerFr: "C'est un appui pédagogique supplémentaire.",
+                        answerCn: "它是额外的教学辅助工具。"
+                    },
+                    {
+                        id: 17,
+                        text: `Le festival de la bande dessinée aura lieu les 6 et 7 février à Paris.
 漫画节将于 2 月 6 日和 7 日在巴黎举行。
 Il y aura plus de cent nouveautés à découvrir.
 将有 100 多部新作品可供发现。
@@ -602,12 +791,12 @@ Inscriptions sur le site www.festivalbd@paris.com
 报名网站：www.festivalbd@paris.com
 D’après cette annonce, qu’est-ce qu’on pourrait faire à ce festival ?
 根据这则公告，在这个节日里可以做什么？`,
-            answerFr: "Parler à des dessinateurs.",
-            answerCn: "与漫画作者/画家交流。"
-          },
-          {
-            id: 18,
-            text: `Les Français aiment les chats.
+                        answerFr: "Parler à des dessinateurs.",
+                        answerCn: "与漫画作者/画家交流。"
+                    },
+                    {
+                        id: 18,
+                        text: `Les Français aiment les chats.
 法国人喜欢猫。
 Il faut dire que l’animal colle à son époque : un minimum de contraintes pour un maximum de plaisir.
 不得不说，这种动物符合当下时代：用最少的约束获得最大的快乐。
@@ -617,12 +806,12 @@ Toutes les raisons sont bonnes pour accueillir ce petit animal dans nos foyers.
 各种理由都足以把这小动物迎进家里。
 Selon l’auteur de l’article, qu’est-ce qui caractérise la société contemporaine ?
 作者认为，当代社会的特点是什么？`,
-            answerFr: "La quête du bonheur facile.",
-            answerCn: "追求“轻松获得的幸福”。"
-          },
-          {
-            id: 19,
-            text: `Dora Bruder, publié en 1997, est considéré comme l’un des meilleurs romans de Patrick Modiano.
+                        answerFr: "La quête du bonheur facile.",
+                        answerCn: "追求“轻松获得的幸福”。"
+                    },
+                    {
+                        id: 19,
+                        text: `Dora Bruder, publié en 1997, est considéré comme l’un des meilleurs romans de Patrick Modiano.
 《Dora Bruder》出版于 1997 年，被认为是帕特里克·莫迪亚诺最好的小说之一。
 L’écrivain aime fouiller l’histoire de la capitale et fréquente de nombreuses bibliothèques.
 这位作家喜欢探寻首都（巴黎）的历史，经常出入许多图书馆。
@@ -634,12 +823,12 @@ Modiano va alors s’attacher à lever le mystère de cette disparition en entra
 莫迪亚诺随后致力于揭开这次失踪之谜，带读者走进巴黎第 18 区的街巷。
 Que fait le journaliste dans cet extrait ?
 在这段摘录中，记者做了什么？`,
-            answerFr: "Il explique l'idée de départ d'un livre de Modiano.",
-            answerCn: "他解释了莫迪亚诺一本书的创作起点/灵感来源。"
-          },
-          {
-            id: 20,
-            text: `SOCIÉTÉ
+                        answerFr: "Il explique l'idée de départ d'un livre de Modiano.",
+                        answerCn: "他解释了莫迪亚诺一本书的创作起点/灵感来源。"
+                    },
+                    {
+                        id: 20,
+                        text: `SOCIÉTÉ
 社会
 Plus que jamais peut-être, des lycéens, étudiants, jeunes travailleurs sont nombreux à consacrer une partie de leur activité, souvent bénévolement, aux plus âgés.
 也许比以往任何时候都更明显，许多高中生、大学生和年轻工作者把一部分时间（往往是志愿的）投入到陪伴老人上。
@@ -649,23 +838,23 @@ Rencontrer des jeunes n’est-il pas le plus sûr moyen de conserver un semblant
 与年轻人见面，难道不是保持一点社会生活的最可靠方式吗？
 Pourquoi certains jeunes consacrent-ils du temps aux personnes âgées ?
 为什么一些年轻人会把时间花在老人身上？`,
-            answerFr: "Pour créer un lien entre générations.",
-            answerCn: "为了建立代际之间的联系。"
-          },
-          {
-            id: 21,
-            text: `Envie de faire le clown ?
+                        answerFr: "Pour créer un lien entre générations.",
+                        answerCn: "为了建立代际之间的联系。"
+                    },
+                    {
+                        id: 21,
+                        text: `Envie de faire le clown ?
 想当小丑吗？
 Pendant les vacances de Pâques, l’équipe d’animateurs du centre de loisirs dessinera chaque jour sur les joues des enfants des animaux marins : hippocampes, phoques, manchots, poissons clowns…
 复活节假期期间，活动中心的工作人员每天会在孩子的脸颊上画上海洋动物：海马、海豹、企鹅、小丑鱼等……
 Quelle activité proposera-t-on aux enfants pendant les vacances de Pâques ?
 复活节假期会给孩子们安排什么活动？`,
-            answerFr: "Une activité de maquillage.",
-            answerCn: "脸部彩绘/化妆活动。"
-          },
-          {
-            id: 22,
-            text: `Outre-Manche, une jeune députée a attiré l’attention des médias et des photographes en proposant un décret qui imposerait la mention « retouchée numériquement » sur toutes les photos corrigées.
+                        answerFr: "Une activité de maquillage.",
+                        answerCn: "脸部彩绘/化妆活动。"
+                    },
+                    {
+                        id: 22,
+                        text: `Outre-Manche, une jeune députée a attiré l’attention des médias et des photographes en proposant un décret qui imposerait la mention « retouchée numériquement » sur toutes les photos corrigées.
 在英国，一位年轻女议员提出一项法令：要求所有经过修图的照片必须标注“经过数字修饰”，从而引起媒体和摄影师关注。
 Le parti libéral démocrate a d’ailleurs approuvé cette proposition.
 自由民主党也赞成了这一提议。
@@ -673,12 +862,12 @@ Le parti libéral démocrate a d’ailleurs approuvé cette proposition.
 女议员愤慨地表示：“我不想禁止广告商使用比普通女性更漂亮的模特，但‘选择美’和‘把美修到不可能的比例’是两回事，比如腿的长度比例。”
 Que souhaite cette députée ?
 这位女议员希望实现什么？`,
-            answerFr: "De signaler sur les photos les modifications effectuées.",
-            answerCn: "在照片上标注所做的修图/修改。"
-          },
-          {
-            id: 23,
-            text: `Faire des horaires à rallonge, venir travailler même malade…
+                        answerFr: "De signaler sur les photos les modifications effectuées.",
+                        answerCn: "在照片上标注所做的修图/修改。"
+                    },
+                    {
+                        id: 23,
+                        text: `Faire des horaires à rallonge, venir travailler même malade…
 加班到很晚，甚至生病也来上班……
 Depuis quelques années, le présentéisme — une présence excessive au travail — s’étend dans les entreprises.
 近几年，“出勤主义”（在工作中过度待岗）在企业中蔓延。
@@ -690,12 +879,12 @@ Contrairement à ce que l’on croit souvent, un salarié trop présent risque d
 与常见想法相反，过度待岗的员工可能效率更低：长时间工作会让他疲惫、注意力下降、失去动力。
 Qu’apprend-on sur le présentéisme ?
 关于“出勤主义”，我们了解到什么？`,
-            answerFr: "Il influence la productivité des salariés.",
-            answerCn: "它会影响员工的工作效率/生产力。"
-          },
-          {
-            id: 24,
-            text: `Le PDG de la société SEB a avoué « ne plus espérer avoir une croissance importante » sur les marchés occidentaux, arrivés à saturation.
+                        answerFr: "Il influence la productivité des salariés.",
+                        answerCn: "它会影响员工的工作效率/生产力。"
+                    },
+                    {
+                        id: 24,
+                        text: `Le PDG de la société SEB a avoué « ne plus espérer avoir une croissance importante » sur les marchés occidentaux, arrivés à saturation.
 SEB 公司的 CEO 承认，在趋于饱和的西方市场上，他已不再指望实现显著增长。
 Lui, qui a toujours défendu la valeur ajoutée et le savoir-faire des usines tricolores, n’a pas pu faire face à l’arrivée des pays émergents dans le petit électroménager : 80 % des grille-pains vendus en France coûtent désormais moins de 30 €.
 这位一直强调法国本土工厂附加值和工艺的人，仍无法应对新兴国家进入小家电市场：如今在法国售出的 80% 烤面包机价格低于 30 欧元。
@@ -703,12 +892,12 @@ Résultat, les ventes de l’inventeur de la cocotte-minute ont reculé de 5,6 %
 结果，这家压力锅发明者的销量在法国下降 5.6%，在欧盟其他国家下降 2.6%。
 Quelle est la cause principale évoquée pour cette baisse ?
 这一下滑主要归因于什么？`,
-            answerFr: "L'expansion de la concurrence internationale.",
-            answerCn: "国际竞争的扩张/加剧。"
-          },
-          {
-            id: 25,
-            text: `C’est le défi quotidien du consommateur soucieux de son alimentation.
+                        answerFr: "L'expansion de la concurrence internationale.",
+                        answerCn: "国际竞争的扩张/加剧。"
+                    },
+                    {
+                        id: 25,
+                        text: `C’est le défi quotidien du consommateur soucieux de son alimentation.
 这是关注饮食健康的消费者每天面临的挑战。
 Comment déchiffrer ce qui se cache derrière les sigles et les obscurs tableaux des étiquettes ?
 如何读懂标签上那些缩写和晦涩的表格背后隐藏的信息？
@@ -718,12 +907,12 @@ Mais vous le verrez peu dans les rayons : son utilisation facultative est basée
 但你在货架上很少看到它：因为它是可选的，取决于食品工业是否自愿采用。
 Qu’apprend-on sur l’affichage du Nutri-score ?
 关于 Nutri-score 标识，我们了解到什么？`,
-            answerFr: "Il facilite la lecture des étiquettes.",
-            answerCn: "它让读懂标签变得更容易。"
-          },
-          {
-            id: 26,
-            text: `Depuis quelque temps, le culte du « bien vieillir » s’ajoute à celui de l’idéal esthétique et du jeunisme.
+                        answerFr: "Il facilite la lecture des étiquettes.",
+                        answerCn: "它让读懂标签变得更容易。"
+                    },
+                    {
+                        id: 26,
+                        text: `Depuis quelque temps, le culte du « bien vieillir » s’ajoute à celui de l’idéal esthétique et du jeunisme.
 近来，“优雅变老/好好变老”的崇拜加入到审美理想和崇尚年轻的潮流之中。
 En France, des chercheurs en sciences humaines se demandent s’il ne s’apparente pas à une idéologie tyrannique qui culpabilise de nombreuses personnes âgées, comme l’expliquent le sociologue Michel Billé et le philosophe Didier Martz :
 在法国，人文科学研究者质疑这是否是一种“专制的意识形态”，让许多老人产生内疚感。社会学家 Michel Billé 和哲学家 Didier Martz 解释道：
@@ -733,12 +922,12 @@ D’après lepoint.fr
 摘自 lepoint.fr
 Qu’apprend-on sur le culte du « bien vieillir » ?
 关于“好好变老”的崇拜，我们了解到什么？`,
-            answerFr: "Il se propage imperceptiblement.",
-            answerCn: "它在不知不觉中传播/渗透。"
-          },
-          {
-            id: 27,
-            text: `On assiste aujourd’hui à la naissance d’une véritable géopolitique du sport, caractérisée par trois éléments :
+                        answerFr: "Il se propage imperceptiblement.",
+                        answerCn: "它在不知不觉中传播/渗透。"
+                    },
+                    {
+                        id: 27,
+                        text: `On assiste aujourd’hui à la naissance d’une véritable géopolitique du sport, caractérisée par trois éléments :
 如今我们正见证一种真正的“体育地缘政治”的出现，其特点体现在三方面：
 • l’intégration du sport et des rencontres sportives internationales dans les réalités et les dynamiques internationales ;
 • 将体育与国际体育赛事纳入国际现实与国际动态之中；
@@ -748,12 +937,12 @@ Qu’apprend-on sur le culte du « bien vieillir » ?
 • 越来越多的非体育国际行为体把体育当作行动手段，并将其用作外交政策的驱动力。
 Quel est l’objectif de ce texte ?
 这段文字的目的是什么？`,
-            answerFr: "Décrire les rapports du sport et de la politique internationale.",
-            answerCn: "描述体育与国际政治之间的关系。"
-          },
-          {
-            id: 28,
-            text: `Soyez vous-mêmes, ou sinon, devenez-le !
+                        answerFr: "Décrire les rapports du sport et de la politique internationale.",
+                        answerCn: "描述体育与国际政治之间的关系。"
+                    },
+                    {
+                        id: 28,
+                        text: `Soyez vous-mêmes, ou sinon, devenez-le !
 做你自己；如果还不是，那就成为自己！
 La rentrée de septembre voit s’afficher dans les couloirs du métro parisien et les vitrines des libraires les couvertures de livres de développement personnel et autres introductions à la méditation, destinés à faire passer la pilule du retour au bureau des corps vacanciers.
 9 月开学季，巴黎地铁走廊和书店橱窗里到处是个人成长书籍与冥想入门书的封面，旨在帮助“度假身体”更容易接受回办公室的现实。
@@ -765,12 +954,12 @@ La référence principale du film reste la psychanalyse. La sérénité est au b
 电影主要参考的是精神分析。通往平静的道路尽头有一个秘密：学会爱自己，才能去爱别人。
 Quelle tendance est dans l’air du temps ?
 当下流行的趋势是什么？`,
-            answerFr: "Travailler sur soi-même.",
-            answerCn: "进行自我提升/自我修炼。"
-          },
-          {
-            id: 29,
-            text: `L’un des grands enjeux de l’enseignement aujourd’hui est la question de la transmission.
+                        answerFr: "Travailler sur soi-même.",
+                        answerCn: "进行自我提升/自我修炼。"
+                    },
+                    {
+                        id: 29,
+                        text: `L’un des grands enjeux de l’enseignement aujourd’hui est la question de la transmission.
 当今教育的一大关键问题是“传递”。
 Elle renvoie à deux problématiques : celle des contenus culturels et celle des valeurs à transmettre.
 它涉及两个方面：文化内容的传授，以及价值观的传递。
@@ -786,12 +975,12 @@ Ce qui devient alors essentiel, c’est la cohérence entre ces deux dimensions.
 因此，最重要的是这两者之间的一致性。
 Que explique l’auteur sur l’enseignement des valeurs ?
 作者对价值观教育的解释是什么？`,
-            answerFr: "Il est indissociable de celui des savoirs.",
-            answerCn: "它与知识教育不可分离。"
-          },
-          {
-            id: 30,
-            text: `Une drôle de créature composée de vieux journaux, des pyjamas « customisés » aux œufs de saumon, des voitures miniatures ou une Joconde revisitée : sculptures, dessins, tableaux, tissus brodés composent ce savant mélange artistique sans style précis.
+                        answerFr: "Il est indissociable de celui des savoirs.",
+                        answerCn: "它与知识教育不可分离。"
+                    },
+                    {
+                        id: 30,
+                        text: `Une drôle de créature composée de vieux journaux, des pyjamas « customisés » aux œufs de saumon, des voitures miniatures ou une Joconde revisitée : sculptures, dessins, tableaux, tissus brodés composent ce savant mélange artistique sans style précis.
 由旧报纸组成的奇怪生物、用三文鱼卵“改造”的睡衣、微型汽车或被重新演绎的《蒙娜丽莎》：雕塑、素描、绘画、刺绣织物构成了这种没有固定风格却很“混搭”的艺术组合。
 Mais qu’ont en commun ces créateurs contemporains d’art brut ?
 但这些当代“原生艺术/局外人艺术”（art brut）创作者有什么共同点？
@@ -803,12 +992,12 @@ Dans des ateliers ou seuls, ils récupèrent, collent et inventent de leurs main
 这场展览既温柔又怪诞，充满色彩、符号与图像，呈现出自发性与创造力。
 Qu’apprend-on sur les œuvres exposées ?
 关于展出的作品，我们了解到什么？`,
-            answerFr: "Elles sont issues de techniques variées.",
-            answerCn: "它们使用了多种多样的技法。"
-          },
-          {
-            id: 31,
-            text: `Le philosophe Glenn Albrecht a deux passions : observer les oiseaux et inventer des mots.
+                        answerFr: "Elles sont issues de techniques variées.",
+                        answerCn: "它们使用了多种多样的技法。"
+                    },
+                    {
+                        id: 31,
+                        text: `Le philosophe Glenn Albrecht a deux passions : observer les oiseaux et inventer des mots.
 哲学家 Glenn Albrecht 有两大爱好：观察鸟类与创造新词。
 Son goût de la langue lui vient de sa mère, « femme au foyer, qui adorait les mots croisés et le Scrabble ».
 他对语言的兴趣来自母亲——一位喜欢填字游戏和拼字游戏（Scrabble）的家庭主妇。
@@ -822,12 +1011,12 @@ Une assertion que ne démentira pas le philosophe français Baptiste Morizot, po
 法国哲学家 Baptiste Morizot 也认同：对他而言，“新词就像地图，帮助我们以另一种方式探索即将到来的世界。”
 Selon ce texte, à quoi s’attache Glenn Albrecht ?
 根据这段文字，Glenn Albrecht 致力于什么？`,
-            answerFr: "À l'enrichissement du lexique.",
-            answerCn: "丰富词汇/扩展词汇体系。"
-          },
-          {
-            id: 32,
-            text: `Théâtre
+                        answerFr: "À l'enrichissement du lexique.",
+                        answerCn: "丰富词汇/扩展词汇体系。"
+                    },
+                    {
+                        id: 32,
+                        text: `Théâtre
 戏剧
 Joël Pommerat nous offre un très court spectacle dont à la fois la pureté formelle et le sens nous ont conquis.
 Joël Pommerat 为我们带来一部很短的作品，其形式的纯净与内涵都打动了我们。
@@ -841,12 +1030,12 @@ Il ne nous livre aucun message moral et à peine un message social ; il fait sim
 他不传递道德说教，几乎也不传递社会宣言；他只是唤起我们的感受力。
 Dans quel objectif Joël Pommerat a-t-il créé son spectacle ?
 Joël Pommerat 创作这个作品的目的是什么？`,
-            answerFr: "Amener les spectateurs à s'émouvoir d'un quotidien douloureux.",
-            answerCn: "让观众为痛苦的日常而动容。"
-          },
-          {
-            id: 33,
-            text: `C’est un étonnant phénomène, appelé couronne de timidité : le feuillage de certains arbres n’entre jamais en contact avec celui des autres, créant des frontières entre les feuilles et des chemins de lumière.
+                        answerFr: "Amener les spectateurs à s'émouvoir d'un quotidien douloureux.",
+                        answerCn: "让观众为痛苦的日常而动容。"
+                    },
+                    {
+                        id: 33,
+                        text: `C’est un étonnant phénomène, appelé couronne de timidité : le feuillage de certains arbres n’entre jamais en contact avec celui des autres, créant des frontières entre les feuilles et des chemins de lumière.
 这是一种令人惊讶的现象，称为“羞怯冠层”：某些树的枝叶从不与其他树的枝叶接触，于是叶片之间形成边界和光的通道。
 Dans certaines forêts, en observant les cimes des arbres, un labyrinthe de lumière se dessine entre les feuillages, comme si les arbres laissaient volontairement une barrière polie d’une trentaine de centimètres pour éviter d’entrer en contact.
 在一些森林里，观察树冠会发现叶丛之间出现光的迷宫，仿佛树木故意留出约 30 厘米的“抛光”隔离带，以避免相互接触。
@@ -856,12 +1045,12 @@ Une même espèce d’arbres s’entendrait donc pour créer un environnement pr
 因此，同一树种可能会“达成一致”，共同创造有利于群体整体生存的环境。
 Que constate l’auteur du texte à propos des arbres ?
 作者关于树木观察到什么？`,
-            answerFr: "Ils sont capables de communiquer entre eux.",
-            answerCn: "它们能够彼此沟通/交流。"
-          },
-          {
-            id: 34,
-            text: `Très controversée, la semaine de quatre jours à l’école est dénoncée dans un rapport parlementaire.
+                        answerFr: "Ils sont capables de communiquer entre eux.",
+                        answerCn: "它们能够彼此沟通/交流。"
+                    },
+                    {
+                        id: 34,
+                        text: `Très controversée, la semaine de quatre jours à l’école est dénoncée dans un rapport parlementaire.
 备受争议的“学校四天制”在一份议会报告中遭到批评。
 Les députés proposent de revenir à la semaine de quatre journées et demie et de réduire la période des vacances estivales.
 议员建议回到每周四天半，并缩短暑假。
@@ -875,12 +1064,12 @@ En France, la scolarisation annuelle est de 144 jours, contre une moyenne de 180
 一位专家认为：“必须把学时分配得更均衡。”
 Que reprochent les députés à la semaine de quatre jours ?
 议员们批评四天制的什么问题？`,
-            answerFr: "De satisfaire avant tout les adultes.",
-            answerCn: "它首先满足的是成年人（而非孩子）。"
-          },
-          {
-            id: 35,
-            text: `L’ambition de cet auteur : changer l’art d’écrire, rien de moins.
+                        answerFr: "De satisfaire avant tout les adultes.",
+                        answerCn: "它首先满足的是成年人（而非孩子）。"
+                    },
+                    {
+                        id: 35,
+                        text: `L’ambition de cet auteur : changer l’art d’écrire, rien de moins.
 这位作者的雄心是：改变写作艺术，不多不少。
 Mais cela est dit sans emphase, d’un ton dubitatif, fataliste presque :
 但他说得并不夸张，语气甚至有些怀疑、近乎宿命：
@@ -890,12 +1079,12 @@ J’ai l’idée qu’il est encore trop tôt pour savoir ce que j’ai apporté
 我觉得现在还太早，无法判断我到底带来了什么。不过，当你写作时，你忙于解决每一刻出现的技术问题，以至于没有时间产生很多宏观想法。” 
 Comment cet auteur veut-il changer l’art d’écrire ?
 这位作者打算如何改变写作艺术？`,
-            answerFr: "En abandonnant les codes traditionnels du roman.",
-            answerCn: "通过抛弃传统小说的写作规则/范式。"
-          },
-          {
-            id: 36,
-            text: `Les champs de mise en œuvre des robots sont légion : production, services, gestion des données, vie urbaine, sécurité, loisirs, domotique.
+                        answerFr: "En abandonnant les codes traditionnels du roman.",
+                        answerCn: "通过抛弃传统小说的写作规则/范式。"
+                    },
+                    {
+                        id: 36,
+                        text: `Les champs de mise en œuvre des robots sont légion : production, services, gestion des données, vie urbaine, sécurité, loisirs, domotique.
 机器人的应用领域非常广：生产、服务、数据管理、城市生活、安全、娱乐、智能家居等。
 Leur arrivée donne lieu à des transformations inédites et à des problématiques nouvelles, souvent mythifiées.
 它们的到来带来前所未有的变革与新问题，也常被神话化。
@@ -907,12 +1096,12 @@ Surtout, elle a bouleversé le fonctionnement de l’entreprise, faisant peser u
 更重要的是，它改变了企业运作方式，让员工承受巨大压力：在越来越复杂的流程中必须维持生产连续性。
 Quelle est la conséquence de la robotisation dans le monde professionnel ?
 机器人化在职场中的后果是什么？`,
-            answerFr: "Elle a modifié l'organisation du travail.",
-            answerCn: "它改变了工作的组织方式。"
-          },
-          {
-            id: 37,
-            text: `La bioéthique fait l’objet d’une polémique qui confronte deux écoles.
+                        answerFr: "Elle a modifié l'organisation du travail.",
+                        answerCn: "它改变了工作的组织方式。"
+                    },
+                    {
+                        id: 37,
+                        text: `La bioéthique fait l’objet d’une polémique qui confronte deux écoles.
 生物伦理引发争论，形成两派对立。
 Pour la première, composée de chercheurs et de rationalistes, le progrès scientifique ne saurait être limité.
 第一派由研究者与理性主义者组成，认为科学进步不应被限制。
@@ -926,12 +1115,12 @@ Pour eux, il est impossible de déterminer les tares inconciliables avec l’hum
 在他们看来，无法界定哪些缺陷与“人性”不相容，因为有些人正是把这些缺陷变成了天才的源泉。
 Sur quoi portent les réserves des partisans de la seconde école ?
 第二派的保留/担忧集中在哪一点？`,
-            answerFr: "Les dérives induites par l'amélioration du patrimoine génétique.",
-            answerCn: "对改善遗传基因可能引发的偏差/滥用的担忧。"
-          },
-          {
-            id: 38,
-            text: `Les sons [v] et [f] produits avec la lèvre inférieure qui va vers les dents supérieures seraient apparus suite à l’invention de l’agriculture au néolithique.
+                        answerFr: "Les dérives induites par l'amélioration du patrimoine génétique.",
+                        answerCn: "对改善遗传基因可能引发的偏差/滥用的担忧。"
+                    },
+                    {
+                        id: 38,
+                        text: `Les sons [v] et [f] produits avec la lèvre inférieure qui va vers les dents supérieures seraient apparus suite à l’invention de l’agriculture au néolithique.
 用下唇接触上齿发出的 [v] 与 [f] 音，可能是在新石器时代农业出现后才出现的。
 Une étude récente semble confirmer la théorie élaborée il y a 50 ans par le linguiste Charles Hockett selon laquelle les pratiques agricoles et l’alimentation influencent la manière dont on produit les sons.
 一项近期研究似乎证实了语言学家 Charles Hockett 50 年前提出的理论：农业实践与饮食会影响我们发音的方式。
@@ -945,12 +1134,12 @@ D’après France-Culture.
 摘自 France-Culture。
 Pourquoi cette étude est-elle critiquée ?
 为什么这项研究会受到批评？`,
-            answerFr: "Elle remet en cause les théories habituelles.",
-            answerCn: "因为它挑战/动摇了通常的理论解释。"
-          },
-          {
-            id: 39,
-            text: `J’ai la naïveté de penser qu’un peu d’imagination n’est pas totalement absurde lorsqu’on écrit des romans.
+                        answerFr: "Elle remet en cause les théories habituelles.",
+                        answerCn: "因为它挑战/动摇了通常的理论解释。"
+                    },
+                    {
+                        id: 39,
+                        text: `J’ai la naïveté de penser qu’un peu d’imagination n’est pas totalement absurde lorsqu’on écrit des romans.
 我天真地认为，写小说时有一点想象力并非完全荒唐。
 Or, à mon sens, l’imagination est le fruit de deux choses fondamentales : l’ennui, à qui on donne trop souvent un mauvais rôle, et l’observation, qui n’est pas seulement un terme médical.
 而在我看来，想象力源自两样基本东西：无聊（人们常常给它负面角色）以及观察（这不只是医学术语）。
@@ -962,254 +1151,306 @@ En somme, grâce à ce téléphone intelligent, vous pouvez regarder en permanen
 总之，借助智能手机，你可以随时观看别人精彩想象力的成果（却牺牲了你自己的想象力）。
 Quelle est l’attitude de l’auteur vis-à-vis du téléphone intelligent ?
 作者对智能手机持什么态度？`,
-            answerFr: "Il s'inquiète de son usage abusif.",
-            answerCn: "他担心它被过度使用。"
-          }
-        ]
-      }
-    ];
+                        answerFr: "Il s'inquiète de son usage abusif.",
+                        answerCn: "他担心它被过度使用。"
+                    }
+                ]
+            }
+        ];
 
-    /* ---------- STATE ---------- */
-    let currentExamIndex = null;
+        /* ---------- STATE ---------- */
+        let currentExamIndex = null;
 
-    /* ---------- DOM ELEMENTS ---------- */
-    const examSelectScreen = document.getElementById("examSelectScreen");
-    const readingScreen = document.getElementById("readingScreen");
+        /* ---------- DOM ELEMENTS ---------- */
+        const examSelectScreen = document.getElementById("examSelectScreen");
+        const readingScreen = document.getElementById("readingScreen");
 
-    const backIcon = document.getElementById("backIcon");
-    const topbarTitle = document.getElementById("topbarTitle");
-    const examGrid = document.getElementById("examGrid");
+        const backIcon = document.getElementById("backIcon");
+        const topbarTitle = document.getElementById("topbarTitle");
+        const examGrid = document.getElementById("examGrid");
 
-    const readingTitle = document.getElementById("readingTitle");
-    const readingMeta = document.getElementById("readingMeta");
-    const questionList = document.getElementById("questionList");
+        const readingTitle = document.getElementById("readingTitle");
+        const readingMeta = document.getElementById("readingMeta");
+        const questionList = document.getElementById("questionList");
 
-    const toggleCnBtn = document.getElementById("toggleCnBtn");
-    const toggleAllAnswersBtn = document.getElementById("toggleAllAnswersBtn");
-    const searchInput = document.getElementById("searchInput");
+        const toggleCnBtn = document.getElementById("toggleCnBtn");
+        const toggleAllAnswersBtn = document.getElementById("toggleAllAnswersBtn");
+        const searchInput = document.getElementById("searchInput");
 
-    /* ---------- EXAM SELECTION ---------- */
-    function buildExamGrid() {
-      examGrid.innerHTML = "";
-      exams.forEach((exam, idx) => {
-        const card = document.createElement("div");
-        card.className = "exam-card";
-        card.dataset.index = idx;
-        card.addEventListener("click", () => startExam(idx));
+        /* ---------- EXAM SELECTION ---------- */
+        function buildExamGrid() {
+            examGrid.innerHTML = "";
+            exams.forEach((exam, idx) => {
+                const card = document.createElement("div");
+                card.className = "exam-card";
+                card.dataset.index = idx;
+                card.addEventListener("click", () => startExam(idx));
 
-        const label = document.createElement("div");
-        label.className = "exam-card-label";
-        label.textContent = exam.label;
+                const label = document.createElement("div");
+                label.className = "exam-card-label";
+                label.textContent = exam.label;
 
-        const sub = document.createElement("div");
-        sub.className = "exam-card-sub";
-        sub.textContent = exam.subtitle || "";
+                const sub = document.createElement("div");
+                sub.className = "exam-card-sub";
+                sub.textContent = exam.subtitle || "";
 
-        card.appendChild(label);
-        card.appendChild(sub);
-        examGrid.appendChild(card);
-      });
-    }
+                card.appendChild(label);
+                card.appendChild(sub);
+                examGrid.appendChild(card);
+            });
+        }
 
-    function exitExam() {
-      currentExamIndex = null;
-      questionList.innerHTML = "";
-      readingScreen.style.display = "none";
-      examSelectScreen.style.display = "block";
-      backIcon.classList.add("hidden");
-      topbarTitle.textContent = "TCF - Compréhension écrite";
-      searchInput.value = "";
-      updateGlobalAnswerToggle();
-    }
+        function exitExam() {
+            currentExamIndex = null;
+            questionList.innerHTML = "";
+            readingScreen.style.display = "none";
+            examSelectScreen.style.display = "block";
+            backIcon.classList.add("hidden");
+            topbarTitle.textContent = "TCF - Compréhension écrite";
+            searchInput.value = "";
+            updateGlobalAnswerToggle();
+        }
 
-    backIcon.addEventListener("click", exitExam);
+        backIcon.addEventListener("click", exitExam);
 
-    function getCurrentExam() {
-      return exams[currentExamIndex];
-    }
+        function getCurrentExam() {
+            return exams[currentExamIndex];
+        }
 
-    /* ---------- RENDER BILINGUAL BLOCK ---------- */
-    function renderBilingualBlock(container, raw) {
-      container.innerHTML = "";
-      if (!raw) return;
+        /* ---------- RENDER BILINGUAL BLOCK ---------- */
+        function renderBilingualBlock(container, raw) {
+            container.innerHTML = "";
+            if (!raw) return;
 
-      const lines = raw
-        .split("\n")
-        .map(l => l.trim())
-        .filter(l => l.length > 0);
+            const lines = raw
+                .split("\n")
+                .map(l => l.trim())
+                .filter(l => l.length > 0);
 
-      const total = lines.length;
+            const total = lines.length;
 
-      lines.forEach((line, idx) => {
-        const p = document.createElement("p");
+            lines.forEach((line, idx) => {
+                const p = document.createElement("p");
 
-        const baseClass = idx % 2 === 0 ? "qt-fr" : "qt-cn";
-        const isQuestionPair = total >= 2 && idx >= total - 2;
+                const baseClass = idx % 2 === 0 ? "qt-fr" : "qt-cn";
+                const isQuestionPair = total >= 2 && idx >= total - 2;
 
-        p.className = baseClass + (isQuestionPair ? " qt-question" : "");
-        p.textContent = line;
+                p.className = baseClass + (isQuestionPair ? " qt-question" : "");
+                p.textContent = line;
 
-        container.appendChild(p);
-      });
-    }
+                container.appendChild(p);
+            });
+        }
 
-    /* ---------- ANSWER TOGGLE HELPERS ---------- */
-    function setAnswerForCard(card, show) {
-      const ans = card.querySelector(".answer-wrap");
-      const btn = card.querySelector(".btn-toggle-answer");
-      if (!ans || !btn) return;
+        /* ---------- ANSWER TOGGLE HELPERS ---------- */
+        function setAnswerForCard(card, show) {
+            const ans = card.querySelector(".answer-wrap");
+            const btn = card.querySelector(".btn-toggle-answer");
+            if (!ans || !btn) return;
 
-      if (show) {
-        ans.style.display = "block";
-        btn.textContent = "隐藏答案";
-        btn.dataset.open = "1";
-      } else {
-        ans.style.display = "none";
-        btn.textContent = "显示答案";
-        btn.dataset.open = "0";
-      }
-    }
+            if (show) {
+                ans.style.display = "block";
+                btn.textContent = "隐藏答案";
+                btn.dataset.open = "1";
+            } else {
+                ans.style.display = "none";
+                btn.textContent = "显示答案";
+                btn.dataset.open = "0";
+            }
+        }
 
-    function getOpenCount() {
-      return Array.from(document.querySelectorAll(".btn-toggle-answer"))
-        .filter(btn => btn.dataset.open === "1").length;
-    }
+        function getOpenCount() {
+            return Array.from(document.querySelectorAll(".btn-toggle-answer"))
+                .filter(btn => btn.dataset.open === "1").length;
+        }
 
-    function updateGlobalAnswerToggle() {
-      const total = document.querySelectorAll(".btn-toggle-answer").length;
-      const open = getOpenCount();
+        function updateGlobalAnswerToggle() {
+            const total = document.querySelectorAll(".btn-toggle-answer").length;
+            const open = getOpenCount();
 
-      if (!total) {
-        toggleAllAnswersBtn.textContent = "显示全部答案";
-        return;
-      }
+            if (!total) {
+                toggleAllAnswersBtn.textContent = "显示全部答案";
+                return;
+            }
 
-      // 只要有任何题目已展开，总开关就变成“隐藏全部答案”
-      toggleAllAnswersBtn.textContent = open > 0 ? "隐藏全部答案" : "显示全部答案";
-    }
+            // 只要有任何题目已展开，总开关就变成“隐藏全部答案”
+            toggleAllAnswersBtn.textContent = open > 0 ? "隐藏全部答案" : "显示全部答案";
+        }
 
-    function setAllAnswers(show) {
-      document.querySelectorAll(".q-card").forEach(card => setAnswerForCard(card, show));
-      updateGlobalAnswerToggle();
-    }
+        function setAllAnswers(show) {
+            document.querySelectorAll(".q-card").forEach(card => setAnswerForCard(card, show));
+            updateGlobalAnswerToggle();
+        }
 
-    /* ---------- RENDER ALL QUESTIONS ---------- */
-    function renderAllQuestions() {
-      const exam = getCurrentExam();
-      const total = exam.questions.length;
+        /* ---------- RENDER ALL QUESTIONS ---------- */
+        function renderAllQuestions() {
+            const exam = getCurrentExam();
+            const total = exam.questions.length;
 
-      readingTitle.textContent = `TCF - Compréhension écrite - ${exam.label}`;
-      readingMeta.textContent = `${total} questions`;
+            readingTitle.textContent = `TCF - Compréhension écrite - ${exam.label}`;
+            readingMeta.textContent = `${total} questions`;
 
-      questionList.innerHTML = "";
+            questionList.innerHTML = "";
 
-      exam.questions.forEach((q) => {
-        const card = document.createElement("div");
-        card.className = "q-card";
-        card.dataset.qid = q.id;
+            exam.questions.forEach((q) => {
+                const card = document.createElement("div");
+                card.className = "q-card";
+                card.dataset.qid = q.id;
 
-        const head = document.createElement("div");
-        head.className = "q-card-head";
+                const head = document.createElement("div");
+                head.className = "q-card-head";
 
-        const num = document.createElement("div");
-        num.className = "q-card-num";
-        num.textContent = `Question ${q.id}`;
+                const num = document.createElement("div");
+                num.className = "q-card-num";
+                num.textContent = `Question ${q.id}`;
 
-        const actions = document.createElement("div");
-        actions.className = "q-card-actions";
+                const actions = document.createElement("div");
+                actions.className = "q-card-actions";
 
-        const toggleAnsBtn = document.createElement("button");
-        toggleAnsBtn.className = "btn btn-toggle-answer";
-        toggleAnsBtn.textContent = "显示答案";
-        toggleAnsBtn.dataset.open = "0";
+                const toggleAnsBtn = document.createElement("button");
+                toggleAnsBtn.className = "btn btn-toggle-answer";
+                toggleAnsBtn.textContent = "显示答案";
+                toggleAnsBtn.dataset.open = "0";
 
-        head.appendChild(num);
-        actions.appendChild(toggleAnsBtn);
-        head.appendChild(actions);
+                head.appendChild(num);
+                actions.appendChild(toggleAnsBtn);
+                head.appendChild(actions);
 
-        const body = document.createElement("div");
-        body.className = "q-body";
+                const body = document.createElement("div");
+                body.className = "q-body";
 
-        const textBlock = document.createElement("div");
-        textBlock.className = "q-text";
-        renderBilingualBlock(textBlock, q.text);
+                const textBlock = document.createElement("div");
+                textBlock.className = "q-text";
+                renderBilingualBlock(textBlock, q.text);
 
-        const ans = document.createElement("div");
-        ans.className = "answer-wrap";
-        ans.innerHTML = `
+                const ans = document.createElement("div");
+                ans.className = "answer-wrap";
+                ans.innerHTML = `
           <div class="answer-title">Réponse / 答案</div>
           <div class="ans-fr">${escapeHtml(q.answerFr || "")}</div>
           <div class="ans-cn">${escapeHtml(q.answerCn || "")}</div>
         `;
 
-        toggleAnsBtn.addEventListener("click", () => {
-          const open = toggleAnsBtn.dataset.open === "1";
-          setAnswerForCard(card, !open);
-          updateGlobalAnswerToggle();
+                toggleAnsBtn.addEventListener("click", () => {
+                    preserveTopQuestionPosition(() => {
+                        const open = toggleAnsBtn.dataset.open === "1";
+                        setAnswerForCard(card, !open);
+                        updateGlobalAnswerToggle();
+                    });
+                });
+
+                body.appendChild(textBlock);
+                body.appendChild(ans);
+
+                card.appendChild(head);
+                card.appendChild(body);
+                questionList.appendChild(card);
+            });
+
+            updateGlobalAnswerToggle();
+        }
+
+        /* ---------- SEARCH FILTER ---------- */
+        function applySearchFilter() {
+            const kw = (searchInput.value || "").trim().toLowerCase();
+            const cards = document.querySelectorAll(".q-card");
+            cards.forEach(card => {
+                if (!kw) { card.style.display = ""; return; }
+                const txt = card.innerText.toLowerCase();
+                card.style.display = txt.includes(kw) ? "" : "none";
+            });
+        }
+
+        searchInput.addEventListener("input", applySearchFilter);
+
+        /* ---------- CN TOGGLE ---------- */
+        toggleCnBtn.addEventListener("click", () => {
+            preserveTopQuestionPosition(() => {
+                const hiding = document.body.classList.toggle("hide-cn");
+                toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
+            });
         });
 
-        body.appendChild(textBlock);
-        body.appendChild(ans);
 
-        card.appendChild(head);
-        card.appendChild(body);
-        questionList.appendChild(card);
-      });
+        /* ---------- GLOBAL ANSWER TOGGLE (ONE BUTTON) ---------- */
+        toggleAllAnswersBtn.addEventListener("click", () => {
+            preserveTopQuestionPosition(() => {
+                const anyOpen = getOpenCount() > 0;
+                setAllAnswers(!anyOpen);
+            });
+        });
 
-      updateGlobalAnswerToggle();
-    }
 
-    /* ---------- SEARCH FILTER ---------- */
-    function applySearchFilter() {
-      const kw = (searchInput.value || "").trim().toLowerCase();
-      const cards = document.querySelectorAll(".q-card");
-      cards.forEach(card => {
-        if (!kw) { card.style.display = ""; return; }
-        const txt = card.innerText.toLowerCase();
-        card.style.display = txt.includes(kw) ? "" : "none";
-      });
-    }
+        /* ---------- START EXAM ---------- */
+        function startExam(idx) {
+            currentExamIndex = idx;
+            examSelectScreen.style.display = "none";
+            readingScreen.style.display = "block";
+            backIcon.classList.remove("hidden");
+            topbarTitle.textContent = `TCF - Compréhension écrite - ${exams[idx].label}`;
+            renderAllQuestions();
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }
 
-    searchInput.addEventListener("input", applySearchFilter);
+        function preserveTopQuestionPosition(mutateFn) {
+            const topLimit = (() => {
+                const controls = document.querySelector(".reading-controls");
+                if (!controls) return 0;
+                // 锚点必须在 sticky 控件下面，否则会选到“被控件盖住/半拉”的题
+                return Math.max(0, Math.floor(controls.getBoundingClientRect().bottom) + 1);
+            })();
 
-    /* ---------- CN TOGGLE ---------- */
-    toggleCnBtn.addEventListener("click", () => {
-      const hiding = document.body.classList.toggle("hide-cn");
-      toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
-    });
+            const cards = Array.from(document.querySelectorAll(".q-card"))
+                .filter(el => el.offsetParent !== null); // 过滤 display:none
 
-    /* ---------- GLOBAL ANSWER TOGGLE (ONE BUTTON) ---------- */
-    toggleAllAnswersBtn.addEventListener("click", () => {
-      const anyOpen = getOpenCount() > 0;
-      // 有任何展开 -> 一键全隐藏；全都没展开 -> 一键全显示
-      setAllAnswers(!anyOpen);
-    });
+            if (!cards.length) { mutateFn(); return; }
 
-    /* ---------- START EXAM ---------- */
-    function startExam(idx) {
-      currentExamIndex = idx;
-      examSelectScreen.style.display = "none";
-      readingScreen.style.display = "block";
-      backIcon.classList.remove("hidden");
-      topbarTitle.textContent = `TCF - Compréhension écrite - ${exams[idx].label}`;
-      renderAllQuestions();
-      window.scrollTo({ top: 0, behavior: "auto" });
-    }
+            // 关键：找“第一个完整题目”的锚点（顶部边框 >= topLimit）
+            let anchor = null;
+            for (const card of cards) {
+                const r = card.getBoundingClientRect();
+                if (r.top >= topLimit && r.top < window.innerHeight) {
+                    anchor = card;
+                    break;
+                }
+            }
 
-    /* ---------- HELPERS ---------- */
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+            // 如果当前视口里没有“顶部完整可见”的题（极端情况），就退化为：选那个穿过 topLimit 的题
+            if (!anchor) {
+                anchor = cards.find(card => {
+                    const r = card.getBoundingClientRect();
+                    return r.top < topLimit && r.bottom > topLimit;
+                }) || cards[0];
+            }
 
-    /* ---------- INIT ---------- */
-    buildExamGrid();
-    updateGlobalAnswerToggle();
-  </script>
+            const beforeTop = anchor.getBoundingClientRect().top;
+
+            mutateFn();
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    const afterTop = anchor.getBoundingClientRect().top;
+                    const delta = afterTop - beforeTop;
+                    if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
+                });
+            });
+        }
+
+
+        /* ---------- HELPERS ---------- */
+        function escapeHtml(str) {
+            return String(str)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        /* ---------- INIT ---------- */
+        buildExamGrid();
+        updateGlobalAnswerToggle();
+    </script>
 </body>
 
 </html>
