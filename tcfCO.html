@@ -146,8 +146,11 @@
             margin-bottom: 16px;
             padding: 12px 16px;
             border-radius: 12px;
-            background: rgba(15, 23, 42, 0.9);
-            /* 深色卡片 */
+
+            /* ✅ 白天模式：不要黑底框，改成白底浅边框 */
+            background: #ffffff;
+            border: 1px solid #e5edf8;
+
             max-height: 260px;
             /* 文字太长时内部滚动 */
             overflow-y: auto;
@@ -159,9 +162,11 @@
         .qt-question {
             margin-top: 8px;
             padding-top: 8px;
-            border-top: 1px solid rgba(148, 163, 184, 0.5);
+
+            /* ✅ 白天模式 */
+            border-top: 1px solid #cbd5e1;
             font-weight: 600;
-            color: #f9fafb;
+            color: #111827;
         }
 
         /* ====== MOBILE / DEFAULT (phone & small screens) ====== */
@@ -170,7 +175,10 @@
             font-size: 16px;
             line-height: 1.7;
             font-weight: 500;
-            color: #e5e7eb;
+
+            /* ✅ 白天模式 */
+            color: #111827;
+
             margin-bottom: 2px;
         }
 
@@ -178,7 +186,10 @@
         .qt-cn {
             font-size: 14px;
             line-height: 1.7;
-            color: #9ca3af;
+
+            /* ✅ 白天模式 */
+            color: #4b5563;
+
             margin-bottom: 8px;
         }
 
@@ -186,9 +197,11 @@
         .qt-question {
             margin-top: 8px;
             padding-top: 8px;
-            border-top: 1px solid rgba(148, 163, 184, 0.5);
+
+            /* ✅ 白天模式 */
+            border-top: 1px solid #cbd5e1;
             font-weight: 600;
-            color: #f9fafb;
+            color: #111827;
         }
 
         .choice {
@@ -386,8 +399,25 @@
                 color: #9ca3af;
             }
 
+            /* ✅ 夜间模式：把题干框恢复深色 */
             .question-text {
+                background: rgba(15, 23, 42, 0.9);
+                border: none;
                 color: #e5e7eb;
+            }
+
+            /* ✅ 夜间模式：文字恢复浅色 */
+            .qt-fr {
+                color: #e5e7eb;
+            }
+
+            .qt-cn {
+                color: #9ca3af;
+            }
+
+            .qt-question {
+                border-top: 1px solid rgba(148, 163, 184, 0.5);
+                color: #f9fafb;
             }
 
             .choice {
@@ -436,6 +466,7 @@
             }
         }
     </style>
+
 </head>
 
 <body>
