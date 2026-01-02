@@ -123,37 +123,53 @@
   <script src="assets/js/isotope.pkgd.min.js"></script>
   <script src="assets/js/venobox.min.js"></script>
 
-  <div id='aplayer'></div>
+  <div id="aplayer"></div>
   <script>
     var ap = new APlayer({
       element: document.getElementById('aplayer'),
       showlrc: true,
       fixed: true,
       mini: true,
+      lrcType: 3,
       audio: [
         {
-          title: '十年人间',
-          author: '李常超',
-          url: 'https://haoyanzheng.github.io/assets/music/十年人间.mp3',
-          lrc: 'https://haoyanzheng.github.io/assets/music/十年人间.lrc',
-          pic: 'https://haoyanzheng.github.io/assets/music/十年人间.jpg'
+          title: '御剑江湖',
+          author: '骆集益',
+          url: 'https://haoyanzheng.github.io/assets/music/御剑江湖.mp3',
+          lrc: 'https://haoyanzheng.github.io/assets/music/御剑江湖.lrc',
+          pic: 'https://haoyanzheng.github.io/assets/music/御剑江湖.jpg'
         },
-        {
-          title: '天下',
-          author: '王杰',
-          url: 'https://haoyanzheng.github.io/assets/music/天下.mp3',
-          lrc: 'https://haoyanzheng.github.io/assets/music/天下.lrc',
-          pic: 'https://haoyanzheng.github.io/assets/music/天下.jpg'
-        },
-        {
-          title: '',
-          author: '',
-        }
-      ],
-      lrcType: 3
+      ]
     });
-    ap.init();
+
+    function switchToFirst() {
+      // 兼容不同版本 API
+      if (ap.list && ap.list.switch) ap.list.switch(0);
+      else if (ap.switchMusic) ap.switchMusic(0);
+    }
+
+    function playFirst() {
+      try { switchToFirst(); } catch (e) { }
+      try { ap.play(); } catch (e) { }
+    }
+
+    // 关键：无论自动播放是否被拦截，先绑定一次“用户手势触发播放”
+    function bindGesturePlayOnce() {
+      const handler = () => playFirst();
+      window.addEventListener('pointerdown', handler, { once: true, capture: true, passive: true });
+      window.addEventListener('touchstart', handler, { once: true, capture: true, passive: true });
+      window.addEventListener('click', handler, { once: true, capture: true });
+      window.addEventListener('keydown', handler, { once: true, capture: true });
+    }
+
+    window.addEventListener('load', function () {
+      bindGesturePlayOnce();
+      // 给 APlayer 创建 audio 一点时间（更稳）
+      setTimeout(playFirst, 200);
+    });
   </script>
+
+
 
 
   <!-- 弹幕必备的div -->
