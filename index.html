@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0f12" media="(prefers-color-scheme: dark)">
 
   <title>Haoyan Zheng</title>
   <meta name="description" content="Haoyan Zheng">
@@ -90,7 +93,7 @@
           </a>
         </h2>
         <!-- Introduction text -->
-        <p style="margin: 10px 0; font-size: 16px; color: #555;">
+        <p class="intro-text" style="margin: 10px 0; font-size: 16px;">
           Hi! I'm a 3rd year Robotics Engineering student at the University of Toronto,
           interested in interactive robotics, data analytics, and public health.
         </p>
@@ -105,34 +108,9 @@
               class="bi bi-envelope"></i></a>
         </div>
         <!-- Add the Resume Box -->
-        <div style="
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-">
-          <!-- Primary -->
-          <a href="assets/resume.pdf" target="_blank" style="
-      display:inline-block; background:#000; color:#fff;
-      text-decoration:none; padding:18px 40px;
-      font-size:18px; font-weight:600; border-radius:8px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.25);
-      transition:transform 0.15s ease, box-shadow 0.15s ease;
-     ">
-            Resume >>
-          </a>
-
-          <!-- Secondary / Outline -->
-          <a href="/news/" target="_blank" style="
-      display:inline-block; background:#fff; color:#000;
-      text-decoration:none; padding:18px 40px;
-      font-size:18px; font-weight:600; border-radius:8px;
-      border:2px solid #000;
-      box-shadow:0 4px 12px rgba(0,0,0,0.12);
-      transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
-     ">
-            News >>
-          </a>
+        <div class="cta-row">
+          <a href="assets/resume.pdf" target="_blank" class="cta cta-primary">Resume >></a>
+          <a href="/news/" target="_blank" class="cta cta-secondary">News >></a>
         </div>
 
       </div>

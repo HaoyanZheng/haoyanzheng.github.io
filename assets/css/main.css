@@ -37,6 +37,103 @@
   /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
+/* =========================================================
+   System Dark Mode (auto): prefers-color-scheme
+   ========================================================= */
+
+/* Let the browser render built-in UI (forms, scrollbars) appropriately */
+:root {
+  color-scheme: light dark;
+
+  /* Extra semantic token(s) you can reuse */
+  --muted-color: #555555;
+}
+
+/* Auto dark mode based on OS/browser setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #0e0f12;
+    --default-color: #e8eaf0;
+    --heading-color: #ffffff;
+
+    /* Surfaces/cards */
+    --surface-color: #1a1c22;
+
+    /* Text on accent backgrounds */
+    --contrast-color: #0e0f12;
+
+    /* Navigation */
+    --nav-color: #e8eaf0;
+    --nav-mobile-background-color: #0e0f12;
+    --nav-dropdown-background-color: rgba(0, 0, 0, 0.65);
+    --nav-dropdown-color: #f0f0f0;
+
+    /* Muted text */
+    --muted-color: #b7bac3;
+  }
+
+  /* Your existing light scrolled header becomes too bright in dark mode */
+  .scrolled .header {
+    --background-color: rgba(14, 15, 18, 0.88);
+    box-shadow: 0px 0 18px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Optional: make the preloader ring visible in dark mode as well */
+  #preloader:before {
+    border: 6px solid rgba(232, 234, 240, 0.9);
+    border-color: var(--accent-color) transparent var(--accent-color) transparent;
+  }
+}
+
+/* =========================================================
+   Theme-aware Hero intro + CTA buttons (replaces inline colors)
+   ========================================================= */
+
+.intro-text {
+  color: var(--muted-color);
+}
+
+/* Button row layout */
+.cta-row {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Shared button styling */
+.cta {
+  display: inline-block;
+  text-decoration: none;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+/* Primary: uses your theme variables, so it auto-inverts in dark mode */
+.cta-primary {
+  background: var(--default-color);
+  color: var(--background-color);
+  border: 2px solid var(--default-color);
+}
+
+/* Secondary: outline */
+.cta-secondary {
+  background: transparent;
+  color: var(--default-color);
+  border: 2px solid var(--default-color);
+}
+
+
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
 .light-background {
@@ -218,10 +315,24 @@ h6 {
 }
 
 /* Global Header on Scroll
-------------------------------*/
+/* Header should follow theme (fix white banner on scroll) */
 .scrolled .header {
-  --background-color: rgba(255, 255, 255, 0.8);
+  --background-color: color-mix(in srgb, var(--background-color), transparent 15%);
 }
+
+/* Optional: make the header readable even before scrolling */
+.header {
+  --background-color: color-mix(in srgb, var(--background-color), transparent 100%);
+}
+
+/* Dark mode: slightly stronger header tint + better shadow */
+@media (prefers-color-scheme: dark) {
+  .scrolled .header {
+    --background-color: color-mix(in srgb, var(--background-color), transparent 8%);
+    box-shadow: 0px 0 18px rgba(0, 0, 0, 0.35);
+  }
+}
+
 
 /*--------------------------------------------------------------
 # Navigation Menu
