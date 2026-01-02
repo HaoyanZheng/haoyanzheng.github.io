@@ -1756,3 +1756,45 @@ section,
 #down_click a:hover {
   background: #d35776;
 }
+
+/* Fix APlayer/Meting colors in dark mode (white text on white bg) */
+@media (prefers-color-scheme: dark) {
+  .aplayer,
+  .meting-aplayer .aplayer {
+    background: var(--surface-color) !important;
+    color: var(--default-color) !important;
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%) !important;
+  }
+
+  .aplayer .aplayer-info,
+  .aplayer .aplayer-list {
+    background: var(--surface-color) !important;
+    color: var(--default-color) !important;
+  }
+
+  .aplayer .aplayer-info .aplayer-music .aplayer-title,
+  .aplayer .aplayer-info .aplayer-music .aplayer-author {
+    color: var(--default-color) !important;
+  }
+
+  .aplayer .aplayer-list ol li {
+    background: transparent !important;
+    color: var(--default-color) !important;
+    border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 85%) !important;
+  }
+
+  .aplayer .aplayer-list ol li.aplayer-list-light {
+    background: color-mix(in srgb, var(--default-color), transparent 92%) !important;
+  }
+
+  /* icons + time text */
+  .aplayer .aplayer-time,
+  .aplayer .aplayer-time * {
+    color: var(--default-color) !important;
+    fill: var(--default-color) !important;
+  }
+
+  .aplayer .aplayer-bar-wrap {
+    background: color-mix(in srgb, var(--default-color), transparent 85%) !important;
+  }
+}
