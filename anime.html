@@ -141,51 +141,82 @@
 
   <div id="aplayer"></div>
   <script>
-    var ap = new APlayer({
-      element: document.getElementById('aplayer'),
-      showlrc: true,
-      fixed: true,
-      mini: true,
-      lrcType: 3,
-      audio: [
-        {
-          title: '御剑江湖',
-          author: '骆集益',
-          url: 'https://haoyanzheng.github.io/assets/music/御剑江湖.mp3',
-          lrc: 'https://haoyanzheng.github.io/assets/music/御剑江湖.lrc',
-          pic: 'https://haoyanzheng.github.io/assets/music/御剑江湖.jpg'
-        },
-      ]
-    });
+  var ap = new APlayer({
+    element: document.getElementById('aplayer'),
+    showlrc: true,
+    fixed: true,
+    mini: true,
+    lrcType: 3,
+    audio: [
+      {
+        title: '御剑江湖',
+        author: '骆集益',
+        url: 'https://haoyanzheng.github.io/assets/music/御剑江湖.mp3',
+        lrc: 'https://haoyanzheng.github.io/assets/music/御剑江湖.lrc',
+        pic: 'https://haoyanzheng.github.io/assets/music/御剑江湖.jpg'
+      },
+    ]
+  });
 
-    function switchToFirst() {
-      // 兼容不同版本 API
-      if (ap.list && ap.list.switch) ap.list.switch(0);
-      else if (ap.switchMusic) ap.switchMusic(0);
+  // 是否正在播放（核心：用于避免“点击时重播”）
+  function isPlaying() {
+    try {
+      const a = ap.audio;                 // HTMLAudioElement
+      return a && !a.paused && !a.ended;  // 播放中
+    } catch (e) {
+      return false;
     }
+  }
 
-    function playFirst() {
-      try { switchToFirst(); } catch (e) { }
-      try { ap.play(); } catch (e) { }
-    }
+  // 只在“从未开始播放过/还没选中首曲”时才切到第一首，避免打断正在播放/暂停位置
+  function ensureFirstIfNeeded() {
+    try {
+      const a = ap.audio;
+      const neverStarted = !a || a.currentTime === 0;
+      const hasListIndex = ap.list && typeof ap.list.index === 'number';
 
-    // 关键：无论自动播放是否被拦截，先绑定一次“用户手势触发播放”
-    function bindGesturePlayOnce() {
-      const handler = () => playFirst();
-      window.addEventListener('pointerdown', handler, { once: true, capture: true, passive: true });
-      window.addEventListener('touchstart', handler, { once: true, capture: true, passive: true });
-      window.addEventListener('click', handler, { once: true, capture: true });
-      window.addEventListener('keydown', handler, { once: true, capture: true });
-    }
+      if (neverStarted && hasListIndex && ap.list.index !== 0 && ap.list.switch) {
+        ap.list.switch(0);
+      } else if (neverStarted && ap.switchMusic) {
+        ap.switchMusic(0);
+      }
+    } catch (e) {}
+  }
 
-    window.addEventListener('load', function () {
-      bindGesturePlayOnce();
-      // 给 APlayer 创建 audio 一点时间（更稳）
-      setTimeout(playFirst, 200);
-    });
-  </script>
+  // 尝试播放：如果已在播 -> 什么都不做；如果暂停 -> 继续播放；如果没开始过 -> 选首曲再播
+  function tryPlay() {
+    if (isPlaying()) return;
 
+    // 如果只是暂停了（可能在中途暂停），直接 play()，不要 switch，避免回到开头
+    try {
+      ap.play();
+      return;
+    } catch (e) {}
 
+    // 兜底：没初始化好时再强制选首曲
+    ensureFirstIfNeeded();
+    try { ap.play(); } catch (e) {}
+  }
+
+  // 只绑定一次手势触发：但触发时如果已经在播，则不做任何事（解决“点一下就重播”）
+  function bindGesturePlayOnce() {
+    const handler = () => {
+      if (isPlaying()) return;
+      tryPlay();
+    };
+
+    window.addEventListener('pointerdown', handler, { once: true, capture: true, passive: true });
+    window.addEventListener('touchstart', handler, { once: true, capture: true, passive: true });
+    window.addEventListener('click', handler, { once: true, capture: true });
+    window.addEventListener('keydown', handler, { once: true, capture: true });
+  }
+
+  window.addEventListener('load', function () {
+    bindGesturePlayOnce();
+    // 自动播放尝试（如果浏览器拦截，用户首次交互会补上；如果已在播，不会重播）
+    setTimeout(tryPlay, 200);
+  });
+</script>
 
 
   <!-- 弹幕必备的div -->
