@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-  <title>男神你好美的小站ヾ(≧▽≦*)o</title>
-  <meta name="description" content="男神你好美的小站">
+  <title>江海寄余生的小站ヾ(≧▽≦*)o</title>
+  <meta name="description" content="江海寄余生的小站">
   <meta name="keywords" content="男神你好美">
 
   <!-- Favicons -->
@@ -62,12 +62,28 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="assets/img/bg.jpeg" alt="" data-aos="fade-in" style="filter: brightness(50%);">
+      <img id="hero-bg" src="assets/img/bg.jpeg" alt="" data-aos="fade-in" style="filter: brightness(100%);">
+
+      <script>
+        (function () {
+          const bgs = [
+            "assets/img/仙剑奇侠传七1.jpeg",
+            "assets/img/仙剑奇侠传七2.jpeg"
+          ];
+
+          const img = document.getElementById("hero-bg");
+          if (!img) return;
+
+          const pick = bgs[Math.floor(Math.random() * bgs.length)];
+          img.src = pick + "?v=" + Date.now(); // 防缓存，确保刷新就换
+        })();
+      </script>
+
 
       <div class="container" data-aos="zoom-out" data-aos-delay="100">
         <h2>
           <a href="index.html" style="text-decoration: none; color: inherit;">
-            男神你好美
+            江海寄余生
           </a>
         </h2>
         <p><span class="typed" data-typed-items="别让等待 成为遗憾, 常回家看看"></span><span

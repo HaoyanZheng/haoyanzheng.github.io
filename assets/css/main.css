@@ -1798,3 +1798,46 @@ section,
     background: color-mix(in srgb, var(--default-color), transparent 85%) !important;
   }
 }
+/* =========================================================
+   Force text shadow: Hero + Header (normal & scrolled) + Scroll-top
+   Put at the VERY END of assets/css/main.css
+   ========================================================= */
+
+:root{
+  --ts-strong: 0 2px 10px rgba(0,0,0,.75), 0 0 24px rgba(0,0,0,.20);
+  --ts-soft:   0 1px  8px rgba(0,0,0,.55);
+}
+
+/* 1) Hero（覆盖 #hero 和 .hero 两种写法；不依赖 body class） */
+#hero h2, #hero p, #hero p2, #hero a,
+.hero h2, .hero p, .hero p2, .hero a{
+  text-shadow: var(--ts-strong) !important;
+}
+
+/* 小字更稳（运行时间那行） */
+#hero #timeDate, #hero #times{
+  text-shadow: var(--ts-soft) !important;
+}
+
+/* 2) Header：正常 + 滚动后都要（含 logo 和 nav 链接） */
+.header .logo h1,
+.header .navmenu a{
+  text-shadow: var(--ts-strong) !important;
+}
+
+.scrolled .header .logo h1,
+.scrolled .header .navmenu a{
+  text-shadow: var(--ts-strong) !important;
+}
+
+/* 3) Scroll-top：Bootstrap Icons 常用 ::before 输出字体，需要一起覆盖 */
+.scroll-top,
+.scroll-top i,
+.scroll-top i::before{
+  text-shadow: var(--ts-strong) !important;
+}
+
+/* 滚动词条/弹幕（barrage.js 生成的 .dan-m-span）加阴影 */
+.dan-m-span{
+  text-shadow: var(--ts-strong) !important;
+}
