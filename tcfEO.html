@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>TCF – Expression Orale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #222;
+    }
+
+    /* Top bar */
+    .topbar {
+      background: #0059b3;
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title { margin: 0 auto; font-size: 18px; font-weight: 700; }
+    .topbar-back { font-size: 22px; cursor: pointer; user-select: none; }
+    .topbar-back.hidden { visibility: hidden; }
+
+    /* Generic card layout */
+    .page-wrap {
+      max-width: 980px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 24px 28px 30px;
+    }
+
+    /* --- Part selection screen --- */
+    #partSelectScreen { text-align: center; }
+    .hero { margin-bottom: 18px; }
+    .hero-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .hero-sub { font-size: 14px; color: #555; }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .card {
+      width: 170px;
+      min-height: 110px;
+      border-radius: 18px;
+      border: 2px solid #0c63c7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+      background: #f8fbff;
+      padding: 10px 12px;
+      text-align: center;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      background: #eaf2ff;
+    }
+    .card-label { font-size: 16px; font-weight: 800; color: #0c63c7; margin-bottom: 4px; }
+    .card-sub { font-size: 12px; color: #666; }
+
+    /* --- Practice screen --- */
+    #practiceScreen { display: none; }
+
+    .practice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .practice-title { font-weight: 800; font-size: 16px; }
+    .practice-meta { font-size: 13px; color: #666; }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      position: sticky;
+      top: 52px;
+      z-index: 20;
+      background: rgba(244, 247, 251, 0.92);
+      backdrop-filter: blur(6px);
+      padding: 10px 0;
+      margin-bottom: 10px;
+    }
+    .input {
+      flex: 1 1 240px;
+      min-width: 220px;
+      border: 1px solid #d0d7e2;
+      border-radius: 24px;
+      padding: 10px 14px;
+      outline: none;
+      font-size: 14px;
+      background: #fff;
+    }
+    .btn {
+      border: none;
+      padding: 10px 14px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      background: #e2efff;
+      color: #0059b3;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+      transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+      white-space: nowrap;
+    }
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+    }
+    .btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
+    .btn:focus-visible, .input:focus-visible, select:focus-visible, input[type="range"]:focus-visible {
+      outline: 3px solid rgba(12, 99, 199, 0.25);
+      outline-offset: 2px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid #d0d7e2;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      color: #1f2937;
+    }
+    select, input[type="range"] {
+      border: 1px solid #d0d7e2;
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: #fff;
+      color: inherit;
+      font-size: 13px;
+    }
+    input[type="range"] { padding: 0; }
+
+    .list { display: flex; flex-direction: column; gap: 14px; }
+
+    .item {
+      border: 1px solid #d0d7e2;
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    }
+    .item-head {
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #f8fbff;
+      border-bottom: 1px solid #e5edf8;
+    }
+    .item-num { font-weight: 900; color: #0c63c7; }
+    .item-topic { font-weight: 800; color: #111827; }
+    .item-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .item-body { padding: 14px 14px 16px; }
+
+    .block {
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid #e5edf8;
+      max-width: 860px;
+      margin: 0 auto 10px;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      color: #0c63c7;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .fr { font-size: 16px; line-height: 1.75; font-weight: 600; color: #111827; margin-bottom: 6px; }
+    .cn { font-size: 14px; line-height: 1.75; color: #4b5563; }
+
+    .answer {
+      border-radius: 14px;
+      border: 1px solid #d0d7e2;
+      background: #f7fbff;
+      padding: 12px 14px;
+      display: none;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .answer-title { font-size: 12px; font-weight: 900; color: #0c63c7; margin-bottom: 8px; text-transform: uppercase; }
+
+    /* Hide CN toggle */
+    .hide-cn .cn { display: none !important; }
+
+    /* Desktop override */
+    @media (min-width: 900px) {
+      .fr { font-size: 20px; }
+      .cn { font-size: 18px; }
+    }
+    @media (max-width: 640px) {
+      .page-wrap { margin: 12px; padding: 18px 16px 22px; }
+      .card { width: 46%; min-width: 160px; }
+      .controls { top: 50px; }
+    }
+
+    /* ---- Dark mode ---- */
+    @media (prefers-color-scheme: dark) {
+      body { background: #060814; color: #e5e7eb; }
+      .topbar { background: #0b3a7a; color: #e5e7eb; }
+      .page-wrap { background: #111827; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); }
+      .hero-sub { color: #d1d5db; }
+
+      .card { background: #111827; border-color: #2563eb; }
+      .card:hover { background: #1f2937; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9); }
+      .card-label { color: #bfdbfe; }
+      .card-sub { color: #9ca3af; }
+
+      .practice-meta { color: #9ca3af; }
+      .controls { background: rgba(6, 8, 20, 0.75); }
+
+      .input { background: #0b1120; border-color: #374151; color: #e5e7eb; }
+      .btn { background: #1e3a8a; color: #e5e7eb; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); }
+
+      .pill, select, input[type="range"] { background: #0b1120; border-color: #374151; color: #e5e7eb; }
+
+      .item { background: #111827; border-color: #374151; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55); }
+      .item-head { background: #0b1120; border-bottom-color: #1f2937; }
+      .item-num { color: #93c5fd; }
+      .item-topic { color: #f9fafb; }
+
+      .block { background: rgba(15, 23, 42, 0.92); border-color: #374151; }
+      .label { color: #93c5fd; }
+      .fr { color: #e5e7eb; }
+      .cn { color: #9ca3af; }
+
+      .answer { background: #0b1120; border-color: #374151; }
+      .answer-title { color: #93c5fd; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div id="backIcon" class="topbar-back hidden">&larr;</div>
+    <div id="topbarTitle" class="topbar-title">TCF - Expression orale</div>
+  </header>
+
+  <main>
+    <!-- PART SELECTION -->
+    <section id="partSelectScreen" class="page-wrap">
+      <div class="hero">
+        <div class="hero-title">TCF – Expression Orale</div>
+        <div class="hero-sub">Choisissez une partie (3 tâches). Chaque tâche reste sur une seule page, avec audio (TTS).</div>
+      </div>
+      <div id="partGrid" class="grid"></div>
+    </section>
+
+    <!-- PRACTICE SCREEN -->
+    <section id="practiceScreen" class="page-wrap">
+      <div class="practice-header">
+        <div class="practice-title" id="practiceTitle">Tâche 1</div>
+        <div class="practice-meta" id="practiceMeta"></div>
+      </div>
+
+      <div class="controls">
+        <input id="searchInput" class="input" placeholder="Rechercher (FR / 中文)..." />
+        <button class="btn" id="toggleCnBtn">隐藏中文</button>
+        <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
+
+        <span class="pill">
+          Voix
+          <select id="voiceSelect" aria-label="Choisir une voix"></select>
+        </span>
+
+        <span class="pill">
+          Débit
+          <input id="rateRange" type="range" min="0.7" max="1.2" step="0.05" value="1.0" />
+          <span id="rateLabel">1.00</span>
+        </span>
+
+        <button class="btn" id="playAllBtn">朗读全部（FR）</button>
+        <button class="btn" id="stopBtn">停止朗读</button>
+      </div>
+
+      <div class="list" id="itemList"></div>
+    </section>
+  </main>
+
+  <script>
+    /* =========================
+       DATA: 3 parts (tasks)
+       ========================= */
+
+    const parts = [
+      {
+        label: "Tâche 1",
+        subtitle: "Présentation personnelle · 20 thèmes",
+        items: [
+          { id: 1, topicCn: "姓名", promptFr: "Comment vous appelez-vous ?", promptCn: "您叫什么名字？",
+            answerFr: "Bonjour madame/ monsieur, je m’appelle Haoyan.", answerCn: "您好，我叫 Haoyan。" },
+
+          { id: 2, topicCn: "年龄", promptFr: "Quel âge avez-vous ?", promptCn: "您多大了？",
+            answerFr: "J’ai vingt et un ans.", answerCn: "我21岁。" },
+
+          { id: 3, topicCn: "国籍", promptFr: "Quelle est votre nationalité ?", promptCn: "您的国籍是什么？",
+            answerFr: "Je suis de nationalité chinoise. Actuellement, je suis étudiant international et je vis à Toronto avec mes amis.",
+            answerCn: "我是中国国籍。目前我是一名国际学生，和朋友住在多伦多。" },
+
+          { id: 4, topicCn: "性格", promptFr: "Comment êtes-vous ?", promptCn: "您的性格如何？",
+            answerFr: "Je suis quelqu’un d’introverti, calme, et réfléchi. Mes amis me trouvent poli et généreux.",
+            answerCn: "我比较内向、冷静、爱思考。朋友觉得我有礼貌而且大方。" },
+
+          { id: 5, topicCn: "语言", promptFr: "Quelles langues parlez-vous ?", promptCn: "您会哪些语言？",
+            answerFr: "Ma langue maternelle est le mandarin. Je parle couramment l’anglais et un peu de japonais. J’aime apprendre de nouvelles langues, parce que cela me permet de mieux comprendre d’autres cultures et de voir le monde sous un autre angle.",
+            answerCn: "我的母语是普通话。我英语很流利，也会一点日语。我喜欢学新语言，因为这能帮助我理解其他文化，并从不同角度看世界。" },
+
+          { id: 6, topicCn: "家庭", promptFr: "Parlez-moi de votre famille.", promptCn: "请介绍一下您的家庭。",
+            answerFr: "Mes parents sont commerçants en Chine et je suis enfant unique. Ça fait un an que je n’ai pas vu mes parents, mais on fait un appel vidéo chaque mois.",
+            answerCn: "我父母在中国做生意，我是独生子女。我已经一年没见他们了，但我们每个月都会视频通话。" },
+
+          { id: 7, topicCn: "专业", promptFr: "Qu’est-ce que vous étudiez ?", promptCn: "您学什么专业？",
+            answerFr: "J’étudie le génie robotique à l’université de Toronto et je suis actuellement en quatrième année. C’est un domaine difficile, mais je vois les grands changements que les robots apporteront à nos vies dans le futur. Je pense aussi qu’il y aura une forte demande sur le marché du travail et beaucoup de valeur à créer. C’est donc, à mon avis, un diplôme très prometteur.",
+            answerCn: "我在多伦多大学学机器人工程，目前大四。这个领域很难，但我看到机器人未来会给生活带来巨大变化。我也认为就业市场需求会很大，价值空间也很高，所以我觉得这是很有前景的学位。" },
+
+          { id: 8, topicCn: "实习经历", promptFr: "Avez-vous déjà fait des stages ?", promptCn: "您有实习经历吗？",
+            answerFr: "Pendant mes études, j’ai eu l’occasion de faire plusieurs stages et travaux pratiques. L’an dernier, j’ai fait un stage au ministère des Transports de l’Ontario, où j’ai participé à l’inspection des autoroutes et j’ai suivi des travaux d’entretien. En parallèle, je travaille à l’Hôpital Général de Toronto, ce qui m’aide à développer mes compétences en communication et en organisation.",
+            answerCn: "学习期间我做过多次实习和实践。去年我在安省交通厅实习，参与高速公路检查并跟进养护工作。同时我也在多伦多综合医院工作，帮助我提升沟通与组织能力。" },
+
+          { id: 9, topicCn: "喜好", promptFr: "Quels sont vos centres d’intérêt ?", promptCn: "您的兴趣爱好是什么？",
+            answerFr: "J’ai beaucoup de centres d’intérêt. J’aime le sport, surtout le badminton et la randonnée. J’aime aussi lire et j’écoute souvent les informations pour améliorer mon français. Ces activités m’aident à rester motivé et à garder un bon équilibre.",
+            answerCn: "我兴趣很多。我喜欢运动，尤其是羽毛球和徒步。我也喜欢阅读，经常听新闻来提高法语。这些活动让我保持动力并维持平衡。" },
+
+          { id: 10, topicCn: "未来计划", promptFr: "Quels sont vos projets pour l’avenir ?", promptCn: "您未来有什么计划？",
+            answerFr: "Dans le futur, je souhaite continuer mes études et développer ma carrière au Canada. Je veux améliorer mon français et mon anglais pour m’intégrer facilement dans la société canadienne et réussir mes projets professionnels. Je suis motivé, curieux et prêt à relever de nouveaux défis.",
+            answerCn: "未来我希望继续深造并在加拿大发展职业。我想提高法语和英语，更容易融入加拿大社会并实现职业目标。我很有动力、好奇，也准备迎接新挑战。" },
+
+          { id: 11, topicCn: "难忘的事件", promptFr: "Racontez-moi un souvenir marquant.", promptCn: "请讲一个难忘的经历。",
+            answerFr: "J’ai voyagé à Montréal l’année dernière, et cela m’a laissé un souvenir inoubliable. La ville a une ambiance différente grâce à sa culture francophone. J’ai beaucoup aimé la nourriture, le système de transport et l’architecture. Après l’obtention de mon diplôme, je prévois de m’y installer.",
+            answerCn: "我去年去蒙特利尔旅行，留下了难忘回忆。这座城市因为法语文化氛围很不一样。我很喜欢那里的食物、交通系统和建筑。毕业后我计划搬去那里生活。" },
+
+          { id: 12, topicCn: "城市", promptFr: "Où habitez-vous ?", promptCn: "您住在哪里？",
+            answerFr: "J’habite à Toronto, une ville moderne connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique.",
+            answerCn: "我住在多伦多，这是一座现代化城市，以摩天大楼、多元文化和经济活力著称。" },
+
+          { id: 13, topicCn: "住房条件", promptFr: "Comment est votre logement ?", promptCn: "您的住房情况如何？",
+            answerFr: "Je loue une maison de quatre chambres avec des amis de l’université, dans Chinatown, juste en face de mon université. Le loyer est abordable, mais le quartier peut être bruyant et très fréquenté.",
+            answerCn: "我和大学朋友在唐人街合租一套四卧室的房子，就在学校对面。房租比较划算，但这片区会比较吵、人也多。" },
+
+          { id: 14, topicCn: "社区文化", promptFr: "Y a-t-il des événements dans votre quartier ?", promptCn: "您社区有哪些活动？",
+            answerFr: "De temps en temps, il y a des événements culturels chinois pendant les fêtes, comme le nouvel An Chinois ou la fête nationale. Cependant, je suis souvent occupé par mes études et mon travail, donc je ne participe pas aux événements du quartier.",
+            answerCn: "节日期间偶尔会有一些华人文化活动，比如春节或国庆。但我常忙于学习和工作，所以很少参加。" },
+
+          { id: 15, topicCn: "交通", promptFr: "Comment vous déplacez-vous ?", promptCn: "您平时怎么出行？",
+            answerFr: "Comme je vis au centre-ville, il y a des tramways sur presque toutes les grandes rues. De plus, mon université est proche de plusieurs stations de métro, donc il est facile de se déplacer dans le centre-ville.",
+            answerCn: "因为我住在市中心，几乎每条大路都有有轨电车。学校也靠近多条地铁站，所以在市中心出行很方便。" },
+
+          { id: 16, topicCn: "气候", promptFr: "Quel temps fait-il chez vous ?", promptCn: "您那里的气候怎样？",
+            answerFr: "L’été à Toronto est ma période préférée de l’année. Pendant les journées les plus chaudes, je reste généralement au travail ou à la maison, et je sors marcher ou faire de la randonnée le matin ou en soirée, quand il fait plus doux. Il fait bon, il y a un peu de vent, et c’est confortable.\n\nEn comparaison, l’hiver à Toronto est rude et glacial. Je dois porter un bonnet, des gants et un manteau d’hiver pour rester au chaud, mais c’est quand même difficile de se déplacer à cause du vent et de la neige que nous avons chaque année.",
+            answerCn: "多伦多的夏天是我最喜欢的季节。最热的时候我通常在工作或在家，早上或傍晚凉快时出去散步或徒步，天气舒服、有点风。\n\n相比之下，多伦多的冬天又冷又严酷。我得戴帽子、手套、穿冬衣保暖，但因为风和每年的积雪，出行仍然比较困难。" },
+
+          { id: 17, topicCn: "友谊关系", promptFr: "Parlez-moi de vos amis.", promptCn: "说说你的朋友。",
+            answerFr: "J’ai beaucoup d’amis de l’université avec qui je reste en contact toute l’année. On échange régulièrement des nouvelles et on se parle aussi de nos difficultés, par exemple la recherche d’emploi, les candidatures en études supérieures, ou des conseils de vie en général. C’est une excellente façon de rester informé et de suivre les tendances en technologie, en politique et en économie.",
+            answerCn: "我有很多大学朋友，我们全年保持联系。我们经常互相分享近况，也会讨论困难，比如找工作、申请研究生，或者生活建议。这也是了解科技、政治、经济趋势的好方式。" },
+
+          { id: 18, topicCn: "个人物品", promptFr: "Quels objets sont importants pour vous ?", promptCn: "哪些物品对你很重要？",
+            answerFr: "Comme je suis étudiant international au Canada, je n’ai pas de gros meubles ni d’objets de grande valeur. Je garde seulement l’essentiel, des affaires utiles et peu coûteuses, pour pouvoir déménager facilement ailleurs au Canada pour mes études ou pour le travail. Pour moi, le plus important ce sont mes outils de communication et de travail : mon téléphone et mon iPad.",
+            answerCn: "作为国际学生，我没有大件家具或贵重物品。我只保留必需、实用又不贵的东西，方便以后因学习或工作在加拿大搬家。对我最重要的是沟通和学习工具：手机和 iPad。" },
+
+          { id: 19, topicCn: "最想去的地方", promptFr: "Quel pays aimeriez-vous visiter ?", promptCn: "你最想去哪里？",
+            answerFr: "Le pays que j’aimerais le plus visiter, c’est l’Islande. Je privilégie le calme et l’équilibre entre la vie professionnelle et la vie personnelle, plutôt que les endroits très fréquentés ou trop compétitifs. L’Islande offre des paysages naturels magnifiques, que j’aimerais vraiment découvrir. En hiver, il y fait généralement plus doux qu’à Toronto, et le pays dispose d’un système de protection sociale solide. De plus, c’est l’un des rares pays d’Europe sans armée permanente.",
+            answerCn: "我最想去的国家是冰岛。我更看重安静以及工作与生活的平衡，而不是人太多或竞争很强的地方。冰岛自然风景很美，我很想去看看。冬天一般也比多伦多温和，而且社会保障体系完善。并且它还是欧洲少数没有常备军的国家之一。" },
+
+          { id: 20, topicCn: "为什么加拿大", promptFr: "Pourquoi voulez-vous vivre au Canada ?", promptCn: "你为什么想在加拿大生活？",
+            answerFr: "D’abord, le Canada est un pays d’immigration: en y travaillant, il est possible d’obtenir la résidence permanente, puis éventuellement la citoyenneté. Ensuite, le Canada offre une nature exceptionnelle. Comme j’aime beaucoup la nature, j’apprécie passer du temps près de l’océan, en montagne, et observer les animaux. Enfin, le Canada est un pays multiculturaliste, où différentes cultures et valeurs sont généralement respectées et bien accueillies. Je pense que l’inclusivité, l’environnement et la qualité de vie sont les principales raisons pour lesquelles je veux vivre au Canada.",
+            answerCn: "首先，加拿大是移民国家：在这里工作有机会拿到永久居民，之后甚至可以入籍。其次，加拿大自然环境非常好。我喜欢自然，喜欢去海边、山里、观察动物。最后，加拿大是多元文化国家，不同文化和价值观通常会被尊重和欢迎。我认为包容性、环境和生活质量是我想在加拿大生活的主要原因。" }
+        ]
+      },
+
+      {
+        label: "Tâche 2",
+        subtitle: "Jeu de rôle · à compléter",
+        items: [
+          { id: 1, topicCn: "占位", promptFr: "Ajoutez ici vos scénarios (demande d’info, négociation, etc.).", promptCn: "在这里添加第二部分的情景对话素材。",
+            answerFr: "Contenu à compléter.", answerCn: "待补充。" }
+        ]
+      },
+
+      {
+        label: "Tâche 3",
+        subtitle: "Défendre un point de vue · à compléter",
+        items: [
+          { id: 1, topicCn: "占位", promptFr: "Ajoutez ici vos sujets d’opinion (pour/contre + arguments).", promptCn: "在这里添加第三部分的观点题目与论点。",
+            answerFr: "Contenu à compléter.", answerCn: "待补充。" }
+        ]
+      }
+    ];
+
+    /* =========================
+       STATE
+       ========================= */
+    let currentPartIndex = null;
+    let isAllPlaying = false;
+    let playQueue = [];
+    let currentUtterance = null;
+
+    /* =========================
+       DOM
+       ========================= */
+    const partSelectScreen = document.getElementById("partSelectScreen");
+    const practiceScreen = document.getElementById("practiceScreen");
+
+    const backIcon = document.getElementById("backIcon");
+    const topbarTitle = document.getElementById("topbarTitle");
+    const partGrid = document.getElementById("partGrid");
+
+    const practiceTitle = document.getElementById("practiceTitle");
+    const practiceMeta = document.getElementById("practiceMeta");
+    const itemList = document.getElementById("itemList");
+
+    const toggleCnBtn = document.getElementById("toggleCnBtn");
+    const toggleAllAnswersBtn = document.getElementById("toggleAllAnswersBtn");
+    const searchInput = document.getElementById("searchInput");
+
+    const voiceSelect = document.getElementById("voiceSelect");
+    const rateRange = document.getElementById("rateRange");
+    const rateLabel = document.getElementById("rateLabel");
+    const playAllBtn = document.getElementById("playAllBtn");
+    const stopBtn = document.getElementById("stopBtn");
+
+    /* =========================
+       PART SELECTION
+       ========================= */
+    function buildPartGrid() {
+      partGrid.innerHTML = "";
+      parts.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.addEventListener("click", () => startPart(idx));
+
+        const label = document.createElement("div");
+        label.className = "card-label";
+        label.textContent = p.label;
+
+        const sub = document.createElement("div");
+        sub.className = "card-sub";
+        sub.textContent = p.subtitle || "";
+
+        card.appendChild(label);
+        card.appendChild(sub);
+        partGrid.appendChild(card);
+      });
+    }
+
+    function exitPart() {
+      stopSpeaking(true);
+      currentPartIndex = null;
+      itemList.innerHTML = "";
+      practiceScreen.style.display = "none";
+      partSelectScreen.style.display = "block";
+      backIcon.classList.add("hidden");
+      topbarTitle.textContent = "TCF - Expression orale";
+      searchInput.value = "";
+      updateGlobalAnswerToggle();
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    backIcon.addEventListener("click", exitPart);
+
+    function getCurrentPart() {
+      return parts[currentPartIndex];
+    }
+
+    /* =========================
+       RENDER
+       ========================= */
+    function renderAllItems() {
+      const part = getCurrentPart();
+      const total = part.items.length;
+
+      practiceTitle.textContent = `${part.label} — Expression orale`;
+      practiceMeta.textContent = `${total} item(s)`;
+
+      itemList.innerHTML = "";
+
+      part.items.forEach((it) => {
+        const card = document.createElement("div");
+        card.className = "item";
+        card.dataset.itemid = it.id;
+
+        const head = document.createElement("div");
+        head.className = "item-head";
+
+        const left = document.createElement("div");
+        left.innerHTML = `<div class="item-num">Item ${it.id}</div><div class="item-topic">${escapeHtml(it.topicCn || "")}</div>`;
+
+        const actions = document.createElement("div");
+        actions.className = "item-actions";
+
+        const btnSpeak = document.createElement("button");
+        btnSpeak.className = "btn";
+        btnSpeak.textContent = "朗读答案（FR）";
+        btnSpeak.addEventListener("click", () => {
+          preserveTopItemPosition(() => {
+            speakText(it.answerFr || "");
+          });
+        });
+
+        const btnSpeakQ = document.createElement("button");
+        btnSpeakQ.className = "btn";
+        btnSpeakQ.textContent = "朗读问题（FR）";
+        btnSpeakQ.addEventListener("click", () => {
+          preserveTopItemPosition(() => {
+            speakText(it.promptFr || "");
+          });
+        });
+
+        const btnToggleAns = document.createElement("button");
+        btnToggleAns.className = "btn btn-toggle-answer";
+        btnToggleAns.textContent = "显示答案";
+        btnToggleAns.dataset.open = "0";
+
+        btnToggleAns.addEventListener("click", () => {
+          preserveTopItemPosition(() => {
+            const open = btnToggleAns.dataset.open === "1";
+            setAnswerForCard(card, !open);
+            updateGlobalAnswerToggle();
+          });
+        });
+
+        actions.appendChild(btnSpeakQ);
+        actions.appendChild(btnSpeak);
+        actions.appendChild(btnToggleAns);
+
+        head.appendChild(left);
+        head.appendChild(actions);
+
+        const body = document.createElement("div");
+        body.className = "item-body";
+
+        const qBlock = document.createElement("div");
+        qBlock.className = "block";
+        qBlock.innerHTML = `
+          <div class="label">Question / 提问</div>
+          <div class="fr">${escapeHtml(it.promptFr || "")}</div>
+          <div class="cn">${escapeHtml(it.promptCn || "")}</div>
+        `;
+
+        const ans = document.createElement("div");
+        ans.className = "answer";
+        ans.innerHTML = `
+          <div class="answer-title">Réponse / 答案</div>
+          <div class="fr">${escapeHtml(it.answerFr || "")}</div>
+          <div class="cn">${escapeHtml(it.answerCn || "")}</div>
+        `;
+
+        body.appendChild(qBlock);
+        body.appendChild(ans);
+
+        card.appendChild(head);
+        card.appendChild(body);
+        itemList.appendChild(card);
+      });
+
+      updateGlobalAnswerToggle();
+    }
+
+    /* =========================
+       ANSWER TOGGLES
+       ========================= */
+    function setAnswerForCard(card, show) {
+      const ans = card.querySelector(".answer");
+      const btn = card.querySelector(".btn-toggle-answer");
+      if (!ans || !btn) return;
+
+      if (show) {
+        ans.style.display = "block";
+        btn.textContent = "隐藏答案";
+        btn.dataset.open = "1";
+      } else {
+        ans.style.display = "none";
+        btn.textContent = "显示答案";
+        btn.dataset.open = "0";
+      }
+    }
+
+    function getOpenCount() {
+      return Array.from(document.querySelectorAll(".btn-toggle-answer"))
+        .filter(btn => btn.dataset.open === "1").length;
+    }
+
+    function updateGlobalAnswerToggle() {
+      const total = document.querySelectorAll(".btn-toggle-answer").length;
+      const open = getOpenCount();
+      if (!total) {
+        toggleAllAnswersBtn.textContent = "显示全部答案";
+        return;
+      }
+      toggleAllAnswersBtn.textContent = open > 0 ? "隐藏全部答案" : "显示全部答案";
+    }
+
+    function setAllAnswers(show) {
+      document.querySelectorAll(".item").forEach(card => setAnswerForCard(card, show));
+      updateGlobalAnswerToggle();
+    }
+
+    toggleAllAnswersBtn.addEventListener("click", () => {
+      preserveTopItemPosition(() => {
+        const anyOpen = getOpenCount() > 0;
+        setAllAnswers(!anyOpen);
+      });
+    });
+
+    /* =========================
+       CN TOGGLE
+       ========================= */
+    toggleCnBtn.addEventListener("click", () => {
+      preserveTopItemPosition(() => {
+        const hiding = document.body.classList.toggle("hide-cn");
+        toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
+      });
+    });
+
+    /* =========================
+       SEARCH FILTER
+       ========================= */
+    function applySearchFilter() {
+      const kw = (searchInput.value || "").trim().toLowerCase();
+      const cards = document.querySelectorAll(".item");
+      cards.forEach(card => {
+        if (!kw) { card.style.display = ""; return; }
+        const txt = card.innerText.toLowerCase();
+        card.style.display = txt.includes(kw) ? "" : "none";
+      });
+    }
+    searchInput.addEventListener("input", applySearchFilter);
+
+    /* =========================
+       START PART
+       ========================= */
+    function startPart(idx) {
+      stopSpeaking(true);
+      currentPartIndex = idx;
+      partSelectScreen.style.display = "none";
+      practiceScreen.style.display = "block";
+      backIcon.classList.remove("hidden");
+      topbarTitle.textContent = `TCF - Expression orale - ${parts[idx].label}`;
+      renderAllItems();
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    /* =========================
+       KEEP SCROLL POSITION (for sticky controls)
+       ========================= */
+    function preserveTopItemPosition(mutateFn) {
+      const topLimit = (() => {
+        const controls = document.querySelector(".controls");
+        if (!controls) return 0;
+        return Math.max(0, Math.floor(controls.getBoundingClientRect().bottom) + 1);
+      })();
+
+      const cards = Array.from(document.querySelectorAll(".item"))
+        .filter(el => el.offsetParent !== null);
+
+      if (!cards.length) { mutateFn(); return; }
+
+      let anchor = null;
+      for (const card of cards) {
+        const r = card.getBoundingClientRect();
+        if (r.top >= topLimit && r.top < window.innerHeight) { anchor = card; break; }
+      }
+      if (!anchor) {
+        anchor = cards.find(card => {
+          const r = card.getBoundingClientRect();
+          return r.top < topLimit && r.bottom > topLimit;
+        }) || cards[0];
+      }
+
+      const beforeTop = anchor.getBoundingClientRect().top;
+      mutateFn();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const afterTop = anchor.getBoundingClientRect().top;
+          const delta = afterTop - beforeTop;
+          if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
+        });
+      });
+    }
+
+    /* =========================
+       TTS (SpeechSynthesis)
+       ========================= */
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizeForSpeech(text) {
+      // Keep it simple: trim; keep punctuation; remove repeated spaces.
+      return String(text || "").replace(/\s+/g, " ").trim();
+    }
+
+    function getSelectedVoice() {
+      const voices = speechSynthesis.getVoices() || [];
+      const idx = Number(voiceSelect.value || 0);
+      return voices[idx] || null;
+    }
+
+    function speakText(text) {
+      const clean = normalizeForSpeech(text);
+      if (!clean) return;
+
+      // Stop current speech (but do not clear queue unless explicitly)
+      speechSynthesis.cancel();
+      currentUtterance = null;
+
+      const u = new SpeechSynthesisUtterance(clean);
+      u.lang = "fr-FR";
+      const v = getSelectedVoice();
+      if (v) u.voice = v;
+
+      const rate = Number(rateRange.value || 1.0);
+      u.rate = Math.max(0.6, Math.min(1.4, rate));
+
+      u.onend = () => {
+        currentUtterance = null;
+        if (isAllPlaying) playNextInQueue();
+      };
+      u.onerror = () => {
+        currentUtterance = null;
+        if (isAllPlaying) playNextInQueue();
+      };
+
+      currentUtterance = u;
+      speechSynthesis.speak(u);
+    }
+
+    function stopSpeaking(clearQueue) {
+      try { speechSynthesis.cancel(); } catch (e) {}
+      currentUtterance = null;
+      if (clearQueue) {
+        isAllPlaying = false;
+        playQueue = [];
+        playAllBtn.textContent = "朗读全部（FR）";
+      }
+    }
+
+    function buildVisibleQueueAnswers() {
+      const part = getCurrentPart();
+      if (!part) return [];
+      // Only include visible cards after filtering
+      const visibleIds = new Set(Array.from(document.querySelectorAll(".item"))
+        .filter(el => el.offsetParent !== null)
+        .map(el => Number(el.dataset.itemid)));
+
+      return part.items
+        .filter(it => visibleIds.has(it.id))
+        .map(it => it.answerFr || "");
+    }
+
+    function playNextInQueue() {
+      if (!isAllPlaying) return;
+      const next = playQueue.shift();
+      if (!next) {
+        stopSpeaking(true);
+        return;
+      }
+      speakText(next);
+    }
+
+    playAllBtn.addEventListener("click", () => {
+      preserveTopItemPosition(() => {
+        if (isAllPlaying) {
+          stopSpeaking(true);
+          return;
+        }
+        const q = buildVisibleQueueAnswers();
+        if (!q.length) return;
+
+        isAllPlaying = true;
+        playQueue = q.slice();
+        playAllBtn.textContent = "停止朗读全部";
+        playNextInQueue();
+      });
+    });
+
+    stopBtn.addEventListener("click", () => {
+      preserveTopItemPosition(() => stopSpeaking(true));
+    });
+
+    /* =========================
+       VOICES INIT
+       ========================= */
+    function populateVoices() {
+      const voices = speechSynthesis.getVoices() || [];
+      voiceSelect.innerHTML = "";
+
+      // Prefer French voices first
+      const preferred = voices
+        .map((v, i) => ({ v, i }))
+        .sort((a, b) => {
+          const af = (a.v.lang || "").toLowerCase().startsWith("fr") ? 0 : 1;
+          const bf = (b.v.lang || "").toLowerCase().startsWith("fr") ? 0 : 1;
+          if (af !== bf) return af - bf;
+          return (a.v.name || "").localeCompare(b.v.name || "");
+        });
+
+      preferred.forEach(({ v, i }, idx) => {
+        const opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = `${v.name} (${v.lang})`;
+        voiceSelect.appendChild(opt);
+      });
+
+      // Auto-select the first French voice if available
+      const firstFr = preferred.find(({ v }) => (v.lang || "").toLowerCase().startsWith("fr"));
+      if (firstFr) voiceSelect.value = String(firstFr.i);
+      else if (preferred[0]) voiceSelect.value = String(preferred[0].i);
+    }
+
+    // Some browsers load voices async
+    if ("speechSynthesis" in window) {
+      populateVoices();
+      window.speechSynthesis.onvoiceschanged = () => populateVoices();
+    } else {
+      // If TTS unsupported, disable buttons gracefully
+      playAllBtn.disabled = true;
+      stopBtn.disabled = true;
+      voiceSelect.disabled = true;
+      rateRange.disabled = true;
+      rateLabel.textContent = "N/A";
+    }
+
+    rateRange.addEventListener("input", () => {
+      rateLabel.textContent = Number(rateRange.value).toFixed(2);
+    });
+
+    /* =========================
+       INIT
+       ========================= */
+    buildPartGrid();
+    updateGlobalAnswerToggle();
+    rateLabel.textContent = Number(rateRange.value).toFixed(2);
+  </script>
+</body>
+
+</html>
