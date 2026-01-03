@@ -131,31 +131,10 @@
       box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
     }
     .btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
-    .btn:focus-visible, .input:focus-visible, select:focus-visible, input[type="range"]:focus-visible {
+    .btn:focus-visible, .input:focus-visible {
       outline: 3px solid rgba(12, 99, 199, 0.25);
       outline-offset: 2px;
     }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border: 1px solid #d0d7e2;
-      border-radius: 999px;
-      background: #fff;
-      font-size: 13px;
-      color: #1f2937;
-    }
-    select, input[type="range"] {
-      border: 1px solid #d0d7e2;
-      border-radius: 999px;
-      padding: 8px 10px;
-      background: #fff;
-      color: inherit;
-      font-size: 13px;
-    }
-    input[type="range"] { padding: 0; }
 
     .list { display: flex; flex-direction: column; gap: 14px; }
 
@@ -248,8 +227,6 @@
       .input { background: #0b1120; border-color: #374151; color: #e5e7eb; }
       .btn { background: #1e3a8a; color: #e5e7eb; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); }
 
-      .pill, select, input[type="range"] { background: #0b1120; border-color: #374151; color: #e5e7eb; }
-
       .item { background: #111827; border-color: #374151; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55); }
       .item-head { background: #0b1120; border-bottom-color: #1f2937; }
       .item-num { color: #93c5fd; }
@@ -277,7 +254,9 @@
     <section id="partSelectScreen" class="page-wrap">
       <div class="hero">
         <div class="hero-title">TCF – Expression Orale</div>
-        <div class="hero-sub">Choisissez une partie (3 tâches). Chaque tâche reste sur une seule page, avec audio (TTS).</div>
+        <div class="hero-sub">
+          选择任务（3 tâches）。本页使用你自己的 MP3：仅“答案”有音频（A1.mp3 ~ A20.mp3）。
+        </div>
       </div>
       <div id="partGrid" class="grid"></div>
     </section>
@@ -294,19 +273,8 @@
         <button class="btn" id="toggleCnBtn">隐藏中文</button>
         <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
 
-        <span class="pill">
-          Voix
-          <select id="voiceSelect" aria-label="Choisir une voix"></select>
-        </span>
-
-        <span class="pill">
-          Débit
-          <input id="rateRange" type="range" min="0.7" max="1.2" step="0.05" value="1.0" />
-          <span id="rateLabel">1.00</span>
-        </span>
-
-        <button class="btn" id="playAllBtn">朗读全部（FR）</button>
-        <button class="btn" id="stopBtn">停止朗读</button>
+        <button class="btn" id="playAllBtn">播放全部答案（A1→A20）</button>
+        <button class="btn" id="stopBtn">停止播放</button>
       </div>
 
       <div class="list" id="itemList"></div>
@@ -426,9 +394,13 @@
        STATE
        ========================= */
     let currentPartIndex = null;
+
+    // Audio playback state
+    const audioPlayer = new Audio();
+    audioPlayer.preload = "metadata";
     let isAllPlaying = false;
-    let playQueue = [];
-    let currentUtterance = null;
+    let playQueue = []; // array of itemIds
+    let currentPlayingId = null;
 
     /* =========================
        DOM
@@ -448,11 +420,38 @@
     const toggleAllAnswersBtn = document.getElementById("toggleAllAnswersBtn");
     const searchInput = document.getElementById("searchInput");
 
-    const voiceSelect = document.getElementById("voiceSelect");
-    const rateRange = document.getElementById("rateRange");
-    const rateLabel = document.getElementById("rateLabel");
     const playAllBtn = document.getElementById("playAllBtn");
     const stopBtn = document.getElementById("stopBtn");
+
+    /* =========================
+       HELPERS
+       ========================= */
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getCurrentPart() {
+      return parts[currentPartIndex];
+    }
+
+    function partHasAudio() {
+      // Only Task 1 has A1..A20
+      return currentPartIndex === 0;
+    }
+
+    function hasAudioForItem(itemId) {
+      return partHasAudio() && Number(itemId) >= 1 && Number(itemId) <= 20;
+    }
+
+    function audioSrcForItem(itemId) {
+      // IMPORTANT: use forward slashes for web paths
+      return `assets/tcfEO/A${Number(itemId)}.mp3`;
+    }
 
     /* =========================
        PART SELECTION
@@ -479,7 +478,7 @@
     }
 
     function exitPart() {
-      stopSpeaking(true);
+      stopAudio(true);
       currentPartIndex = null;
       itemList.innerHTML = "";
       practiceScreen.style.display = "none";
@@ -493,10 +492,6 @@
 
     backIcon.addEventListener("click", exitPart);
 
-    function getCurrentPart() {
-      return parts[currentPartIndex];
-    }
-
     /* =========================
        RENDER
        ========================= */
@@ -506,6 +501,13 @@
 
       practiceTitle.textContent = `${part.label} — Expression orale`;
       practiceMeta.textContent = `${total} item(s)`;
+
+      // Enable/disable global audio buttons depending on part
+      const audioOK = partHasAudio();
+      playAllBtn.disabled = !audioOK;
+      stopBtn.disabled = !audioOK;
+      playAllBtn.textContent = audioOK ? "播放全部答案（A1→A20）" : "本任务无音频";
+      stopBtn.textContent = "停止播放";
 
       itemList.innerHTML = "";
 
@@ -523,29 +525,19 @@
         const actions = document.createElement("div");
         actions.className = "item-actions";
 
-        const btnSpeak = document.createElement("button");
-        btnSpeak.className = "btn";
-        btnSpeak.textContent = "朗读答案（FR）";
-        btnSpeak.addEventListener("click", () => {
-          preserveTopItemPosition(() => {
-            speakText(it.answerFr || "");
-          });
-        });
-
-        const btnSpeakQ = document.createElement("button");
-        btnSpeakQ.className = "btn";
-        btnSpeakQ.textContent = "朗读问题（FR）";
-        btnSpeakQ.addEventListener("click", () => {
-          preserveTopItemPosition(() => {
-            speakText(it.promptFr || "");
-          });
+        // Only answer audio (no question audio)
+        const btnPlayAns = document.createElement("button");
+        btnPlayAns.className = "btn";
+        btnPlayAns.textContent = hasAudioForItem(it.id) ? `播放答案 A${it.id}` : "无音频";
+        btnPlayAns.disabled = !hasAudioForItem(it.id);
+        btnPlayAns.addEventListener("click", () => {
+          preserveTopItemPosition(() => playItemAudio(it.id));
         });
 
         const btnToggleAns = document.createElement("button");
         btnToggleAns.className = "btn btn-toggle-answer";
         btnToggleAns.textContent = "显示答案";
         btnToggleAns.dataset.open = "0";
-
         btnToggleAns.addEventListener("click", () => {
           preserveTopItemPosition(() => {
             const open = btnToggleAns.dataset.open === "1";
@@ -554,8 +546,7 @@
           });
         });
 
-        actions.appendChild(btnSpeakQ);
-        actions.appendChild(btnSpeak);
+        actions.appendChild(btnPlayAns);
         actions.appendChild(btnToggleAns);
 
         head.appendChild(left);
@@ -665,7 +656,7 @@
        START PART
        ========================= */
     function startPart(idx) {
-      stopSpeaking(true);
+      stopAudio(true);
       currentPartIndex = idx;
       partSelectScreen.style.display = "none";
       practiceScreen.style.display = "block";
@@ -714,155 +705,113 @@
     }
 
     /* =========================
-       TTS (SpeechSynthesis)
+       AUDIO (MP3)
        ========================= */
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+    function stopAudio(clearQueue) {
+      try {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+      } catch (e) {}
 
-    function normalizeForSpeech(text) {
-      // Keep it simple: trim; keep punctuation; remove repeated spaces.
-      return String(text || "").replace(/\s+/g, " ").trim();
-    }
+      currentPlayingId = null;
 
-    function getSelectedVoice() {
-      const voices = speechSynthesis.getVoices() || [];
-      const idx = Number(voiceSelect.value || 0);
-      return voices[idx] || null;
-    }
-
-    function speakText(text) {
-      const clean = normalizeForSpeech(text);
-      if (!clean) return;
-
-      // Stop current speech (but do not clear queue unless explicitly)
-      speechSynthesis.cancel();
-      currentUtterance = null;
-
-      const u = new SpeechSynthesisUtterance(clean);
-      u.lang = "fr-FR";
-      const v = getSelectedVoice();
-      if (v) u.voice = v;
-
-      const rate = Number(rateRange.value || 1.0);
-      u.rate = Math.max(0.6, Math.min(1.4, rate));
-
-      u.onend = () => {
-        currentUtterance = null;
-        if (isAllPlaying) playNextInQueue();
-      };
-      u.onerror = () => {
-        currentUtterance = null;
-        if (isAllPlaying) playNextInQueue();
-      };
-
-      currentUtterance = u;
-      speechSynthesis.speak(u);
-    }
-
-    function stopSpeaking(clearQueue) {
-      try { speechSynthesis.cancel(); } catch (e) {}
-      currentUtterance = null;
       if (clearQueue) {
         isAllPlaying = false;
         playQueue = [];
-        playAllBtn.textContent = "朗读全部（FR）";
+        if (partHasAudio()) playAllBtn.textContent = "播放全部答案（A1→A20）";
       }
     }
 
-    function buildVisibleQueueAnswers() {
-      const part = getCurrentPart();
-      if (!part) return [];
-      // Only include visible cards after filtering
-      const visibleIds = new Set(Array.from(document.querySelectorAll(".item"))
-        .filter(el => el.offsetParent !== null)
-        .map(el => Number(el.dataset.itemid)));
+    function playItemAudio(itemId) {
+      const id = Number(itemId);
+      if (!hasAudioForItem(id)) return;
 
-      return part.items
-        .filter(it => visibleIds.has(it.id))
-        .map(it => it.answerFr || "");
+      // If "Play All" is active, stop it and play the single one
+      if (isAllPlaying) stopAudio(true);
+
+      const src = audioSrcForItem(id);
+      currentPlayingId = id;
+
+      // Restart from the beginning each time
+      try {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+      } catch (e) {}
+
+      audioPlayer.src = src;
+
+      const p = audioPlayer.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          // Autoplay policy / user gesture restrictions: do nothing, keep UI stable.
+          // 用户点按钮正常不会触发；如果被拦截，就需要再点一次。
+        });
+      }
+    }
+
+    function buildVisibleQueueIds() {
+      // Only visible items after search filter
+      const visibleIds = Array.from(document.querySelectorAll(".item"))
+        .filter(el => el.offsetParent !== null)
+        .map(el => Number(el.dataset.itemid))
+        .filter(id => hasAudioForItem(id))
+        .sort((a, b) => a - b);
+
+      return visibleIds;
     }
 
     function playNextInQueue() {
       if (!isAllPlaying) return;
-      const next = playQueue.shift();
-      if (!next) {
-        stopSpeaking(true);
+      const nextId = playQueue.shift();
+      if (!nextId) {
+        stopAudio(true);
         return;
       }
-      speakText(next);
+
+      const src = audioSrcForItem(nextId);
+      currentPlayingId = nextId;
+
+      audioPlayer.src = src;
+      audioPlayer.currentTime = 0;
+
+      const p = audioPlayer.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          // If iOS blocks chained autoplay, stop queue cleanly.
+          stopAudio(true);
+        });
+      }
     }
+
+    audioPlayer.addEventListener("ended", () => {
+      if (isAllPlaying) playNextInQueue();
+    });
+
+    audioPlayer.addEventListener("error", () => {
+      if (isAllPlaying) playNextInQueue();
+    });
 
     playAllBtn.addEventListener("click", () => {
       preserveTopItemPosition(() => {
+        if (!partHasAudio()) return;
+
         if (isAllPlaying) {
-          stopSpeaking(true);
+          stopAudio(true);
           return;
         }
-        const q = buildVisibleQueueAnswers();
-        if (!q.length) return;
+
+        const ids = buildVisibleQueueIds();
+        if (!ids.length) return;
 
         isAllPlaying = true;
-        playQueue = q.slice();
-        playAllBtn.textContent = "停止朗读全部";
+        playQueue = ids.slice();
+        playAllBtn.textContent = "停止播放全部";
         playNextInQueue();
       });
     });
 
     stopBtn.addEventListener("click", () => {
-      preserveTopItemPosition(() => stopSpeaking(true));
-    });
-
-    /* =========================
-       VOICES INIT
-       ========================= */
-    function populateVoices() {
-      const voices = speechSynthesis.getVoices() || [];
-      voiceSelect.innerHTML = "";
-
-      // Prefer French voices first
-      const preferred = voices
-        .map((v, i) => ({ v, i }))
-        .sort((a, b) => {
-          const af = (a.v.lang || "").toLowerCase().startsWith("fr") ? 0 : 1;
-          const bf = (b.v.lang || "").toLowerCase().startsWith("fr") ? 0 : 1;
-          if (af !== bf) return af - bf;
-          return (a.v.name || "").localeCompare(b.v.name || "");
-        });
-
-      preferred.forEach(({ v, i }, idx) => {
-        const opt = document.createElement("option");
-        opt.value = String(i);
-        opt.textContent = `${v.name} (${v.lang})`;
-        voiceSelect.appendChild(opt);
-      });
-
-      // Auto-select the first French voice if available
-      const firstFr = preferred.find(({ v }) => (v.lang || "").toLowerCase().startsWith("fr"));
-      if (firstFr) voiceSelect.value = String(firstFr.i);
-      else if (preferred[0]) voiceSelect.value = String(preferred[0].i);
-    }
-
-    // Some browsers load voices async
-    if ("speechSynthesis" in window) {
-      populateVoices();
-      window.speechSynthesis.onvoiceschanged = () => populateVoices();
-    } else {
-      // If TTS unsupported, disable buttons gracefully
-      playAllBtn.disabled = true;
-      stopBtn.disabled = true;
-      voiceSelect.disabled = true;
-      rateRange.disabled = true;
-      rateLabel.textContent = "N/A";
-    }
-
-    rateRange.addEventListener("input", () => {
-      rateLabel.textContent = Number(rateRange.value).toFixed(2);
+      preserveTopItemPosition(() => stopAudio(true));
     });
 
     /* =========================
@@ -870,7 +819,6 @@
        ========================= */
     buildPartGrid();
     updateGlobalAnswerToggle();
-    rateLabel.textContent = Number(rateRange.value).toFixed(2);
   </script>
 </body>
 
