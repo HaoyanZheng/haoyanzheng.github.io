@@ -22,6 +22,10 @@
       --radius: 18px;
       --tap: 44px;
       --shadow: 0 18px 50px rgba(0, 0, 0, .55);
+
+      /* === NEW: dynamic heights for iOS/mobile safe layout === */
+      --playerbar-h: 92px; /* JS 会实时覆盖 */
+      --dvh: 100vh;        /* JS 会用 window.innerHeight 覆盖 */
     }
 
     * {
@@ -73,8 +77,9 @@
 
     .app {
       min-height: 100%;
+      /* === CHANGED: bottom padding follows real playerbar height === */
       padding:
-        calc(14px + env(safe-area-inset-top)) 14px calc(92px + env(safe-area-inset-bottom)) 14px;
+        calc(14px + env(safe-area-inset-top)) 14px calc(14px + var(--playerbar-h) + env(safe-area-inset-bottom)) 14px;
       max-width: 1100px;
       margin: 0 auto;
     }
@@ -386,9 +391,13 @@
 
     .tracks {
       list-style: none;
-      max-height: calc(100vh - 260px);
+      max-height: calc(var(--dvh) - 260px);
       overflow: auto;
       -webkit-overflow-scrolling: touch;
+
+      /* === NEW: ensure last items not covered by fixed playerbar === */
+      padding-bottom: calc(14px + var(--playerbar-h) + env(safe-area-inset-bottom));
+      scroll-padding-bottom: calc(14px + var(--playerbar-h) + env(safe-area-inset-bottom));
     }
 
     @media (max-width:980px) {
@@ -890,7 +899,7 @@
       display: none;
     }
 
-    /* ====== Mobile topbar fix: prevent action buttons "disappearing" ====== */
+    /* ====== Mobile topbar fix ====== */
     @media (max-width: 720px) {
       .topbar {
         flex-wrap: wrap;
@@ -901,31 +910,26 @@
         order: 1;
       }
 
-      /* 把按钮区放到第二行，并用网格排满 */
       .actions {
         order: 2;
         width: 100%;
         overflow: visible;
-        /* 不再横向滚动隐藏 */
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 8px;
       }
 
-      /* 歌单按钮太宽：手机上独占一整行 */
       #btnPlaylist {
         grid-column: 1 / -1;
         width: 100%;
         max-width: none;
       }
 
-      /* 其余按钮平均分三列 */
       .actions .btn {
         width: 100%;
         justify-content: center;
       }
 
-      /* 搜索框放到第三行，占满 */
       .search {
         order: 3;
         flex: 1 1 100%;
@@ -933,7 +937,6 @@
       }
     }
 
-    /* 额外稳妥：避免 actions 在某些浏览器里被 flex 压到 0 宽 */
     .actions {
       flex: 0 0 auto;
     }
@@ -950,7 +953,6 @@
       <input id="search" class="search" placeholder="搜索歌曲 / 歌手…" />
 
       <div class="actions">
-        <!-- 新歌单切换：按钮 + 底部弹出 -->
         <button id="btnPlaylist" class="plist-btn" type="button" aria-label="选择歌单">
           <span class="plist-ava"><img id="plistAva" alt="" src="" /></span>
           <span class="plist-text">
@@ -1078,8 +1080,6 @@
       "default": {
         name: "默认",
         desc: "最常听的一组",
-        // 可选：歌单封面；不填则用该歌单第一首歌的封面
-        // cover: "assets/music/playlist_default.jpg",
         tracks: [
           {
             name: "御剑江湖",
@@ -1093,15 +1093,12 @@
       "chill": {
         name: "Chill",
         desc: "放松 / 学习",
-        tracks: [
-          // { name:"...", artist:"...", url:"assets/music/..mp3", cover:"assets/music/..jpg", lrc:"assets/music/..lrc" }
-        ]
+        tracks: []
       },
       "game": {
         name: "Game",
         desc: "游戏原声",
-        tracks: [
-        ]
+        tracks: []
       }
     };
 
@@ -1160,6 +1157,133 @@
       const r = getRecent();
       b.classList.toggle("on", r.length > 0);
       b.textContent = r.length ? `最近 ${r.length}` : "最近";
+    }
+
+    /**********************
+     * NEW: dynamic viewport + playerbar height (fix iOS cut off)
+     **********************/
+    function setDvh() {
+      document.documentElement.style.setProperty("--dvh", `${window.innerHeight}px`);
+    }
+
+    function syncPlayerbarHeight() {
+      const bar = document.querySelector(".playerbar");
+      if (!bar) return;
+      const h = Math.ceil(bar.getBoundingClientRect().height);
+      document.documentElement.style.setProperty("--playerbar-h", `${h}px`);
+    }
+
+    function installLayoutObservers() {
+      setDvh();
+      syncPlayerbarHeight();
+
+      window.addEventListener("resize", () => {
+        setDvh();
+        syncPlayerbarHeight();
+      }, { passive: true });
+
+      window.addEventListener("orientationchange", () => {
+        setTimeout(() => {
+          setDvh();
+          syncPlayerbarHeight();
+        }, 250);
+      }, { passive: true });
+
+      try {
+        const bar = document.querySelector(".playerbar");
+        if (bar && "ResizeObserver" in window) {
+          const ro = new ResizeObserver(() => syncPlayerbarHeight());
+          ro.observe(bar);
+        }
+      } catch (e) { }
+    }
+
+    /**********************
+     * NEW: Media Session (iOS Now Playing title/artwork)
+     **********************/
+    let mediaSessionInstalled = false;
+
+    function artworkListFromCover(coverUrl) {
+      if (!coverUrl) return [];
+      // iOS 对 sizes/type 很挑剔时，可给多档 sizes（同一张图也行）
+      return [
+        { src: coverUrl, sizes: "96x96" },
+        { src: coverUrl, sizes: "128x128" },
+        { src: coverUrl, sizes: "192x192" },
+        { src: coverUrl, sizes: "256x256" },
+        { src: coverUrl, sizes: "384x384" },
+        { src: coverUrl, sizes: "512x512" }
+      ];
+    }
+
+    function setMediaMetadata(t) {
+      if (!("mediaSession" in navigator)) return;
+      if (!t) return;
+
+      const plistName = PLAYLISTS[activeKey]?.name || "";
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: t.name || "Music",
+          artist: t.artist || "",
+          album: plistName,
+          artwork: artworkListFromCover(t.cover || "")
+        });
+      } catch (e) { }
+
+      // 旧 iOS / 不支持 MediaSession 的兜底：改 document.title
+      // （如果你不想改变页面标题，把这一行删掉）
+      document.title = t.name ? `${t.name}${t.artist ? " · " + t.artist : ""}` : "Music";
+    }
+
+    function setMediaPlaybackState() {
+      if (!("mediaSession" in navigator)) return;
+      try {
+        navigator.mediaSession.playbackState = isPlaying() ? "playing" : "paused";
+      } catch (e) { }
+    }
+
+    function installMediaSessionHandlers() {
+      if (mediaSessionInstalled) return;
+      if (!("mediaSession" in navigator)) return;
+      mediaSessionInstalled = true;
+
+      const ms = navigator.mediaSession;
+      const safe = (action, handler) => {
+        try { ms.setActionHandler(action, handler); } catch (e) { }
+      };
+
+      safe("play", () => { try { ap && ap.play(); } catch (e) { } });
+      safe("pause", () => { try { ap && ap.pause(); } catch (e) { } });
+      safe("previoustrack", () => prevTrack());
+      safe("nexttrack", () => nextTrack());
+
+      safe("seekto", (details) => {
+        try {
+          if (!ap || !ap.audio) return;
+          const a = ap.audio;
+          if (typeof details.seekTime === "number" && Number.isFinite(details.seekTime)) {
+            a.currentTime = Math.max(0, Math.min(a.duration || 0, details.seekTime));
+          }
+        } catch (e) { }
+      });
+
+      safe("seekbackward", (details) => {
+        try {
+          if (!ap || !ap.audio) return;
+          const a = ap.audio;
+          const offset = (details && details.seekOffset) ? details.seekOffset : 10;
+          a.currentTime = Math.max(0, (a.currentTime || 0) - offset);
+        } catch (e) { }
+      });
+
+      safe("seekforward", (details) => {
+        try {
+          if (!ap || !ap.audio) return;
+          const a = ap.audio;
+          const offset = (details && details.seekOffset) ? details.seekOffset : 10;
+          a.currentTime = Math.min(a.duration || 0, (a.currentTime || 0) + offset);
+        } catch (e) { }
+      });
     }
 
     /**********************
@@ -1243,6 +1367,9 @@
     function updatePlayIcon() {
       playBtn.textContent = isPlaying() ? "⏸" : "▶";
       elState.textContent = isPlaying() ? "播放中" : "暂停";
+
+      // NEW: sync iOS Now Playing state
+      setMediaPlaybackState();
     }
 
     function pickRandomIndex(avoid) {
@@ -1283,6 +1410,13 @@
 
       // 更新顶部歌单按钮
       syncPlaylistButton();
+
+      // NEW: iOS Now Playing metadata
+      setMediaMetadata(t);
+      setMediaPlaybackState();
+
+      // NEW: layout might change with cover/title wrapping
+      syncPlayerbarHeight();
     }
 
     function applySearch() {
@@ -1487,6 +1621,9 @@
         listFolded: true
       });
 
+      // NEW: Media Session handlers (once)
+      installMediaSessionHandlers();
+
       renderList();
       updateLoopBtn();
       updateNow();
@@ -1540,6 +1677,9 @@
         const v = Math.max(0, Math.min(1, Number(volEl.value)));
         try { ap.volume(v, true); } catch (e) { }
       };
+
+      // NEW: ensure correct padding after playerbar layout change
+      syncPlayerbarHeight();
     }
 
     /**********************
@@ -1570,7 +1710,7 @@
       plistBtnSub.textContent = `${n} 首`;
       plistAva.src = getPlaylistCover(activeKey) || "";
       elPname.textContent = p?.name || "—";
-      buildPlaylistGrid(); // 高亮/曲数可能变化
+      buildPlaylistGrid();
     }
 
     function openPlaylist() { plistModal.style.display = "flex"; plistSearch.value = ""; buildPlaylistGrid(); plistSearch.focus({ preventScroll: true }); }
@@ -1584,7 +1724,7 @@
       const ordered = [
         ...recent,
         ...keys.filter(k => !recent.includes(k))
-      ].filter((k, idx, arr) => arr.indexOf(k) === idx); // unique keep order
+      ].filter((k, idx, arr) => arr.indexOf(k) === idx);
 
       plistGrid.innerHTML = "";
       ordered.forEach(key => {
@@ -1618,7 +1758,6 @@
 
         card.addEventListener("click", () => {
           if (count === 0) {
-            // 允许切换到空歌单也可以，但体验上给提示
             if (!confirm("这个歌单目前是空的。仍然切换吗？")) return;
           }
           switchPlaylist(key, true);
@@ -1643,7 +1782,6 @@
       localStorage.setItem(LS_KEY, key);
       if (recordRecent) pushRecent(key);
 
-      // 换歌单：清搜索更直观
       searchEl.value = "";
       applySearch();
 
@@ -1662,6 +1800,9 @@
         setCoverBackground(getPlaylistCover(key) || "");
         tracksEl.innerHTML = "";
         updatePlayIcon();
+
+        // NEW: clear iOS Now Playing metadata
+        setMediaMetadata({ name: "Music", artist: "", cover: getPlaylistCover(key) || "", url: "" });
         return;
       }
 
@@ -1673,10 +1814,12 @@
      * Init
      **********************/
     function init() {
+      // NEW: fix iOS cut off before rendering
+      installLayoutObservers();
+
       buildPresets();
       updateRecentBadge();
 
-      // 恢复上次歌单
       const saved = localStorage.getItem(LS_KEY);
       const initial = (saved && PLAYLISTS[saved]) ? saved : playlistKeys()[0];
       switchPlaylist(initial, false);
@@ -1729,6 +1872,7 @@
       setTimeout(() => { try { ap && ap.play(); } catch (e) { } }, 250);
 
       syncPlaylistButton();
+      syncPlayerbarHeight();
     }
 
     init();
