@@ -1,0 +1,81 @@
+Using the open source IDE, "dnSpy", open the "Assembly-CSharp.dll" file under SteamLibrary\steamapps\common\Dungreed\Dungreed_Data\Managed
+
+
+
+
+
+# modify the number of items brought out for dimension vault:
+
+1. Under "Edit" - "find assemblies", 
+   search for "Perk_DementionVault". 
+
+2. Change line 10 "player.dementionVaultSrorage++;" to "+= X", with X being the number of numbers in the dimension vault, suggessted maximum 15
+   Change line 21 "this.player.dementionVaultSrorage--;" to "-= X"
+
+
+
+
+
+# Add ability level without using ability points
+
+1. Under "Edit" - "find assemblies", 
+   search for "playerability". 
+
+2. Delete line 314 "this.abilityPoint--;"
+
+
+
+
+
+# Enhanced items do not have #enhanced tag:
+
+1. Under "Edit" - "find assemblies", 
+   search for "UI_AnvilPanel". 
+
+2. Change line 406 "this.upgraded = true;" to false
+
+3. Change line 425 "itemOwnInfo.upgraded = true;" to false 
+
+4. Change line 429 "itemOwnInfo.anvilsmithUpgraded = true;" to false
+
+
+
+
+
+# dimension vault can bring out enhanced items:
+
+1. Under "Edit" - "find assemblies", 
+   search for "UI_DementionVaultPanel". 
+
+2. Delete lines from 123 - 127 (
+		if (icon.itemOwnInfo != null && (icon.itemOwnInfo.upgraded || icon.itemOwnInfo.anvilsmithUpgraded))
+		{
+			UIManager.Instance.Narration(I._("UI_Narration_CantSelectVault_Enhanced"), 3f);
+			return;
+		}
+)	
+
+
+
+
+
+# mofify the number of accessory slots:
+
+1. Under "Edit" - "find assemblies", 
+   search for "Perk_Lavish". 
+
+2. Copy line 14, "player.AddAccessorySlot(false);" to the number of accessory slots you want, suggessted maximum 14
+
+3. Copy line 23, "this.player.RemoveAccessorySlot();" to the same number of copies made in the previous step
+
+
+
+
+
+# Modify the maximum number of dashes added with the highest level (20) of mystery skill
+
+1. Under "Edit" - "find assemblies", 
+   search for "Perk_DementionVault". 
+
+2. Change the number inside bracket in line 11: "this.dash = new StatusModule_Dash(1);" to the number of dashes you want, the screen is able to display a maximum of 31 dashes
+

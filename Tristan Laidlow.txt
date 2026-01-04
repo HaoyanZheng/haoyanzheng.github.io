@@ -1,0 +1,18 @@
+Tristan Laidlow
+
+1. Research at university vs industry?
+they are getting closely related. it is used to be that university were theoretical and indsutry is applicational.
+Academic: freedom over choice of what you do. Boston dyanmcis is goal-oriented but you can try a lot more in univesrtiy. You have freedom over time and path.
+Industry: the computational power and fundinfg is enormous
+
+2. propescts of robotics?
+amazing. hype of funding into robo, lots of jobs. not sure if it lasts.
+there used to be tons of companies in self driving. 
+now robotics are getting better and better (specific purpose orbotics)
+AI sending fuel. 
+
+3. trend of sensing?
+robotics perception is moving into camera only.
+traditional sensor requires calibration and certain terrain/ lighting condition
+camera is cheap.
+
