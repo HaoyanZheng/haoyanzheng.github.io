@@ -24,8 +24,10 @@
       --shadow: 0 18px 50px rgba(0, 0, 0, .55);
 
       /* === NEW: dynamic heights for iOS/mobile safe layout === */
-      --playerbar-h: 92px; /* JS 会实时覆盖 */
-      --dvh: 100vh;        /* JS 会用 window.innerHeight 覆盖 */
+      --playerbar-h: 92px;
+      /* JS 会实时覆盖 */
+      --dvh: 100vh;
+      /* JS 会用 window.innerHeight 覆盖 */
     }
 
     * {
@@ -1078,8 +1080,8 @@
      ******************************************************************/
     const PLAYLISTS = {
       "default": {
-        name: "默认",
-        desc: "最常听的一组",
+        name: "修仙",
+        desc: "我等修仙之人最讲究念头通达。",
         tracks: [
           {
             name: "御剑江湖",
@@ -1087,17 +1089,33 @@
             url: "assets/music/御剑江湖.mp3",
             cover: "assets/music/御剑江湖.jpg",
             lrc: "assets/music/御剑江湖.lrc"
+          },
+          {
+            name: "水龙吟",
+            artist: "骆集益",
+            url: "assets/music/水龙吟.mp3",
+            cover: "assets/music/水龙吟.jpg",
+            lrc: "assets/music/水龙吟.lrc"
           }
         ]
       },
-      "chill": {
-        name: "Chill",
-        desc: "放松 / 学习",
-        tracks: []
+      "dj": {
+        name: "DJ",
+        desc: "这江湖之大，非她不可吗？",
+        tracks: [
+          {
+            name: "一笑江湖DJ",
+            artist: "问人听书",
+            url: "assets/music/一笑江湖DJ.mp3",
+            cover: "assets/music/一笑江湖Dj.jpg",
+            lrc: "assets/music/一笑江湖.lrc"
+          },
+
+        ]
       },
-      "game": {
-        name: "Game",
-        desc: "游戏原声",
+      "shuijiao": {
+        name: "睡觉",
+        desc: "半睡半醒日复日，花开花落年复年。",
         tracks: []
       }
     };
