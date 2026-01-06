@@ -8,14 +8,18 @@
   <meta name="color-scheme" content="light dark">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #f4f7fb;
       color: #222;
     }
 
-    /* Top bar */
     .topbar {
       background: #0059b3;
       color: #fff;
@@ -26,11 +30,23 @@
       top: 0;
       z-index: 50;
     }
-    .topbar-title { margin: 0 auto; font-size: 18px; font-weight: 700; }
-    .topbar-back { font-size: 22px; cursor: pointer; user-select: none; }
-    .topbar-back.hidden { visibility: hidden; }
 
-    /* Generic card layout */
+    .topbar-title {
+      margin: 0 auto;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .topbar-back {
+      font-size: 22px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .topbar-back.hidden {
+      visibility: hidden;
+    }
+
     .page-wrap {
       max-width: 980px;
       margin: 30px auto;
@@ -40,11 +56,24 @@
       padding: 24px 28px 30px;
     }
 
-    /* --- Part selection screen --- */
-    #partSelectScreen { text-align: center; }
-    .hero { margin-bottom: 18px; }
-    .hero-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
-    .hero-sub { font-size: 14px; color: #555; }
+    #partSelectScreen {
+      text-align: center;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: #555;
+    }
 
     .grid {
       display: flex;
@@ -53,6 +82,7 @@
       gap: 14px;
       margin-top: 18px;
     }
+
     .card {
       width: 170px;
       min-height: 110px;
@@ -68,16 +98,28 @@
       padding: 10px 12px;
       text-align: center;
     }
+
     .card:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
       background: #eaf2ff;
     }
-    .card-label { font-size: 16px; font-weight: 800; color: #0c63c7; margin-bottom: 4px; }
-    .card-sub { font-size: 12px; color: #666; }
 
-    /* --- Practice screen --- */
-    #practiceScreen { display: none; }
+    .card-label {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0c63c7;
+      margin-bottom: 4px;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: #666;
+    }
+
+    #practiceScreen {
+      display: none;
+    }
 
     .practice-header {
       display: flex;
@@ -87,8 +129,16 @@
       flex-wrap: wrap;
       margin-bottom: 12px;
     }
-    .practice-title { font-weight: 800; font-size: 16px; }
-    .practice-meta { font-size: 13px; color: #666; }
+
+    .practice-title {
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .practice-meta {
+      font-size: 13px;
+      color: #666;
+    }
 
     .controls {
       display: flex;
@@ -103,6 +153,7 @@
       padding: 10px 0;
       margin-bottom: 10px;
     }
+
     .input {
       flex: 1 1 240px;
       min-width: 220px;
@@ -113,6 +164,7 @@
       font-size: 14px;
       background: #fff;
     }
+
     .btn {
       border: none;
       padding: 10px 14px;
@@ -126,17 +178,30 @@
       transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
       white-space: nowrap;
     }
+
     .btn:hover:not(:disabled) {
       transform: translateY(-1px);
       box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
     }
-    .btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
-    .btn:focus-visible, .input:focus-visible {
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn:focus-visible,
+    .input:focus-visible {
       outline: 3px solid rgba(12, 99, 199, 0.25);
       outline-offset: 2px;
     }
 
-    .list { display: flex; flex-direction: column; gap: 14px; }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
     .item {
       border: 1px solid #d0d7e2;
@@ -145,6 +210,7 @@
       overflow: hidden;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
     }
+
     .item-head {
       padding: 12px 14px;
       display: flex;
@@ -155,11 +221,26 @@
       background: #f8fbff;
       border-bottom: 1px solid #e5edf8;
     }
-    .item-num { font-weight: 900; color: #0c63c7; }
-    .item-topic { font-weight: 800; color: #111827; }
-    .item-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-    .item-body { padding: 14px 14px 16px; }
+    .item-num {
+      font-weight: 900;
+      color: #0c63c7;
+    }
+
+    .item-topic {
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .item-body {
+      padding: 14px 14px 16px;
+    }
 
     .block {
       padding: 12px 16px;
@@ -181,8 +262,19 @@
       text-transform: uppercase;
     }
 
-    .fr { font-size: 16px; line-height: 1.75; font-weight: 600; color: #111827; margin-bottom: 6px; }
-    .cn { font-size: 14px; line-height: 1.75; color: #4b5563; }
+    .fr {
+      font-size: 16px;
+      line-height: 1.75;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .cn {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #4b5563;
+    }
 
     .answer {
       border-radius: 14px;
@@ -193,52 +285,167 @@
       max-width: 860px;
       margin: 0 auto;
     }
-    .answer-title { font-size: 12px; font-weight: 900; color: #0c63c7; margin-bottom: 8px; text-transform: uppercase; }
 
-    /* Hide CN toggle */
-    .hide-cn .cn { display: none !important; }
+    .answer-title {
+      font-size: 12px;
+      font-weight: 900;
+      color: #0c63c7;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
 
-    /* Desktop override */
+    .hide-cn .cn {
+      display: none !important;
+    }
+
+    .section-sep {
+      margin: 18px 0 8px;
+      padding: 10px 12px;
+      border-left: 6px solid #0c63c7;
+      background: #eef5ff;
+      border-radius: 12px;
+      font-weight: 900;
+      color: #0c63c7;
+    }
+
     @media (min-width: 900px) {
-      .fr { font-size: 20px; }
-      .cn { font-size: 18px; }
+      .fr {
+        font-size: 20px;
+      }
+
+      .cn {
+        font-size: 18px;
+      }
     }
+
     @media (max-width: 640px) {
-      .page-wrap { margin: 12px; padding: 18px 16px 22px; }
-      .card { width: 46%; min-width: 160px; }
-      .controls { top: 50px; }
+      .page-wrap {
+        margin: 12px;
+        padding: 18px 16px 22px;
+      }
+
+      .card {
+        width: 46%;
+        min-width: 160px;
+      }
+
+      .controls {
+        top: 50px;
+      }
+
+      .input {
+        min-width: 180px;
+      }
     }
 
-    /* ---- Dark mode ---- */
     @media (prefers-color-scheme: dark) {
-      body { background: #060814; color: #e5e7eb; }
-      .topbar { background: #0b3a7a; color: #e5e7eb; }
-      .page-wrap { background: #111827; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); }
-      .hero-sub { color: #d1d5db; }
+      body {
+        background: #060814;
+        color: #e5e7eb;
+      }
 
-      .card { background: #111827; border-color: #2563eb; }
-      .card:hover { background: #1f2937; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9); }
-      .card-label { color: #bfdbfe; }
-      .card-sub { color: #9ca3af; }
+      .topbar {
+        background: #0b3a7a;
+        color: #e5e7eb;
+      }
 
-      .practice-meta { color: #9ca3af; }
-      .controls { background: rgba(6, 8, 20, 0.75); }
+      .page-wrap {
+        background: #111827;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+      }
 
-      .input { background: #0b1120; border-color: #374151; color: #e5e7eb; }
-      .btn { background: #1e3a8a; color: #e5e7eb; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); }
+      .hero-sub {
+        color: #d1d5db;
+      }
 
-      .item { background: #111827; border-color: #374151; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55); }
-      .item-head { background: #0b1120; border-bottom-color: #1f2937; }
-      .item-num { color: #93c5fd; }
-      .item-topic { color: #f9fafb; }
+      .card {
+        background: #111827;
+        border-color: #2563eb;
+      }
 
-      .block { background: rgba(15, 23, 42, 0.92); border-color: #374151; }
-      .label { color: #93c5fd; }
-      .fr { color: #e5e7eb; }
-      .cn { color: #9ca3af; }
+      .card:hover {
+        background: #1f2937;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9);
+      }
 
-      .answer { background: #0b1120; border-color: #374151; }
-      .answer-title { color: #93c5fd; }
+      .card-label {
+        color: #bfdbfe;
+      }
+
+      .card-sub {
+        color: #9ca3af;
+      }
+
+      .practice-meta {
+        color: #9ca3af;
+      }
+
+      .controls {
+        background: rgba(6, 8, 20, 0.75);
+      }
+
+      .input {
+        background: #0b1120;
+        border-color: #374151;
+        color: #e5e7eb;
+      }
+
+      .btn {
+        background: #1e3a8a;
+        color: #e5e7eb;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      }
+
+      .item {
+        background: #111827;
+        border-color: #374151;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+      }
+
+      .item-head {
+        background: #0b1120;
+        border-bottom-color: #1f2937;
+      }
+
+      .item-num {
+        color: #93c5fd;
+      }
+
+      .item-topic {
+        color: #f9fafb;
+      }
+
+      .block {
+        background: rgba(15, 23, 42, 0.92);
+        border-color: #374151;
+      }
+
+      .label {
+        color: #93c5fd;
+      }
+
+      .fr {
+        color: #e5e7eb;
+      }
+
+      .cn {
+        color: #9ca3af;
+      }
+
+      .answer {
+        background: #0b1120;
+        border-color: #374151;
+      }
+
+      .answer-title {
+        color: #93c5fd;
+      }
+
+      .section-sep {
+        background: #0b1120;
+        color: #93c5fd;
+        border-left-color: #2563eb;
+      }
     }
   </style>
 </head>
@@ -255,7 +462,7 @@
       <div class="hero">
         <div class="hero-title">TCF – Expression Orale</div>
         <div class="hero-sub">
-          选择任务（3 tâches）。本页使用你自己的 MP3：仅“答案”有音频（A1.mp3 ~ A20.mp3）。
+          选择任务（3 tâches）。默认：Tâche 1 有答案音频（A1.mp3 ~ A20.mp3）。
         </div>
       </div>
       <div id="partGrid" class="grid"></div>
@@ -270,6 +477,11 @@
 
       <div class="controls">
         <input id="searchInput" class="input" placeholder="Rechercher (FR / 中文)..." />
+
+        <!-- Voice dropdown (only for TTS parts) -->
+        <select id="voiceSelect" class="input" style="flex:0 1 320px; min-width:240px; display:none;"></select>
+        <button class="btn" id="testVoiceBtn" style="display:none;">测试声音</button>
+
         <button class="btn" id="toggleCnBtn">隐藏中文</button>
         <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
 
@@ -283,109 +495,589 @@
 
   <script>
     /* =========================
-       DATA: 3 parts (tasks)
+       HELPERS (HTML)
        ========================= */
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+    function toHtmlText(str) { return escapeHtml(str).replaceAll("\n", "<br>"); }
 
+    /* =========================
+       TÂCHE 2 BUILDER
+       ========================= */
+    function buildT2Items() {
+      const t2raw = [
+        ["SECTION", "A. 开场引入（正式）"],
+        ["开场-正式", "您好，我听说您提供……，关于这个，如果您方便的话，我想问几个问题。", "Bonjour, j’ai entendu dire que vous proposez… À ce sujet, j’aimerais vous poser quelques questions, si vous êtes disponible."],
+        ["开场-正式", "我对……感兴趣，想了解更多相关信息。", "Je suis intéressé(e) par… et je voudrais en savoir plus à ce sujet."],
+        ["开场-正式", "您有几分钟时间回答我关于……的问题吗？", "Est-ce que vous auriez quelques minutes pour répondre à mes questions sur… ?"],
+        ["开场-正式", "您好，我需要关于……的信息，我可以问您几个问题吗？", "Bonjour, j’ai besoin de renseignements sur… Est-ce que je peux vous poser quelques questions ?"],
+        ["开场-正式", "我想了解关于……的详细信息，您能为我解释一下吗？", "J’aimerais avoir des détails sur… Pouvez-vous m’éclairer à ce sujet, s’il vous plaît ?"],
+
+        ["SECTION", "A. 开场引入（非正式）"],
+        ["开场-非正式", "我听说了……，关于这个我想问你几个问题，如果你方便的话。", "J’ai entendu parler de… et j’aimerais bien te poser quelques questions à ce sujet, si tu es disponible."],
+        ["开场-非正式", "你好，我想问你对……的看法。", "Salut, je voudrais te demander ton avis sur…"],
+        ["开场-非正式", "我需要一些关于……的建议，你能帮我吗？", "J’ai besoin de quelques conseils sur… Est-ce que tu peux m’aider ?"],
+        ["开场-非正式", "我注意到……，我想知道你能不能跟我多解释一下。", "J’ai remarqué que… et je me demandais si tu pouvais m’expliquer un peu plus."],
+        ["开场-非正式", "你有几分钟时间吗？我想就……问你几个问题。", "Tu as quelques minutes ? J’aimerais te poser quelques questions sur…"],
+
+        ["SECTION", "B. 中间衔接（积极回应/继续提问）"],
+        ["衔接-表达兴趣和接受建议", "好主意！我很感兴趣。", "Ah, super idée ! Ça me tente bien."],
+        ["衔接-表达兴趣和接受建议", "我喜欢这个主意。", "J’aime bien l’idée."],
+        ["衔接-表达兴趣和接受建议", "看起来不错。", "Ça a l’air bien."],
+        ["衔接-表达兴趣和接受建议", "听起来很有意思。", "Ça semble intéressant."],
+        ["衔接-表达兴趣和接受建议", "这很有趣。", "C’est intéressant."],
+        ["衔接-表达兴趣和接受建议", "太棒了！", "C’est top !"],
+        ["衔接-表达兴趣和接受建议", "太棒了！", "C’est génial !"],
+        ["衔接-确认和做出积极回应", "好的。我知道这个地方。", "Ah, d’accord. Je connais cet endroit."],
+        ["衔接-确认和做出积极回应", "哦，我明白了！", "Ah, je vois !"],
+        ["衔接-确认和做出积极回应", "听起来很清楚。", "Ça semble clair."],
+        ["衔接-表达愉快的心情和期待", "太好了！我喜欢流行音乐。", "Génial ! J’adore la pop."],
+        ["衔接-表达愉快的心情和期待", "太好了，我周六晚上有空。", "Parfait, je suis libre samedi soir."],
+        ["衔接-表示行动", "太好了，我稍后会看一下。", "Super, je vais regarder ça tout à l’heure."],
+        ["衔接-表示方便或实用", "这很方便！", "C’est pratique !"],
+        ["衔接-表示方便或实用", "让人很想参与！", "Ça donne envie !"],
+        ["衔接-表达对事情的积极评价", "看起来很不错。", "Ça a l’air sympa."],
+        ["衔接-表达对事情的积极评价", "我很期待！", "J’ai hâte !"],
+        ["衔接-表达对事情的积极评价", "这会是一个很棒的晚上。", "Ça va être une super soirée."],
+
+        ["SECTION", "B. 继续提问模板"],
+        ["提问模板", "另外，您能告诉我……吗？", "Et puis, pourriez-vous me dire … ?"],
+        ["提问模板", "我也想知道……", "J’aimerais aussi savoir …"],
+        ["提问模板", "关于……，我还有一个问题。", "Concernant …, j’ai une autre question."],
+        ["提问模板", "此外，您能解释一下……吗？", "Et pour compléter, pouvez-vous m’expliquer … ?"],
+        ["提问模板", "啊，我明白了。关于时长，我还有一个问题：晚会会持续到很晚吗？", "Ah, je vois. Et concernant la durée, j’ai une autre question : est-ce que la soirée se prolongera tard ?"],
+        ["提问模板", "很好，这对我很有帮助。那么参加者的费用是多少？", "Génial ! Ça m’aide beaucoup. J’ai encore une question. Et quels sont les tarifs pour les participants ?"],
+        ["提问模板", "另外，您能告诉我哪些日期是可预约的吗？", "Et puis, pourriez-vous me dire quels sont les dates disponibles?"],
+        ["提问模板", "好的。此外，我也想了解一下报名流程。您能说明一下需要提供哪些信息吗？", "Très bien. Et pour compléter, j’aimerais aussi savoir le processus d’inscription. Pouvez-vous m’expliquer quelles sont les informations à fournir ?"],
+        ["提问模板", "啊，太好了。有可能免费试听一节课吗？", "Ah, c’est parfait. Est-il possible de faire un cours d’essai gratuit ?"],
+        ["提问模板", "这很有意思。那么一对一的课程和集体课程的价格相比如何？", "C’est intéressant. Et quels sont les tarifs pour les cours individuels comparés aux cours collectifs ?"],
+
+        ["SECTION", "C. 结束语（正式）"],
+        ["结束-正式", "非常感谢您的宝贵帮助，如果需要，我一定会再次联系您。", "Merci beaucoup pour votre aide précieuse, je n’hésiterai pas à revenir vers vous si besoin."],
+        ["结束-正式", "非常感谢您提供的信息，这对我非常有帮助。", "Je vous remercie vivement pour ces informations, elles m’ont été vraiment utiles."],
+        ["结束-正式", "感谢您的倾听和时间，如果有需要，我会再联系您。", "Merci pour votre écoute et votre disponibilité, je reviendrai vers vous en cas de besoin."],
+
+        ["SECTION", "C. 结束语（非正式）"],
+        ["结束-非正式", "非常感谢你的帮助，真的很有用！如果我有其他问题，会再联系你。", "Merci beaucoup pour ton aide, c’était vraiment utile ! Je reviendrai vers toi si j’ai d’autres questions."],
+        ["结束-非正式", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！", "Je te remercie pour tes réponses, elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
+        ["结束-非正式", "再次感谢你的倾听。如果需要，我会再联系你。", "Merci encore pour ton écoute. Je reviendrai vers toi en cas de besoin."],
+
+        ["SECTION", "D. 通用高频提问（类型/内容/地点/时间/人物/吃喝/活动/价格）"],
+        // 一、类型（le type）
+        ["类型", "有哪些类型可选择？", "Quels types sont disponibles ?"],
+        ["类型", "你们提供哪些类型的车辆？", "Quels types de véhicules proposez-vous ?"],
+        ["类型", "哪个最经济 / 最实用？", "Lequel est le plus économique / pratique ?"],
+        ["类型", "最好的交通方式是什么？", "Quel est le meilleur moyen de transport ?"],
+        ["类型", "你们有这个季节的热门目的地吗？", "Est-ce que vous avez des destinations populaires pour cette saison ?"],
+        ["类型", "是否还有其他国家可以选择？", "Y a-t-il d'autres pays disponibles au choix ?"],
+        ["类型", "哪种工作最受需求？", "Quel type de travail est le plus demandé ?"],
+        ["类型", "哪种工作薪资最低 / 最高？", "Quel type de travail offre le salaire le plus bas / le plus élevé ?"],
+
+        // 二、餐馆类型
+        ["餐馆类型", "附近有好吃的中餐馆或西餐馆吗？", "Y a-t-il de bons restaurants chinois ou occidentaux ?"],
+        ["餐馆类型", "有没有更实惠的餐馆 / 高档餐厅？", "Y a-t-il des restaurants plus économiques / haut de gamme ?"],
+
+        // 三、类型—教学、音乐、表演、电影
+        ["类型—教学/音乐/表演/电影", "您教授哪一类课程？", "Quel genre enseignez-vous ?"],
+        ["类型—教学/音乐/表演/电影", "节日上会弹哪种音乐？", "Quel genre de musique sera joué au festival ?"],
+        ["类型—教学/音乐/表演/电影", "我们要看哪种表演？", "Quel genre de spectacle allons-nous voir ?"],
+
+        // 四、电影类型与喜好
+        ["电影类型与喜好", "你推荐哪部电影？", "Quel film recommandes-tu ?"],
+        ["电影类型与喜好", "你最喜欢哪部电影？", "Quel film tu aimes le plus ?"],
+        ["电影类型与喜好", "每种类型都有独特的魅力，你能解释一下你为什么喜欢这种类型的电影吗？", "Chaque genre a son charme unique, et tu peux expliquer pourquoi tu aimes ce type de film ?"],
+        ["电影类型与喜好", "有没有一种类型是你完全不喜欢的？", "Y a-t-il un genre que tu n’aimes pas du tout ?"],
+        ["电影类型与喜好", "你能推荐适合全家观看的电影吗？", "Pouvez-vous recommander des films adaptés à toute la famille ?"],
+        ["电影类型与喜好", "哪部电影最打动你？", "Quel est le film qui t’a le plus touché ?"],
+        ["电影类型与喜好", "你更喜欢旧电影还是新电影？", "Préfères-tu les films anciens ou les nouveaux films ?"],
+
+        ["内容", "课程内容有哪些？", "Quels sont les contenus des cours ?"],
+        ["内容", "我可以定制课程内容吗？", "Puis-je personnaliser les contenus des cours ?"],
+        ["内容", "课程中可以学特定的歌曲吗？", "Peut-on apprendre des chansons spécifiques pendant les cours ?"],
+        ["内容", "你目前的工作是什么？", "Quel est ton travail actuel ?"],
+        ["内容", "你的主要任务是什么？", "Quelle est votre mission principale ?"],
+        ["内容", "你的第一天工作过得怎么样？", "Comment s’est passé ton premier jour de travail ?"],
+
+        ["地点", "协会总部/活动地点在哪里？", "Où se trouve le siège de l’association / le lieu ?"],
+        ["地点", "这个位于哪里？", "Où est-ce que ça se trouve ?"],
+        ["地点", "节日将在哪里举行？", "Où aura lieu le festival ?"],
+        ["地点", "附近有商店、学校或医院吗？", "Y a-t-il des magasins, écoles ou hôpitaux à proximité ?"],
+        ["地点", "离这里远吗？", "C’est loin d’ici ? / Est-ce que c’est loin d’ici ?"],
+        ["地点", "我怎么去那里？", "Comment puis-je m’y rendre ?"],
+        ["地点", "可以坐公交/步行/开车去吗？", "Est-ce que c’est accessible en transports en commun / à pied / en voiture ?"],
+        ["地点", "这个地方的公共交通方便吗？", "Est-ce que l’endroit est bien desservi par les transports publics ?"],
+        ["地点", "这个地方有电梯吗？", "Est-ce qu’il y a un ascenseur ?"],
+        ["地点", "附近有停车场吗？这里好停车吗？", "Y a-t-il un parking à proximité ? / Peut-on se garer facilement dans le coin ?"],
+        ["地点", "最近的公交车站在哪里？", "Où se trouvent les arrêts de bus les plus proches ?"],
+        ["地点", "市中心经常堵车吗？", "Y a-t-il souvent des embouteillages au centre-ville ?"],
+        ["地点", "海滩怎么样？安静还是人很多？", "Comment étaient les plages ? Elles étaient tranquilles ou très fréquentées ?"],
+        ["地点", "这里有热门的酒吧、餐厅或社交场所吗？", "Y a-t-il des bars, restaurants ou lieux de rencontre populaires ici ?"],
+        ["地点", "在您看来，这座城市最适合社交的地方是哪里？", "À votre avis, quel est le meilleur endroit pour socialiser dans cette ville ?"],
+        ["地点", "这家餐厅的环境好吗？因为我喜欢拍照。", "Ce restaurant est-il bien décoré ? Parce que j’aime prendre des photos."],
+
+        ["时间", "节日什么时候举行？", "Quand se déroulera le festival ?"],
+        ["时间", "音乐会几点开始？", "À quelle heure commencent les concerts ?"],
+        ["时间", "你想几点开始？", "À quelle heure souhaites-tu commencer ?"],
+        ["时间", "你每天工作多少小时？", "Combien d’heures travailles-tu chaque jour ?"],
+        ["时间", "仪式将持续多久？", "Combien de temps durera la cérémonie ?"],
+        ["时间", "你打算什么时候搬家？", "Quand prévois-tu de faire le déménagement ?"],
+        ["时间", "做志愿者需要多长时间？", "Ça fait combien de temps pour être bénévole ?"],
+        ["时间", "可以选择我的志愿者工作时间吗？", "Puis-je choisir mes horaires de bénévolat ?"],
+        ["时间", "需要长期参与吗？", "Y a-t-il des engagements à long terme ?"],
+        ["时间", "您建议每周上几次课？", "Combien de fois par semaine recommandez-vous de faire des cours ?"],
+        ["时间", "营业时间是几点？", "Quels sont les horaires d’ouverture ?"],
+        ["时间", "几点来比较能避免人多？", "À quelle heure est-il préférable de venir pour éviter la foule ?"],
+        ["时间", "公交准时吗？", "Les bus sont-ils ponctuels ?"],
+        ["时间", "去那里需要多久？", "Ça fait combien de temps y aller ?"],
+        ["时间", "我需要等地铁多久？", "Combien de temps dois-je attendre le métro ?"],
+        ["时间", "这部电影每天上映吗？", "Ce film passe-t-il tous les jours ?"],
+        ["时间", "每天有几场？", "Combien de séances y a-t-il chaque jour ?"],
+
+        ["人物", "有多少名参与者？", "Combien de participants y a-t-il ?"],
+        ["人物", "徒步活动平均有多少参与者？", "Combien de participants y a-t-il en moyenne lors des randonnées ?"],
+        ["人物", "俱乐部有多少成员？", "Combien de membres compte le club ?"],
+        ["人物", "谁可以参加活动？", "Qui peut participer aux activités ?"],
+        ["人物", "人多吗？", "Y a-t-il beaucoup de monde ?"],
+        ["人物", "总共会有多少人参加？", "Combien de personnes seront présentes au total ?"],
+        ["人物", "有素食者吗？", "Y a-t-il des végétariens ?"],
+        ["人物", "这个俱乐部吸引年轻人还是年长的人？", "Est-ce un club où il y a des jeunes ou des personnes plus âgées ?"],
+        ["人物", "你的团队有多少人？", "Combien de personnes y a-t-il dans l’équipe ?"],
+        ["人物", "他们彼此很熟吗？", "Est-ce qu’ils se connaissent bien ?"],
+        ["人物", "可以带孩子/宠物吗？", "Est-ce que les enfants / animaux sont acceptés ?"],
+        ["人物", "还有其他同事或朋友加入我们吗？", "Est-ce que d’autres collègues ou amis se joignent à nous ?"],
+
+        ["人物-孩子", "你们的孩子几岁？", "Quel âge a votre enfant ?"],
+        ["人物-孩子", "您的孩子是男孩还是女孩？", "Est-ce que votre enfant est un garçon ou une fille ?"],
+        ["人物-孩子", "他/她叫什么名字？", "Comment s’appelle-t-il / elle ?"],
+        ["人物-孩子", "你的孩子怎么样？比较害羞还是比较外向？", "Ton enfant, il est comment ? Plutôt timide ou sociable ?"],
+
+        ["人物-喜好", "你最喜欢的男演员/女演员是谁？", "Qui est ton acteur ou ton actrice préféré(e) ?"],
+        ["人物-喜好", "你为什么特别喜欢他/她？是因为演技还是外貌？", "Pourquoi tu l’aimes particulièrement ? Le style, le jeu ou l’apparence ?"],
+        ["人物-喜好", "他/她得过奖吗？", "Est-ce qu’il / elle a été primé(e) ?"],
+        ["人物-喜好", "哪个最有名？", "Lequel est le plus connu ?"],
+
+        ["人物-工作", "你第一天就见到你的主管/上司了吗？", "As-tu déjà rencontré ton directeur / supérieur dès le premier jour ?"],
+        ["人物-工作", "你的同事友好吗？", "Est-ce que tes collègues sont accueillants / gentils ?"],
+        ["人物-工作", "他们有帮助你融入吗？", "Est-ce qu’ils t’ont aidé à t’intégrer ?"],
+
+        ["吃喝", "我可以为生日定制菜单吗？", "Puis-je personnaliser le menu pour l’anniversaire ?"],
+        ["吃喝", "餐馆有提供生日特别甜点吗？", "Est-ce que les restaurants offrent des desserts spéciaux pour l’anniversaire ?"],
+        ["吃喝", "有素食菜吗？", "Y a-t-il des plats végétariens ?"],
+        ["吃喝", "菜的味道怎么样？是辣的吗？", "Comment sont les saveurs des plats ? Sont-ils épicés ou non ?"],
+        ["吃喝", "您的孩子晚餐喜欢吃什么？", "Qu’est-ce que votre enfant aime manger pour le dîner ?"],
+        ["吃喝", "我可以让他/她吃巧克力/糖果吗？", "Je peux le/la laisser manger du chocolat / des bonbons ?"],
+        ["吃喝", "他/她有食物过敏吗？", "Est-ce qu’il a des allergies alimentaires ?"],
+        ["吃喝", "我可以自带饮料和食物吗？", "Puis-je apporter des boissons et de la nourriture ?"],
+        ["吃喝", "现场会有卖饮料的摊位吗？", "Y aura-t-il des stands pour vendre des boissons ?"],
+
+        ["活动", "在这次行程中我可以做哪些活动？", "Quelles activités puis-je faire pendant le séjour ?"],
+        ["活动", "你在那边做了哪些活动？", "Quelles activités as-tu faites là-bas ?"],
+        ["活动", "婚礼上会安排哪些活动？", "Quelles activités sont organisées lors du mariage ?"],
+        ["活动", "这些行程里有自由时间吗？", "Dans ces circuits, y a-t-il du temps libre ?"],
+        ["活动", "有适合孩子/老年人的活动吗？", "Y a-t-il des activités adaptées aux enfants / aux personnes âgées ?"],
+        ["活动", "有适合初学者的路线吗？", "Y a-t-il des itinéraires pour les débutants ?"],
+        ["活动", "有给孩子的工作坊/活动课程吗？", "Y a-t-il des ateliers pour les enfants ?"],
+        ["活动", "附近有当地集市或农场可以参观吗？", "Y a-t-il des visites à des marchés locaux ou des fermes à visiter dans la région ?"],
+        ["活动", "你们有中文导览/语音导览吗？", "Proposez-vous des visites guidées en chinois / des audioguides ?"],
+        ["活动", "他最喜欢的活动是什么？", "Quelles sont ses activités préférées ?"],
+        ["活动", "我可以让他/她看电视/玩游戏吗？", "Puis-je le/la laisser regarder la télévision / jouer aux jeux vidéo ?"],
+        ["活动", "他喜欢踢足球吗？", "Est-ce qu’il aime jouer au foot ?"],
+        ["活动", "我可以带他去公园吗？", "Est-ce que je peux l’emmener au parc ?"],
+
+        ["价格", "价格是多少？", "Quel est le tarif ? / C’est combien ?"],
+        ["价格", "这家餐厅的人均价格是多少？", "Quel est le prix moyen par personne dans ce restaurant ?"],
+        ["价格", "（一节课/一次活动）价格是多少？", "Quel est le tarif / le prix pour une séance ?"],
+        ["价格", "（一张票/一节课/一次活动）的价格是多少？", "Quel est le prix d’une place / d’un billet / d’une séance ?"],
+        ["价格", "会员费用是多少？", "Combien coûte l’abonnement ?"],
+        ["价格", "地铁票多少钱？", "Combien coûte un ticket de métro ?"],
+        ["价格", "房租是多少？", "Quel est le loyer ?"],
+        ["价格", "押金是多少？", "Quelle est la caution ?"],
+        ["价格", "会费是多少？", "Quelle est la cotisation ?"],
+        ["价格", "房租可以谈吗？", "Peut-on négocier le loyer ?"],
+        ["价格", "你为这次聚会计划的预算是多少？", "Quel est le budget que vous envisagez pour cette fête ?"],
+        ["价格", "对住房有最高预算限制吗？", "Y a-t-il un budget maximal à respecter pour le logement ?"],
+        ["价格", "团体有特别价格吗？", "Est-ce qu’il y a un tarif spécial / particulier pour les groupes ?"],
+        ["价格", "儿童/学生/老人有折扣吗？", "Y a-t-il des réductions pour les enfants / étudiants / personnes âgées ?"],
+        ["价格", "餐费包括在内吗？", "Les repas sont-ils inclus ?"],
+        ["价格", "有额外费用吗，比如保险费？", "Y a-t-il des frais supplémentaires, comme l’assurance ?"],
+        ["价格", "第一节课免费吗？", "Le premier cours est-il gratuit ?"],
+        ["价格", "有每月/每年的订阅吗？", "Y a-t-il un abonnement mensuel / annuel ?"],
+        ["价格", "有交通卡或月票吗？", "Existe-t-il des cartes de transport ou des abonnements mensuels ?"],
+        ["价格", "付款方式是什么？在线支付、现金还是刷卡？", "Quels sont les moyens de paiement ? En ligne, en espèces ou par carte ?"],
+        ["价格", "可以分期付款吗？", "Peut-on payer en plusieurs fois ?"],
+        ["价格", "我怎么购买？", "Comment puis-je l’acheter ?"],
+        ["价格", "可以在线购买票吗？", "Est-il possible d’acheter le ticket en ligne ?"],
+        ["价格", "需要提前付款还是现场付款？", "Faut-il payer à l’avance ou sur place ?"],
+
+        ["SECTION", "E. 场景：工作（正式）"],
+        ["开场", "你好！我听说你换了工作，我也打算换工作。如果你方便的话，我可以关于这个问你几个问题吗？",
+          "Bonjour ! J’ai entendu dire que tu as changé de travail et j’envisage moi aussi de changer d’emploi. Si tu es disponible, puis-je te poser quelques questions à ce sujet ?"],
+
+        // 类型（Le type）
+        ["类型", "你在哪家公司工作？", "Dans quelle entreprise travailles-tu ?"],
+        ["类型", "公司的主要业务领域是？", "Quel est le domaine principal de l’entreprise ?"],
+
+        // 内容（Le contenu）
+        ["内容", "你目前的工作是什么？", "Quel est ton travail actuel ?"],
+        ["内容", "你的主要任务是什么？", "Quelle est votre mission principale ?"],
+
+        // 地点（Le lieu）
+        ["地点", "公司地点在哪里？", "Où se trouve l’entreprise ?"],
+        ["地点", "离这里远吗？", "Est-ce que c’est loin d’ici ?"],
+
+        // 时间（L’heure / La durée）
+        ["时间", "你每天工作多少小时？", "Combien d’heures travailles-tu chaque jour ?"],
+        ["时间", "你加班吗？", "Est-ce que tu fais des heures supplémentaires ?"],
+        ["时间", "一年有几天休假？", "Combien de jours de congé as-tu par an ?"],
+        ["时间", "有陪产假吗？", "Y a-t-il un congé paternel ?"],
+        ["时间", "工作时间是否灵活？", "Est-ce que les horaires sont flexibles ?"],
+        ["时间", "你可以远程办公吗？", "Peut-on faire du télétravail ?"],
+        ["时间", "中午有休息时间吗？", "Y a-t-il une pause le midi ?"],
+        ["时间", "午休多长时间？", "Combien de temps dure la pause déjeuner ?"],
+
+        // 人物（La personne）
+        ["人物", "你的团队有多少人？", "Combien de personnes y a-t-il dans ton équipe ?"],
+        ["人物", "他们彼此很熟吗？", "Est-ce qu’ils se connaissent bien ?"],
+        ["人物", "你的同事友好吗？", "Est-ce que tes collègues sont accueillants / gentils ?"],
+        ["人物", "有中国同事吗？", "Y a-t-il des collègues chinois ?"],
+        ["人物", "他们有帮助你融入吗？", "Est-ce qu’ils t’ont aidé à t’intégrer ?"],
+
+        // 活动（L’activité）
+        ["活动", "你们会在工作之外组织活动吗？", "Organisez-vous des activités en dehors du travail ?"],
+        ["活动", "你最喜欢的活动是什么？", "Quelle est ton activité préférée ?"],
+
+        // 吃喝（La nourriture et la boisson）
+        ["吃喝", "公司里有食堂吗？", "Y a-t-il une cantine dans l’entreprise ?"],
+        ["吃喝", "饭菜好吃吗？", "Les repas sont-ils bons ?"],
+        ["吃喝", "是免费还是收费的？", "Est-ce que c’est gratuit ou payant ?"],
+        ["吃喝", "有素食选择吗？", "Est-ce qu’il y a des options végétariennes ?"],
+
+        // 工资（Le salaire）
+        ["工资", "我能问一下你每月的工资吗？", "Puis-je te demander quel est ton salaire mensuel ?"],
+        ["工资", "工资符合你的预期吗？", "Est-ce que le salaire correspond à ce que tu attendais ?"],
+        ["工资", "你满意你的工资吗？", "Tu es satisfait(e) de ton salaire ?"],
+        ["工资", "除了工资，还有奖金或其他福利吗？", "Y a-t-il des primes ou des avantages en plus du salaire ?"],
+
+        // 结束
+        ["结束", "谢谢你的回答，它们对我帮助很大！如果我有其他问题，会再联系你，回头见！",
+          "Je te remercie pour tes réponses. Elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
+
+        ["SECTION", "F. 场景：工作文化（正式）"],
+        ["开场", "你好！我对加拿大的工作节奏很感兴趣。如果您方便的话，我可以关于这个问几个问题吗？",
+          "Bonjour ! Je m’intéresse au rythme du travail au Canada. Si vous êtes disponible, puis-je vous poser quelques questions à ce sujet ?"],
+
+        // 类型（Le type）
+        ["类型", "在加拿大年轻人有很多工作机会吗？", "Est-ce qu’il y a beaucoup d’opportunités de travail pour les jeunes au Canada ?"],
+        ["类型", "哪个领域机会最多？", "Dans quel domaine y a-t-il le plus d’opportunités ?"],
+        ["类型", "哪种工作最受需求？", "Quel type de travail est le plus demandé ?"],
+        ["类型", "哪种工作薪资最低 / 最高？", "Quel type de travail offre le salaire le plus bas / le plus élevé ?"],
+
+        // 时间（L’heure / La durée）
+        ["时间", "加拿大通常的工作时间是怎样的？", "Quels sont les horaires de travail habituels au Canada ?"],
+        ["时间", "加班在加拿大普遍吗？", "Est-ce que les heures supplémentaires sont courantes au Canada ?"],
+        ["时间", "每年有多少天带薪休假？", "Combien de jours de congés payés a-t-on par an ?"],
+        ["时间", "加拿大的假期是否比中国更长？", "Est-ce que les vacances sont plus longues au Canada qu’en Chine ?"],
+        ["时间", "中国和加拿大的假期制度最大区别是什么？", "Quelle est la plus grande différence entre les congés en Chine et au Canada ?"],
+        ["时间", "在您看来，哪个制度更人性化？为什么？", "Selon vous, quel système est plus humain ? Pourquoi ?"],
+        ["时间", "在加拿大有陪产假吗？", "Y a-t-il un congé paternel au Canada ?"],
+        ["时间", "远程工作在加拿大是否普遍？", "Est-ce que le travail à distance est courant au Canada ?"],
+        ["时间", "周末工作常见吗？", "Travailler le week-end est-il fréquent ?"],
+        ["时间", "人们经常上夜班吗？", "Est-ce que les gens travaillent souvent la nuit ?"],
+
+        // 人物（La personne）
+        ["人物", "有很多外国员工吗？", "Y a-t-il beaucoup de salariés étrangers ?"],
+        ["人物", "在加拿大工作中容易交朋友吗？", "Est-ce qu’il est facile de se faire des amis au travail au Canada ?"],
+        ["人物", "同事之间的氛围相比中国更正式还是更轻松？", "L’ambiance entre les collègues est-elle plutôt formelle ou détendue par rapport à la Chine ?"],
+        ["人物", "加拿大人对新员工友好吗？", "Est-ce que les Canadiens sont ouverts avec les nouveaux employés ?"],
+
+        // 活动（L’activité）
+        ["活动", "公司会在工作之外组织活动吗？", "Y a-t-il des activités en dehors du travail organisées par les entreprises ?"],
+        ["活动", "公司是否提供体育活动？", "Y a-t-il des activités sportives proposées par les entreprises ?"],
+        ["活动", "公司里有托儿所吗？", "Y a-t-il des crèches dans les entreprises ?"],
+
+        // 吃喝（La nourriture et la boisson）
+        ["吃喝", "通常公司里有食堂吗？", "Y a-t-il des cantines dans les entreprises en général ?"],
+        ["吃喝", "通常是免费还是收费？", "Est-ce que c’est généralement gratuit ou payant ?"],
+
+        // 工资（Le salaire）
+        ["工资", "我能问一下每月的平均工资吗？", "Puis-je vous demander quel est le salaire mensuel en moyenne ?"],
+        ["工资", "一般来说，除了工资，还有奖金或其他福利吗？", "Y a-t-il des primes ou des avantages en plus du salaire en général ?"],
+        ["工资", "在加拿大有带薪病假吗？", "Est-ce que le congé maladie est payé au Canada ?"],
+
+        // 结束
+        ["结束", "谢谢您的回答，它们对我帮助很大！如果有需要，会再联系您，回头见！",
+          "Je vous remercie pour vos réponses. Elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
+
+        ["SECTION", "G. 场景：面试准备（正式）"],
+        ["面试-穿着", "面试我应该怎么穿着？", "Comment dois-je m’habiller pour l’entretien ?"],
+        ["面试-穿着", "是否一定要穿西装？", "Est-ce qu’il faut porter un costume ?"],
+        ["面试-穿着", "需要避免某些颜色吗？", "Faut-il éviter certaines couleurs ?"],
+        ["面试-穿着", "饰品重要吗？", "Les accessoires sont-ils importants ?"],
+        ["面试-穿着", "我可以化妆吗？", "Est-ce que je peux me maquiller ?"],
+        ["面试-穿着", "妆容是否应该淡雅？", "Est-ce que le maquillage doit être discret ?"],
+        ["面试-穿着", "鞋子重要吗？", "Est-ce que les chaussures ont de l’importance ?"],
+        ["面试-穿着", "发型需要特别打理吗？", "Est-ce qu’il faut se coiffer de manière spéciale ?"],
+        ["面试-穿着", "我可以喷淡香水吗？", "Puis-je porter un parfum léger ?"],
+
+        // 二、关于行为举止 Comportement et attitude
+        ["面试-举止", "我应该如何向面试官打招呼？", "Comment dois-je saluer le recruteur ?"],
+        ["面试-举止", "我需要握手吗？", "Dois-je serrer la main ?"],
+        ["面试-举止", "是否一开始就要微笑？", "Dois-je sourire dès le début ?"],
+        ["面试-举止", "我需要直视面试官的眼睛吗？", "Est-ce que je dois regarder le recruteur dans les yeux ?"],
+        ["面试-举止", "如何在面试中保持自然？", "Comment rester naturel pendant l’entretien ?"],
+        ["面试-举止", "我可以用手势来表达吗？", "Est-ce que je peux faire des gestes avec les mains ?"],
+        ["面试-举止", "如何表现出我很有积极性/动力？", "Comment montrer que je suis motivé(e) ?"],
+
+        // 三、关于准备 Préparation générale
+        ["面试-准备", "我该怎么做才能更好地准备？", "Que dois-je faire pour bien me préparer ?"],
+        ["面试-准备", "我需要准备一个自我介绍吗？", "Dois-je préparer une présentation de moi-même ?"],
+        ["面试-准备", "面试一开始我应该说什么？", "Que dois-je dire en premier pendant l’entretien ?"],
+        ["面试-准备", "我需要了解这家公司吗？", "Est-ce que je dois connaître l’entreprise ?"],
+        ["面试-准备", "如何对公司进行调查？", "Comment faire des recherches sur l’entreprise ?"],
+        ["面试-准备", "我需要提前阅读岗位描述吗？", "Est-ce que je dois lire la description du poste à l’avance ?"],
+        ["面试-准备", "我需要提前练习回答吗？", "Dois-je répéter mes réponses à l’avance ?"],
+        ["面试-准备", "有没有可以用来练习的视频？", "Est-ce qu’il existe des vidéos pour s’entraîner ?"],
+
+        // 四、关于面试内容 Contenu de l’entretien
+        ["面试-内容", "面试中最常见的问题有哪些？", "Quelles sont les questions les plus courantes ?"],
+        ["面试-内容", "我需要谈论我的优点吗？", "Dois-je parler de mes qualités ?"],
+        ["面试-内容", "我需要谈论我的缺点吗？", "Est-ce que je dois parler de mes défauts ?"],
+        ["面试-内容", "如果被问到我的弱点，我该怎么回答？", "Que dois-je dire si on me demande mes faiblesses ?"],
+        ["面试-内容", "我需要谈论我的学习经历吗？", "Est-ce que je dois parler de mes études ?"],
+        ["面试-内容", "我需要提供具体的例子吗？", "Dois-je donner des exemples concrets ?"],
+        ["面试-内容", "如果我听不懂问题，我该怎么办？", "Que dois-je faire si je ne comprends pas une question ?"],
+        ["面试-内容", "我可以在最后提问吗？", "Est-ce que je peux poser des questions à la fin ?"],
+
+        // 五、关于时间安排 Durée et déroulement
+        ["面试-流程时间", "面试持续多久？", "Combien de temps dure l’entretien ?"],
+        ["面试-流程时间", "我可以提前到吗？", "Est-ce que je peux arriver en avance ?"],
+        ["面试-流程时间", "我需要提前多久到达？", "Combien de temps à l’avance dois-je arriver ?"],
+        ["面试-流程时间", "面试流程可能有多少个环节？", "Combien d’étapes peut comporter le processus ?"],
+        ["面试-流程时间", "面试时会有多少人在场？", "Combien de personnes seront présentes pendant l’entretien ?"],
+
+        // 六、其他建议 Autres conseils
+        ["面试-其他", "我需要关掉手机吗？", "Dois-je éteindre mon téléphone ?"],
+        ["面试-其他", "我可以带上打印好的简历吗？", "Est-ce que je peux apporter mon CV imprimé ?"],
+        ["面试-其他", "如果我非常紧张该怎么办？", "Que faire si je suis très stressé(e) ?"],
+        ["面试-其他", "我需要感谢面试官吗？", "Est-ce que je dois remercier le recruteur ?"],
+        ["面试-其他", "面试后我需要发一封邮件吗？", "Dois-je envoyer un e-mail après l’entretien ?"],
+        ["面试-其他", "我需要询问什么时候能收到回复吗？", "Est-ce que je dois demander quand je recevrai une réponse ?"],
+        ["面试-其他", "你能给我的最大建议是什么？", "Quel est le meilleur conseil que tu puisses me donner ?"],
+
+        ["SECTION", "H. 场景：志愿者分发餐食（正式）"],
+        ["地点", "分发地点在哪里？", "Où a lieu la distribution ?"],
+        ["地点", "是否有志愿者的集合地点？", "Existe-t-il un lieu de rendez-vous pour les bénévoles ?"],
+
+        // 时间（L’heure / La durée）
+        ["时间", "这项工作的典型时间安排是怎样的？", "Quels sont les horaires typiques pour cette mission ?"],
+        ["时间", "每周大概需要多少小时？", "Combien d'heures par semaine faut-il prévoir ?"],
+        ["时间", "是否可以根据自己的时间来调整工作时间？", "Peut-on adapter les horaires en fonction de son emploi du temps ?"],
+        ["时间", "可以更换时间段吗？", "Peut-on changer de créneau horaire ?"],
+        ["时间", "是否有试用期？", "Y a-t-il une période d'essai ?"],
+        ["时间", "我可以只报名参加一天吗？", "Est-ce que je peux m'inscrire pour une seule journée ?"],
+        ["时间", "如果在预定的某天我不能来，该怎么办？", "Que faire si je ne peux pas venir un jour prévu ?"],
+
+        // 人物（La personne）
+        ["人物", "谁来准备餐食？", "Qui prépare les repas ?"],
+        ["人物", "每天动员多少名志愿者？", "Combien de bénévoles sont mobilisés par jour ?"],
+        ["人物", "有其他中国志愿者吗？", "Y a-t-il d'autres bénévoles chinois ?"],
+        ["人物", "每项任务是否都有负责人？", "Y a-t-il un responsable pour chaque mission ?"],
+        ["人物", "是否有最低年龄？", "Faut-il avoir un âge minimum ?"],
+        ["人物", "是否有最高年龄？", "Est-ce qu'il y a un âge maximum ?"],
+        ["人物", "是否需要提供一些文件？", "Est-ce qu'il faut fournir des documents ?"],
+        ["人物", "是否可以获得志愿者证书？", "Peut-on recevoir un certificat de bénévolat ?"],
+
+        // 吃喝（La nourriture et la boisson）
+        ["吃喝", "每天分发多少份餐食？", "Combien de repas sont distribués chaque jour ?"],
+        ["吃喝", "什么类型的餐食？", "Quel type de repas ?"],
+        ["吃喝", "饭菜好吃吗？", "Les repas sont-ils bons ?"],
+        ["吃喝", "有素食选择吗？", "Est-ce qu'il y a des options végétariennes ?"],
+
+        // ===== 租房场景：提问清单（来自图片整理）=====
+        ["SECTION", "I. 租房场景：公寓本身（小地点 / Le logement）"],
+
+        ["住房", "现在有哪些类型的住房？", "Quels types de logements sont disponibles ?"],
+        ["住房", "公寓的总面积是多少？", "Quelle est la surface totale de l'appartement ?"],
+        ["住房", "有多少个房间？", "Combien de pièces y a-t-il ?"],
+        ["住房", "是否有浴室或淋浴间？", "Y a-t-il une salle de bains ou une salle d'eau ?"],
+        ["住房", "客厅的面积是多少？", "Quelle est la superficie du salon ?"],
+        ["住房", "住房是新房还是旧房？", "Le logement est-il neuf ou ancien ?"],
+        ["住房", "房子是带家具的吗？", "Est-ce que le bien est meublé ?"],
+        ["住房", "有没有阳台或露台？", "Y a-t-il un balcon ou une terrasse ?"],
+        ["住房", "有没有地下室？", "Y a-t-il une cave ?"],
+        ["住房", "房子的朝向是什么？", "Quelle est l'orientation du logement ?"],
+        ["住房", "景观是面向街道、花园还是院子？", "La vue donne sur une rue, un jardin ou une cour ?"],
+        ["住房", "是否有良好的日照？", "Est-il bien exposé au soleil ?"],
+        ["住房", "是否有漂亮的景观？", "Y a-t-il une belle vue ?"],
+        ["住房", "房间是否明亮？", "Est-ce que les pièces sont lumineuses ?"],
+
+        ["地点", "有楼梯还是电梯？", "Y a-t-il des escaliers ou un ascenseur ?"],
+        ["地点", "公寓在第几层？", "À quel étage se trouve l'appartement ?"],
+        ["地点", "它坐落在哪个街区？", "Dans quel quartier est-il situé ?"],
+        ["地点", "这是一个安静还是热闹的街区？", "Est-ce un quartier calme ou animé ?"],
+        ["地点", "附近有商店吗？", "Y a-t-il des commerces à proximité ?"],
+        ["地点", "附近有嘈杂的酒吧或餐馆吗？", "Y a-t-il des bars ou restaurants bruyants à proximité ?"],
+        ["地点", "这个街区安全吗？", "Est-ce un quartier sécurisé ?"],
+        ["地点", "附​​近有医院或诊所吗？", "Est-ce qu'il y a un hôpital ou une clinique dans les environs ?"],
+        ["地点", "附近有公园或绿地吗？", "Y a-t-il un parc ou des espaces verts à côté ?"],
+        ["地点", "这个地区的交通是否便利？", "Est-ce que le quartier est bien desservi par les transports ?"],
+        ["地点", "附近有地铁站或公交车站吗？", "Y a-t-il une station de métro ou de bus à proximité ?"],
+        ["地点", "最近的车站有多远？", "À quelle distance est la station la plus proche ?"],
+        ["地点", "到市中心需要多长时间？", "Combien de temps faut-il pour aller au centre-ville ?"],
+        ["地点", "在街上停车方便吗？", "Est-il facile de se garer dans la rue ?"],
+        ["地点", "房子是否含停车位？", "Y a-t-il un parking inclus avec le logement ?"],
+
+        ["时间", "这栋楼的建造年份是哪一年？", "Quelle est l'année de construction du bâtiment ?"],
+        ["时间", "最短租期是多久？", "Quelle est la durée minimale du bail ?"],
+        ["时间", "需要提前多久解约？", "Combien de temps à l’avance faut-il résilier le contrat ?"],
+
+        ["人物", "邻居安静吗？", "Les voisins sont-ils calmes ?"],
+        ["人物", "邻居友好吗？", "Est-ce que les voisins sont accueillants / gentils ?"],
+        ["人物", "邻居彼此熟悉吗？", "Est-ce qu'ils se connaissent bien ?"],
+        ["人物", "有噪音干扰吗？", "Y a-t-il des nuisances sonores ?"],
+        ["人物", "楼里人来人往多吗？", "Y a-t-il beaucoup de passage dans l'immeuble ?"],
+
+        ["价格", "公寓每月租金多少？", "Quel est le loyer mensuel des appartements ?"],
+        ["价格", "价格可以商量吗？", "Est-ce que le prix est négociable ?"],
+        ["价格", "其他费用包含在内吗，比如网络费用？", "Est-ce que les charges sont comprises / incluses dans le loyer, comme les charges d’Internet ?"],
+        ["价格", "有没有其他费用，比如押金？", "Y a-t-il des frais supplémentaires à prévoir, comme une caution ?"],
+        ["价格", "具体租房步骤是？", "Quelles sont les étapes précises pour louer un logement ?"],
+        ["价格", "我需要准备什么文件？", "Quels documents dois-je préparer ?"],
+
+        ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！",
+          "Je vous remercie pour vos réponses, elles m'ont beaucoup aidé ! À bientôt si j'ai d'autres besoins."],
+
+        // ===== 场景：课程咨询（来自图片整理）=====
+        ["SECTION", "J. 场景：课程咨询（类型 / 内容 / 地点 / 时间 / 人物 / 价格）"],
+        ["类型", "有哪些课程类型可选择？", "Quels types de cours sont disponibles ?"],
+        ["类型", "课程适合初学者吗？", "Les cours sont-ils adaptés aux débutants ?"],
+        ["类型", "您也提供在线课程吗？", "Est-ce que vous proposez aussi des cours en ligne ?"],
+        ["类型", "课程是一对一还是团课？", "Les cours sont-ils individuels ou en groupe ?"],
+
+        ["内容", "课程内容有哪些？", "Quels sont les contenus des cours ?"],
+        ["内容", "我可以定制课程内容吗？", "Puis-je personnaliser les contenus des cours ?"],
+        ["内容", "课程中可以学特定的歌曲吗？", "Peut-on apprendre des chansons spécifiques pendant les cours ?"],
+
+        ["地点", "学校在哪里？", "Où se trouve l’école ?"],
+        ["地点", "离这里远吗？", "C’est loin d’ici ? / Est-ce que c’est loin d’ici ?"],
+        ["地点", "我怎么去那里？", "Comment puis-je m’y rendre ?"],
+        ["地点", "可以坐公交/步行/开车去吗？", "Est-ce que c’est accessible en transports en commun / à pied / en voiture ?"],
+        ["地点", "这个地方的公共交通方便吗？", "Est-ce que l’endroit est bien desservi par les transports publics ?"],
+        ["地点", "附近有停车场吗？这里好停车吗？", "Y a-t-il un parking à proximité ? / Peut-on se garer facilement dans le coin ?"],
+        ["地点", "最近的公交车站在哪里？", "Où se trouvent les arrêts de bus les plus proches ?"],
+        ["地点", "您是否提供上门授课？", "Proposez-vous des cours à domicile ?"],
+
+        ["时间", "课程时间是？", "Quels sont les horaires des cours ?"],
+        ["时间", "每节课持续多长时间？", "Combien de temps dure chaque séance ?"],
+        ["时间", "您建议每周上几次课？", "Combien de fois par semaine recommandez-vous de prendre des cours ?"],
+        ["时间", "课程可以取消或改期吗？", "Peut-on annuler ou reporter un cours ?"],
+        ["时间", "需要提前预约吗？", "Faut-il réserver à l’avance ?"],
+
+        ["人物", "团课有多少名学生？", "Combien d’élèves y a-t-il dans les cours en groupe ?"],
+        ["人物", "谁可以参加课程？", "Qui peut participer aux cours ?"],
+        ["人物", "有最低年龄/水平要求吗？", "Y a-t-il un âge minimum / un niveau minimum requis ?"],
+        ["人物", "您也教孩子吗，还是只面向成人？", "Est-ce que vous donnez aussi des cours pour les enfants ou uniquement pour les adultes ?"],
+
+        ["价格", "（一节课）价格是多少？", "Quel est le tarif pour une séance ?"],
+        ["价格", "第一节课免费吗？", "Le premier cours est-il gratuit ?"],
+        ["价格", "付款方式是什么？在线、现金还是刷卡？", "Quels sont les moyens de paiement ? En ligne, en espèces ou par carte ?"],
+        ["价格", "可以分期付款吗？", "Peut-on payer en plusieurs fois ?"],
+        ["价格", "需要提前付款还是现场付款？", "Faut-il payer à l’avance ou sur place ?"],
+        ["价格", "是否提供多节课的优惠套餐？", "Faites-vous des forfaits de plusieurs cours à tarif réduit ?"],
+        ["价格", "在线课程和面授课程的价格是否相同？", "Est-ce que le prix est le même pour des cours en ligne et en présentiel ?"],
+        ["价格", "是否对学生或团体提供优惠？", "Proposez-vous des réductions pour les étudiants ou les groupes ?"],
+        ["价格", "是否有需要额外考虑的费用？", "Y a-t-il des frais supplémentaires à prévoir ?"],
+
+        ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！",
+          "Je vous remercie pour vos réponses, elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
+      ];
+
+      const seen = new Set();
+      const out = [];
+      let id = 1;
+
+      for (const row of t2raw) {
+        if (row[0] === "SECTION") { out.push({ type: "section", titleCn: row[1] }); continue; }
+        const [topicCn, promptCn, answerFr] = row;
+        const key = `${promptCn}||${answerFr}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push({ id: id++, topicCn, promptCn, answerFr });
+      }
+      return out;
+    }
+
+    /* =========================
+       DATA
+       ========================= */
     const parts = [
       {
         label: "Tâche 1",
         subtitle: "Présentation personnelle · 20 thèmes",
+        display: { question: "both", answer: "both" },
+        labels: { question: "Question / 提问", answer: "Réponse / 答案" },
+        audio: {
+          enabled: true,
+          type: "mp3",
+          range: [1, 20],
+          playAllLabel: "播放全部答案（A1→A20）",
+          src: (id) => `assets/tcfEO/A${id}.mp3`
+        },
         items: [
-          { id: 1, topicCn: "姓名", promptFr: "Comment vous appelez-vous ?", promptCn: "您叫什么名字？",
-            answerFr: "Bonjour madame/ monsieur, je m’appelle Haoyan.", answerCn: "您好，我叫 Haoyan。" },
-
-          { id: 2, topicCn: "年龄", promptFr: "Quel âge avez-vous ?", promptCn: "您多大了？",
-            answerFr: "J’ai vingt et un ans.", answerCn: "我21岁。" },
-
-          { id: 3, topicCn: "国籍", promptFr: "Quelle est votre nationalité ?", promptCn: "您的国籍是什么？",
-            answerFr: "Je suis de nationalité chinoise. Actuellement, je suis étudiant international et je vis à Toronto avec mes amis.",
-            answerCn: "我是中国国籍。目前我是一名国际学生，和朋友住在多伦多。" },
-
-          { id: 4, topicCn: "性格", promptFr: "Comment êtes-vous ?", promptCn: "您的性格如何？",
-            answerFr: "Je suis quelqu’un d’introverti, calme, et réfléchi. Mes amis me trouvent poli et généreux.",
-            answerCn: "我比较内向、冷静、爱思考。朋友觉得我有礼貌而且大方。" },
-
-          { id: 5, topicCn: "语言", promptFr: "Quelles langues parlez-vous ?", promptCn: "您会哪些语言？",
-            answerFr: "Ma langue maternelle est le mandarin. Je parle couramment l’anglais et un peu de japonais. J’aime apprendre de nouvelles langues, parce que cela me permet de mieux comprendre d’autres cultures et de voir le monde sous un autre angle.",
-            answerCn: "我的母语是普通话。我英语很流利，也会一点日语。我喜欢学新语言，因为这能帮助我理解其他文化，并从不同角度看世界。" },
-
-          { id: 6, topicCn: "家庭", promptFr: "Parlez-moi de votre famille.", promptCn: "请介绍一下您的家庭。",
-            answerFr: "Mes parents sont commerçants en Chine et je suis enfant unique. Ça fait un an que je n’ai pas vu mes parents, mais on fait un appel vidéo chaque mois.",
-            answerCn: "我父母在中国做生意，我是独生子女。我已经一年没见他们了，但我们每个月都会视频通话。" },
-
-          { id: 7, topicCn: "专业", promptFr: "Qu’est-ce que vous étudiez ?", promptCn: "您学什么专业？",
-            answerFr: "J’étudie le génie robotique à l’université de Toronto et je suis actuellement en quatrième année. C’est un domaine difficile, mais je vois les grands changements que les robots apporteront à nos vies dans le futur. Je pense aussi qu’il y aura une forte demande sur le marché du travail et beaucoup de valeur à créer. C’est donc, à mon avis, un diplôme très prometteur.",
-            answerCn: "我在多伦多大学学机器人工程，目前大四。这个领域很难，但我看到机器人未来会给生活带来巨大变化。我也认为就业市场需求会很大，价值空间也很高，所以我觉得这是很有前景的学位。" },
-
-          { id: 8, topicCn: "实习经历", promptFr: "Avez-vous déjà fait des stages ?", promptCn: "您有实习经历吗？",
-            answerFr: "Pendant mes études, j’ai eu l’occasion de faire plusieurs stages et travaux pratiques. L’an dernier, j’ai fait un stage au ministère des Transports de l’Ontario, où j’ai participé à l’inspection des autoroutes et j’ai suivi des travaux d’entretien. En parallèle, je travaille à l’Hôpital Général de Toronto, ce qui m’aide à développer mes compétences en communication et en organisation.",
-            answerCn: "学习期间我做过多次实习和实践。去年我在安省交通厅实习，参与高速公路检查并跟进养护工作。同时我也在多伦多综合医院工作，帮助我提升沟通与组织能力。" },
-
-          { id: 9, topicCn: "喜好", promptFr: "Quels sont vos centres d’intérêt ?", promptCn: "您的兴趣爱好是什么？",
-            answerFr: "J’ai beaucoup de centres d’intérêt. J’aime le sport, surtout le badminton et la randonnée. J’aime aussi lire et j’écoute souvent les informations pour améliorer mon français. Ces activités m’aident à rester motivé et à garder un bon équilibre.",
-            answerCn: "我兴趣很多。我喜欢运动，尤其是羽毛球和徒步。我也喜欢阅读，经常听新闻来提高法语。这些活动让我保持动力并维持平衡。" },
-
-          { id: 10, topicCn: "未来计划", promptFr: "Quels sont vos projets pour l’avenir ?", promptCn: "您未来有什么计划？",
-            answerFr: "Dans le futur, je souhaite continuer mes études et développer ma carrière au Canada. Je veux améliorer mon français et mon anglais pour m’intégrer facilement dans la société canadienne et réussir mes projets professionnels. Je suis motivé, curieux et prêt à relever de nouveaux défis.",
-            answerCn: "未来我希望继续深造并在加拿大发展职业。我想提高法语和英语，更容易融入加拿大社会并实现职业目标。我很有动力、好奇，也准备迎接新挑战。" },
-
-          { id: 11, topicCn: "难忘的事件", promptFr: "Racontez-moi un souvenir marquant.", promptCn: "请讲一个难忘的经历。",
-            answerFr: "J’ai voyagé à Montréal l’année dernière, et cela m’a laissé un souvenir inoubliable. La ville a une ambiance différente grâce à sa culture francophone. J’ai beaucoup aimé la nourriture, le système de transport et l’architecture. Après l’obtention de mon diplôme, je prévois de m’y installer.",
-            answerCn: "我去年去蒙特利尔旅行，留下了难忘回忆。这座城市因为法语文化氛围很不一样。我很喜欢那里的食物、交通系统和建筑。毕业后我计划搬去那里生活。" },
-
-          { id: 12, topicCn: "城市", promptFr: "Où habitez-vous ?", promptCn: "您住在哪里？",
-            answerFr: "J’habite à Toronto, une ville moderne connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique.",
-            answerCn: "我住在多伦多，这是一座现代化城市，以摩天大楼、多元文化和经济活力著称。" },
-
-          { id: 13, topicCn: "住房条件", promptFr: "Comment est votre logement ?", promptCn: "您的住房情况如何？",
-            answerFr: "Je loue une maison de quatre chambres avec des amis de l’université, dans Chinatown, juste en face de mon université. Le loyer est abordable, mais le quartier peut être bruyant et très fréquenté.",
-            answerCn: "我和大学朋友在唐人街合租一套四卧室的房子，就在学校对面。房租比较划算，但这片区会比较吵、人也多。" },
-
-          { id: 14, topicCn: "社区文化", promptFr: "Y a-t-il des événements dans votre quartier ?", promptCn: "您社区有哪些活动？",
-            answerFr: "De temps en temps, il y a des événements culturels chinois pendant les fêtes, comme le nouvel An Chinois ou la fête nationale. Cependant, je suis souvent occupé par mes études et mon travail, donc je ne participe pas aux événements du quartier.",
-            answerCn: "节日期间偶尔会有一些华人文化活动，比如春节或国庆。但我常忙于学习和工作，所以很少参加。" },
-
-          { id: 15, topicCn: "交通", promptFr: "Comment vous déplacez-vous ?", promptCn: "您平时怎么出行？",
-            answerFr: "Comme je vis au centre-ville, il y a des tramways sur presque toutes les grandes rues. De plus, mon université est proche de plusieurs stations de métro, donc il est facile de se déplacer dans le centre-ville.",
-            answerCn: "因为我住在市中心，几乎每条大路都有有轨电车。学校也靠近多条地铁站，所以在市中心出行很方便。" },
-
-          { id: 16, topicCn: "气候", promptFr: "Quel temps fait-il chez vous ?", promptCn: "您那里的气候怎样？",
-            answerFr: "L’été à Toronto est ma période préférée de l’année. Pendant les journées les plus chaudes, je reste généralement au travail ou à la maison, et je sors marcher ou faire de la randonnée le matin ou en soirée, quand il fait plus doux. Il fait bon, il y a un peu de vent, et c’est confortable.\n\nEn comparaison, l’hiver à Toronto est rude et glacial. Je dois porter un bonnet, des gants et un manteau d’hiver pour rester au chaud, mais c’est quand même difficile de se déplacer à cause du vent et de la neige que nous avons chaque année.",
-            answerCn: "多伦多的夏天是我最喜欢的季节。最热的时候我通常在工作或在家，早上或傍晚凉快时出去散步或徒步，天气舒服、有点风。\n\n相比之下，多伦多的冬天又冷又严酷。我得戴帽子、手套、穿冬衣保暖，但因为风和每年的积雪，出行仍然比较困难。" },
-
-          { id: 17, topicCn: "友谊关系", promptFr: "Parlez-moi de vos amis.", promptCn: "说说你的朋友。",
-            answerFr: "J’ai beaucoup d’amis de l’université avec qui je reste en contact toute l’année. On échange régulièrement des nouvelles et on se parle aussi de nos difficultés, par exemple la recherche d’emploi, les candidatures en études supérieures, ou des conseils de vie en général. C’est une excellente façon de rester informé et de suivre les tendances en technologie, en politique et en économie.",
-            answerCn: "我有很多大学朋友，我们全年保持联系。我们经常互相分享近况，也会讨论困难，比如找工作、申请研究生，或者生活建议。这也是了解科技、政治、经济趋势的好方式。" },
-
-          { id: 18, topicCn: "个人物品", promptFr: "Quels objets sont importants pour vous ?", promptCn: "哪些物品对你很重要？",
-            answerFr: "Comme je suis étudiant international au Canada, je n’ai pas de gros meubles ni d’objets de grande valeur. Je garde seulement l’essentiel, des affaires utiles et peu coûteuses, pour pouvoir déménager facilement ailleurs au Canada pour mes études ou pour le travail. Pour moi, le plus important ce sont mes outils de communication et de travail : mon téléphone et mon iPad.",
-            answerCn: "作为国际学生，我没有大件家具或贵重物品。我只保留必需、实用又不贵的东西，方便以后因学习或工作在加拿大搬家。对我最重要的是沟通和学习工具：手机和 iPad。" },
-
-          { id: 19, topicCn: "最想去的地方", promptFr: "Quel pays aimeriez-vous visiter ?", promptCn: "你最想去哪里？",
-            answerFr: "Le pays que j’aimerais le plus visiter, c’est l’Islande. Je privilégie le calme et l’équilibre entre la vie professionnelle et la vie personnelle, plutôt que les endroits très fréquentés ou trop compétitifs. L’Islande offre des paysages naturels magnifiques, que j’aimerais vraiment découvrir. En hiver, il y fait généralement plus doux qu’à Toronto, et le pays dispose d’un système de protection sociale solide. De plus, c’est l’un des rares pays d’Europe sans armée permanente.",
-            answerCn: "我最想去的国家是冰岛。我更看重安静以及工作与生活的平衡，而不是人太多或竞争很强的地方。冰岛自然风景很美，我很想去看看。冬天一般也比多伦多温和，而且社会保障体系完善。并且它还是欧洲少数没有常备军的国家之一。" },
-
-          { id: 20, topicCn: "为什么加拿大", promptFr: "Pourquoi voulez-vous vivre au Canada ?", promptCn: "你为什么想在加拿大生活？",
-            answerFr: "D’abord, le Canada est un pays d’immigration: en y travaillant, il est possible d’obtenir la résidence permanente, puis éventuellement la citoyenneté. Ensuite, le Canada offre une nature exceptionnelle. Comme j’aime beaucoup la nature, j’apprécie passer du temps près de l’océan, en montagne, et observer les animaux. Enfin, le Canada est un pays multiculturaliste, où différentes cultures et valeurs sont généralement respectées et bien accueillies. Je pense que l’inclusivité, l’environnement et la qualité de vie sont les principales raisons pour lesquelles je veux vivre au Canada.",
-            answerCn: "首先，加拿大是移民国家：在这里工作有机会拿到永久居民，之后甚至可以入籍。其次，加拿大自然环境非常好。我喜欢自然，喜欢去海边、山里、观察动物。最后，加拿大是多元文化国家，不同文化和价值观通常会被尊重和欢迎。我认为包容性、环境和生活质量是我想在加拿大生活的主要原因。" }
+          { id: 1, topicCn: "姓名", promptFr: "Comment vous appelez-vous ?", promptCn: "您叫什么名字？", answerFr: "Bonjour madame/ monsieur, je m’appelle Haoyan.", answerCn: "您好，我叫 Haoyan。" },
+          { id: 2, topicCn: "年龄", promptFr: "Quel âge avez-vous ?", promptCn: "您多大了？", answerFr: "J’ai vingt et un ans.", answerCn: "我21岁。" },
+          { id: 3, topicCn: "国籍", promptFr: "Quelle est votre nationalité ?", promptCn: "您的国籍是什么？", answerFr: "Je suis de nationalité chinoise. Actuellement, je suis étudiant international et je vis à Toronto avec mes amis.", answerCn: "我是中国国籍。目前我是一名国际学生，和朋友住在多伦多。" },
+          { id: 4, topicCn: "性格", promptFr: "Comment êtes-vous ?", promptCn: "您的性格如何？", answerFr: "Je suis quelqu’un d’introverti, calme, et réfléchi. Mes amis me trouvent poli et généreux.", answerCn: "我比较内向、冷静、爱思考。朋友觉得我有礼貌而且大方。" },
+          { id: 5, topicCn: "语言", promptFr: "Quelles langues parlez-vous ?", promptCn: "您会哪些语言？", answerFr: "Ma langue maternelle est le mandarin. Je parle couramment l’anglais et un peu de japonais. J’aime apprendre de nouvelles langues, parce que cela me permet de mieux comprendre d’autres cultures et de voir le monde sous un autre angle.", answerCn: "我的母语是普通话。我英语很流利，也会一点日语。我喜欢学新语言，因为这能帮助我理解其他文化，并从不同角度看世界。" },
+          { id: 6, topicCn: "家庭", promptFr: "Parlez-moi de votre famille.", promptCn: "请介绍一下您的家庭。", answerFr: "Mes parents sont commerçants en Chine et je suis enfant unique. Ça fait un an que je n’ai pas vu mes parents, mais on fait un appel vidéo chaque mois.", answerCn: "我父母在中国做生意，我是独生子女。我已经一年没见他们了，但我们每个月都会视频通话。" },
+          { id: 7, topicCn: "专业", promptFr: "Qu’est-ce que vous étudiez ?", promptCn: "您学什么专业？", answerFr: "J’étudie le génie robotique à l’université de Toronto et je suis actuellement en quatrième année. C’est un domaine difficile, mais je vois les grands changements que les robots apporteront à nos vies dans le futur. Je pense aussi qu’il y aura une forte demande sur le marché du travail et beaucoup de valeur à créer. C’est donc, à mon avis, un diplôme très prometteur.", answerCn: "我在多伦多大学学机器人工程，目前大四。这个领域很难，但我看到机器人未来会给生活带来巨大变化。我也认为就业市场需求会很大，价值空间也很高，所以我觉得这是很有前景的学位。" },
+          { id: 8, topicCn: "实习经历", promptFr: "Avez-vous déjà fait des stages ?", promptCn: "您有实习经历吗？", answerFr: "Pendant mes études, j’ai eu l’occasion de faire plusieurs stages et travaux pratiques. L’an dernier, j’ai fait un stage au ministère des Transports de l’Ontario, où j’ai participé à l’inspection des autoroutes et j’ai suivi des travaux d’entretien. En parallèle, je travaille à l’Hôpital Général de Toronto, ce qui m’aide à développer mes compétences en communication et en organisation.", answerCn: "学习期间我做过多次实习和实践。去年我在安省交通厅实习，参与高速公路检查并跟进养护工作。同时我也在多伦多综合医院工作，帮助我提升沟通与组织能力。" },
+          { id: 9, topicCn: "喜好", promptFr: "Quels sont vos centres d’intérêt ?", promptCn: "您的兴趣爱好是什么？", answerFr: "J’ai beaucoup de centres d’intérêt. J’aime le sport, surtout le badminton et la randonnée. J’aime aussi lire et j’écoute souvent les informations pour améliorer mon français. Ces activités m’aident à rester motivé et à garder un bon équilibre.", answerCn: "我兴趣很多。我喜欢运动，尤其是羽毛球和徒步。我也喜欢阅读，经常听新闻来提高法语。这些活动让我保持动力并维持平衡。" },
+          { id: 10, topicCn: "未来计划", promptFr: "Quels sont vos projets pour l’avenir ?", promptCn: "您未来有什么计划？", answerFr: "Dans le futur, je souhaite continuer mes études et développer ma carrière au Canada. Je veux améliorer mon français et mon anglais pour m’intégrer facilement dans la société canadienne et réussir mes projets professionnels. Je suis motivé, curieux et prêt à relever de nouveaux défis.", answerCn: "未来我希望继续深造并在加拿大发展职业。我想提高法语和英语，更容易融入加拿大社会并实现职业目标。我很有动力、好奇，也准备迎接新挑战。" },
+          { id: 11, topicCn: "难忘的事件", promptFr: "Racontez-moi un souvenir marquant.", promptCn: "请讲一个难忘的经历。", answerFr: "J’ai voyagé à Montréal l’année dernière, et cela m’a laissé un souvenir inoubliable. La ville a une ambiance différente grâce à sa culture francophone. J’ai beaucoup aimé la nourriture, le système de transport et l’architecture. Après l’obtention de mon diplôme, je prévois de m’y installer.", answerCn: "我去年去蒙特利尔旅行，留下了难忘回忆。这座城市因为法语文化氛围很不一样。我很喜欢那里的食物、交通系统和建筑。毕业后我计划搬去那里生活。" },
+          { id: 12, topicCn: "城市", promptFr: "Où habitez-vous ?", promptCn: "您住在哪里？", answerFr: "J’habite à Toronto, une ville moderne connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique.", answerCn: "我住在多伦多，这是一座现代化城市，以摩天大楼、多元文化和经济活力著称。" },
+          { id: 13, topicCn: "住房条件", promptFr: "Comment est votre logement ?", promptCn: "您的住房情况如何？", answerFr: "Je loue une maison de quatre chambres avec des amis de l’université, dans Chinatown, juste en face de mon université. Le loyer est abordable, mais le quartier peut être bruyant et très fréquenté.", answerCn: "我和大学朋友在唐人街合租一套四卧室的房子，就在学校对面。房租比较划算，但这片区会比较吵、人也多。" },
+          { id: 14, topicCn: "社区文化", promptFr: "Y a-t-il des événements dans votre quartier ?", promptCn: "您社区有哪些活动？", answerFr: "De temps en temps, il y a des événements culturels chinois pendant les fêtes, comme le nouvel An Chinois ou la fête nationale. Cependant, je suis souvent occupé par mes études et mon travail, donc je ne participe pas aux événements du quartier.", answerCn: "节日期间偶尔会有一些华人文化活动，比如春节或国庆。但我常忙于学习和工作，所以很少参加。" },
+          { id: 15, topicCn: "交通", promptFr: "Comment vous déplacez-vous ?", promptCn: "您平时怎么出行？", answerFr: "Comme je vis au centre-ville, il y a des tramways sur presque toutes les grandes rues. De plus, mon université est proche de plusieurs stations de métro, donc il est facile de se déplacer dans le centre-ville.", answerCn: "因为我住在市中心，几乎每条大路都有有轨电车。学校也靠近多条地铁站，所以在市中心出行很方便。" },
+          { id: 16, topicCn: "气候", promptFr: "Quel temps fait-il chez vous ?", promptCn: "您那里的气候怎样？", answerFr: "L’été à Toronto est ma période préférée de l’année. Pendant les journées les plus chaudes, je reste généralement au travail ou à la maison, et je sors marcher ou faire de la randonnée le matin ou en soirée, quand il fait plus doux. Il fait bon, il y a un peu de vent, et c’est confortable.\n\nEn comparaison, l’hiver à Toronto est rude et glacial. Je dois porter un bonnet, des gants et un manteau d’hiver pour rester au chaud, mais c’est quand même difficile de se déplacer à cause du vent et de la neige que nous avons chaque année.", answerCn: "多伦多的夏天是我最喜欢的季节。最热的时候我通常在工作或在家，早上或傍晚凉快时出去散步或徒步，天气舒服、有点风。\n\n相比之下，多伦多的冬天又冷又严酷。我得戴帽子、手套、穿冬衣保暖，但因为风和每年的积雪，出行仍然比较困难。" },
+          { id: 17, topicCn: "友谊关系", promptFr: "Parlez-moi de vos amis.", promptCn: "说说你的朋友。", answerFr: "J’ai beaucoup d’amis de l’université avec qui je reste en contact toute l’année. On échange régulièrement des nouvelles et on se parle aussi de nos difficultés, par exemple la recherche d’emploi, les candidatures en études supérieures, ou des conseils de vie en général. C’est une excellente façon de rester informé et de suivre les tendances en technologie, en politique et en économie.", answerCn: "我有很多大学朋友，我们全年保持联系。我们经常互相分享近况，也会讨论困难，比如找工作、申请研究生，或者生活建议。这也是了解科技、政治、经济趋势的好方式。" },
+          { id: 18, topicCn: "个人物品", promptFr: "Quels objets sont importants pour vous ?", promptCn: "哪些物品对你很重要？", answerFr: "Comme je suis étudiant international au Canada, je n’ai pas de gros meubles ni d’objets de grande valeur. Je garde seulement l’essentiel, des affaires utiles et peu coûteuses, pour pouvoir déménager facilement ailleurs au Canada pour mes études ou pour le travail. Pour moi, le plus important ce sont mes outils de communication et de travail : mon téléphone et mon iPad.", answerCn: "作为国际学生，我没有大件家具或贵重物品。我只保留必需、实用又不贵的东西，方便以后因学习或工作在加拿大搬家。对我最重要的是沟通和学习工具：手机和 iPad。" },
+          { id: 19, topicCn: "最想去的地方", promptFr: "Quel pays aimeriez-vous visiter ?", promptCn: "你最想去哪里？", answerFr: "Le pays que j’aimerais le plus visiter, c’est l’Islande. Je privilégie le calme et l’équilibre entre la vie professionnelle et la vie personnelle, plutôt que les endroits très fréquentés ou trop compétitifs. L’Islande offre des paysages naturels magnifiques, que j’aimerais vraiment découvrir. En hiver, il y fait généralement plus doux qu’à Toronto, et le pays dispose d’un système de protection sociale solide. De plus, c’est l’un des rares pays d’Europe sans armée permanente.", answerCn: "我最想去的国家是冰岛。我更看重安静以及工作与生活的平衡，而不是人太多或竞争很强的地方。冰岛自然风景很美，我很想去看看。冬天一般也比多伦多温和，而且社会保障体系完善。并且它还是欧洲少数没有常备军的国家之一。" },
+          { id: 20, topicCn: "为什么加拿大", promptFr: "Pourquoi voulez-vous vivre au Canada ?", promptCn: "你为什么想在加拿大生活？", answerFr: "D’abord, le Canada est un pays d’immigration: en y travaillant, il est possible d’obtenir la résidence permanente, puis éventuellement la citoyenneté. Ensuite, le Canada offre une nature exceptionnelle. Comme j’aime beaucoup la nature, j’apprécie passer du temps près de l’océan, en montagne, et observer les animaux. Enfin, le Canada est un pays multiculturaliste, où différentes cultures et valeurs sont généralement respectées et bien accueillies. Je pense que l’inclusivité, l’environnement et la qualité de vie sont les principales raisons pour lesquelles je veux vivre au Canada.", answerCn: "首先，加拿大是移民国家：在这里工作有机会拿到永久居民，之后甚至可以入籍。其次，加拿大自然环境非常好。我喜欢自然，喜欢去海边、山里、观察动物。最后，加拿大是多元文化国家，不同文化和价值观通常会被尊重和欢迎。我认为包容性、环境和生活质量是我想在加拿大生活的主要原因。" }
         ]
       },
 
       {
         label: "Tâche 2",
-        subtitle: "Jeu de rôle · à compléter",
-        items: [
-          { id: 1, topicCn: "占位", promptFr: "Ajoutez ici vos scénarios (demande d’info, négociation, etc.).", promptCn: "在这里添加第二部分的情景对话素材。",
-            answerFr: "Contenu à compléter.", answerCn: "待补充。" }
-        ]
+        subtitle: "Jeu de rôle · 只显示中文题目（点答案看法语原文）",
+        display: { question: "cn", answer: "fr" },
+        labels: { question: "题目（中文）", answer: "答案（法语原文）" },
+        audio: {
+          enabled: true,
+          type: "tts",
+          lang: "fr-FR",       // 可改 "fr-CA"
+          rate: 1.0,
+          pitch: 1.0,
+          playAllLabel: "朗读全部答案",
+          getText: (item) => item.answerFr
+        },
+        items: buildT2Items()
       },
 
       {
         label: "Tâche 3",
         subtitle: "Défendre un point de vue · à compléter",
+        display: { question: "both", answer: "both" },
+        labels: { question: "Question / 提问", answer: "Réponse / 答案" },
+        audio: { enabled: false },
         items: [
-          { id: 1, topicCn: "占位", promptFr: "Ajoutez ici vos sujets d’opinion (pour/contre + arguments).", promptCn: "在这里添加第三部分的观点题目与论点。",
-            answerFr: "Contenu à compléter.", answerCn: "待补充。" }
+          { id: 1, topicCn: "占位", promptFr: "Ajoutez ici vos sujets d’opinion (pour/contre + arguments).", promptCn: "在这里添加第三部分的观点题目与论点。", answerFr: "Contenu à compléter.", answerCn: "待补充。" }
         ]
       }
     ];
@@ -395,12 +1087,17 @@
        ========================= */
     let currentPartIndex = null;
 
-    // Audio playback state
+    // MP3 player
     const audioPlayer = new Audio();
     audioPlayer.preload = "metadata";
+
+    // Global queue
     let isAllPlaying = false;
-    let playQueue = []; // array of itemIds
+    let playQueue = [];
     let currentPlayingId = null;
+
+    // TTS state
+    let currentUtterance = null;
 
     /* =========================
        DOM
@@ -423,38 +1120,157 @@
     const playAllBtn = document.getElementById("playAllBtn");
     const stopBtn = document.getElementById("stopBtn");
 
+    const voiceSelect = document.getElementById("voiceSelect");
+    const testVoiceBtn = document.getElementById("testVoiceBtn");
+
     /* =========================
-       HELPERS
+       PART HELPERS
        ========================= */
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+    function getCurrentPart() { return parts[currentPartIndex]; }
+    function partHasAudio() { return Boolean(getCurrentPart()?.audio?.enabled); }
+    function isTTSPart() { return Boolean(getCurrentPart()?.audio?.enabled && getCurrentPart()?.audio?.type === "tts"); }
+    function isMP3Part() { return Boolean(getCurrentPart()?.audio?.enabled && getCurrentPart()?.audio?.type === "mp3"); }
 
-    function getCurrentPart() {
-      return parts[currentPartIndex];
-    }
-
-    function partHasAudio() {
-      // Only Task 1 has A1..A20
-      return currentPartIndex === 0;
+    function findItemById(itemId) {
+      const part = getCurrentPart();
+      if (!part) return null;
+      const id = Number(itemId);
+      return part.items.find(x => x && x.type !== "section" && Number(x.id) === id) || null;
     }
 
     function hasAudioForItem(itemId) {
-      return partHasAudio() && Number(itemId) >= 1 && Number(itemId) <= 20;
+      const part = getCurrentPart();
+      if (!partHasAudio()) return false;
+
+      const it = findItemById(itemId);
+      if (!it) return false;
+
+      if (part.audio?.type === "tts") {
+        const txt = (typeof part.audio?.getText === "function") ? part.audio.getText(it) : (it.answerFr || "");
+        return Boolean(String(txt || "").trim());
+      }
+
+      // mp3 range guard
+      const id = Number(itemId);
+      if (Array.isArray(part.audio?.range)) {
+        const [minId, maxId] = part.audio.range;
+        if (id < minId || id > maxId) return false;
+      }
+      return true;
     }
 
     function audioSrcForItem(itemId) {
-      // IMPORTANT: use forward slashes for web paths
-      return `assets/tcfEO/A${Number(itemId)}.mp3`;
+      const part = getCurrentPart();
+      const id = Number(itemId);
+      if (typeof part.audio?.src === "function") return part.audio.src(id);
+      return String(part.audio?.src || "").replaceAll("{id}", String(id));
+    }
+
+    function ttsTextForItem(itemId) {
+      const part = getCurrentPart();
+      const it = findItemById(itemId);
+      if (!it) return "";
+      if (typeof part.audio?.getText === "function") return String(part.audio.getText(it) || "");
+      return String(it.answerFr || "");
     }
 
     /* =========================
-       PART SELECTION
+       TTS VOICE DROPDOWN
+       ========================= */
+    let ttsVoices = [];
+
+    function refreshVoices() {
+      try { ttsVoices = window.speechSynthesis?.getVoices?.() || []; }
+      catch { ttsVoices = []; }
+    }
+
+    function normalizeLang(lang) {
+      const s = String(lang || "").trim();
+      if (!s) return { full: "", base: "" };
+      const low = s.toLowerCase();
+      return { full: low, base: low.split("-")[0] };
+    }
+
+    function getSavedVoiceName() {
+      try { return localStorage.getItem("tcf_tts_voice") || ""; } catch { return ""; }
+    }
+    function saveVoiceName(name) {
+      try { localStorage.setItem("tcf_tts_voice", String(name || "")); } catch { }
+    }
+
+    function populateVoiceSelect(targetLang) {
+      if (!voiceSelect) return;
+      if (!("speechSynthesis" in window)) return;
+
+      refreshVoices();
+      const { full, base } = normalizeLang(targetLang);
+
+      const preferred = ttsVoices.filter(v => {
+        const l = String(v.lang || "").toLowerCase();
+        return l === full || l.startsWith(base);
+      });
+
+      const list = preferred.length ? preferred : ttsVoices.slice();
+
+      voiceSelect.innerHTML = "";
+      const optAuto = document.createElement("option");
+      optAuto.value = "";
+      optAuto.textContent = "Voix: Auto (默认)";
+      voiceSelect.appendChild(optAuto);
+
+      list.sort((a, b) => {
+        const an = (a.name || "").toLowerCase();
+        const bn = (b.name || "").toLowerCase();
+        const aNat = an.includes("natural") || an.includes("online");
+        const bNat = bn.includes("natural") || bn.includes("online");
+        if (aNat !== bNat) return aNat ? -1 : 1;
+        return an.localeCompare(bn);
+      });
+
+      for (const v of list) {
+        const o = document.createElement("option");
+        o.value = v.name || "";
+        o.textContent = `${v.name} — ${v.lang}`;
+        voiceSelect.appendChild(o);
+      }
+
+      const saved = getSavedVoiceName();
+      if (saved && Array.from(voiceSelect.options).some(o => o.value === saved)) voiceSelect.value = saved;
+      else voiceSelect.value = "";
+    }
+
+    function resolveSelectedVoice(targetLang) {
+      refreshVoices();
+      const selectedName = (voiceSelect?.value || "") || getSavedVoiceName() || "";
+      if (selectedName) {
+        const exact = ttsVoices.find(v => v.name === selectedName);
+        if (exact) return exact;
+      }
+      const { full, base } = normalizeLang(targetLang);
+      return (
+        ttsVoices.find(v => String(v.lang || "").toLowerCase() === full) ||
+        ttsVoices.find(v => String(v.lang || "").toLowerCase().startsWith(base)) ||
+        null
+      );
+    }
+
+    if ("speechSynthesis" in window) {
+      refreshVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        refreshVoices();
+        const part = (currentPartIndex != null) ? getCurrentPart() : null;
+        if (part?.audio?.enabled && part.audio?.type === "tts") {
+          populateVoiceSelect(part.audio?.lang || "fr-FR");
+        }
+      };
+    }
+
+    if (voiceSelect) {
+      voiceSelect.addEventListener("change", () => saveVoiceName(voiceSelect.value || ""));
+    }
+
+    /* =========================
+       PART SELECTION UI
        ========================= */
     function buildPartGrid() {
       partGrid.innerHTML = "";
@@ -489,7 +1305,6 @@
       updateGlobalAnswerToggle();
       window.scrollTo({ top: 0, behavior: "auto" });
     }
-
     backIcon.addEventListener("click", exitPart);
 
     /* =========================
@@ -497,21 +1312,49 @@
        ========================= */
     function renderAllItems() {
       const part = getCurrentPart();
-      const total = part.items.length;
+      const display = part.display || { question: "both", answer: "both" };
 
+      if (display.question === "cn") document.body.classList.remove("hide-cn");
+
+      const total = part.items.filter(x => x.type !== "section").length;
       practiceTitle.textContent = `${part.label} — Expression orale`;
       practiceMeta.textContent = `${total} item(s)`;
 
-      // Enable/disable global audio buttons depending on part
       const audioOK = partHasAudio();
       playAllBtn.disabled = !audioOK;
       stopBtn.disabled = !audioOK;
-      playAllBtn.textContent = audioOK ? "播放全部答案（A1→A20）" : "本任务无音频";
+      playAllBtn.textContent = audioOK ? (part.audio.playAllLabel || "播放全部答案") : "本任务无音频";
       stopBtn.textContent = "停止播放";
+
+      // voice dropdown only for TTS parts
+      const showVoice = !!(audioOK && part.audio?.type === "tts" && ("speechSynthesis" in window));
+      if (voiceSelect && testVoiceBtn) {
+        voiceSelect.style.display = showVoice ? "" : "none";
+        testVoiceBtn.style.display = showVoice ? "" : "none";
+        if (showVoice) populateVoiceSelect(part.audio?.lang || "fr-FR");
+      }
+
+      const hideCnToggle = (display.question === "cn" && display.answer === "fr");
+      toggleCnBtn.style.display = hideCnToggle ? "none" : "";
+      if (!hideCnToggle) {
+        const hiding = document.body.classList.contains("hide-cn");
+        toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
+      }
+
+      const qLabel = part.labels?.question || "Question / 提问";
+      const aLabel = part.labels?.answer || "Réponse / 答案";
 
       itemList.innerHTML = "";
 
-      part.items.forEach((it) => {
+      for (const it of part.items) {
+        if (it.type === "section") {
+          const sep = document.createElement("div");
+          sep.className = "section-sep";
+          sep.textContent = it.titleCn || "";
+          itemList.appendChild(sep);
+          continue;
+        }
+
         const card = document.createElement("div");
         card.className = "item";
         card.dataset.itemid = it.id;
@@ -520,18 +1363,20 @@
         head.className = "item-head";
 
         const left = document.createElement("div");
-        left.innerHTML = `<div class="item-num">Item ${it.id}</div><div class="item-topic">${escapeHtml(it.topicCn || "")}</div>`;
+        left.innerHTML = `
+          <div class="item-num">Item ${it.id}</div>
+          <div class="item-topic">${toHtmlText(it.topicCn || "")}</div>
+        `;
 
         const actions = document.createElement("div");
         actions.className = "item-actions";
 
-        // Only answer audio (no question audio)
         const btnPlayAns = document.createElement("button");
         btnPlayAns.className = "btn";
-        btnPlayAns.textContent = hasAudioForItem(it.id) ? `播放答案 A${it.id}` : "无音频";
+        btnPlayAns.textContent = hasAudioForItem(it.id) ? (isTTSPart() ? "朗读答案" : "播放答案") : "无音频";
         btnPlayAns.disabled = !hasAudioForItem(it.id);
         btnPlayAns.addEventListener("click", () => {
-          preserveTopItemPosition(() => playItemAudio(it.id));
+          preserveTopItemPosition(() => playItemAudio(it.id, false));
         });
 
         const btnToggleAns = document.createElement("button");
@@ -555,20 +1400,25 @@
         const body = document.createElement("div");
         body.className = "item-body";
 
+        const showQFr = display.question !== "cn" && (it.promptFr || "").trim();
+        const showQCn = display.question !== "fr" && (it.promptCn || "").trim();
+        const showAFr = display.answer !== "cn" && (it.answerFr || "").trim();
+        const showACn = display.answer !== "fr" && (it.answerCn || "").trim();
+
         const qBlock = document.createElement("div");
         qBlock.className = "block";
         qBlock.innerHTML = `
-          <div class="label">Question / 提问</div>
-          <div class="fr">${escapeHtml(it.promptFr || "")}</div>
-          <div class="cn">${escapeHtml(it.promptCn || "")}</div>
+          <div class="label">${toHtmlText(qLabel)}</div>
+          ${showQFr ? `<div class="fr">${toHtmlText(it.promptFr)}</div>` : ""}
+          ${showQCn ? `<div class="cn">${toHtmlText(it.promptCn)}</div>` : ""}
         `;
 
         const ans = document.createElement("div");
         ans.className = "answer";
         ans.innerHTML = `
-          <div class="answer-title">Réponse / 答案</div>
-          <div class="fr">${escapeHtml(it.answerFr || "")}</div>
-          <div class="cn">${escapeHtml(it.answerCn || "")}</div>
+          <div class="answer-title">${toHtmlText(aLabel)}</div>
+          ${showAFr ? `<div class="fr">${toHtmlText(it.answerFr)}</div>` : ""}
+          ${showACn ? `<div class="cn">${toHtmlText(it.answerCn)}</div>` : ""}
         `;
 
         body.appendChild(qBlock);
@@ -577,7 +1427,7 @@
         card.appendChild(head);
         card.appendChild(body);
         itemList.appendChild(card);
-      });
+      }
 
       updateGlobalAnswerToggle();
     }
@@ -609,10 +1459,7 @@
     function updateGlobalAnswerToggle() {
       const total = document.querySelectorAll(".btn-toggle-answer").length;
       const open = getOpenCount();
-      if (!total) {
-        toggleAllAnswersBtn.textContent = "显示全部答案";
-        return;
-      }
+      if (!total) { toggleAllAnswersBtn.textContent = "显示全部答案"; return; }
       toggleAllAnswersBtn.textContent = open > 0 ? "隐藏全部答案" : "显示全部答案";
     }
 
@@ -643,12 +1490,30 @@
        ========================= */
     function applySearchFilter() {
       const kw = (searchInput.value || "").trim().toLowerCase();
+
       const cards = document.querySelectorAll(".item");
       cards.forEach(card => {
         if (!kw) { card.style.display = ""; return; }
         const txt = card.innerText.toLowerCase();
         card.style.display = txt.includes(kw) ? "" : "none";
       });
+
+      const nodes = Array.from(itemList.children);
+      let currentSection = null;
+      let hasVisibleAfter = false;
+
+      for (const node of nodes) {
+        if (node.classList.contains("section-sep")) {
+          if (currentSection) currentSection.style.display = hasVisibleAfter ? "" : "none";
+          currentSection = node;
+          hasVisibleAfter = false;
+          continue;
+        }
+        if (node.classList.contains("item")) {
+          if (node.style.display !== "none") hasVisibleAfter = true;
+        }
+      }
+      if (currentSection) currentSection.style.display = hasVisibleAfter ? "" : "none";
     }
     searchInput.addEventListener("input", applySearchFilter);
 
@@ -667,7 +1532,7 @@
     }
 
     /* =========================
-       KEEP SCROLL POSITION (for sticky controls)
+       KEEP SCROLL POSITION
        ========================= */
     function preserveTopItemPosition(mutateFn) {
       const topLimit = (() => {
@@ -705,100 +1570,101 @@
     }
 
     /* =========================
-       AUDIO (MP3)
+       AUDIO (MP3 + TTS) — FIXED
        ========================= */
     function stopAudio(clearQueue) {
+      // stop mp3
+      try { audioPlayer.pause(); audioPlayer.currentTime = 0; } catch (e) { }
+
+      // stop tts
       try {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-      } catch (e) {}
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      } catch (e) { }
+      currentUtterance = null;
 
       currentPlayingId = null;
 
       if (clearQueue) {
         isAllPlaying = false;
         playQueue = [];
-        if (partHasAudio()) playAllBtn.textContent = "播放全部答案（A1→A20）";
+        const part = getCurrentPart();
+        if (part?.audio?.enabled) playAllBtn.textContent = (part.audio.playAllLabel || "播放全部答案");
       }
     }
 
-    function playItemAudio(itemId) {
+    function speakTTS(text, onDone) {
+      if (!("speechSynthesis" in window)) { onDone?.(); return; }
+      const part = getCurrentPart();
+      const t = String(text || "").trim();
+      if (!t) { onDone?.(); return; }
+
+      const u = new SpeechSynthesisUtterance(t);
+      u.lang = part.audio?.lang || "fr-FR";
+      u.rate = part.audio?.rate ?? 1.0;
+      u.pitch = part.audio?.pitch ?? 1.0;
+
+      const v = resolveSelectedVoice(u.lang);
+      if (v) u.voice = v;
+
+      u.onend = () => onDone?.();
+      u.onerror = () => onDone?.();
+
+      currentUtterance = u;
+
+      try { window.speechSynthesis.cancel(); } catch (e) { }
+      window.speechSynthesis.speak(u);
+    }
+
+    function playItemAudio(itemId, fromQueue) {
       const id = Number(itemId);
       if (!hasAudioForItem(id)) return;
 
-      // If "Play All" is active, stop it and play the single one
-      if (isAllPlaying) stopAudio(true);
+      // If user clicked a single item while queue is running, stop queue
+      if (!fromQueue && isAllPlaying) stopAudio(true);
 
-      const src = audioSrcForItem(id);
       currentPlayingId = id;
 
-      // Restart from the beginning each time
-      try {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-      } catch (e) {}
+      const part = getCurrentPart();
+      if (part.audio?.type === "tts") {
+        const text = ttsTextForItem(id);
+        speakTTS(text, () => { if (isAllPlaying) playNextInQueue(); });
+        return;
+      }
 
+      // mp3
+      const src = audioSrcForItem(id);
+      try { audioPlayer.pause(); audioPlayer.currentTime = 0; } catch (e) { }
       audioPlayer.src = src;
 
       const p = audioPlayer.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {
-          // Autoplay policy / user gesture restrictions: do nothing, keep UI stable.
-          // 用户点按钮正常不会触发；如果被拦截，就需要再点一次。
-        });
-      }
+      if (p && typeof p.catch === "function") p.catch(() => { });
     }
 
     function buildVisibleQueueIds() {
-      // Only visible items after search filter
       const visibleIds = Array.from(document.querySelectorAll(".item"))
         .filter(el => el.offsetParent !== null)
         .map(el => Number(el.dataset.itemid))
         .filter(id => hasAudioForItem(id))
         .sort((a, b) => a - b);
-
       return visibleIds;
     }
 
     function playNextInQueue() {
       if (!isAllPlaying) return;
       const nextId = playQueue.shift();
-      if (!nextId) {
-        stopAudio(true);
-        return;
-      }
-
-      const src = audioSrcForItem(nextId);
-      currentPlayingId = nextId;
-
-      audioPlayer.src = src;
-      audioPlayer.currentTime = 0;
-
-      const p = audioPlayer.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {
-          // If iOS blocks chained autoplay, stop queue cleanly.
-          stopAudio(true);
-        });
-      }
+      if (!nextId) { stopAudio(true); return; }
+      playItemAudio(nextId, true);
     }
 
-    audioPlayer.addEventListener("ended", () => {
-      if (isAllPlaying) playNextInQueue();
-    });
-
-    audioPlayer.addEventListener("error", () => {
-      if (isAllPlaying) playNextInQueue();
-    });
+    // mp3 queue continuation
+    audioPlayer.addEventListener("ended", () => { if (isAllPlaying) playNextInQueue(); });
+    audioPlayer.addEventListener("error", () => { if (isAllPlaying) playNextInQueue(); });
 
     playAllBtn.addEventListener("click", () => {
       preserveTopItemPosition(() => {
         if (!partHasAudio()) return;
 
-        if (isAllPlaying) {
-          stopAudio(true);
-          return;
-        }
+        if (isAllPlaying) { stopAudio(true); return; }
 
         const ids = buildVisibleQueueIds();
         if (!ids.length) return;
@@ -813,6 +1679,16 @@
     stopBtn.addEventListener("click", () => {
       preserveTopItemPosition(() => stopAudio(true));
     });
+
+    if (testVoiceBtn) {
+      testVoiceBtn.addEventListener("click", () => {
+        preserveTopItemPosition(() => {
+          const part = getCurrentPart();
+          if (!part?.audio?.enabled || part.audio?.type !== "tts") return;
+          speakTTS("Bonjour. Ceci est un test de la voix.", null);
+        });
+      });
+    }
 
     /* =========================
        INIT
