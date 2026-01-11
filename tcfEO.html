@@ -8,6 +8,10 @@
   <meta name="color-scheme" content="light dark">
 
   <style>
+    :root {
+      --header-height: 74px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -20,15 +24,19 @@
       color: #222;
     }
 
+    /* Sticky header wrapper (topbar + progress bar) */
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+    }
+
     .topbar {
       background: #0059b3;
       color: #fff;
       padding: 12px 20px;
       display: flex;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 50;
     }
 
     .topbar-title {
@@ -45,6 +53,40 @@
 
     .topbar-back.hidden {
       visibility: hidden;
+    }
+
+    /* Top progress bar (the design you liked) */
+    .progress-top {
+      display: none;
+      background: rgba(244, 247, 251, 0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 8px 20px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-top .progress-text {
+      font-size: 12px;
+      font-weight: 900;
+      color: #0c63c7;
+      white-space: nowrap;
+    }
+
+    .progress-top .progress-bar {
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(12, 99, 199, 0.15);
+    }
+
+    .progress-top .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #0c63c7;
+      border-radius: 999px;
+      transition: width 140ms linear;
     }
 
     .page-wrap {
@@ -146,7 +188,7 @@
       flex-wrap: wrap;
       align-items: center;
       position: sticky;
-      top: 52px;
+      top: var(--header-height);
       z-index: 20;
       background: rgba(244, 247, 251, 0.92);
       backdrop-filter: blur(6px);
@@ -329,10 +371,6 @@
         min-width: 160px;
       }
 
-      .controls {
-        top: 50px;
-      }
-
       .input {
         min-width: 180px;
       }
@@ -347,6 +385,23 @@
       .topbar {
         background: #0b3a7a;
         color: #e5e7eb;
+      }
+
+      .progress-top {
+        background: rgba(6, 8, 20, 0.78);
+        border-bottom-color: #1f2937;
+      }
+
+      .progress-top .progress-text {
+        color: #93c5fd;
+      }
+
+      .progress-top .progress-bar {
+        background: rgba(147, 197, 253, 0.18);
+      }
+
+      .progress-top .progress-fill {
+        background: #93c5fd;
       }
 
       .page-wrap {
@@ -451,9 +506,18 @@
 </head>
 
 <body>
-  <header class="topbar">
-    <div id="backIcon" class="topbar-back hidden">&larr;</div>
-    <div id="topbarTitle" class="topbar-title">TCF - Expression orale</div>
+  <header id="headerSticky" class="header-sticky">
+    <div class="topbar">
+      <div id="backIcon" class="topbar-back hidden">&larr;</div>
+      <div id="topbarTitle" class="topbar-title">TCF - Expression orale</div>
+    </div>
+
+    <div id="progressTop" class="progress-top" aria-label="Progress">
+      <div id="progressText" class="progress-text">Item -- / --</div>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progressFill" class="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
   </header>
 
   <main>
@@ -1154,6 +1218,8 @@
         ["价格", "我应该怎么预定？", "Comment puis-je faire une réservation ?"],
 
         ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！", "Je te remercie pour tes réponses. Elles m'ont beaucoup aidé ! À bientôt si j'ai d'autres besoins."],
+
+        ["SECTION", "M. 场景：询问餐厅"],
       ];
 
       const seen = new Set();
@@ -1256,12 +1322,20 @@
     // TTS state
     let currentUtterance = null;
 
+    // TTS anti-flash sequence token
+    let ttsSeq = 0;
+
     // Current "active" question in viewport
     let currentActiveId = null;
 
     /* =========================
        DOM
        ========================= */
+    const headerSticky = document.getElementById("headerSticky");
+    const progressTop = document.getElementById("progressTop");
+    const progressText = document.getElementById("progressText");
+    const progressFill = document.getElementById("progressFill");
+
     const partSelectScreen = document.getElementById("partSelectScreen");
     const practiceScreen = document.getElementById("practiceScreen");
 
@@ -1282,6 +1356,13 @@
 
     const voiceSelect = document.getElementById("voiceSelect");
     const testVoiceBtn = document.getElementById("testVoiceBtn");
+
+    function updateHeaderHeightVar() {
+      if (!headerSticky) return;
+      const h = Math.max(52, headerSticky.offsetHeight || 0);
+      document.documentElement.style.setProperty("--header-height", `${h}px`);
+    }
+    window.addEventListener("resize", updateHeaderHeightVar);
 
     /* =========================
        PART HELPERS
@@ -1331,6 +1412,44 @@
       if (!it) return "";
       if (typeof part.audio?.getText === "function") return String(part.audio.getText(it) || "");
       return String(it.answerFr || "");
+    }
+
+    /* =========================
+       TOP PROGRESS BAR
+       ========================= */
+    function getVisibleNonSectionIds() {
+      return Array.from(document.querySelectorAll(".item"))
+        .filter(el => el.offsetParent !== null && el.style.display !== "none")
+        .map(el => Number(el.dataset.itemid))
+        .filter(Boolean)
+        .sort((a, b) => a - b);
+    }
+
+    function updateProgressUI() {
+      if (!progressTop || !progressText || !progressFill) return;
+      if (currentPartIndex == null) { progressTop.style.display = "none"; return; }
+
+      const ids = getVisibleNonSectionIds();
+      const total = ids.length;
+      if (!total) {
+        progressTop.style.display = "flex";
+        progressText.textContent = "Item 0 / 0";
+        progressFill.style.width = "0%";
+        progressTop.querySelector(".progress-bar")?.setAttribute("aria-valuenow", "0");
+        return;
+      }
+
+      let cur = Number(currentActiveId);
+      if (!cur || !ids.includes(cur)) cur = ids[0];
+
+      const idx = ids.indexOf(cur);
+      const done = idx + 1;
+      const pct = Math.round((done / total) * 100);
+
+      progressTop.style.display = "flex";
+      progressText.textContent = `Item ${done} / ${total} (ID ${cur})`;
+      progressFill.style.width = `${pct}%`;
+      progressTop.querySelector(".progress-bar")?.setAttribute("aria-valuenow", String(pct));
     }
 
     /* =========================
@@ -1463,6 +1582,8 @@
       topbarTitle.textContent = "TCF - Expression orale";
       searchInput.value = "";
       updateGlobalAnswerToggle();
+      if (progressTop) progressTop.style.display = "none";
+      updateHeaderHeightVar();
       window.scrollTo({ top: 0, behavior: "auto" });
     }
     backIcon.addEventListener("click", exitPart);
@@ -1518,7 +1639,6 @@
         card.className = "item";
         card.dataset.itemid = it.id;
 
-        // mark currentActiveId when user interacts with this card
         card.addEventListener("pointerdown", () => setCurrentActiveId(it.id));
         card.addEventListener("focusin", () => setCurrentActiveId(it.id));
 
@@ -1598,9 +1718,10 @@
 
       updateGlobalAnswerToggle();
 
-      // After rendering, set currentActiveId to first visible item
       requestAnimationFrame(() => {
         updateCurrentActiveFromViewport();
+        updateProgressUI();
+        updateHeaderHeightVar();
       });
     }
 
@@ -1687,8 +1808,10 @@
       }
       if (currentSection) currentSection.style.display = hasVisibleAfter ? "" : "none";
 
-      // After filtering, refresh current active from viewport
-      requestAnimationFrame(() => updateCurrentActiveFromViewport());
+      requestAnimationFrame(() => {
+        updateCurrentActiveFromViewport();
+        updateProgressUI();
+      });
     }
     searchInput.addEventListener("input", applySearchFilter);
 
@@ -1704,6 +1827,8 @@
       backIcon.classList.remove("hidden");
       topbarTitle.textContent = `TCF - Expression orale - ${parts[idx].label}`;
       renderAllItems();
+      if (progressTop) progressTop.style.display = "flex";
+      updateHeaderHeightVar();
       window.scrollTo({ top: 0, behavior: "auto" });
     }
 
@@ -1711,11 +1836,8 @@
        KEEP SCROLL POSITION
        ========================= */
     function preserveTopItemPosition(mutateFn) {
-      const topLimit = (() => {
-        const controls = document.querySelector(".controls");
-        if (!controls) return 0;
-        return Math.max(0, Math.floor(controls.getBoundingClientRect().bottom) + 1);
-      })();
+      const controls = document.querySelector(".controls");
+      const topLimit = controls ? Math.max(0, Math.floor(controls.getBoundingClientRect().bottom) + 1) : 0;
 
       const cards = Array.from(document.querySelectorAll(".item"))
         .filter(el => el.offsetParent !== null);
@@ -1752,15 +1874,7 @@
       const n = Number(id);
       if (!n || Number.isNaN(n)) return;
       currentActiveId = n;
-
-      // Update topbar title with current question info (non-invasive)
-      try {
-        const part = getCurrentPart();
-        if (!part) return;
-        const it = findItemById(n);
-        if (!it) return;
-        topbarTitle.textContent = `TCF - Expression orale - ${part.label} — Current: Item ${n} (${it.topicCn || ""})`;
-      } catch (e) { }
+      updateProgressUI();
     }
 
     function updateCurrentActiveFromViewport() {
@@ -1790,7 +1904,6 @@
 
     window.addEventListener("scroll", () => {
       if (currentPartIndex == null) return;
-      // cheap throttling via rAF
       if (updateCurrentActiveFromViewport._raf) return;
       updateCurrentActiveFromViewport._raf = requestAnimationFrame(() => {
         updateCurrentActiveFromViewport._raf = null;
@@ -1805,7 +1918,8 @@
       // stop mp3
       try { audioPlayer.pause(); audioPlayer.currentTime = 0; } catch (e) { }
 
-      // stop tts
+      // stop tts (also bumps token so old callbacks can’t advance)
+      ttsSeq++;
       try {
         if ("speechSynthesis" in window) window.speechSynthesis.cancel();
       } catch (e) { }
@@ -1821,10 +1935,20 @@
     }
 
     function speakTTS(text, onDone) {
-      if (!("speechSynthesis" in window)) { onDone?.(); return; }
+      if (!("speechSynthesis" in window)) {
+        setTimeout(() => onDone?.(), 0);
+        return;
+      }
+
       const part = getCurrentPart();
       const t = String(text || "").trim();
-      if (!t) { onDone?.(); return; }
+      if (!t) {
+        setTimeout(() => onDone?.(), 0);
+        return;
+      }
+
+      // Sequence token: only the latest utterance is allowed to call onDone
+      const mySeq = ++ttsSeq;
 
       const u = new SpeechSynthesisUtterance(t);
       u.lang = part.audio?.lang || "fr-FR";
@@ -1834,20 +1958,28 @@
       const v = resolveSelectedVoice(u.lang);
       if (v) u.voice = v;
 
-      u.onend = () => onDone?.();
-      u.onerror = () => onDone?.();
+      let finished = false;
+      const safeDone = () => {
+        if (finished) return;
+        finished = true;
+        if (mySeq !== ttsSeq) return; // cancelled/replaced -> ignore
+        onDone?.();
+      };
+
+      u.onend = safeDone;
+      u.onerror = safeDone;
 
       currentUtterance = u;
 
       try { window.speechSynthesis.cancel(); } catch (e) { }
-      window.speechSynthesis.speak(u);
+      try { window.speechSynthesis.speak(u); } catch (e) { safeDone(); return; }
+      try { window.speechSynthesis.resume(); } catch (e) { }
     }
 
     function playItemAudio(itemId, fromAuto) {
       const id = Number(itemId);
       if (!hasAudioForItem(id)) return;
 
-      // if user clicks a single item while auto is running, stop auto
       if (!fromAuto && isAllPlaying) stopAudio(true);
 
       currentPlayingId = id;
@@ -1856,7 +1988,11 @@
       const part = getCurrentPart();
       if (part.audio?.type === "tts") {
         const text = ttsTextForItem(id);
-        speakTTS(text, () => { if (isAllPlaying) playNextAuto(); });
+        speakTTS(text, () => {
+          if (!isAllPlaying) return;
+          // small delay prevents “instant chaining” on some browsers
+          setTimeout(() => { if (isAllPlaying) playNextAuto(); }, 120);
+        });
         return;
       }
 
@@ -1917,7 +2053,6 @@
 
         if (isAllPlaying) { stopAudio(true); return; }
 
-        // ensure currentActiveId is up-to-date before starting
         updateCurrentActiveFromViewport();
 
         isAllPlaying = true;
@@ -1946,6 +2081,7 @@
        ========================= */
     buildPartGrid();
     updateGlobalAnswerToggle();
+    updateHeaderHeightVar();
   </script>
 </body>
 
