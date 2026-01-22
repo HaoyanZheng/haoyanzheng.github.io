@@ -37,25 +37,30 @@
       padding: 12px 20px;
       display: flex;
       align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .topbar-title {
       margin: 0 auto;
       font-size: 18px;
       font-weight: 700;
+      text-align: center;
+      flex: 1 1 260px;
     }
 
     .topbar-back {
       font-size: 22px;
       cursor: pointer;
       user-select: none;
+      flex: 0 0 auto;
     }
 
     .topbar-back.hidden {
       visibility: hidden;
     }
 
-    /* Top progress bar (brought back) */
+    /* Top progress bar */
     .progress-top {
       display: none;
       background: rgba(244, 247, 251, 0.96);
@@ -239,6 +244,36 @@
       outline-offset: 2px;
     }
 
+    .pill {
+      border: 1px solid #d0d7e2;
+      border-radius: 999px;
+      padding: 8px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .pill label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0c63c7;
+      user-select: none;
+    }
+
+    .pill input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0c63c7;
+      cursor: pointer;
+    }
+
+    .pill small {
+      font-size: 12px;
+      color: #4b5563;
+      user-select: none;
+    }
+
     .list {
       display: flex;
       flex-direction: column;
@@ -295,6 +330,7 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .section-desc {
@@ -506,6 +542,15 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
       }
 
+      .pill {
+        background: rgba(11, 17, 32, 0.72);
+        border-color: #374151;
+      }
+
+      .pill label {
+        color: #93c5fd;
+      }
+
       details.section {
         background: #111827;
         border-color: #374151;
@@ -599,7 +644,7 @@
       <div class="hero">
         <div class="hero-title">TCF – Expression Orale</div>
         <div class="hero-sub">
-          选择任务（3 tâches）。默认：Tâche 1 有答案音频（A1.mp3 ~ A20.mp3）。
+          选择任务（3 tâches）。支持：逐题播放、播放全部、连续循环（整套/单题）。
         </div>
       </div>
       <div id="partGrid" class="grid"></div>
@@ -624,6 +669,19 @@
 
         <button class="btn" id="playAllBtn">播放/朗读全部（从当前位置）</button>
         <button class="btn" id="stopBtn">停止播放</button>
+
+        <!-- NEW: looping controls -->
+        <span class="pill" title="播放完最后一句后自动继续">
+          <label for="loopAllToggle">循环整套</label>
+          <input id="loopAllToggle" type="checkbox" />
+          <small>到末尾回到开头</small>
+        </span>
+
+        <span class="pill" title="反复循环当前题（优先级高于循环整套）">
+          <label for="loopOneToggle">单题循环</label>
+          <input id="loopOneToggle" type="checkbox" />
+          <small>只循环当前题</small>
+        </span>
       </div>
 
       <div class="list" id="itemList"></div>
@@ -646,10 +704,7 @@
       function toHtmlText(str) { return escapeHtml(str).replaceAll("\n", "<br>"); }
 
       /* =========================
-         TÂCHE 2 BUILDER
-         - updated: SECTION can carry scenario text to show under section header
-         - you asked to omit section 2 content here, so I keep only a small sample.
-         - paste your full t2raw back in the same format anytime.
+         TÂCHE 2 BUILDER (you can paste your full content)
          ========================= */
       function buildT2Items() {
         const t2raw = [
@@ -837,7 +892,7 @@
           ["价格", "可以在线购买票吗？", "Est-il possible d’acheter le ticket en ligne ?"],
           ["价格", "需要提前付款还是现场付款？", "Faut-il payer à l’avance ou sur place ?"],
 
-          ["SECTION", "E. 场景：工作（正式）", "Je suis votre ancien(ne) collègue. Je viens de commencer un nouveau travail. Vous souhaitez changer d’emploi. Vous me posez des questions pour avoir des informations sur mon travail et mon entreprise (activités, salaire, collègues, etc.)."],
+          ["SECTION", "E. 场景：工作（正式）", "Je suis votre ancien(ne) collègue. Je viens de commencer un nouveau travail. Vous souhaitez changer d’emploi. Vous me posez des questions pour avoir des informations sur mon travail et mon entreprise (activités, salaire, collègues, etc.).", "我是你以前的同事。我刚开始了一份新工作。你想换工作。你向我提问，想了解我现在的工作和公司情况（例如业务内容、薪资、同事等）。"],
           ["开场", "你好！我听说你换了工作，我也打算换工作。如果你方便的话，我可以关于这个问你几个问题吗？",
             "Bonjour ! J’ai entendu dire que tu as changé de travail et j’envisage moi aussi de changer d’emploi. Si tu es disponible, puis-je te poser quelques questions à ce sujet ?"],
 
@@ -862,109 +917,60 @@
           ["工资", "工资符合你的预期吗？", "Est-ce que le salaire correspond à ce que tu attendais ?"],
           ["工资", "除了工资，还有奖金或其他福利吗？", "Y a-t-il des primes ou des avantages en plus du salaire ?"],
 
-          ["SECTION", "F. 场景：工作文化（正式）"],
+          ["SECTION", "F. 场景：工作文化（正式）", "Vous vous intéressez au rythme du travail au Canada. Interrogez-moi sur les horaires de travail et les jours de congé au Canada. Comparez avec la situation dans votre pays.", "你对加拿大的工作节奏感兴趣。请就加拿大的工作时间和休假天数向我提问，并与您国家的情况进行比较。"],
           ["开场", "你好！我对加拿大的工作节奏很感兴趣。如果您方便的话，我可以关于这个问几个问题吗？",
             "Bonjour ! Je m’intéresse au rythme du travail au Canada. Si vous êtes disponible, puis-je vous poser quelques questions à ce sujet ?"],
 
           ["类型", "在加拿大年轻人有很多工作机会吗？", "Est-ce qu’il y a beaucoup d’opportunités de travail pour les jeunes au Canada ?"],
-          ["类型", "哪个领域机会最多？", "Dans quel domaine y a-t-il le plus d’opportunités ?"],
           ["类型", "哪种工作最受需求？", "Quel type de travail est le plus demandé ?"],
-          ["类型", "哪种工作薪资最低 / 最高？", "Quel type de travail offre le salaire le plus bas / le plus élevé ?"],
 
           ["时间", "加拿大通常的工作时间是怎样的？", "Quels sont les horaires de travail habituels au Canada ?"],
           ["时间", "加班在加拿大普遍吗？", "Est-ce que les heures supplémentaires sont courantes au Canada ?"],
-          ["时间", "每年有多少天带薪休假？", "Combien de jours de congés payés a-t-on par an ?"],
-          ["时间", "加拿大的假期是否比中国更长？", "Est-ce que les vacances sont plus longues au Canada qu’en Chine ?"],
-          ["时间", "中国和加拿大的假期制度最大区别是什么？", "Quelle est la plus grande différence entre les congés en Chine et au Canada ?"],
-          ["时间", "在您看来，哪个制度更人性化？为什么？", "Selon vous, quel système est plus humain ? Pourquoi ?"],
-          ["时间", "在加拿大有陪产假吗？", "Y a-t-il un congé paternel au Canada ?"],
-          ["时间", "远程工作在加拿大是否普遍？", "Est-ce que le travail à distance est courant au Canada ?"],
-          ["时间", "周末工作常见吗？", "Travailler le week-end est-il fréquent ?"],
-          ["时间", "人们经常上夜班吗？", "Est-ce que les gens travaillent souvent la nuit ?"],
 
           ["人物", "有很多外国员工吗？", "Y a-t-il beaucoup de salariés étrangers ?"],
           ["人物", "在加拿大工作中容易交朋友吗？", "Est-ce qu’il est facile de se faire des amis au travail au Canada ?"],
-          ["人物", "同事之间的氛围相比中国更正式还是更轻松？", "L’ambiance entre les collègues est-elle plutôt formelle ou détendue par rapport à la Chine ?"],
-          ["人物", "加拿大人对新员工友好吗？", "Est-ce que les Canadiens sont ouverts avec les nouveaux employés ?"],
 
           ["活动", "公司会在工作之外组织活动吗？", "Y a-t-il des activités en dehors du travail organisées par les entreprises ?"],
           ["活动", "公司是否提供体育活动？", "Y a-t-il des activités sportives proposées par les entreprises ?"],
           ["活动", "公司里有托儿所吗？", "Y a-t-il des crèches dans les entreprises ?"],
 
           ["吃喝", "通常公司里有食堂吗？", "Y a-t-il des cantines dans les entreprises en général ?"],
-          ["吃喝", "通常是免费还是收费？", "Est-ce que c’est généralement gratuit ou payant ?"],
 
-          ["工资", "我能问一下每月的平均工资吗？", "Puis-je vous demander quel est le salaire mensuel en moyenne ?"],
           ["工资", "一般来说，除了工资，还有奖金或其他福利吗？", "Y a-t-il des primes ou des avantages en plus du salaire en général ?"],
-          ["工资", "在加拿大有带薪病假吗？", "Est-ce que le congé maladie est payé au Canada ?"],
 
-          ["SECTION", "G. 场景：面试准备（正式）"],
+          ["SECTION", "G. 场景：面试准备（正式）", "Je suis un(e) ami(e). Vous cherchez un emploi. Vous allez à un entretien professionnel la semaine prochaine. Demandez-moi des conseils pour réussir votre entretien (comportement, vêtements, préparatifs, etc.).", "我是你的朋友。你正在找工作。你下周要参加一场求职面试。请向我询问一些成功通过面试的建议（比如行为举止、着装、准备事项等）。"],
+          ["开场", "你好！我正在找工作。如果你有时间的话，我可以向你请教一些关于求职面试的问题吗？",
+            "Bonjour ! Je suis en train de chercher un emploi. Si tu es disponible, puis-je te poser quelques questions sur l’entretien professionnel ?"],
+
           ["面试-穿着", "面试我应该怎么穿着？", "Comment dois-je m’habiller pour l’entretien ?"],
           ["面试-穿着", "是否一定要穿西装？", "Est-ce qu’il faut porter un costume ?"],
-          ["面试-穿着", "需要避免某些颜色吗？", "Faut-il éviter certaines couleurs ?"],
-          ["面试-穿着", "饰品重要吗？", "Les accessoires sont-ils importants ?"],
-          ["面试-穿着", "我可以化妆吗？", "Est-ce que je peux me maquiller ?"],
-          ["面试-穿着", "妆容是否应该淡雅？", "Est-ce que le maquillage doit être discret ?"],
-          ["面试-穿着", "鞋子重要吗？", "Est-ce que les chaussures ont de l’importance ?"],
-          ["面试-穿着", "发型需要特别打理吗？", "Est-ce qu’il faut se coiffer de manière spéciale ?"],
-          ["面试-穿着", "我可以喷淡香水吗？", "Puis-je porter un parfum léger ?"],
 
-          ["面试-举止", "我应该如何向面试官打招呼？", "Comment dois-je saluer le recruteur ?"],
-          ["面试-举止", "我需要握手吗？", "Dois-je serrer la main ?"],
-          ["面试-举止", "是否一开始就要微笑？", "Dois-je sourire dès le début ?"],
-          ["面试-举止", "我需要直视面试官的眼睛吗？", "Est-ce que je dois regarder le recruteur dans les yeux ?"],
-          ["面试-举止", "如何在面试中保持自然？", "Comment rester naturel pendant l’entretien ?"],
-          ["面试-举止", "我可以用手势来表达吗？", "Est-ce que je peux faire des gestes avec les mains ?"],
           ["面试-举止", "如何表现出我很有积极性/动力？", "Comment montrer que je suis motivé(e) ?"],
 
           ["面试-准备", "我该怎么做才能更好地准备？", "Que dois-je faire pour bien me préparer ?"],
-          ["面试-准备", "我需要准备一个自我介绍吗？", "Dois-je préparer une présentation de moi-même ?"],
-          ["面试-准备", "面试一开始我应该说什么？", "Que dois-je dire en premier pendant l’entretien ?"],
-          ["面试-准备", "我需要了解这家公司吗？", "Est-ce que je dois connaître l’entreprise ?"],
           ["面试-准备", "如何对公司进行调查？", "Comment faire des recherches sur l’entreprise ?"],
-          ["面试-准备", "我需要提前阅读岗位描述吗？", "Est-ce que je dois lire la description du poste à l’avance ?"],
-          ["面试-准备", "我需要提前练习回答吗？", "Dois-je répéter mes réponses à l’avance ?"],
           ["面试-准备", "有没有可以用来练习的视频？", "Est-ce qu’il existe des vidéos pour s’entraîner ?"],
 
           ["面试-内容", "面试中最常见的问题有哪些？", "Quelles sont les questions les plus courantes ?"],
-          ["面试-内容", "我需要谈论我的优点吗？", "Dois-je parler de mes qualités ?"],
-          ["面试-内容", "我需要谈论我的缺点吗？", "Est-ce que je dois parler de mes défauts ?"],
-          ["面试-内容", "如果被问到我的弱点，我该怎么回答？", "Que dois-je dire si on me demande mes faiblesses ?"],
-          ["面试-内容", "我需要谈论我的学习经历吗？", "Est-ce que je dois parler de mes études ?"],
-          ["面试-内容", "我需要提供具体的例子吗？", "Dois-je donner des exemples concrets ?"],
-          ["面试-内容", "如果我听不懂问题，我该怎么办？", "Que dois-je faire si je ne comprends pas une question ?"],
-          ["面试-内容", "我可以在最后提问吗？", "Est-ce que je peux poser des questions à la fin ?"],
 
-          ["面试-流程时间", "面试持续多久？", "Combien de temps dure l’entretien ?"],
-          ["面试-流程时间", "我可以提前到吗？", "Est-ce que je peux arriver en avance ?"],
           ["面试-流程时间", "我需要提前多久到达？", "Combien de temps à l’avance dois-je arriver ?"],
           ["面试-流程时间", "面试流程可能有多少个环节？", "Combien d’étapes peut comporter le processus ?"],
           ["面试-流程时间", "面试时会有多少人在场？", "Combien de personnes seront présentes pendant l’entretien ?"],
 
-          ["面试-其他", "我需要关掉手机吗？", "Dois-je éteindre mon téléphone ?"],
-          ["面试-其他", "我可以带上打印好的简历吗？", "Est-ce que je peux apporter mon CV imprimé ?"],
-          ["面试-其他", "如果我非常紧张该怎么办？", "Que faire si je suis très stressé(e) ?"],
-          ["面试-其他", "我需要感谢面试官吗？", "Est-ce que je dois remercier le recruteur ?"],
-          ["面试-其他", "面试后我需要发一封邮件吗？", "Dois-je envoyer un e-mail après l’entretien ?"],
-          ["面试-其他", "我需要询问什么时候能收到回复吗？", "Est-ce que je dois demander quand je recevrai une réponse ?"],
           ["面试-其他", "你能给我的最大建议是什么？", "Quel est le meilleur conseil que tu puisses me donner ?"],
 
-          ["SECTION", "H. 场景：志愿者分发餐食（正式）"],
-          ["地点", "分发地点在哪里？", "Où a lieu la distribution ?"],
+          ["SECTION", "H. 场景：志愿者分发餐食（正式）", "Vous êtes intéressé à devenir bénévole dans une association qui distribue des repas aux sans-abris, et vous avez des questions sur l’organisation, les conditions de bénévolat et l’emploi du temps requis.", "你有兴趣成为一个向无家可归者提供餐食的协会的志愿者，并且你对协会的组织、志愿服务条件以及所需时间安排有一些问题。"],
+          ["开场", "你好！我对你们的协会很感兴趣。如果您方便的话，我可以就这个问题向您请教几个问题吗？",
+            "Bonjour ! Je m’intéresse à votre association. Si vous êtes disponible, puis-je vous poser quelques questions à ce sujet ?"],
+
           ["地点", "是否有志愿者的集合地点？", "Existe-t-il un lieu de rendez-vous pour les bénévoles ?"],
+          ["地点", "分发地点在哪里？", "Où a lieu la distribution ?"],
 
           ["时间", "这项工作的典型时间安排是怎样的？", "Quels sont les horaires typiques pour cette mission ?"],
-          ["时间", "每周大概需要多少小时？", "Combien d'heures par semaine faut-il prévoir ?"],
-          ["时间", "是否可以根据自己的时间来调整工作时间？", "Peut-on adapter les horaires en fonction de son emploi du temps ?"],
-          ["时间", "可以更换时间段吗？", "Peut-on changer de créneau horaire ?"],
           ["时间", "是否有试用期？", "Y a-t-il une période d'essai ?"],
-          ["时间", "我可以只报名参加一天吗？", "Est-ce que je peux m'inscrire pour une seule journée ?"],
           ["时间", "如果在预定的某天我不能来，该怎么办？", "Que faire si je ne peux pas venir un jour prévu ?"],
 
           ["人物", "谁来准备餐食？", "Qui prépare les repas ?"],
-          ["人物", "每天动员多少名志愿者？", "Combien de bénévoles sont mobilisés par jour ?"],
-          ["人物", "有其他中国志愿者吗？", "Y a-t-il d'autres bénévoles chinois ?"],
-          ["人物", "每项任务是否都有负责人？", "Y a-t-il un responsable pour chaque mission ?"],
           ["人物", "是否有最低年龄？", "Faut-il avoir un âge minimum ?"],
           ["人物", "是否有最高年龄？", "Est-ce qu'il y a un âge maximum ?"],
           ["人物", "是否需要提供一些文件？", "Est-ce qu'il faut fournir des documents ?"],
@@ -972,51 +978,32 @@
 
           ["吃喝", "每天分发多少份餐食？", "Combien de repas sont distribués chaque jour ?"],
           ["吃喝", "什么类型的餐食？", "Quel type de repas ?"],
-          ["吃喝", "饭菜好吃吗？", "Les repas sont-ils bons ?"],
-          ["吃喝", "有素食选择吗？", "Est-ce qu'il y a des options végétariennes ?"],
 
-          ["SECTION", "I. 租房场景：公寓本身（小地点 / Le logement）"],
+          ["SECTION", "I. 租房场景：公寓本身（小地点 / Le logement）,", "Je travaille dans une agence de location. Vous venez d’arriver au Québec et vous cherchez un logement. Vous me posez des questions pour trouver un appartement (démarches, quartier, type de logement, etc.).", "我在一家租赁机构工作。您刚来到魁北克，正在寻找住房。您向我询问有关找公寓的问题（流程、街区、住房类型等）。"],
+          ["开场", "你好！如果您方便的话，我可以就住房/房子这个问题向您请教几个问题吗？",
+            "Bonjour ! Si vous êtes disponible, puis-je vous poser quelques questions sur le logement / la maison ?"],
 
           ["住房", "现在有哪些类型的住房？", "Quels types de logements sont disponibles ?"],
           ["住房", "公寓的总面积是多少？", "Quelle est la surface totale de l'appartement ?"],
           ["住房", "有多少个房间？", "Combien de pièces y a-t-il ?"],
           ["住房", "是否有浴室或淋浴间？", "Y a-t-il une salle de bains ou une salle d'eau ?"],
-          ["住房", "客厅的面积是多少？", "Quelle est la superficie du salon ?"],
-          ["住房", "住房是新房还是旧房？", "Le logement est-il neuf ou ancien ?"],
           ["住房", "房子是带家具的吗？", "Est-ce que le bien est meublé ?"],
           ["住房", "有没有阳台或露台？", "Y a-t-il un balcon ou une terrasse ?"],
-          ["住房", "有没有地下室？", "Y a-t-il une cave ?"],
           ["住房", "房子的朝向是什么？", "Quelle est l'orientation du logement ?"],
-          ["住房", "景观是面向街道、花园还是院子？", "La vue donne sur une rue, un jardin ou une cour ?"],
           ["住房", "是否有良好的日照？", "Est-il bien exposé au soleil ?"],
-          ["住房", "是否有漂亮的景观？", "Y a-t-il une belle vue ?"],
-          ["住房", "房间是否明亮？", "Est-ce que les pièces sont lumineuses ?"],
 
           ["地点", "有楼梯还是电梯？", "Y a-t-il des escaliers ou un ascenseur ?"],
           ["地点", "公寓在第几层？", "À quel étage se trouve l'appartement ?"],
-          ["地点", "它坐落在哪个街区？", "Dans quel quartier est-il situé ?"],
-          ["地点", "这是一个安静还是热闹的街区？", "Est-ce un quartier calme ou animé ?"],
-          ["地点", "附近有商店吗？", "Y a-t-il des commerces à proximité ?"],
-          ["地点", "附近有嘈杂的酒吧或餐馆吗？", "Y a-t-il des bars ou restaurants bruyants à proximité ?"],
-          ["地点", "这个街区安全吗？", "Est-ce un quartier sécurisé ?"],
           ["地点", "附​​近有医院或诊所吗？", "Est-ce qu'il y a un hôpital ou une clinique dans les environs ?"],
           ["地点", "附近有公园或绿地吗？", "Y a-t-il un parc ou des espaces verts à côté ?"],
-          ["地点", "这个地区的交通是否便利？", "Est-ce que le quartier est bien desservi par les transports ?"],
           ["地点", "附近有地铁站或公交车站吗？", "Y a-t-il une station de métro ou de bus à proximité ?"],
-          ["地点", "最近的车站有多远？", "À quelle distance est la station la plus proche ?"],
-          ["地点", "到市中心需要多长时间？", "Combien de temps faut-il pour aller au centre-ville ?"],
-          ["地点", "在街上停车方便吗？", "Est-il facile de se garer dans la rue ?"],
           ["地点", "房子是否含停车位？", "Y a-t-il un parking inclus avec le logement ?"],
 
           ["时间", "这栋楼的建造年份是哪一年？", "Quelle est l'année de construction du bâtiment ?"],
           ["时间", "最短租期是多久？", "Quelle est la durée minimale du bail ?"],
           ["时间", "需要提前多久解约？", "Combien de temps à l’avance faut-il résilier le contrat ?"],
 
-          ["人物", "邻居安静吗？", "Les voisins sont-ils calmes ?"],
           ["人物", "邻居友好吗？", "Est-ce que les voisins sont accueillants / gentils ?"],
-          ["人物", "邻居彼此熟悉吗？", "Est-ce qu'ils se connaissent bien ?"],
-          ["人物", "有噪音干扰吗？", "Y a-t-il des nuisances sonores ?"],
-          ["人物", "楼里人来人往多吗？", "Y a-t-il beaucoup de passage dans l'immeuble ?"],
 
           ["价格", "公寓每月租金多少？", "Quel est le loyer mensuel des appartements ?"],
           ["价格", "价格可以商量吗？", "Est-ce que le prix est négociable ?"],
@@ -1025,10 +1012,8 @@
           ["价格", "具体租房步骤是？", "Quelles sont les étapes précises pour louer un logement ?"],
           ["价格", "我需要准备什么文件？", "Quels documents dois-je préparer ?"],
 
-          ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！",
-            "Je vous remercie pour vos réponses, elles m'ont beaucoup aidé ! À bientôt si j'ai d'autres besoins."],
+          ["SECTION", "J. 场景：课程咨询（类型 / 内容 / 地点 / 时间 / 人物 / 价格）", "Je suis votre voisin(e). Je suis professeur de piano, je donne des cours dans une école de musique de notre quartier. Vous êtes intéressé(e). Vous me posez des questions sur l’école de musique dans laquelle je travaille (cours, tarifs, horaires, etc.).", "我是您的邻居。我是钢琴老师，在我们社区的一所音乐学校授课。您对此感兴趣。您会向我询问我工作的那所音乐学校的信息（课程、价格、时间安排等）。"],
 
-          ["SECTION", "J. 场景：课程咨询（类型 / 内容 / 地点 / 时间 / 人物 / 价格）"],
           ["类型", "有哪些课程类型可选择？", "Quels types de cours sont disponibles ?"],
           ["类型", "课程适合初学者吗？", "Les cours sont-ils adaptés aux débutants ?"],
           ["类型", "您也提供在线课程吗？", "Est-ce que vous proposez aussi des cours en ligne ?"],
@@ -1039,12 +1024,7 @@
           ["内容", "课程中可以学特定的歌曲吗？", "Peut-on apprendre des chansons spécifiques pendant les cours ?"],
 
           ["地点", "学校在哪里？", "Où se trouve l’école ?"],
-          ["地点", "离这里远吗？", "C’est loin d’ici ? / Est-ce que c’est loin d’ici ?"],
-          ["地点", "我怎么去那里？", "Comment puis-je m’y rendre ?"],
-          ["地点", "可以坐公交/步行/开车去吗？", "Est-ce que c’est accessible en transports en commun / à pied / en voiture ?"],
-          ["地点", "这个地方的公共交通方便吗？", "Est-ce que l’endroit est bien desservi par les transports publics ?"],
           ["地点", "附近有停车场吗？这里好停车吗？", "Y a-t-il un parking à proximité ? / Peut-on se garer facilement dans le coin ?"],
-          ["地点", "最近的公交车站在哪里？", "Où se trouvent les arrêts de bus les plus proches ?"],
           ["地点", "您是否提供上门授课？", "Proposez-vous des cours à domicile ?"],
 
           ["时间", "课程时间是？", "Quels sont les horaires des cours ?"],
@@ -1067,9 +1047,6 @@
           ["价格", "在线课程和面授课程的价格是否相同？", "Est-ce que le prix est le même pour des cours en ligne et en présentiel ?"],
           ["价格", "是否对学生或团体提供优惠？", "Proposez-vous des réductions pour les étudiants ou les groupes ?"],
           ["价格", "是否有需要额外考虑的费用？", "Y a-t-il des frais supplémentaires à prévoir ?"],
-
-          ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！",
-            "Je vous remercie pour vos réponses, elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
 
           ["SECTION", "K. 场景：询问旅游经历"],
 
@@ -1163,8 +1140,6 @@
           ["价格", "付款方式是什么？在线支付、现金还是刷卡？", "Quels sont les moyens de paiement ? En ligne, en espèces ou par carte ?"],
           ["价格", "可以分期付款吗？", "Peut-on payer en plusieurs fois ?"],
 
-          ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！", "Je vous remercie pour vos réponses. Elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
-
           ["SECTION", "L. 场景：询问旅游经历"],
 
           ["类型", "这是跟团游还是自由行？", "Est-ce que c’était plutôt un voyage organisé ou indépendant ?"],
@@ -1201,8 +1176,6 @@
           ["住宿", "您这次旅行花费多吗？", "Est-ce que vous avez trouvé le voyage cher ?"],
           ["住宿", "您有成功节省开支吗？", "Est-ce que vous avez réussi à économiser ?"],
           ["住宿", "是否有意外的费用？", "Y a-t-il eu des dépenses imprévues ?"],
-
-          ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！", "Je vous remercie pour vos réponses. Elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
 
           ["SECTION", "L. 场景：询问餐厅"],
           ["类型", "这是什么类型的餐厅？", "Quel type de restaurant est-ce ?"],
@@ -1256,8 +1229,6 @@
           ["价格", "是否需要提前预定？", "Est-ce qu’il est nécessaire de réserver à l’avance ?"],
           ["价格", "提前多久需要预定？", "Combien de temps à l’avance faut-il réserver ?"],
           ["价格", "我应该怎么预定？", "Comment puis-je faire une réservation ?"],
-
-          ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！", "Je te remercie pour tes réponses. Elles m'ont beaucoup aidé ! À bientôt si j'ai d'autres besoins."],
 
           ["SECTION", "M. 场景：询问生日派对"],
 
@@ -1338,8 +1309,6 @@
           ["着装", "需要化妆吗？", "Est-ce qu’il faut se maquiller ?"],
           ["着装", "有衣物寄存处吗？", "Est-ce qu’il y a un vestiaire ?"],
 
-          ["结束", "谢谢你的回答，它们对我帮助很大！如果有需要，会再联系你，回头见！", "Je te remercie pour tes réponses, elles m'ont beaucoup aidé ! À bientôt si j'ai d'autres besoins."],
-
           ["SECTION", "N. 场景：询问照顾孩子"],
 
           ["人物-孩子", "您的孩子几岁？", "Quel âge a ton enfant ?"],
@@ -1384,12 +1353,8 @@
           ["活动", "他喜欢做手工吗？", "Est-ce qu’il aime faire des bricolages ?"],
           ["活动", "我们可以一起听音乐吗？", "Peut-on écouter de la musique ensemble ?"],
 
-          ["结束", "谢谢你的回答，它们对我帮助很大!如果有需要，会再联系你，回头见!", "Je te remercie pour tes réponses, elles m'ont beaucoup aidé ! À bientôt si j'ai d'autres besoins."],
-
           ["SECTION", "O. 场景：询问预定家具"],
-          // Livraison de meubles — questions (FR/CN) in your existing row format
 
-          // 价格（Les frais）
           ["价格", "这件家具多少钱？", "Combien coûte ce meuble ?"],
           ["价格", "有送货费吗？", "Y a-t-il des frais de livraison ?"],
           ["价格", "送货费包含在价格里吗？", "Les frais de livraison sont-ils inclus dans le prix ?"],
@@ -1400,7 +1365,6 @@
           ["价格", "可以分期付款吗？", "Peut-on payer en plusieurs fois ?"],
           ["价格", "下订单时需要付定金吗？", "Faut-il verser un acompte lors de la commande ?"],
 
-          // 时间（Le délai de livraison）
           ["时间", "家具什么时候送达？", "Quand le meuble sera-t-il livré ?"],
           ["时间", "送货需要多长时间？", "Combien de temps faut-il pour la livraison ?"],
           ["时间", "可以预约具体送货日期吗？", "Est-ce que la livraison peut être programmée à une date précise ?"],
@@ -1412,12 +1376,10 @@
           ["时间", "晚上也送货吗？", "Livrez-vous aussi le soir ?"],
           ["时间", "如果送货延迟怎么办？", "Que se passe-t-il si la livraison est retardée ?"],
 
-          // 运输方式（Mode de transport）
           ["运输方式", "用什么运输方式送家具？", "Quel est le mode de transport utilisé pour livrer les meubles ?"],
           ["运输方式", "家具是由专业公司配送吗？", "Les meubles sont-ils livrés par une entreprise spécialisée ?"],
           ["运输方式", "家具是送货后已经组装好，还是需要自己组装？", "Les meubles sont-ils livrés montés ou à assembler soi-même ?"],
 
-          // 送货条件（Conditions de livraison）
           ["送货条件", "我可以实时追踪送货吗？", "Puis-je suivre la livraison en temps réel ?"],
           ["送货条件", "有送货员的联系电话吗？", "Avez-vous un numéro de téléphone pour contacter le livreur ?"],
           ["送货条件", "送货员会帮忙组装家具吗？", "Le livreur aide-t-il à monter le meuble ?"],
@@ -1425,12 +1387,7 @@
           ["送货条件", "如果家具有损坏我可以拒收吗？", "Puis-je refuser la livraison si le meuble est endommagé ?"],
           ["送货条件", "如果有问题，有保修吗？", "Y a-t-il une garantie en cas de problème ?"],
           ["送货条件", "如果缺少零件怎么办？", "Que faire si une pièce manque ?"],
-
-          // 结束（Fin）
-          ["结束", "谢谢你的回答，它们对我帮助很大!如果有需要，会再联系你，回头见!", "Je vous remercie pour vos réponses, elles m'ont beaucoup aidé ! À bientôt si j'ai d'autres besoins."],
-
         ];
-
 
         const seen = new Set();
         const out = [];
@@ -1456,12 +1413,12 @@
       }
 
       /* =========================
-         DATA (kept Tâche 1 and 3 as-is from your snippet)
+         DATA (placeholder content for all tâches; replace with yours)
          ========================= */
       const parts = [
         {
           label: "Tâche 1",
-          subtitle: "Présentation personnelle · 20 thèmes",
+          subtitle: "Présentation personnelle",
           display: { question: "both", answer: "both" },
           labels: { question: "Question / 提问", answer: "Réponse / 答案" },
           audio: {
@@ -1494,10 +1451,9 @@
             { id: 20, topicCn: "为什么加拿大", promptFr: "Pourquoi voulez-vous vivre au Canada ?", promptCn: "你为什么想在加拿大生活？", answerFr: "D’abord, le Canada est un pays d’immigration: en y travaillant, il est possible d’obtenir la résidence permanente, puis éventuellement la citoyenneté. Ensuite, le Canada offre une nature exceptionnelle. Comme j’aime beaucoup la nature, j’apprécie passer du temps près de l’océan, en montagne, et observer les animaux. Enfin, le Canada est un pays multiculturaliste, où différentes cultures et valeurs sont généralement respectées et bien accueillies. Je pense que l’inclusivité, l’environnement et la qualité de vie sont les principales raisons pour lesquelles je veux vivre au Canada.", answerCn: "首先，加拿大是移民国家：在这里工作有机会拿到永久居民，之后甚至可以入籍。其次，加拿大自然环境非常好。我喜欢自然，喜欢去海边、山里、观察动物。最后，加拿大是多元文化国家，不同文化和价值观通常会被尊重和欢迎。我认为包容性、环境和生活质量是我想在加拿大生活的主要原因。" }
           ]
         },
-
         {
           label: "Tâche 2",
-          subtitle: "Jeu de rôle · 只显示中文题目（点答案看法语原文）",
+          subtitle: "Jeu de rôle",
           display: { question: "cn", answer: "fr" },
           labels: { question: "题目（中文）", answer: "答案（法语原文）" },
           audio: {
@@ -1511,7 +1467,6 @@
           },
           items: buildT2Items()
         },
-
         {
           label: "Tâche 3",
           subtitle: "Défendre un point de vue",
@@ -1568,7 +1523,7 @@
       ];
 
       /* =========================
-         STATE (single declarations only; no redeclare)
+         STATE
          ========================= */
       let currentPartIndex = null;
 
@@ -1589,6 +1544,12 @@
 
       // Current "active" question in viewport
       let currentActiveId = null;
+
+      // NEW: Looping state (persisted)
+      const STORAGE_LOOP_ALL = "tcf_loop_all";
+      const STORAGE_LOOP_ONE = "tcf_loop_one";
+      let loopAllEnabled = false;
+      let loopOneEnabled = false;
 
       /* =========================
          DOM
@@ -1619,12 +1580,67 @@
       const voiceSelect = document.getElementById("voiceSelect");
       const testVoiceBtn = document.getElementById("testVoiceBtn");
 
+      const loopAllToggle = document.getElementById("loopAllToggle");
+      const loopOneToggle = document.getElementById("loopOneToggle");
+
       function updateHeaderHeightVar() {
         if (!headerSticky) return;
         const h = Math.max(52, headerSticky.offsetHeight || 0);
         document.documentElement.style.setProperty("--header-height", `${h}px`);
       }
       window.addEventListener("resize", updateHeaderHeightVar);
+
+      /* =========================
+         LOOPING (persist + behavior)
+         ========================= */
+      function safeGetLS(key) {
+        try { return localStorage.getItem(key); } catch { return null; }
+      }
+      function safeSetLS(key, val) {
+        try { localStorage.setItem(key, String(val)); } catch { }
+      }
+
+      function loadLoopPrefs() {
+        loopAllEnabled = safeGetLS(STORAGE_LOOP_ALL) === "1";
+        loopOneEnabled = safeGetLS(STORAGE_LOOP_ONE) === "1";
+        if (loopAllToggle) loopAllToggle.checked = loopAllEnabled;
+        if (loopOneToggle) loopOneToggle.checked = loopOneEnabled;
+      }
+
+      function setLoopAll(val) {
+        loopAllEnabled = !!val;
+        safeSetLS(STORAGE_LOOP_ALL, loopAllEnabled ? "1" : "0");
+        if (loopAllToggle) loopAllToggle.checked = loopAllEnabled;
+      }
+
+      function setLoopOne(val) {
+        loopOneEnabled = !!val;
+        safeSetLS(STORAGE_LOOP_ONE, loopOneEnabled ? "1" : "0");
+        if (loopOneToggle) loopOneToggle.checked = loopOneEnabled;
+      }
+
+      // Priority rule:
+      // - If loopOne is ON: loop current item (single or play-all).
+      // - Else if loopAll is ON: when play-all reaches end, restart from first visible item.
+      // - Otherwise: stop normally.
+      function normalizeLoopToggles() {
+        // If user enables loopOne, keep loopAll as-is (but loopOne has priority).
+        // If user disables loopOne, loopAll can still apply.
+        // No forced auto-toggle needed; just priority.
+      }
+
+      if (loopAllToggle) {
+        loopAllToggle.addEventListener("change", () => {
+          setLoopAll(loopAllToggle.checked);
+          normalizeLoopToggles();
+        });
+      }
+      if (loopOneToggle) {
+        loopOneToggle.addEventListener("change", () => {
+          setLoopOne(loopOneToggle.checked);
+          normalizeLoopToggles();
+        });
+      }
 
       /* =========================
          PART HELPERS
@@ -1849,8 +1865,6 @@
 
       /* =========================
          SECTION RENDER HELPERS
-         - Each section is collapsible via <details>
-         - Section can include a scenario/question text (descFr/descCn)
          ========================= */
       function createSection(titleCn, descFr, descCn) {
         const details = document.createElement("details");
@@ -1864,13 +1878,12 @@
         left.className = "section-left";
         left.innerHTML = `
           <div class="section-title">${toHtmlText(titleCn || "Section")}</div>
-          ${(descFr || descCn) ? `<div class="section-sub">Cliquez pour replier/déplier</div>` : `<div class="section-sub">Cliquez pour replier/déplier</div>`}
+          <div class="section-sub">Cliquez pour replier/déplier</div>
         `;
 
         const actions = document.createElement("div");
         actions.className = "section-actions";
 
-        // Optional: "朗读本节" for TTS parts so section text is readable by TTS
         if (isTTSPart()) {
           const btnSpeak = document.createElement("button");
           btnSpeak.className = "btn";
@@ -1919,7 +1932,7 @@
       }
 
       /* =========================
-         RENDER (with collapsible sections + questions shown in sections)
+         RENDER
          ========================= */
       function renderAllItems() {
         const part = getCurrentPart();
@@ -1994,6 +2007,7 @@
           btnPlayAns.addEventListener("click", () => {
             preserveTopItemPosition(() => {
               setCurrentActiveId(it.id);
+              // if loopOne is enabled, single-play should keep looping this item
               playItemAudio(it.id, false);
             });
           });
@@ -2033,9 +2047,6 @@
             ${showQFr ? `<div class="fr">${toHtmlText(it.promptFr)}</div>` : ""}
             ${showQCn ? `<div class="cn">${toHtmlText(it.promptCn)}</div>` : ""}
           `;
-
-          // Tâche 2 uses promptCn (question) + answerFr (fr original); ensure question is present
-          // This is already covered above.
 
           const ans = document.createElement("div");
           ans.className = "answer";
@@ -2117,12 +2128,11 @@
       });
 
       /* =========================
-         SEARCH FILTER (updated for collapsible sections)
+         SEARCH FILTER
          ========================= */
       function applySearchFilter() {
         const kw = (searchInput.value || "").trim().toLowerCase();
 
-        // filter cards
         const cards = document.querySelectorAll(".item");
         cards.forEach(card => {
           if (!kw) { card.style.display = ""; return; }
@@ -2130,7 +2140,6 @@
           card.style.display = txt.includes(kw) ? "" : "none";
         });
 
-        // hide entire sections with no visible cards
         const sections = document.querySelectorAll("details.section");
         sections.forEach(sec => {
           const visible = Array.from(sec.querySelectorAll(".item"))
@@ -2242,16 +2251,14 @@
       }, { passive: true });
 
       /* =========================
-         AUDIO (MP3 + TTS) — play item + play all from current
+         AUDIO (MP3 + TTS)
          ========================= */
       function stopAudio(clearAll) {
         playSeq++;
         ttsSeq++;
 
-        // stop mp3
         try { audioPlayer.pause(); audioPlayer.currentTime = 0; } catch { }
 
-        // stop tts
         if ("speechSynthesis" in window) {
           try { window.speechSynthesis.cancel(); } catch { }
         }
@@ -2261,12 +2268,13 @@
         currentPlayingId = null;
 
         if (clearAll) {
-          // no-op, reserved
+          // reserved
         }
       }
 
       function highlightPlaying(itemId) {
         document.querySelectorAll(".item").forEach(el => el.style.outline = "");
+        if (itemId == null) return;
         const el = document.querySelector(`.item[data-itemid="${Number(itemId)}"]`);
         if (el) el.style.outline = "3px solid rgba(12,99,199,0.25)";
       }
@@ -2292,7 +2300,6 @@
         if (!("speechSynthesis" in window)) return;
 
         ttsSeq++;
-        const mySeq = ttsSeq;
         try { window.speechSynthesis.cancel(); } catch { }
 
         const part = getCurrentPart();
@@ -2309,8 +2316,6 @@
 
         currentUtterance = u;
         window.speechSynthesis.speak(u);
-
-        // no promise needed for section speak
       }
 
       function playTtsItem(itemId) {
@@ -2343,9 +2348,10 @@
         });
       }
 
+      // NEW: a "wait for current audio" wrapper that resolves on end/stop
       async function playItemAudio(itemId, fromPlayAll) {
-        if (!partHasAudio()) return;
-        if (!hasAudioForItem(itemId)) return;
+        if (!partHasAudio()) return { ok: false, ended: true };
+        if (!hasAudioForItem(itemId)) return { ok: false, ended: true };
 
         // stop any current single playback if not in play-all
         if (!fromPlayAll) stopAudio(false);
@@ -2354,13 +2360,71 @@
         highlightPlaying(itemId);
 
         if (isMP3Part()) {
-          await playMp3Item(itemId);
-          return;
+          const res = await playMp3Item(itemId);
+          return { ok: res.ok, ended: true, seq: res.seq };
         }
         if (isTTSPart()) {
-          await playTtsItem(itemId);
-          return;
+          const res = await playTtsItem(itemId);
+          return { ok: res.ok, ended: true, seq: res.seq };
         }
+        return { ok: false, ended: true };
+      }
+
+      function getLoopMode() {
+        // loopOne has priority
+        if (loopOneEnabled) return "one";
+        if (loopAllEnabled) return "all";
+        return "none";
+      }
+
+      function firstVisiblePlayableId() {
+        const ids = getVisibleNonSectionIds();
+        for (const id of ids) {
+          if (hasAudioForItem(id)) return id;
+        }
+        return ids[0] || null;
+      }
+
+      function nextVisiblePlayableId(currentId) {
+        const ids = getVisibleNonSectionIds();
+        if (!ids.length) return null;
+        const idx = ids.indexOf(Number(currentId));
+        for (let i = idx + 1; i < ids.length; i++) {
+          if (hasAudioForItem(ids[i])) return ids[i];
+        }
+        return null;
+      }
+
+      async function playSingleWithPossibleLoop(itemId) {
+        // Called when user clicks "播放答案/朗读答案" on one item.
+        // Behavior:
+        // - If loopOne enabled: repeat this item until Stop.
+        // - Else: play once.
+        stopAudio(false);
+
+        const myRun = ++playSeq;
+        const id = Number(itemId);
+
+        while (true) {
+          if (myRun !== playSeq) break; // stopped / replaced
+          setCurrentActiveId(id);
+          highlightPlaying(id);
+
+          await playItemAudio(id, true);
+
+          if (myRun !== playSeq) break;
+
+          const mode = getLoopMode();
+          if (mode === "one") {
+            // continue looping same item
+            continue;
+          }
+          // mode all/none: single-play ends after one run
+          break;
+        }
+
+        currentPlayingId = null;
+        highlightPlaying(null);
       }
 
       async function playAllFromCurrent() {
@@ -2376,18 +2440,63 @@
         let startId = Number(currentActiveId);
         if (!startId || !ids.includes(startId)) startId = ids[0];
 
-        const startIndex = Math.max(0, ids.indexOf(startId));
-        const queue = ids.slice(startIndex).filter(id => hasAudioForItem(id));
+        const modeAtStart = getLoopMode();
 
-        for (const id of queue) {
-          if (!isAllPlaying || myRun !== playSeq) break;
-          currentPlayingId = id;
-          setCurrentActiveId(id);
-          highlightPlaying(id);
-          await playItemAudio(id, true);
+        // We will keep a pointer, and loop based on mode evaluated each cycle
+        let pointer = startId;
 
-          // if user stopped during TTS/MP3, break
+        while (true) {
           if (!isAllPlaying || myRun !== playSeq) break;
+
+          const mode = getLoopMode();
+
+          // resolve current pointer to a playable item; if not playable, find next playable
+          if (!hasAudioForItem(pointer)) {
+            const nxtPlayable = nextVisiblePlayableId(pointer);
+            if (nxtPlayable != null) pointer = nxtPlayable;
+            else {
+              // no playable after pointer
+              if (mode === "all") {
+                const first = firstVisiblePlayableId();
+                if (first == null) break;
+                pointer = first;
+              } else {
+                break;
+              }
+            }
+          }
+
+          // play pointer
+          currentPlayingId = pointer;
+          setCurrentActiveId(pointer);
+          highlightPlaying(pointer);
+
+          await playItemAudio(pointer, true);
+
+          if (!isAllPlaying || myRun !== playSeq) break;
+
+          // decide next pointer
+          if (mode === "one") {
+            // loop same pointer
+            continue;
+          }
+
+          const next = nextVisiblePlayableId(pointer);
+          if (next != null) {
+            pointer = next;
+            continue;
+          }
+
+          // reached the end
+          if (mode === "all") {
+            const first = firstVisiblePlayableId();
+            if (first == null) break;
+            pointer = first;
+            continue;
+          }
+
+          // mode none
+          break;
         }
 
         isAllPlaying = false;
@@ -2395,6 +2504,7 @@
         highlightPlaying(null);
       }
 
+      /* Hook buttons */
       playAllBtn.addEventListener("click", () => {
         preserveTopItemPosition(() => {
           playAllFromCurrent();
@@ -2412,12 +2522,55 @@
         });
       }
 
+      /* Intercept per-item play to support single-item looping */
+      function wirePerItemPlayOverride() {
+        // This is called after rendering; we override the click behavior to use looping logic.
+        // (We keep DOM structure unchanged; only adjust listeners.)
+        const part = getCurrentPart();
+        if (!part) return;
+
+        document.querySelectorAll(".item").forEach(card => {
+          const id = Number(card.dataset.itemid);
+          const btn = card.querySelector(".item-actions .btn");
+          if (!btn) return;
+
+          // We only want the first action button (播放/朗读答案). In renderAllItems it's appended first.
+          // Guard by checking text starts with 播放/朗读/无音频.
+          const txt = (btn.textContent || "").trim();
+          if (!txt || txt === "无音频") return;
+
+          // Remove previous listeners safely by cloning
+          const clone = btn.cloneNode(true);
+          btn.replaceWith(clone);
+
+          clone.addEventListener("click", () => {
+            preserveTopItemPosition(() => {
+              setCurrentActiveId(id);
+              playSingleWithPossibleLoop(id);
+            });
+          });
+        });
+      }
+
       /* =========================
          BOOT
          ========================= */
       buildPartGrid();
+      loadLoopPrefs();
       updateHeaderHeightVar();
       updateProgressUI();
+
+      /* When part starts, we must re-wire per-item play buttons (because we clone/replace) */
+      const _startPart = startPart;
+      startPart = function (idx) {
+        _startPart(idx);
+        // After render, wire loop-aware per-item play
+        requestAnimationFrame(() => wirePerItemPlayOverride());
+      };
+
+      /* Make backIcon handler still point to exitPart after startPart override */
+      // (No change needed.)
+
     })();
   </script>
 </body>
