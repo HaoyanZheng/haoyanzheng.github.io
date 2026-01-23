@@ -1260,7 +1260,7 @@
             type: "mp3",
             range: [1, 21],
             playAllLabel: "播放全部答案（从当前位置开始）",
-            src: (id) => `assets/tcfEO/t1a${id}.mp3`
+            src: (id) => `assets/tcfEO/mp3/t1a${id}.mp3`
           },
           items: [
             {
@@ -1436,12 +1436,11 @@
           labels: { question: "题目（中文）", answer: "答案（法语原文）" },
           audio: {
             enabled: true,
-            type: "tts",
-            lang: "fr-FR",
-            rate: 1.0,
-            pitch: 1.0,
-            playAllLabel: "朗读全部答案（从当前位置开始）",
-            getText: (item) => item.answerFr
+            type: "mp3",
+            // 你现在 t3 有 1..8（看你贴的 items），就写 [1, 8]
+            range: [1, 8],
+            playAllLabel: "播放全部答案（从当前位置开始）",
+            src: (id) => `assets/tcfEO/mp3/t2a${id}.mp3`
           },
           items: buildT2Items()
         },
@@ -1456,7 +1455,7 @@
             // 你现在 t3 有 1..8（看你贴的 items），就写 [1, 8]
             range: [1, 8],
             playAllLabel: "播放全部答案（从当前位置开始）",
-            src: (id) => `assets/tcfEO/t3a${id}.mp3`
+            src: (id) => `assets/tcfEO/mp3/t3a${id}.mp3`
           },
           items: [
 
