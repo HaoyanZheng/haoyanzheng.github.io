@@ -1,6 +1,6 @@
 param(
-  [string]$CsvPath = "\tts.csv",
-  [string]$OutDir  = "\out",
+  [string]$CsvPath = "assets/tcfEO/tache2.csv",
+  [string]$OutDir  = "assets/tcfEO/",
   [string]$VoiceLike = "Microsoft",   # partial match; adjust to pick a specific voice
   [int]$Rate = 0,                     # -10..10 (0 is normal)
   [int]$Volume = 100,                 # 0..100
