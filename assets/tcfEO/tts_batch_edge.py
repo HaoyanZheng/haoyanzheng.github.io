@@ -88,7 +88,7 @@ async def synth_one_ssml(voice: str, text: str, out_path: Path, rate: int, volum
 
 async def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default="assets/tcfEO/tache3.csv")
+    ap.add_argument("--csv", default="assets/tcfEO/tache2.csv")
     ap.add_argument("--outdir", default="assets/tcfEO/mp3")
     ap.add_argument("--voice", default="fr-CA-AntoineNeural")
     ap.add_argument("--lang", default="fr-CA")
