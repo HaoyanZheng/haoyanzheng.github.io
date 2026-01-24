@@ -352,12 +352,6 @@
       background: #fff;
       overflow: hidden;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-      scroll-margin-top: calc(var(--header-height) + 70px);
-    }
-
-    .item.playing {
-      border-color: #0c63c7;
-      box-shadow: 0 8px 18px rgba(12, 99, 199, 0.22);
     }
 
     .item-head {
@@ -587,11 +581,6 @@
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
       }
 
-      .item.playing {
-        border-color: #93c5fd;
-        box-shadow: 0 10px 22px rgba(147, 197, 253, 0.20);
-      }
-
       .item-head {
         background: #0b1120;
         border-bottom-color: #1f2937;
@@ -655,8 +644,7 @@
       <div class="hero">
         <div class="hero-title">TCF – Expression Orale</div>
         <div class="hero-sub">
-          选择任务（3 tâches）。支持：逐题播放、播放全部、连续循环（整套/单题）。<br />
-          iPhone 锁屏 Now Playing 显示当前句子：已集成 Media Session（iOS 支持时会显示）。
+          选择任务（3 tâches）。支持：逐题播放、播放全部、连续循环（整套/单题）。
         </div>
       </div>
       <div id="partGrid" class="grid"></div>
@@ -682,7 +670,7 @@
         <button class="btn" id="playAllBtn">播放/朗读全部（从当前位置）</button>
         <button class="btn" id="stopBtn">停止播放</button>
 
-        <!-- looping controls -->
+        <!-- NEW: looping controls -->
         <span class="pill" title="播放完最后一句后自动继续">
           <label for="loopAllToggle">循环整套</label>
           <input id="loopAllToggle" type="checkbox" />
@@ -714,12 +702,6 @@
           .replaceAll("'", "&#039;");
       }
       function toHtmlText(str) { return escapeHtml(str).replaceAll("\n", "<br>"); }
-
-      function clampText(s, max = 120) {
-        const t = String(s || "").replace(/\s+/g, " ").trim();
-        if (t.length <= max) return t;
-        return t.slice(0, max - 1) + "…";
-      }
 
       /* =========================
          TÂCHE 2 BUILDER (you can paste your full content)
@@ -1265,7 +1247,7 @@
       }
 
       /* =========================
-         DATA (Tâche 1/2/3)
+         DATA (placeholder content for all tâches; replace with yours)
          ========================= */
       const parts = [
         {
@@ -1280,173 +1262,172 @@
             playAllLabel: "播放全部答案（从当前位置开始）",
             src: (id) => `assets/tcfEO/mp3/t1a${id}.mp3`
           },
-          items:
-            [
-              {
-                id: 1, topicCn: "姓名",
-                promptFr: "Comment vous appelez-vous ?",
-                promptCn: "您叫什么名字？",
-                answerFr: "Bonjour madame/ monsieur, je m’appelle Haoyan.",
-                answerCn: "您好，我叫 Haoyan。"
-              },
-              {
-                id: 2, topicCn: "年龄",
-                promptFr: "Quel âge avez-vous ?",
-                promptCn: "您多大了？",
-                answerFr: "J’ai vingt et un ans.",
-                answerCn: "我21岁。"
-              },
-              {
-                id: 3, topicCn: "国籍",
-                promptFr: "Quelle est votre nationalité ?",
-                promptCn: "您的国籍是什么？",
-                answerFr: "Je suis de nationalité chinoise. Actuellement, je suis étudiant international et je vis à Toronto avec mes amis.",
-                answerCn: "我是中国国籍。目前我是一名国际学生，和朋友住在多伦多。"
-              },
-              {
-                id: 4,
-                topicCn: "性格",
-                promptFr: "Comment êtes-vous ?",
-                promptCn: "您的性格如何？",
-                answerFr: "Je suis quelqu’un d’introverti, calme, et réfléchi. Mes amis me trouvent poli et généreux.",
-                answerCn: "我比较内向、冷静、爱思考。朋友觉得我有礼貌而且大方。"
-              },
-              {
-                id: 5,
-                topicCn: "语言",
-                promptFr: "Quelles langues parlez-vous ?",
-                promptCn: "您会哪些语言？",
-                answerFr: "Ma langue maternelle est le mandarin. Je parle couramment l’anglais et un peu de japonais. J’aime apprendre de nouvelles langues, parce que cela me permet de mieux comprendre d’autres cultures et de voir le monde sous un autre angle.",
-                answerCn: "我的母语是普通话。我英语很流利，也会一点日语。我喜欢学新语言，因为这能帮助我理解其他文化，并从不同角度看世界。"
-              },
-              {
-                id: 6,
-                topicCn: "专业",
-                promptFr: "Qu’est-ce que vous étudiez ?",
-                promptCn: "您学什么专业？",
-                answerFr: "J’étudie le génie robotique à l’université de Toronto et je suis actuellement en quatrième année. C’est un domaine difficile, mais je vois les grands changements que les robots apporteront à nos vies dans le futur. Je pense aussi qu’il y aura une forte demande sur le marché du travail et beaucoup de valeur à créer. C’est donc, à mon avis, un diplôme très prometteur.",
-                answerCn: "我在多伦多大学学机器人工程，目前大四。这个领域很难，但我看到机器人未来会给生活带来巨大变化。我也认为就业市场需求会很大，价值空间也很高，所以我觉得这是很有前景的学位。"
-              },
-              {
-                id: 7,
-                topicCn: "实习经历",
-                promptFr: "Avez-vous déjà fait des stages ?",
-                promptCn: "您有实习经历吗？",
-                answerFr: "Pendant mes études, j’ai eu l’occasion de faire plusieurs stages et travaux pratiques. L’an dernier, j’ai fait un stage au ministère des Transports de l’Ontario, où j’ai participé à l’inspection des autoroutes et j’ai suivi des travaux d’entretien. En parallèle, je travaille à l’Hôpital Général de Toronto, ce qui m’aide à développer mes compétences en communication et en organisation.",
-                answerCn: "学习期间我做过多次实习和实践。去年我在安省交通厅实习，参与高速公路检查并跟进养护工作。同时我也在多伦多综合医院工作，帮助我提升沟通与组织能力。"
-              },
-              {
-                id: 8,
-                topicCn: "喜好",
-                promptFr: "Quels sont vos centres d’intérêt ?",
-                promptCn: "您的兴趣爱好是什么？",
-                answerFr: "J’ai beaucoup de centres d’intérêt. J’aime le sport, surtout le badminton et la randonnée. J’aime aussi lire et j’écoute souvent les informations pour améliorer mon français. Ces activités m’aident à rester motivé et à garder un bon équilibre.",
-                answerCn: "我兴趣很多。我喜欢运动，尤其是羽毛球和徒步。我也喜欢阅读，经常听新闻来提高法语。这些活动让我保持动力并维持平衡。"
-              },
-              {
-                id: 9,
-                topicCn: "家庭",
-                promptFr: "Parlez-moi de votre famille.",
-                promptCn: "请介绍一下您的家庭。",
-                answerFr: "Mes parents sont commerçants en Chine et je suis enfant unique. Ça fait un an que je n’ai pas vu mes parents, mais on fait un appel vidéo chaque mois.",
-                answerCn: "我父母在中国做生意，我是独生子女。我已经一年没见他们了，但我们每个月都会视频通话。"
-              },
-              {
-                id: 10,
-                topicCn: "未来计划",
-                promptFr: "Quels sont vos projets pour l’avenir ?",
-                promptCn: "您未来有什么计划？",
-                answerFr: "Dans le futur, je souhaite continuer mes études et développer ma carrière au Canada. Je veux améliorer mon français et mon anglais pour m’intégrer facilement dans la société canadienne et réussir mes projets professionnels. Je suis motivé, curieux et prêt à relever de nouveaux défis.",
-                answerCn: "未来我希望继续深造并在加拿大发展职业。我想提高法语和英语，更容易融入加拿大社会并实现职业目标。我很有动力、好奇，也准备迎接新挑战。"
-              },
-              {
-                id: 11, topicCn: "难忘的事件",
-                promptFr: "Racontez-moi un souvenir marquant.",
-                promptCn: "请讲一个难忘的经历。",
-                answerFr: "J’ai voyagé à Montréal l’année dernière, et cela m’a laissé un souvenir inoubliable. La ville a une ambiance différente grâce à sa culture francophone. J’ai beaucoup aimé la nourriture, le système de transport et l’architecture. Après l’obtention de mon diplôme, je prévois de m’y installer.",
-                answerCn: "我去年去蒙特利尔旅行，留下了难忘回忆。这座城市因为法语文化氛围很不一样。我很喜欢那里的食物、交通系统和建筑。毕业后我计划搬去那里生活。"
-              },
-              {
-                id: 12,
-                topicCn: "城市",
-                promptFr: "Où habitez-vous ?",
-                promptCn: "您住在哪里？",
-                answerFr: "J’habite à Toronto, une ville moderne connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique.",
-                answerCn: "我住在多伦多，这是一座现代化城市，以摩天大楼、多元文化和经济活力著称。"
-              },
-              {
-                id: 13,
-                topicCn: "住房条件",
-                promptFr: "Comment est votre logement ?",
-                promptCn: "您的住房情况如何？",
-                answerFr: "Je loue une maison de quatre chambres avec des amis de l’université, située dans le quartier de Chinatown, juste en face de mon université. Le loyer est relativement abordable, ce qui est un avantage important pour moi. En revanche, le quartier est parfois bruyant et très fréquenté.",
-                answerCn: "我和大学朋友合租了一套四居室的房子，位于唐人街，就在学校对面。房租相对比较实惠，这对我来说是一个重要的优点。不过，这个区域有时比较吵，人也很多。",
-              },
-              {
-                id: 14,
-                topicCn: "社区文化",
-                promptFr: "Y a-t-il des événements dans votre quartier ?",
-                promptCn: "您社区有哪些活动？",
-                answerFr: "De temps en temps, il y a des événements culturels chinois dans mon quartier, surtout pendant les fêtes comme le Nouvel An chinois. Ces activités permettent aux habitants de se retrouver et de découvrir la culture. Cependant, comme je suis souvent occupé par mes études et mon travail, je participe rarement aux événements du quartier.",
-                answerCn: "我的社区不时会举办一些华人文化活动，尤其是在春节等节日期间。这些活动让居民有机会聚在一起、了解文化。不过，由于我平时忙于学习和工作，很少参加社区活动。",
-              },
-              {
-                id: 15,
-                topicCn: "交通",
-                promptFr: "Comment vous déplacez-vous ?",
-                promptCn: "您平时怎么出行？",
-                answerFr: "Comme je vis au centre-ville, il y a des tramways sur presque toutes les grandes rues. De plus, mon université est située près de plusieurs stations de métro, ce qui rend les déplacements très pratiques. En général, je peux facilement me déplacer dans le centre-ville sans avoir besoin de voiture.",
-                answerCn: "因为我住在市中心，几乎每条主要街道都有有轨电车。此外，我的学校靠近多条地铁站，这让出行非常方便。总体来说，在市中心我不用开车也能很轻松地出行。",
-              },
-              {
-                id: 16,
-                topicCn: "气候",
-                promptFr: "Quelle est votre saison préférée ?",
-                promptCn: "你最喜欢的季节是什么？",
-                answerFr: "L’été est ma saison préférée à Toronto, car le climat est agréable et confortable. Pendant les journées les plus chaudes, je reste généralement au travail ou à la maison, et je préfère sortir marcher ou faire de la randonnée le matin ou en soirée, quand la température est plus douce. Il y a souvent un peu de vent, ce qui rend l’ambiance encore plus agréable.",
-                answerCn: "在多伦多，夏天是我最喜欢的季节，因为气候比较舒适。天气最热的时候，我通常在工作或在家，早上或傍晚气温较低时会出去散步或徒步。通常还会有一点风，让整体感觉更加舒服。",
-              },
-              {
-                id: 17,
-                topicCn: "气候",
-                promptFr: "Quelle est la saison que vous aimez le moins ?",
-                promptCn: "你最讨厌的季节是什么？",
-                answerFr: "L’hiver est la saison que j’aime le moins à Toronto, car il est rude et glacial, ce qui rend la vie quotidienne plus difficile. Je dois porter un bonnet, des gants et un manteau d’hiver pour rester au chaud, surtout lorsque les températures sont très basses. Malgré cela, les déplacements restent souvent compliqués à cause du vent et de la neige présents chaque année.",
-                answerCn: "在多伦多，冬天是我最不喜欢的季节，因为天气又冷又严酷，这让日常生活变得更加困难。为了保暖，我必须戴帽子、手套并穿上厚重的冬衣，尤其是在气温很低的时候。尽管如此，由于每年都会有大风和积雪，出行仍然经常不太方便。",
-              },
-              {
-                id: 18,
-                topicCn: "友谊关系",
-                promptFr: "Parlez-moi de vos amis.",
-                promptCn: "说说你的朋友。",
-                answerFr: "J’ai beaucoup d’amis de l’université avec qui je reste en contact tout au long de l’année. Nous échangeons régulièrement des nouvelles et nous discutons aussi de nos difficultés, comme la recherche d’emploi, les candidatures aux études supérieures ou des questions liées à la vie quotidienne. C’est pour moi une excellente façon de rester informé et de suivre l’actualité en technologie, en politique et en économie.",
-                answerCn: "我有很多大学朋友，我们全年都保持联系。我们经常互相分享近况，也会讨论一些困难，比如找工作、申请研究生，或者日常生活中的问题。对我来说，这也是了解科技、政治和经济动态的一种很好方式。",
-              },
-              {
-                id: 19,
-                topicCn: "个人物品",
-                promptFr: "Quels objets sont importants pour vous ?",
-                promptCn: "哪些物品对你很重要？",
-                answerFr: "Comme je suis étudiant international au Canada, je ne possède pas de gros meubles ni d’objets de grande valeur. Je garde seulement l’essentiel, c’est-à-dire des affaires utiles et peu coûteuses, afin de pouvoir déménager facilement pour mes études ou pour le travail. Pour moi, les objets les plus importants sont mes outils de communication et de travail, notamment mon téléphone et mon iPad.",
-                answerCn: "由于我是加拿大的国际学生，我没有大件家具或贵重物品。我只保留一些必需、实用而且不贵的东西，这样可以方便我因为学习或工作在加拿大搬家。对我来说，最重要的物品是沟通和学习用的工具，比如手机和 iPad。",
-              },
-              {
-                id: 20,
-                topicCn: "最想去的地方",
-                promptFr: "Quel pays aimeriez-vous visiter ?",
-                promptCn: "你最想去哪里？",
-                answerFr: "Le pays que j’aimerais le plus visiter est l’Islande. Je privilégie un mode de vie calme et un bon équilibre entre la vie professionnelle et la vie personnelle, et l’Islande correspond bien à ces valeurs grâce à sa nature préservée. De plus, le climat hivernal y est généralement plus doux qu’à Toronto et le pays dispose d’un système de protection sociale fiable.",
-                answerCn: "我最想去的国家是冰岛。我比较看重安静的生活方式以及工作与生活的平衡，而冰岛凭借其原始的自然环境很好地符合这些价值观。此外，那里的冬季气候通常比多伦多温和，而且社会保障体系也比较完善。",
-              },
-              {
-                id: 21,
-                topicCn: "为什么加拿大",
-                promptFr: "Pourquoi voulez-vous vivre au Canada ?",
-                promptCn: "你为什么想在加拿大生活？",
-                answerFr: "Je pense que l’inclusivité, la protection de l’environnement et la qualité de vie sont les principales raisons pour lesquelles je souhaite vivre au Canada. Le pays offre une nature exceptionnelle, et comme j’aime beaucoup la nature, j’apprécie passer du temps près de l’océan, en montagne et observer les animaux. Enfin, le Canada est un pays multiculturel où différentes cultures et valeurs sont généralement respectées et bien accueillies.",
-                answerCn: "我认为包容性、环境保护以及生活质量是我想在加拿大生活的主要原因。加拿大拥有非常出色的自然环境，而我本身很喜欢大自然，喜欢去海边、山区以及观察动物。最后，加拿大是一个多元文化国家，不同的文化和价值观通常都会受到尊重和欢迎。",
-              }
-            ]
+          items: [
+            {
+              id: 1, topicCn: "姓名",
+              promptFr: "Comment vous appelez-vous ?",
+              promptCn: "您叫什么名字？",
+              answerFr: "Bonjour madame/ monsieur, je m’appelle Haoyan.",
+              answerCn: "您好，我叫 Haoyan。"
+            },
+            {
+              id: 2, topicCn: "年龄",
+              promptFr: "Quel âge avez-vous ?",
+              promptCn: "您多大了？",
+              answerFr: "J’ai vingt et un ans.",
+              answerCn: "我21岁。"
+            },
+            {
+              id: 3, topicCn: "国籍",
+              promptFr: "Quelle est votre nationalité ?",
+              promptCn: "您的国籍是什么？",
+              answerFr: "Je suis de nationalité chinoise. Actuellement, je suis étudiant international et je vis à Toronto avec mes amis.",
+              answerCn: "我是中国国籍。目前我是一名国际学生，和朋友住在多伦多。"
+            },
+            {
+              id: 4,
+              topicCn: "性格",
+              promptFr: "Comment êtes-vous ?",
+              promptCn: "您的性格如何？",
+              answerFr: "Je suis quelqu’un d’introverti, calme, et réfléchi. Mes amis me trouvent poli et généreux.",
+              answerCn: "我比较内向、冷静、爱思考。朋友觉得我有礼貌而且大方。"
+            },
+            {
+              id: 5,
+              topicCn: "语言",
+              promptFr: "Quelles langues parlez-vous ?",
+              promptCn: "您会哪些语言？",
+              answerFr: "Ma langue maternelle est le mandarin. Je parle couramment l’anglais et un peu de japonais. J’aime apprendre de nouvelles langues, parce que cela me permet de mieux comprendre d’autres cultures et de voir le monde sous un autre angle.",
+              answerCn: "我的母语是普通话。我英语很流利，也会一点日语。我喜欢学新语言，因为这能帮助我理解其他文化，并从不同角度看世界。"
+            },
+            {
+              id: 6,
+              topicCn: "专业",
+              promptFr: "Qu’est-ce que vous étudiez ?",
+              promptCn: "您学什么专业？",
+              answerFr: "J’étudie le génie robotique à l’université de Toronto et je suis actuellement en quatrième année. C’est un domaine difficile, mais je vois les grands changements que les robots apporteront à nos vies dans le futur. Je pense aussi qu’il y aura une forte demande sur le marché du travail et beaucoup de valeur à créer. C’est donc, à mon avis, un diplôme très prometteur.",
+              answerCn: "我在多伦多大学学机器人工程，目前大四。这个领域很难，但我看到机器人未来会给生活带来巨大变化。我也认为就业市场需求会很大，价值空间也很高，所以我觉得这是很有前景的学位。"
+            },
+            {
+              id: 7,
+              topicCn: "实习经历",
+              promptFr: "Avez-vous déjà fait des stages ?",
+              promptCn: "您有实习经历吗？",
+              answerFr: "Pendant mes études, j’ai eu l’occasion de faire plusieurs stages et travaux pratiques. L’an dernier, j’ai fait un stage au ministère des Transports de l’Ontario, où j’ai participé à l’inspection des autoroutes et j’ai suivi des travaux d’entretien. En parallèle, je travaille à l’Hôpital Général de Toronto, ce qui m’aide à développer mes compétences en communication et en organisation.",
+              answerCn: "学习期间我做过多次实习和实践。去年我在安省交通厅实习，参与高速公路检查并跟进养护工作。同时我也在多伦多综合医院工作，帮助我提升沟通与组织能力。"
+            },
+            {
+              id: 8,
+              topicCn: "喜好",
+              promptFr: "Quels sont vos centres d’intérêt ?",
+              promptCn: "您的兴趣爱好是什么？",
+              answerFr: "J’ai beaucoup de centres d’intérêt. J’aime le sport, surtout le badminton et la randonnée. J’aime aussi lire et j’écoute souvent les informations pour améliorer mon français. Ces activités m’aident à rester motivé et à garder un bon équilibre.",
+              answerCn: "我兴趣很多。我喜欢运动，尤其是羽毛球和徒步。我也喜欢阅读，经常听新闻来提高法语。这些活动让我保持动力并维持平衡。"
+            },
+            {
+              id: 9,
+              topicCn: "家庭",
+              promptFr: "Parlez-moi de votre famille.",
+              promptCn: "请介绍一下您的家庭。",
+              answerFr: "Mes parents sont commerçants en Chine et je suis enfant unique. Ça fait un an que je n’ai pas vu mes parents, mais on fait un appel vidéo chaque mois.",
+              answerCn: "我父母在中国做生意，我是独生子女。我已经一年没见他们了，但我们每个月都会视频通话。"
+            },
+            {
+              id: 10,
+              topicCn: "未来计划",
+              promptFr: "Quels sont vos projets pour l’avenir ?",
+              promptCn: "您未来有什么计划？",
+              answerFr: "Dans le futur, je souhaite continuer mes études et développer ma carrière au Canada. Je veux améliorer mon français et mon anglais pour m’intégrer facilement dans la société canadienne et réussir mes projets professionnels. Je suis motivé, curieux et prêt à relever de nouveaux défis.",
+              answerCn: "未来我希望继续深造并在加拿大发展职业。我想提高法语和英语，更容易融入加拿大社会并实现职业目标。我很有动力、好奇，也准备迎接新挑战。"
+            },
+            {
+              id: 11, topicCn: "难忘的事件",
+              promptFr: "Racontez-moi un souvenir marquant.",
+              promptCn: "请讲一个难忘的经历。",
+              answerFr: "J’ai voyagé à Montréal l’année dernière, et cela m’a laissé un souvenir inoubliable. La ville a une ambiance différente grâce à sa culture francophone. J’ai beaucoup aimé la nourriture, le système de transport et l’architecture. Après l’obtention de mon diplôme, je prévois de m’y installer.",
+              answerCn: "我去年去蒙特利尔旅行，留下了难忘回忆。这座城市因为法语文化氛围很不一样。我很喜欢那里的食物、交通系统和建筑。毕业后我计划搬去那里生活。"
+            },
+            {
+              id: 12,
+              topicCn: "城市",
+              promptFr: "Où habitez-vous ?",
+              promptCn: "您住在哪里？",
+              answerFr: "J’habite à Toronto, une ville moderne connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique.",
+              answerCn: "我住在多伦多，这是一座现代化城市，以摩天大楼、多元文化和经济活力著称。"
+            },
+            {
+              id: 13,
+              topicCn: "住房条件",
+              promptFr: "Comment est votre logement ?",
+              promptCn: "您的住房情况如何？",
+              answerFr: "Je loue une maison de quatre chambres avec des amis de l’université, située dans le quartier de Chinatown, juste en face de mon université. Le loyer est relativement abordable, ce qui est un avantage important pour moi. En revanche, le quartier est parfois bruyant et très fréquenté.",
+              answerCn: "我和大学朋友合租了一套四居室的房子，位于唐人街，就在学校对面。房租相对比较实惠，这对我来说是一个重要的优点。不过，这个区域有时比较吵，人也很多。",
+            },
+            {
+              id: 14,
+              topicCn: "社区文化",
+              promptFr: "Y a-t-il des événements dans votre quartier ?",
+              promptCn: "您社区有哪些活动？",
+              answerFr: "De temps en temps, il y a des événements culturels chinois dans mon quartier, surtout pendant les fêtes comme le Nouvel An chinois. Ces activités permettent aux habitants de se retrouver et de découvrir la culture. Cependant, comme je suis souvent occupé par mes études et mon travail, je participe rarement aux événements du quartier.",
+              answerCn: "我的社区不时会举办一些华人文化活动，尤其是在春节等节日期间。这些活动让居民有机会聚在一起、了解文化。不过，由于我平时忙于学习和工作，很少参加社区活动。",
+            },
+            {
+              id: 15,
+              topicCn: "交通",
+              promptFr: "Comment vous déplacez-vous ?",
+              promptCn: "您平时怎么出行？",
+              answerFr: "Comme je vis au centre-ville, il y a des tramways sur presque toutes les grandes rues. De plus, mon université est située près de plusieurs stations de métro, ce qui rend les déplacements très pratiques. En général, je peux facilement me déplacer dans le centre-ville sans avoir besoin de voiture.",
+              answerCn: "因为我住在市中心，几乎每条主要街道都有有轨电车。此外，我的学校靠近多条地铁站，这让出行非常方便。总体来说，在市中心我不用开车也能很轻松地出行。",
+            },
+            {
+              id: 16,
+              topicCn: "气候",
+              promptFr: "Quelle est votre saison préférée ?",
+              promptCn: "你最喜欢的季节是什么？",
+              answerFr: "L’été est ma saison préférée à Toronto, car le climat est agréable et confortable. Pendant les journées les plus chaudes, je reste généralement au travail ou à la maison, et je préfère sortir marcher ou faire de la randonnée le matin ou en soirée, quand la température est plus douce. Il y a souvent un peu de vent, ce qui rend l’ambiance encore plus agréable.",
+              answerCn: "在多伦多，夏天是我最喜欢的季节，因为气候比较舒适。天气最热的时候，我通常在工作或在家，早上或傍晚气温较低时会出去散步或徒步。通常还会有一点风，让整体感觉更加舒服。",
+            },
+            {
+              id: 17,
+              topicCn: "气候",
+              promptFr: "Quelle est la saison que vous aimez le moins ?",
+              promptCn: "你最讨厌的季节是什么？",
+              answerFr: "L’hiver est la saison que j’aime le moins à Toronto, car il est rude et glacial, ce qui rend la vie quotidienne plus difficile. Je dois porter un bonnet, des gants et un manteau d’hiver pour rester au chaud, surtout lorsque les températures sont très basses. Malgré cela, les déplacements restent souvent compliqués à cause du vent et de la neige présents chaque année.",
+              answerCn: "在多伦多，冬天是我最不喜欢的季节，因为天气又冷又严酷，这让日常生活变得更加困难。为了保暖，我必须戴帽子、手套并穿上厚重的冬衣，尤其是在气温很低的时候。尽管如此，由于每年都会有大风和积雪，出行仍然经常不太方便。",
+            },
+            {
+              id: 18,
+              topicCn: "友谊关系",
+              promptFr: "Parlez-moi de vos amis.",
+              promptCn: "说说你的朋友。",
+              answerFr: "J’ai beaucoup d’amis de l’université avec qui je reste en contact tout au long de l’année. Nous échangeons régulièrement des nouvelles et nous discutons aussi de nos difficultés, comme la recherche d’emploi, les candidatures aux études supérieures ou des questions liées à la vie quotidienne. C’est pour moi une excellente façon de rester informé et de suivre l’actualité en technologie, en politique et en économie.",
+              answerCn: "我有很多大学朋友，我们全年都保持联系。我们经常互相分享近况，也会讨论一些困难，比如找工作、申请研究生，或者日常生活中的问题。对我来说，这也是了解科技、政治和经济动态的一种很好方式。",
+            },
+            {
+              id: 19,
+              topicCn: "个人物品",
+              promptFr: "Quels objets sont importants pour vous ?",
+              promptCn: "哪些物品对你很重要？",
+              answerFr: "Comme je suis étudiant international au Canada, je ne possède pas de gros meubles ni d’objets de grande valeur. Je garde seulement l’essentiel, c’est-à-dire des affaires utiles et peu coûteuses, afin de pouvoir déménager facilement pour mes études ou pour le travail. Pour moi, les objets les plus importants sont mes outils de communication et de travail, notamment mon téléphone et mon iPad.",
+              answerCn: "由于我是加拿大的国际学生，我没有大件家具或贵重物品。我只保留一些必需、实用而且不贵的东西，这样可以方便我因为学习或工作在加拿大搬家。对我来说，最重要的物品是沟通和学习用的工具，比如手机和 iPad。",
+            },
+            {
+              id: 20,
+              topicCn: "最想去的地方",
+              promptFr: "Quel pays aimeriez-vous visiter ?",
+              promptCn: "你最想去哪里？",
+              answerFr: "Le pays que j’aimerais le plus visiter est l’Islande. Je privilégie un mode de vie calme et un bon équilibre entre la vie professionnelle et la vie personnelle, et l’Islande correspond bien à ces valeurs grâce à sa nature préservée. De plus, le climat hivernal y est généralement plus doux qu’à Toronto et le pays dispose d’un système de protection sociale fiable.",
+              answerCn: "我最想去的国家是冰岛。我比较看重安静的生活方式以及工作与生活的平衡，而冰岛凭借其原始的自然环境很好地符合这些价值观。此外，那里的冬季气候通常比多伦多温和，而且社会保障体系也比较完善。",
+            },
+            {
+              id: 21,
+              topicCn: "为什么加拿大",
+              promptFr: "Pourquoi voulez-vous vivre au Canada ?",
+              promptCn: "你为什么想在加拿大生活？",
+              answerFr: "Je pense que l’inclusivité, la protection de l’environnement et la qualité de vie sont les principales raisons pour lesquelles je souhaite vivre au Canada. Le pays offre une nature exceptionnelle, et comme j’aime beaucoup la nature, j’apprécie passer du temps près de l’océan, en montagne et observer les animaux. Enfin, le Canada est un pays multiculturel où différentes cultures et valeurs sont généralement respectées et bien accueillies.",
+              answerCn: "我认为包容性、环境保护以及生活质量是我想在加拿大生活的主要原因。加拿大拥有非常出色的自然环境，而我本身很喜欢大自然，喜欢去海边、山区以及观察动物。最后，加拿大是一个多元文化国家，不同的文化和价值观通常都会受到尊重和欢迎。",
+            }
+          ]
         },
         {
           label: "Tâche 2",
@@ -1669,29 +1650,29 @@ Merci de votre attention.`,
          ========================= */
       let currentPartIndex = null;
 
-      // MP3 player (this is what drives iPhone lockscreen Now Playing)
+      // MP3 player
       const audioPlayer = new Audio();
       audioPlayer.preload = "metadata";
-      audioPlayer.playsInline = true;
 
       // Auto-play state
       let isAllPlaying = false;
       let currentPlayingId = null;
 
+      // TTS state
+      let currentUtterance = null;
+
+      // Anti-race tokens
+      let ttsSeq = 0;
+      let playSeq = 0;
+
       // Current "active" question in viewport
       let currentActiveId = null;
 
-      // Looping state (persisted)
+      // NEW: Looping state (persisted)
       const STORAGE_LOOP_ALL = "tcf_loop_all";
       const STORAGE_LOOP_ONE = "tcf_loop_one";
       let loopAllEnabled = false;
       let loopOneEnabled = false;
-
-      // Global answer toggle
-      let showAllAnswers = false;
-
-      // Media Session throttling
-      let lastPositionUpdateSec = -1;
 
       /* =========================
          DOM
@@ -1761,11 +1742,27 @@ Merci de votre attention.`,
         if (loopOneToggle) loopOneToggle.checked = loopOneEnabled;
       }
 
+      // Priority rule:
+      // - If loopOne is ON: loop current item (single or play-all).
+      // - Else if loopAll is ON: when play-all reaches end, restart from first visible item.
+      // - Otherwise: stop normally.
+      function normalizeLoopToggles() {
+        // If user enables loopOne, keep loopAll as-is (but loopOne has priority).
+        // If user disables loopOne, loopAll can still apply.
+        // No forced auto-toggle needed; just priority.
+      }
+
       if (loopAllToggle) {
-        loopAllToggle.addEventListener("change", () => setLoopAll(loopAllToggle.checked));
+        loopAllToggle.addEventListener("change", () => {
+          setLoopAll(loopAllToggle.checked);
+          normalizeLoopToggles();
+        });
       }
       if (loopOneToggle) {
-        loopOneToggle.addEventListener("change", () => setLoopOne(loopOneToggle.checked));
+        loopOneToggle.addEventListener("change", () => {
+          setLoopOne(loopOneToggle.checked);
+          normalizeLoopToggles();
+        });
       }
 
       /* =========================
@@ -1773,6 +1770,7 @@ Merci de votre attention.`,
          ========================= */
       function getCurrentPart() { return parts[currentPartIndex]; }
       function partHasAudio() { return Boolean(getCurrentPart()?.audio?.enabled); }
+      function isTTSPart() { return Boolean(getCurrentPart()?.audio?.enabled && getCurrentPart()?.audio?.type === "tts"); }
       function isMP3Part() { return Boolean(getCurrentPart()?.audio?.enabled && getCurrentPart()?.audio?.type === "mp3"); }
 
       function findItemById(itemId) {
@@ -1787,6 +1785,11 @@ Merci de votre attention.`,
         if (!partHasAudio()) return false;
         const it = findItemById(itemId);
         if (!it) return false;
+
+        if (part.audio?.type === "tts") {
+          const txt = (typeof part.audio?.getText === "function") ? part.audio.getText(it) : (it.answerFr || "");
+          return Boolean(String(txt || "").trim());
+        }
 
         const id = Number(itemId);
         if (Array.isArray(part.audio?.range)) {
@@ -1803,135 +1806,12 @@ Merci de votre attention.`,
         return String(part.audio?.src || "").replaceAll("{id}", String(id));
       }
 
-      /* =========================
-         iPhone lockscreen Now Playing (Media Session)
-         ========================= */
-      function canUseMediaSession() {
-        return !!(navigator.mediaSession && window.MediaMetadata);
-      }
-
-      function getNowPlayingText(part, item) {
-        // What to show as title on lockscreen
-        // Prefer: the exact sentence being spoken (answer in FR for mp3).
-        // Fallback: prompt FR.
-        const display = part.display || {};
-        const useAnswer = (display.answer === "fr" || display.answer === "both");
-        let title = "";
-
-        if (useAnswer) title = item.answerFr || "";
-        if (!title) title = item.promptFr || item.promptCn || item.topicCn || "";
-
-        // For long essays, show first line only (lockscreen is small)
-        const firstLine = String(title).split("\n").find(Boolean) || String(title);
-        return clampText(firstLine, 120);
-      }
-
-      function updateNowPlayingMetadata(itemId) {
+      function ttsTextForItem(itemId) {
         const part = getCurrentPart();
-        const item = findItemById(itemId);
-        if (!part || !item) return;
-
-        // Also update page title; iOS sometimes falls back to this
-        const line = getNowPlayingText(part, item);
-        document.title = `${part.label} – ${line}`;
-
-        if (!canUseMediaSession()) return;
-
-        const artist = `${part.label} — Item ${item.id}${item.topicCn ? " · " + item.topicCn : ""}`;
-        const album = "TCF – Expression Orale";
-
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: line,
-          artist,
-          album
-          // artwork: (optional) requires CORS-safe image; omit by default
-        });
-
-        // Some iOS versions show controls only if handlers exist
-        trySetMediaSessionHandlers();
-      }
-
-      function updateMediaSessionPositionState() {
-        if (!canUseMediaSession()) return;
-        const dur = Number(audioPlayer.duration);
-        const pos = Number(audioPlayer.currentTime);
-        if (!isFinite(dur) || dur <= 0) return;
-
-        // Throttle to ~1 update/sec
-        const sec = Math.floor(pos);
-        if (sec === lastPositionUpdateSec) return;
-        lastPositionUpdateSec = sec;
-
-        try {
-          navigator.mediaSession.setPositionState({
-            duration: dur,
-            playbackRate: audioPlayer.playbackRate || 1,
-            position: Math.min(pos, dur)
-          });
-        } catch { }
-      }
-
-      let mediaSessionHandlersSet = false;
-      function trySetMediaSessionHandlers() {
-        if (!canUseMediaSession()) return;
-        if (mediaSessionHandlersSet) return;
-
-        mediaSessionHandlersSet = true;
-
-        const safeSet = (action, fn) => {
-          try { navigator.mediaSession.setActionHandler(action, fn); } catch { }
-        };
-
-        safeSet("play", () => {
-          // Resume current
-          if (audioPlayer.src) audioPlayer.play().catch(() => { });
-        });
-
-        safeSet("pause", () => {
-          audioPlayer.pause();
-        });
-
-        safeSet("stop", () => {
-          stopAudio(false);
-        });
-
-        safeSet("previoustrack", () => {
-          const prev = getPrevPlayableId();
-          if (prev != null) {
-            isAllPlaying = true; // treat as navigating in sequence
-            playItem(prev, { fromMediaSession: true });
-          }
-        });
-
-        safeSet("nexttrack", () => {
-          const next = getNextPlayableId();
-          if (next != null) {
-            isAllPlaying = true;
-            playItem(next, { fromMediaSession: true });
-          }
-        });
-
-        safeSet("seekto", (details) => {
-          if (!details || details.seekTime == null) return;
-          audioPlayer.currentTime = Math.max(0, Number(details.seekTime) || 0);
-          updateMediaSessionPositionState();
-        });
-
-        safeSet("seekbackward", (details) => {
-          const offset = Number(details?.seekOffset ?? 10);
-          audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - offset);
-          updateMediaSessionPositionState();
-        });
-
-        safeSet("seekforward", (details) => {
-          const offset = Number(details?.seekOffset ?? 10);
-          if (isFinite(audioPlayer.duration)) {
-            audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + offset);
-          } else {
-            audioPlayer.currentTime = audioPlayer.currentTime + offset;
-          }
-          updateMediaSessionPositionState();
-        });
+        const it = findItemById(itemId);
+        if (!it) return "";
+        if (typeof part.audio?.getText === "function") return String(part.audio.getText(it) || "");
+        return String(it.answerFr || "");
       }
 
       /* =========================
@@ -1973,6 +1853,99 @@ Merci de votre attention.`,
       }
 
       /* =========================
+         TTS VOICE DROPDOWN
+         ========================= */
+      let ttsVoices = [];
+
+      function refreshVoices() {
+        try { ttsVoices = window.speechSynthesis?.getVoices?.() || []; }
+        catch { ttsVoices = []; }
+      }
+
+      function normalizeLang(lang) {
+        const s = String(lang || "").trim();
+        if (!s) return { full: "", base: "" };
+        const low = s.toLowerCase();
+        return { full: low, base: low.split("-")[0] };
+      }
+
+      function getSavedVoiceName() {
+        try { return localStorage.getItem("tcf_tts_voice") || ""; } catch { return ""; }
+      }
+      function saveVoiceName(name) {
+        try { localStorage.setItem("tcf_tts_voice", String(name || "")); } catch { }
+      }
+
+      function populateVoiceSelect(targetLang) {
+        if (!voiceSelect) return;
+        if (!("speechSynthesis" in window)) return;
+
+        refreshVoices();
+        const { full, base } = normalizeLang(targetLang);
+
+        const preferred = ttsVoices.filter(v => {
+          const l = String(v.lang || "").toLowerCase();
+          return l === full || l.startsWith(base);
+        });
+
+        const list = preferred.length ? preferred : ttsVoices.slice();
+
+        voiceSelect.innerHTML = "";
+        const optAuto = document.createElement("option");
+        optAuto.value = "";
+        optAuto.textContent = "Voix: Auto (默认)";
+        voiceSelect.appendChild(optAuto);
+
+        list.sort((a, b) => {
+          const an = (a.name || "").toLowerCase();
+          const bn = (b.name || "").toLowerCase();
+          const aNat = an.includes("natural") || an.includes("online");
+          const bNat = bn.includes("natural") || bn.includes("online");
+          if (aNat !== bNat) return aNat ? -1 : 1;
+          return an.localeCompare(bn);
+        });
+
+        for (const v of list) {
+          const o = document.createElement("option");
+          o.value = v.name || "";
+          o.textContent = `${v.name} — ${v.lang}`;
+          voiceSelect.appendChild(o);
+        }
+
+        const saved = getSavedVoiceName();
+        if (saved && Array.from(voiceSelect.options).some(o => o.value === saved)) voiceSelect.value = saved;
+        else voiceSelect.value = "";
+      }
+
+      function resolveSelectedVoice(targetLang) {
+        refreshVoices();
+        const selectedName = (voiceSelect?.value || "") || getSavedVoiceName() || "";
+        if (selectedName) {
+          const exact = ttsVoices.find(v => v.name === selectedName);
+          if (exact) return exact;
+        }
+        const { full, base } = normalizeLang(targetLang);
+        return (
+          ttsVoices.find(v => String(v.lang || "").toLowerCase() === full) ||
+          ttsVoices.find(v => String(v.lang || "").toLowerCase().startsWith(base)) ||
+          null
+        );
+      }
+
+      if ("speechSynthesis" in window) {
+        refreshVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+          refreshVoices();
+          const part = (currentPartIndex != null) ? getCurrentPart() : null;
+          if (part?.audio?.enabled && part.audio?.type === "tts") {
+            populateVoiceSelect(part.audio?.lang || "fr-FR");
+          }
+        };
+      }
+
+      if (voiceSelect) voiceSelect.addEventListener("change", () => saveVoiceName(voiceSelect.value || ""));
+
+      /* =========================
          PART SELECTION UI
          ========================= */
       function buildPartGrid() {
@@ -2005,9 +1978,7 @@ Merci de votre attention.`,
         partSelectScreen.style.display = "block";
         backIcon.classList.add("hidden");
         topbarTitle.textContent = "TCF - Expression orale";
-        document.title = "TCF – Expression Orale";
         searchInput.value = "";
-        showAllAnswers = false;
         updateGlobalAnswerToggle();
         if (progressTop) progressTop.style.display = "none";
         updateHeaderHeightVar();
@@ -2035,6 +2006,20 @@ Merci de votre attention.`,
 
         const actions = document.createElement("div");
         actions.className = "section-actions";
+
+        if (isTTSPart()) {
+          const btnSpeak = document.createElement("button");
+          btnSpeak.className = "btn";
+          btnSpeak.type = "button";
+          btnSpeak.textContent = "朗读本节";
+          btnSpeak.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const text = [titleCn, descFr, descCn].filter(Boolean).join(". ");
+            speakText(text);
+          });
+          actions.appendChild(btnSpeak);
+        }
 
         summary.appendChild(left);
         summary.appendChild(actions);
@@ -2076,6 +2061,8 @@ Merci de votre attention.`,
         const part = getCurrentPart();
         const display = part.display || { question: "both", answer: "both" };
 
+        if (display.question === "cn") document.body.classList.remove("hide-cn");
+
         const total = part.items.filter(x => x.type !== "section").length;
         practiceTitle.textContent = `${part.label} — Expression orale`;
         practiceMeta.textContent = `${total} item(s)`;
@@ -2086,9 +2073,12 @@ Merci de votre attention.`,
         playAllBtn.textContent = audioOK ? (part.audio.playAllLabel || "播放/朗读全部（从当前位置）") : "本任务无音频";
         stopBtn.textContent = "停止播放";
 
-        // Hide voice UI (your current tasks are mp3)
-        if (voiceSelect) voiceSelect.style.display = "none";
-        if (testVoiceBtn) testVoiceBtn.style.display = "none";
+        const showVoice = !!(audioOK && part.audio?.type === "tts" && ("speechSynthesis" in window));
+        if (voiceSelect && testVoiceBtn) {
+          voiceSelect.style.display = showVoice ? "" : "none";
+          testVoiceBtn.style.display = showVoice ? "" : "none";
+          if (showVoice) populateVoiceSelect(part.audio?.lang || "fr-FR");
+        }
 
         const hideCnToggle = (display.question === "cn" && display.answer === "fr");
         toggleCnBtn.style.display = hideCnToggle ? "none" : "";
@@ -2132,33 +2122,35 @@ Merci de votre attention.`,
           const actions = document.createElement("div");
           actions.className = "item-actions";
 
-          // Per-item play button
-          const playBtn = document.createElement("button");
-          playBtn.className = "btn";
-          playBtn.type = "button";
-          playBtn.textContent = "播放";
-          playBtn.disabled = !hasAudioForItem(it.id);
-          playBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setCurrentActiveId(it.id);
-            isAllPlaying = false;
-            playItem(it.id);
+          const btnPlayAns = document.createElement("button");
+          btnPlayAns.className = "btn";
+          btnPlayAns.type = "button";
+          btnPlayAns.textContent = hasAudioForItem(it.id) ? (isTTSPart() ? "朗读答案" : "播放答案") : "无音频";
+          btnPlayAns.disabled = !hasAudioForItem(it.id);
+          btnPlayAns.addEventListener("click", () => {
+            preserveTopItemPosition(() => {
+              setCurrentActiveId(it.id);
+              // if loopOne is enabled, single-play should keep looping this item
+              playItemAudio(it.id, false);
+            });
           });
 
-          // Toggle answer button
-          const ansBtn = document.createElement("button");
-          ansBtn.className = "btn";
-          ansBtn.type = "button";
-          ansBtn.textContent = "显示答案";
-          ansBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleItemAnswer(it.id);
+          const btnToggleAns = document.createElement("button");
+          btnToggleAns.className = "btn btn-toggle-answer";
+          btnToggleAns.type = "button";
+          btnToggleAns.textContent = "显示答案";
+          btnToggleAns.dataset.open = "0";
+          btnToggleAns.addEventListener("click", () => {
+            preserveTopItemPosition(() => {
+              setCurrentActiveId(it.id);
+              const open = btnToggleAns.dataset.open === "1";
+              setAnswerForCard(card, !open);
+              updateGlobalAnswerToggle();
+            });
           });
 
-          actions.appendChild(playBtn);
-          actions.appendChild(ansBtn);
+          actions.appendChild(btnPlayAns);
+          actions.appendChild(btnToggleAns);
 
           head.appendChild(left);
           head.appendChild(actions);
@@ -2166,27 +2158,29 @@ Merci de votre attention.`,
           const body = document.createElement("div");
           body.className = "item-body";
 
-          // Question block
+          const showQFr = display.question !== "cn" && (it.promptFr || "").trim();
+          const showQCn = display.question !== "fr" && (it.promptCn || "").trim();
+          const showAFr = display.answer !== "cn" && (it.answerFr || "").trim();
+          const showACn = display.answer !== "fr" && (it.answerCn || "").trim();
+
           const qBlock = document.createElement("div");
           qBlock.className = "block";
           qBlock.innerHTML = `
             <div class="label">${toHtmlText(qLabel)}</div>
-            ${(display.question === "fr" || display.question === "both") ? `<div class="fr">${toHtmlText(it.promptFr || "")}</div>` : ""}
-            ${(display.question === "cn" || display.question === "both") ? `<div class="cn">${toHtmlText(it.promptCn || "")}</div>` : ""}
+            ${showQFr ? `<div class="fr">${toHtmlText(it.promptFr)}</div>` : ""}
+            ${showQCn ? `<div class="cn">${toHtmlText(it.promptCn)}</div>` : ""}
           `;
 
-          // Answer block (collapsed by default; global toggle can show)
-          const aWrap = document.createElement("div");
-          aWrap.className = "answer";
-          aWrap.id = `answer-${it.id}`;
-          aWrap.innerHTML = `
+          const ans = document.createElement("div");
+          ans.className = "answer";
+          ans.innerHTML = `
             <div class="answer-title">${toHtmlText(aLabel)}</div>
-            ${(display.answer === "fr" || display.answer === "both") ? `<div class="fr">${toHtmlText(it.answerFr || "")}</div>` : ""}
-            ${(display.answer === "cn" || display.answer === "both") ? `<div class="cn">${toHtmlText(it.answerCn || "")}</div>` : ""}
+            ${showAFr ? `<div class="fr">${toHtmlText(it.answerFr)}</div>` : ""}
+            ${showACn ? `<div class="cn">${toHtmlText(it.answerCn)}</div>` : ""}
           `;
 
           body.appendChild(qBlock);
-          body.appendChild(aWrap);
+          body.appendChild(ans);
 
           card.appendChild(head);
           card.appendChild(body);
@@ -2194,366 +2188,511 @@ Merci de votre attention.`,
           currentSection.container.appendChild(card);
         }
 
-        // Ensure header height is correct (sticky)
+        updateGlobalAnswerToggle();
+
         requestAnimationFrame(() => {
-          updateHeaderHeightVar();
           updateCurrentActiveFromViewport();
           updateProgressUI();
+          updateHeaderHeightVar();
         });
+      }
 
-        // Open the first section by default (optional)
-        const firstDetails = itemList.querySelector("details.section");
-        if (firstDetails) firstDetails.open = true;
+      /* =========================
+         ANSWER TOGGLES
+         ========================= */
+      function setAnswerForCard(card, show) {
+        const ans = card.querySelector(".answer");
+        const btn = card.querySelector(".btn-toggle-answer");
+        if (!ans || !btn) return;
 
-        // Apply current global answer toggle
-        applyGlobalAnswerToggleToDOM();
+        if (show) {
+          ans.style.display = "block";
+          btn.textContent = "隐藏答案";
+          btn.dataset.open = "1";
+        } else {
+          ans.style.display = "none";
+          btn.textContent = "显示答案";
+          btn.dataset.open = "0";
+        }
+      }
+
+      function getOpenCount() {
+        return Array.from(document.querySelectorAll(".btn-toggle-answer"))
+          .filter(btn => btn.dataset.open === "1").length;
+      }
+
+      function updateGlobalAnswerToggle() {
+        const total = document.querySelectorAll(".btn-toggle-answer").length;
+        const open = getOpenCount();
+        if (!total) { toggleAllAnswersBtn.textContent = "显示全部答案"; return; }
+        toggleAllAnswersBtn.textContent = open > 0 ? "隐藏全部答案" : "显示全部答案";
+      }
+
+      function setAllAnswers(show) {
+        document.querySelectorAll(".item").forEach(card => setAnswerForCard(card, show));
         updateGlobalAnswerToggle();
       }
 
+      toggleAllAnswersBtn.addEventListener("click", () => {
+        preserveTopItemPosition(() => {
+          const anyOpen = getOpenCount() > 0;
+          setAllAnswers(!anyOpen);
+        });
+      });
+
+      /* =========================
+         CN TOGGLE
+         ========================= */
+      toggleCnBtn.addEventListener("click", () => {
+        preserveTopItemPosition(() => {
+          const hiding = document.body.classList.toggle("hide-cn");
+          toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
+        });
+      });
+
+      /* =========================
+         SEARCH FILTER
+         ========================= */
+      function applySearchFilter() {
+        const kw = (searchInput.value || "").trim().toLowerCase();
+
+        const cards = document.querySelectorAll(".item");
+        cards.forEach(card => {
+          if (!kw) { card.style.display = ""; return; }
+          const txt = card.innerText.toLowerCase();
+          card.style.display = txt.includes(kw) ? "" : "none";
+        });
+
+        const sections = document.querySelectorAll("details.section");
+        sections.forEach(sec => {
+          const visible = Array.from(sec.querySelectorAll(".item"))
+            .some(it => it.style.display !== "none");
+          sec.style.display = visible ? "" : "none";
+        });
+
+        requestAnimationFrame(() => {
+          updateCurrentActiveFromViewport();
+          updateProgressUI();
+        });
+      }
+      searchInput.addEventListener("input", applySearchFilter);
+
+      /* =========================
+         START PART
+         ========================= */
       function startPart(idx) {
         stopAudio(true);
         currentPartIndex = idx;
-
+        currentActiveId = null;
         partSelectScreen.style.display = "none";
         practiceScreen.style.display = "block";
         backIcon.classList.remove("hidden");
-        topbarTitle.textContent = parts[idx].label;
-
-        // reset
-        searchInput.value = "";
-        showAllAnswers = false;
-        updateGlobalAnswerToggle();
-
+        topbarTitle.textContent = `TCF - Expression orale - ${parts[idx].label}`;
         renderAllItems();
-        loadLoopPrefs();
-
-        // Make sure we have a sensible active id
-        const ids = getVisibleNonSectionIds();
-        currentActiveId = ids.length ? ids[0] : null;
-
+        if (progressTop) progressTop.style.display = "flex";
         updateHeaderHeightVar();
         window.scrollTo({ top: 0, behavior: "auto" });
       }
 
       /* =========================
-         ACTIVE ITEM (viewport tracking)
+         KEEP SCROLL POSITION
+         ========================= */
+      function preserveTopItemPosition(mutateFn) {
+        const controls = document.querySelector(".controls");
+        const topLimit = controls ? Math.max(0, Math.floor(controls.getBoundingClientRect().bottom) + 1) : 0;
+
+        const cards = Array.from(document.querySelectorAll(".item"))
+          .filter(el => el.offsetParent !== null);
+
+        if (!cards.length) { mutateFn(); return; }
+
+        let anchor = null;
+        for (const card of cards) {
+          const r = card.getBoundingClientRect();
+          if (r.top >= topLimit && r.top < window.innerHeight) { anchor = card; break; }
+        }
+        if (!anchor) {
+          anchor = cards.find(card => {
+            const r = card.getBoundingClientRect();
+            return r.top < topLimit && r.bottom > topLimit;
+          }) || cards[0];
+        }
+
+        const beforeTop = anchor.getBoundingClientRect().top;
+        mutateFn();
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const afterTop = anchor.getBoundingClientRect().top;
+            const delta = afterTop - beforeTop;
+            if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
+          });
+        });
+      }
+
+      /* =========================
+         CURRENT QUESTION (VIEWPORT TRACKING)
          ========================= */
       function setCurrentActiveId(id) {
-        currentActiveId = Number(id) || null;
+        const n = Number(id);
+        if (!n || Number.isNaN(n)) return;
+        currentActiveId = n;
         updateProgressUI();
       }
 
       function updateCurrentActiveFromViewport() {
-        const items = Array.from(document.querySelectorAll(".item"))
+        const controls = document.querySelector(".controls");
+        const topLimit = controls ? Math.max(0, Math.floor(controls.getBoundingClientRect().bottom) + 1) : 0;
+
+        const cards = Array.from(document.querySelectorAll(".item"))
           .filter(el => el.offsetParent !== null && el.style.display !== "none");
 
-        if (!items.length) { currentActiveId = null; return; }
-
-        const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 74;
-        const targetY = headerH + 90;
+        if (!cards.length) return;
 
         let best = null;
-        let bestDist = Infinity;
-
-        for (const el of items) {
-          const r = el.getBoundingClientRect();
-          const dist = Math.abs(r.top - targetY);
-          if (dist < bestDist) { bestDist = dist; best = el; }
+        for (const card of cards) {
+          const r = card.getBoundingClientRect();
+          if (r.top >= topLimit && r.top < window.innerHeight) { best = card; break; }
         }
-        if (best) setCurrentActiveId(Number(best.dataset.itemid));
+        if (!best) {
+          best = cards.find(card => {
+            const r = card.getBoundingClientRect();
+            return r.top < topLimit && r.bottom > topLimit;
+          }) || cards[0];
+        }
+
+        const id = Number(best.dataset.itemid);
+        if (id && id !== currentActiveId) setCurrentActiveId(id);
       }
 
       window.addEventListener("scroll", () => {
         if (currentPartIndex == null) return;
-        // cheap throttle
-        requestAnimationFrame(() => {
+        if (updateCurrentActiveFromViewport._raf) return;
+        updateCurrentActiveFromViewport._raf = requestAnimationFrame(() => {
+          updateCurrentActiveFromViewport._raf = null;
           updateCurrentActiveFromViewport();
-          updateProgressUI();
         });
       }, { passive: true });
 
       /* =========================
-         ANSWERS (per item + global)
+         AUDIO (MP3 + TTS)
          ========================= */
-      function getAnswerEl(id) {
-        return document.getElementById(`answer-${id}`);
-      }
+      function stopAudio(clearAll) {
+        playSeq++;
+        ttsSeq++;
 
-      function toggleItemAnswer(id) {
-        const el = getAnswerEl(id);
-        if (!el) return;
-        const isShown = el.style.display !== "none" && el.style.display !== "";
-        // default is "none" via CSS; so treat "" as hidden? we set explicitly.
-        const nowShow = (el.style.display === "none" || el.style.display === "");
-        el.style.display = nowShow ? "block" : "none";
-      }
+        try { audioPlayer.pause(); audioPlayer.currentTime = 0; } catch { }
 
-      function applyGlobalAnswerToggleToDOM() {
-        const answers = Array.from(document.querySelectorAll(".answer"));
-        for (const a of answers) {
-          a.style.display = showAllAnswers ? "block" : "none";
+        if ("speechSynthesis" in window) {
+          try { window.speechSynthesis.cancel(); } catch { }
         }
-      }
+        currentUtterance = null;
 
-      function updateGlobalAnswerToggle() {
-        toggleAllAnswersBtn.textContent = showAllAnswers ? "隐藏全部答案" : "显示全部答案";
-      }
-
-      toggleAllAnswersBtn.addEventListener("click", () => {
-        showAllAnswers = !showAllAnswers;
-        applyGlobalAnswerToggleToDOM();
-        updateGlobalAnswerToggle();
-      });
-
-      toggleCnBtn.addEventListener("click", () => {
-        document.body.classList.toggle("hide-cn");
-        const hiding = document.body.classList.contains("hide-cn");
-        toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
-      });
-
-      /* =========================
-         SEARCH / FILTER
-         ========================= */
-      function normalizeSearch(s) {
-        return String(s || "").trim().toLowerCase();
-      }
-
-      function itemMatchesSearch(item, q) {
-        const hay = [
-          item.topicCn, item.promptFr, item.promptCn, item.answerFr, item.answerCn
-        ].map(x => String(x || "").toLowerCase()).join("\n");
-        return hay.includes(q);
-      }
-
-      function applySearchFilter() {
-        const q = normalizeSearch(searchInput.value);
-        const part = getCurrentPart();
-        if (!part) return;
-
-        const cards = Array.from(document.querySelectorAll(".item"));
-        for (const card of cards) {
-          const id = Number(card.dataset.itemid);
-          const it = findItemById(id);
-          if (!it) continue;
-
-          const ok = !q || itemMatchesSearch(it, q);
-          card.style.display = ok ? "" : "none";
-        }
-
-        // Hide empty sections
-        const sections = Array.from(document.querySelectorAll("details.section"));
-        for (const sec of sections) {
-          const items = Array.from(sec.querySelectorAll(".item"));
-          const anyVisible = items.some(el => el.style.display !== "none");
-          sec.style.display = anyVisible ? "" : "none";
-        }
-
-        // Recompute active/progress
-        const ids = getVisibleNonSectionIds();
-        currentActiveId = ids.length ? (ids.includes(Number(currentActiveId)) ? Number(currentActiveId) : ids[0]) : null;
-        updateProgressUI();
-      }
-
-      searchInput.addEventListener("input", () => applySearchFilter());
-
-      /* =========================
-         PLAYBACK UI (highlight)
-         ========================= */
-      function setPlayingHighlight(itemId) {
-        const cards = Array.from(document.querySelectorAll(".item"));
-        for (const c of cards) {
-          c.classList.toggle("playing", Number(c.dataset.itemid) === Number(itemId));
-        }
-      }
-
-      function clearPlayingHighlight() {
-        const cards = Array.from(document.querySelectorAll(".item"));
-        for (const c of cards) c.classList.remove("playing");
-      }
-
-      /* =========================
-         PLAYBACK SEQUENCE HELPERS
-         ========================= */
-      function getPlayableVisibleIds() {
-        return getVisibleNonSectionIds().filter(id => hasAudioForItem(id));
-      }
-
-      function getNextPlayableId() {
-        const ids = getPlayableVisibleIds();
-        if (!ids.length) return null;
-
-        const cur = Number(currentPlayingId ?? currentActiveId);
-        if (!cur || !ids.includes(cur)) return ids[0];
-
-        const idx = ids.indexOf(cur);
-        if (idx < 0) return ids[0];
-        if (idx + 1 < ids.length) return ids[idx + 1];
-        return null;
-      }
-
-      function getPrevPlayableId() {
-        const ids = getPlayableVisibleIds();
-        if (!ids.length) return null;
-
-        const cur = Number(currentPlayingId ?? currentActiveId);
-        if (!cur || !ids.includes(cur)) return ids[0];
-
-        const idx = ids.indexOf(cur);
-        if (idx > 0) return ids[idx - 1];
-        return null;
-      }
-
-      function getFirstPlayableId() {
-        const ids = getPlayableVisibleIds();
-        return ids.length ? ids[0] : null;
-      }
-
-      /* =========================
-         AUDIO CONTROL
-         ========================= */
-      function stopAudio(resetSrc) {
         isAllPlaying = false;
         currentPlayingId = null;
-        lastPositionUpdateSec = -1;
 
-        try { audioPlayer.pause(); } catch { }
-        try { audioPlayer.currentTime = 0; } catch { }
-        if (resetSrc) {
-          try { audioPlayer.removeAttribute("src"); audioPlayer.load(); } catch { }
+        if (clearAll) {
+          // reserved
         }
+      }
 
-        clearPlayingHighlight();
+      function highlightPlaying(itemId) {
+        document.querySelectorAll(".item").forEach(el => el.style.outline = "");
+        if (itemId == null) return;
+        const el = document.querySelector(`.item[data-itemid="${Number(itemId)}"]`);
+        if (el) el.style.outline = "3px solid rgba(12,99,199,0.25)";
+      }
 
-        if (canUseMediaSession()) {
-          // Keep metadata (optional). If you want to clear:
-          // navigator.mediaSession.metadata = null;
+      function playMp3Item(itemId) {
+        return new Promise((resolve) => {
+          const seq = playSeq;
+          const src = audioSrcForItem(itemId);
+
           try {
-            navigator.mediaSession.playbackState = "none";
-          } catch { }
-        }
+            audioPlayer.onended = () => resolve({ ok: true, seq });
+            audioPlayer.onerror = () => resolve({ ok: false, seq });
+            audioPlayer.src = src;
+            audioPlayer.currentTime = 0;
+            audioPlayer.play().then(() => { }).catch(() => resolve({ ok: false, seq }));
+          } catch {
+            resolve({ ok: false, seq });
+          }
+        });
       }
 
-      async function playItem(itemId, opts = {}) {
+      function speakText(text) {
+        if (!("speechSynthesis" in window)) return;
+
+        ttsSeq++;
+        try { window.speechSynthesis.cancel(); } catch { }
+
+        const part = getCurrentPart();
+        const lang = part?.audio?.lang || "fr-FR";
+
+        const u = new SpeechSynthesisUtterance(String(text || ""));
+        u.lang = lang;
+
+        const voice = resolveSelectedVoice(lang);
+        if (voice) u.voice = voice;
+
+        u.rate = Number(part?.audio?.rate ?? 1.0);
+        u.pitch = Number(part?.audio?.pitch ?? 1.0);
+
+        currentUtterance = u;
+        window.speechSynthesis.speak(u);
+      }
+
+      function playTtsItem(itemId) {
+        return new Promise((resolve) => {
+          if (!("speechSynthesis" in window)) { resolve({ ok: false, seq: ttsSeq }); return; }
+
+          ttsSeq++;
+          const mySeq = ttsSeq;
+
+          const part = getCurrentPart();
+          const lang = part?.audio?.lang || "fr-FR";
+          const text = ttsTextForItem(itemId);
+
+          try { window.speechSynthesis.cancel(); } catch { }
+
+          const u = new SpeechSynthesisUtterance(String(text || ""));
+          u.lang = lang;
+
+          const voice = resolveSelectedVoice(lang);
+          if (voice) u.voice = voice;
+
+          u.rate = Number(part?.audio?.rate ?? 1.0);
+          u.pitch = Number(part?.audio?.pitch ?? 1.0);
+
+          u.onend = () => resolve({ ok: true, seq: mySeq });
+          u.onerror = () => resolve({ ok: false, seq: mySeq });
+
+          currentUtterance = u;
+          window.speechSynthesis.speak(u);
+        });
+      }
+
+      // NEW: a "wait for current audio" wrapper that resolves on end/stop
+      async function playItemAudio(itemId, fromPlayAll) {
+        if (!partHasAudio()) return { ok: false, ended: true };
+        if (!hasAudioForItem(itemId)) return { ok: false, ended: true };
+
+        // stop any current single playback if not in play-all
+        if (!fromPlayAll) stopAudio(false);
+
+        currentPlayingId = Number(itemId);
+        highlightPlaying(itemId);
+
+        if (isMP3Part()) {
+          const res = await playMp3Item(itemId);
+          return { ok: res.ok, ended: true, seq: res.seq };
+        }
+        if (isTTSPart()) {
+          const res = await playTtsItem(itemId);
+          return { ok: res.ok, ended: true, seq: res.seq };
+        }
+        return { ok: false, ended: true };
+      }
+
+      function getLoopMode() {
+        // loopOne has priority
+        if (loopOneEnabled) return "one";
+        if (loopAllEnabled) return "all";
+        return "none";
+      }
+
+      function firstVisiblePlayableId() {
+        const ids = getVisibleNonSectionIds();
+        for (const id of ids) {
+          if (hasAudioForItem(id)) return id;
+        }
+        return ids[0] || null;
+      }
+
+      function nextVisiblePlayableId(currentId) {
+        const ids = getVisibleNonSectionIds();
+        if (!ids.length) return null;
+        const idx = ids.indexOf(Number(currentId));
+        for (let i = idx + 1; i < ids.length; i++) {
+          if (hasAudioForItem(ids[i])) return ids[i];
+        }
+        return null;
+      }
+
+      async function playSingleWithPossibleLoop(itemId) {
+        // Called when user clicks "播放答案/朗读答案" on one item.
+        // Behavior:
+        // - If loopOne enabled: repeat this item until Stop.
+        // - Else: play once.
+        stopAudio(false);
+
+        const myRun = ++playSeq;
         const id = Number(itemId);
-        if (!hasAudioForItem(id)) return;
 
-        // Stop current
-        try { audioPlayer.pause(); } catch { }
+        while (true) {
+          if (myRun !== playSeq) break; // stopped / replaced
+          setCurrentActiveId(id);
+          highlightPlaying(id);
 
-        // Prepare
-        currentPlayingId = id;
-        setCurrentActiveId(id);
-        setPlayingHighlight(id);
+          await playItemAudio(id, true);
 
-        // Scroll into view (unless coming from lockscreen actions)
-        if (!opts.fromMediaSession) {
-          const el = document.querySelector(`.item[data-itemid="${id}"]`);
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (myRun !== playSeq) break;
+
+          const mode = getLoopMode();
+          if (mode === "one") {
+            // continue looping same item
+            continue;
+          }
+          // mode all/none: single-play ends after one run
+          break;
         }
 
-        // Update iPhone lockscreen "Now Playing" text BEFORE play
-        updateNowPlayingMetadata(id);
-
-        // Load + play MP3
-        const src = audioSrcForItem(id);
-        if (audioPlayer.src !== src) audioPlayer.src = src;
-
-        try {
-          await audioPlayer.play();
-          if (canUseMediaSession()) {
-            try { navigator.mediaSession.playbackState = "playing"; } catch { }
-          }
-        } catch (e) {
-          // Autoplay blocked etc.
-          // Keep state consistent
-          if (canUseMediaSession()) {
-            try { navigator.mediaSession.playbackState = "paused"; } catch { }
-          }
-        }
+        currentPlayingId = null;
+        highlightPlaying(null);
       }
 
-      function playAllFromActive() {
-        const start = Number(currentActiveId) || getFirstPlayableId();
-        if (!start) return;
+      async function playAllFromCurrent() {
+        if (!partHasAudio()) return;
+
+        stopAudio(false);
         isAllPlaying = true;
-        playItem(start);
+        const myRun = ++playSeq;
+
+        const ids = getVisibleNonSectionIds();
+        if (!ids.length) { isAllPlaying = false; return; }
+
+        let startId = Number(currentActiveId);
+        if (!startId || !ids.includes(startId)) startId = ids[0];
+
+        const modeAtStart = getLoopMode();
+
+        // We will keep a pointer, and loop based on mode evaluated each cycle
+        let pointer = startId;
+
+        while (true) {
+          if (!isAllPlaying || myRun !== playSeq) break;
+
+          const mode = getLoopMode();
+
+          // resolve current pointer to a playable item; if not playable, find next playable
+          if (!hasAudioForItem(pointer)) {
+            const nxtPlayable = nextVisiblePlayableId(pointer);
+            if (nxtPlayable != null) pointer = nxtPlayable;
+            else {
+              // no playable after pointer
+              if (mode === "all") {
+                const first = firstVisiblePlayableId();
+                if (first == null) break;
+                pointer = first;
+              } else {
+                break;
+              }
+            }
+          }
+
+          // play pointer
+          currentPlayingId = pointer;
+          setCurrentActiveId(pointer);
+          highlightPlaying(pointer);
+
+          await playItemAudio(pointer, true);
+
+          if (!isAllPlaying || myRun !== playSeq) break;
+
+          // decide next pointer
+          if (mode === "one") {
+            // loop same pointer
+            continue;
+          }
+
+          const next = nextVisiblePlayableId(pointer);
+          if (next != null) {
+            pointer = next;
+            continue;
+          }
+
+          // reached the end
+          if (mode === "all") {
+            const first = firstVisiblePlayableId();
+            if (first == null) break;
+            pointer = first;
+            continue;
+          }
+
+          // mode none
+          break;
+        }
+
+        isAllPlaying = false;
+        currentPlayingId = null;
+        highlightPlaying(null);
       }
 
+      /* Hook buttons */
       playAllBtn.addEventListener("click", () => {
-        if (!isMP3Part() || !partHasAudio()) return;
-        playAllFromActive();
+        preserveTopItemPosition(() => {
+          playAllFromCurrent();
+        });
       });
 
       stopBtn.addEventListener("click", () => {
-        stopAudio(false);
+        stopAudio(true);
       });
+
+      if (testVoiceBtn) {
+        testVoiceBtn.addEventListener("click", () => {
+          if (!isTTSPart()) return;
+          speakText("Bonjour. Ceci est un test de voix.");
+        });
+      }
+
+      /* Intercept per-item play to support single-item looping */
+      function wirePerItemPlayOverride() {
+        // This is called after rendering; we override the click behavior to use looping logic.
+        // (We keep DOM structure unchanged; only adjust listeners.)
+        const part = getCurrentPart();
+        if (!part) return;
+
+        document.querySelectorAll(".item").forEach(card => {
+          const id = Number(card.dataset.itemid);
+          const btn = card.querySelector(".item-actions .btn");
+          if (!btn) return;
+
+          // We only want the first action button (播放/朗读答案). In renderAllItems it's appended first.
+          // Guard by checking text starts with 播放/朗读/无音频.
+          const txt = (btn.textContent || "").trim();
+          if (!txt || txt === "无音频") return;
+
+          // Remove previous listeners safely by cloning
+          const clone = btn.cloneNode(true);
+          btn.replaceWith(clone);
+
+          clone.addEventListener("click", () => {
+            preserveTopItemPosition(() => {
+              setCurrentActiveId(id);
+              playSingleWithPossibleLoop(id);
+            });
+          });
+        });
+      }
 
       /* =========================
-         AUDIO EVENTS (auto-advance + Media Session position)
+         BOOT
          ========================= */
-      audioPlayer.addEventListener("loadedmetadata", () => {
-        lastPositionUpdateSec = -1;
-        updateMediaSessionPositionState();
-      });
-
-      audioPlayer.addEventListener("timeupdate", () => {
-        updateMediaSessionPositionState();
-      });
-
-      audioPlayer.addEventListener("play", () => {
-        if (canUseMediaSession()) {
-          try { navigator.mediaSession.playbackState = "playing"; } catch { }
-        }
-      });
-
-      audioPlayer.addEventListener("pause", () => {
-        if (canUseMediaSession()) {
-          try { navigator.mediaSession.playbackState = "paused"; } catch { }
-        }
-      });
-
-      audioPlayer.addEventListener("ended", () => {
-        const cur = Number(currentPlayingId);
-        if (!cur) { stopAudio(false); return; }
-
-        // Priority 1: loop current item
-        if (loopOneEnabled) {
-          playItem(cur);
-          return;
-        }
-
-        // Play-all sequence
-        if (isAllPlaying) {
-          const next = getNextPlayableId();
-          if (next != null) {
-            playItem(next);
-            return;
-          }
-
-          // Reached end
-          if (loopAllEnabled) {
-            const first = getFirstPlayableId();
-            if (first != null) {
-              playItem(first);
-              return;
-            }
-          }
-        }
-
-        // Otherwise stop
-        stopAudio(false);
-      });
-
-      /* =========================
-         Init
-         ========================= */
-      loadLoopPrefs();
       buildPartGrid();
+      loadLoopPrefs();
       updateHeaderHeightVar();
+      updateProgressUI();
 
-      // iOS lockscreen requires user gesture; you already click Play so ok.
-      // This helps ensure handlers are available early.
-      trySetMediaSessionHandlers();
+      /* When part starts, we must re-wire per-item play buttons (because we clone/replace) */
+      const _startPart = startPart;
+      startPart = function (idx) {
+        _startPart(idx);
+        // After render, wire loop-aware per-item play
+        requestAnimationFrame(() => wirePerItemPlayOverride());
+      };
+
+      /* Make backIcon handler still point to exitPart after startPart override */
+      // (No change needed.)
 
     })();
   </script>
