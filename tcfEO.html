@@ -906,8 +906,8 @@
         ];
       }
       function buildT2Items() {
-        // return [{id:1, topicCn:"...", promptCn:"...", answerFr:"..."}];
-        return [
+        // ✅ 保留你现在的二维数组内容（不要改内容本身）
+        const raw = [
           ["SECTION", "A. 开场引入（正式）"],
           ["开场-正式", "我想了解关于……的详细信息，您能为我解释一下吗？", "J’aimerais avoir des détails sur… À ce sujet, j’aimerais vous poser quelques questions, si vous êtes disponible."],
 
@@ -1226,7 +1226,7 @@
           ["价格", "是否对学生或团体提供优惠？", "Proposez-vous des réductions pour les étudiants ou les groupes ?"],
 
           ["SECTION", "K. 场景：询问旅游规划", "Je suis votre collègue. Vous voulez partir en vacances dans une région que je connais bien. Vous me posez des questions sur cette région (activités, lieux touristiques, climat, etc.).", "我是你的同事。你想去一个我很熟悉的地区度假。你会向我询问关于这个地区的问题（活动、旅游景点、气候等）。"],
-          ["开场", "Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ton séjour à la montagne / Montréal que tu connais bien ?", "你好！如果你方便的话，我可以向你请教几个关于你很熟悉的山里度假/蒙特利尔的问题吗？"],
+          ["开场", "你好！如果你方便的话，我可以向你请教几个关于你很熟悉的山里度假/蒙特利尔的问题吗？", "Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ton séjour à la montagne / Montréal que tu connais bien ?"],
 
           ["地点", "最受欢迎的景点是什么？", "Quelle est l'attraction la plus populaire ?"],
           ["地点", "有典型的街区值得探索吗？", "Y a-t-il des quartiers typiques à découvrir ?"],
@@ -1251,7 +1251,7 @@
           ["价格", "有额外费用吗，比如保险费？", "Y a-t-il des frais supplémentaires, comme l’assurance ?"],
 
           ["SECTION", "L. 场景：询问旅游经历（过去时）", "Nous sommes dans une soirée, nous nous rencontrons pour la première fois. Je rentre d’un voyage. Vous me posez des questions sur le voyage que j’ai fait (durée, lieux, impressions, etc.).", "我们在一个聚会上第一次见面。我刚旅行回来。你会问我一些关于我这次旅行的问题（比如旅行时长、地点、感受/印象等）。"],
-          ["开场", "Bonsoir ! Je suis content(e) de vous rencontrer. Vous venez juste de revenir d’un voyage, non ? Puis-je vous poser quelques questions sur votre séjour ?", "晚上好！很高兴认识您。您刚旅行回来，对吗？我可以向您问几个关于您这次行程的问题吗？"],
+          ["开场", "晚上好！很高兴认识您。您刚旅行回来，对吗？我可以向您问几个关于您这次行程的问题吗？", "Bonsoir ! Je suis content(e) de vous rencontrer. Vous venez juste de revenir d’un voyage, non ? Puis-je vous poser quelques questions sur votre séjour ?"],
 
           ["地点", "您去了哪里？", "Où êtes-vous allé(e) exactement ?"],
           ["地点", "哪个地方给您留下了最深的印象？", "Quel endroit vous a le plus marqué(e) ?"],
@@ -1272,7 +1272,7 @@
           ["价格", "是否有意外的费用？", "Y a-t-il eu des dépenses imprévues ?"],
 
           ["SECTION", "L. 场景：询问餐厅", "Je suis votre ami(e). J’ai dîné dans un nouveau restaurant à Ottawa. Vous souhaitez y aller. Vous me posez des questions sur ce nouveau restaurant (menu, prix, appréciation, etc.).", "我是你的朋友。我在渥太华的一家新餐厅吃过饭。你也想去。你会向我询问这家新餐厅的情况（菜单、价格、我的评价等）。"],
-          ["开场", "Salut ! J’ai entendu parler d’un nouveau restaurant à Ottawa où tu as dîné. Ça m’intéresse beaucoup, pourrais-tu me dire un peu plus sur ce restaurant ?", "你好！我听说你在渥太华一家新餐厅吃过饭。我对它很感兴趣，你能跟我多介绍一下这家餐厅吗？"],
+          ["开场", "你好！我听说你在渥太华一家新餐厅吃过饭。我对它很感兴趣，你能跟我多介绍一下这家餐厅吗？", "Salut ! J’ai entendu parler d’un nouveau restaurant à Ottawa où tu as dîné. Ça m’intéresse beaucoup, pourrais-tu me dire un peu plus sur ce restaurant ?"],
 
           ["类型", "这是什么类型的餐厅？", "Quel type de restaurant est-ce ?"],
           ["类型", "你等了很久吗？", "Tu as attendu longtemps ?"],
@@ -1293,7 +1293,7 @@
           ["价格", "我应该怎么预定？", "Comment puis-je faire une réservation ?"],
 
           ["SECTION", "M. 场景：询问生日派对", "Je suis votre ami(e). J’organise ma fête d’anniversaire. Vous voulez m’aider. Vous me posez des questions sur la préparation de la fête (repas, décoration, invités, etc.).", "我是你的朋友。我正在筹办我的生日聚会。你想帮我。你会问我一些关于聚会准备的问题（餐饮、装饰、邀请名单等）。"],
-          ["开场", "Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ta fête d’anniversaire ?", "你好！如果你方便的话，我可以问你几个关于你生日聚会的问题吗？"],
+          ["开场", "你好！如果你方便的话，我可以问你几个关于你生日聚会的问题吗？", "Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ta fête d’anniversaire ?"],
 
           ["时间", "生日聚会什么时候举行？", "Quand se déroulera la fête d’anniversaire ?"],
           ["时间", "生日聚会将持续多久？", "Combien de temps durera la fête d’anniversaire ?"],
@@ -1318,7 +1318,7 @@
           ["着装", "有衣物寄存处吗？", "Est-ce qu’il y a un vestiaire ?"],
 
           ["SECTION", "N. 场景：询问照顾孩子", "Nous sommes voisin(e)s. Je vous demande de garder mon enfant le week-end prochain. Vous acceptez. Vous me demandez ce que vous devez faire (horaires, activités, repas, etc.).", "我们是邻居。我请您下个周末帮我照看孩子。您答应了。您会问我需要做些什么（时间安排、活动、餐食等）。"],
-          ["开场", "Salut ! Je suis ravi(e) de t’aider à garder ton enfant. Est-ce que je pourrais te demander plus d’informations ?", "你好！我很高兴能帮你照看孩子。我可以向你问一些更多的细节信息吗？"],
+          ["开场", "你好！我很高兴能帮你照看孩子。我可以向你问一些更多的细节信息吗？", "Salut ! Je suis ravi(e) de t’aider à garder ton enfant. Est-ce que je pourrais te demander plus d’informations ?"],
 
           ["人物-孩子", "您的孩子几岁？", "Quel âge a ton enfant ?"],
           ["人物-孩子", "您的孩子是男孩还是女孩？", "Est-ce que ton enfant est un garçon ou une fille ?"],
@@ -1357,7 +1357,7 @@
           ["送货条件", "如果缺少零件怎么办？", "Que faire si une pièce manque ?"],
 
           ["SECTION", "P. 场景：询问电视剧", "Je suis un(e) ami(e). Vous avez envie de commencer une série, mais vous êtes indécis(e). Vous me demandez des informations pour faire votre choix (catégorie, acteurs, plateforme de streaming, etc.).", "我是你的一个朋友。你想开始看一部电视剧，但还拿不定主意。你向我询问一些信息，帮助你做出选择（类型、演员、流媒体平台等）。"],
-          ["开场", "Salut ! J’ai envie de commencer une série, mais je suis indécis(e). Est-ce que je pourrais te demander des informations pour faire mon choix ?", "嗨！我想开始追一部剧，但我有点拿不定主意。我可以问你一些信息来帮助我做决定吗？"],
+          ["开场", "嗨！我想开始追一部剧，但我有点拿不定主意。我可以问你一些信息来帮助我做决定吗？", "Salut ! J’ai envie de commencer une série, mais je suis indécis(e). Est-ce que je pourrais te demander des informations pour faire mon choix ?"],
 
           ["类型", "你推荐哪部电视剧？", "Quelle série recommandes-tu ?"],
           ["类型", "每种类型都有独特的魅力，你能解释一下你为什么喜欢这部电视剧吗？", "Chaque genre a son charme unique. Peux-tu m’expliquer pourquoi tu aimes cette série ?"],
@@ -1378,7 +1378,7 @@
           ["价格", "我怎么订阅？", "Comment puis-je m’abonner ?"],
 
           ["SECTION", "Q. 场景：询问电影（过去时）", "Je suis un(e) collègue de travail. Je viens de voir un film au cinéma. Vous me posez des questions sur ce film pour décider si vous irez le voir (thème, acteurs principaux, horaires des séances, etc.).", "我是你的同事。我刚在电影院看了一部电影。你会向我询问这部电影的信息，以便决定你是否要去看（主题、主要演员、放映时间等）。"],
-          ["开场", "Salut ! J’ai entendu dire que tu viens de voir un film au cinéma. Est-ce que je pourrais te demander des informations sur ce film ?", "嗨！我听说你刚在电影院看了一部电影。我可以向你打听一些关于这部电影的信息吗？"],
+          ["开场", "嗨！我听说你刚在电影院看了一部电影。我可以向你打听一些关于这部电影的信息吗？", "Salut ! J’ai entendu dire que tu viens de voir un film au cinéma. Est-ce que je pourrais te demander des informations sur ce film ?"],
 
           ["类型", "这是什么类型的电影？", "Quel genre de film est-ce ?"],
           ["类型", "是喜剧、剧情、动作还是恐怖片？", "Est-ce un film comique, dramatique, d’action ou un film d’horreur ?"],
@@ -1402,7 +1402,7 @@
           ["价格", "需要提前预订才能确保有座位吗？", "Faut-il réserver à l’avance pour être sûr d’avoir une place ?"],
 
           ["SECTION", "R. 场景：询问事故（过去时）", "Je suis votre collègue de travail. Je viens d’avoir un léger accident. Vous me rendez visite et vous me posez des questions sur ce qui m’est arrivé (lieu, moment, contexte, etc.).", "我是你的同事。我刚发生了一起轻微事故。你来看望我，并问我发生了什么（地点、时间、经过等）。"],
-          ["开场", "Salut ! Je suis vraiment désolé(e) d’apprendre que tu as eu un accident. Est-ce que ça va ?", "嗨！听说你出了事故我很难过。你还好吗？"],
+          ["开场", "嗨！听说你出了事故我很难过。你还好吗？", "Salut ! Je suis vraiment désolé(e) d’apprendre que tu as eu un accident. Est-ce que ça va ?"],
 
           ["类型/情况", "你发生了什么类型的事故？", "Quel type d’accident as-tu eu ?"],
           ["类型/情况", "是交通事故、家里事故还是工作中发生的？", "Est-ce que c’était un accident de voiture, domestique ou au travail ?"],
@@ -1422,7 +1422,59 @@
 
           ["结束", "谢谢你跟我解释这一切。如果你需要什么，别犹豫告诉我。好好照顾自己，好好休息！回头见！", "Si tu as besoin de quelque chose, n’hésite pas à me le dire.Prends bien soin de toi et repose-toi bien ! À bientôt !"],
         ];
+
+        const items = [];
+        let id = 0;
+
+        for (const row of raw) {
+          if (!Array.isArray(row) || row.length < 2) continue;
+
+          // --- SECTION row ---
+          if (row[0] === "SECTION") {
+            const titleCn = String(row[1] ?? "").trim();
+            const descFr = row.length >= 3 ? String(row[2] ?? "").trim() : "";
+            const descCn = row.length >= 4 ? String(row[3] ?? "").trim() : "";
+
+            items.push({
+              type: "section",
+              titleCn,
+              descFr,
+              descCn,
+            });
+            continue;
+          }
+
+          // --- ITEM row ---
+          // supports:
+          //  - [topicCn, promptCn, answerFr]
+          //  - [topicCn, promptCn, answerFr, promptFr]
+          //  - [topicCn, promptCn, answerFr, promptFr, answerCn]
+          id += 1;
+
+          const topicCn = String(row[0] ?? "").trim();
+          const promptCn = String(row[1] ?? "").trim();
+          const answerFr = String(row[2] ?? "").trim();
+
+          const promptFr = row.length >= 4 ? String(row[3] ?? "").trim() : "";
+          const answerCn = row.length >= 5 ? String(row[4] ?? "").trim() : "";
+
+          items.push({
+            type: "item",
+            id,          // ✅ 用于音频编号
+            topicCn,
+            promptCn,
+            promptFr,
+            answerFr,
+            answerCn,
+            // ✅ 可选：如果你们的播放器直接读 audioKey / audioSrc
+            audioKey: `t2q${id}`,
+            // audioSrc: `audio/t2q${id}.mp3`, // 需要的话打开
+          });
+        }
+
+        return items;
       }
+
       function buildT3Items() {
         // return [{id:1, topicCn:"...", promptFr:"...", promptCn:"...", answerFr:"...", answerCn:"..."}];
         return [
