@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>TCF – Expression Orale</title>
+  <title>TCF – Expression Écrite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark">
 
@@ -647,7 +647,7 @@
   <header id="headerSticky" class="header-sticky">
     <div class="topbar">
       <div id="backIcon" class="topbar-back hidden">&larr;</div>
-      <div id="topbarTitle" class="topbar-title">TCF - Expression Orale</div>
+      <div id="topbarTitle" class="topbar-title">TCF - Expression Écrite</div>
     </div>
 
     <div id="progressTop" class="progress-top" aria-label="Progress">
@@ -662,7 +662,7 @@
     <!-- PART SELECTION -->
     <section id="partSelectScreen" class="page-wrap">
       <div class="hero">
-        <div class="hero-title">TCF – Expression Orale</div>
+        <div class="hero-title">TCF – Expression Écrite</div>
         <div class="hero-sub">
           选择任务（3 tâches）。支持：逐题播放、播放全部、连续循环（整套/单题）。<br>
           ✅ 新增：播放时自动跟随当前高亮段落（自动滚动）。
@@ -2027,7 +2027,7 @@ Merci de votre attention.`,
         practiceScreen.style.display = "none";
         partSelectScreen.style.display = "block";
         backIcon.classList.add("hidden");
-        topbarTitle.textContent = "TCF - Expression Orale";
+        topbarTitle.textContent = "TCF - Expression Écrite";
         searchInput.value = "";
         if (progressTop) progressTop.style.display = "none";
         updateHeaderHeightVar();
@@ -2121,7 +2121,7 @@ Merci de votre attention.`,
         const display = part.display || { question: "both", answer: "both" };
 
         const total = part.items.filter(x => x && x.type !== "section").length;
-        practiceTitle.textContent = `${part.label} — Expression Orale`;
+        practiceTitle.textContent = `${part.label} — Expression Écrite`;
         practiceMeta.textContent = `${total} item(s)`;
 
         const audioOK = partHasAudio();
