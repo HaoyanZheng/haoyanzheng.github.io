@@ -462,6 +462,48 @@
       }
     }
 
+    /* 让 controls-row 真正占满一整行，避免“看起来有空间但实际被收缩” */
+    .controls-row {
+      flex: 1 1 100%;
+      width: 100%;
+    }
+
+    /* 桌面端：尽量不换行，让输入框可以缩，按钮保持一行 */
+    @media (min-width: 641px) {
+      .controls-row {
+        flex-wrap: nowrap;
+      }
+
+      .controls-row .input {
+        min-width: 0;
+        /* 关键：允许 input 缩小，不然会挤掉最后的按钮 */
+        flex: 1 1 auto;
+      }
+
+      .controls-row .btn {
+        flex: 0 0 auto;
+      }
+    }
+
+
+    .controls-more {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .controls.is-collapsed .controls-more {
+      display: none;
+    }
+
+    /* “更多”按钮弱化一点 */
+    .btn-ghost {
+      background: transparent;
+      box-shadow: none;
+      border: 1px solid rgba(12, 99, 199, 0.25);
+    }
+
     @media (max-width: 640px) {
       .page-wrap {
         margin: 12px;
@@ -476,7 +518,33 @@
       .input {
         min-width: 180px;
       }
+
+      .controls-row {
+        gap: 8px;
+      }
+
+      .controls-row .input {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+
+      .btn {
+        padding: 8px 10px;
+        font-size: 13px;
+        border-radius: 18px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+      }
+
+      .pill {
+        padding: 6px 8px;
+      }
+
+      .pill label,
+      .pill small {
+        font-size: 11px;
+      }
     }
+
 
     @media (prefers-color-scheme: dark) {
       body {
@@ -678,38 +746,44 @@
         <div class="practice-meta" id="practiceMeta"></div>
       </div>
 
-      <div class="controls">
-        <input id="searchInput" class="input" placeholder="Rechercher (FR / 中文)..." />
+      <div class="controls is-collapsed">
+        <div class="controls-row">
+          <input id="searchInput" class="input" placeholder="Rechercher (FR / 中文)..." />
 
-        <!-- Optional TTS voice UI (only if you enable a TTS part) -->
-        <select id="voiceSelect" class="input" style="flex:0 1 320px; min-width:240px; display:none;"></select>
-        <button class="btn" id="testVoiceBtn" style="display:none;">测试声音</button>
+          <button class="btn" id="playAllBtn">播放/朗读全部</button>
+          <button class="btn" id="stopBtn">停止播放</button>
 
-        <button class="btn" id="toggleCnBtn">隐藏中文</button>
-        <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
+          <!-- NEW: 更多/收起 -->
+          <button class="btn btn-ghost" id="controlsMoreBtn" type="button">更多 ▾</button>
+        </div>
 
-        <button class="btn" id="playAllBtn">播放/朗读全部（从当前位置）</button>
-        <button class="btn" id="stopBtn">停止播放</button>
+        <!-- 默认折叠：不常用的都放这里 -->
+        <div class="controls-more" id="controlsMore">
+          <!-- Optional TTS voice UI -->
+          <select id="voiceSelect" class="input" style="flex:0 1 320px; min-width:240px; display:none;"></select>
+          <button class="btn" id="testVoiceBtn" style="display:none;">测试声音</button>
 
-        <!-- NEW: auto-follow toggle -->
-        <span class="pill" title="播放/朗读时自动滚动到当前高亮段落">
-          <label for="autoFollowToggle">跟随播放</label>
-          <input id="autoFollowToggle" type="checkbox" />
-          <small>自动滚动</small>
-        </span>
+          <button class="btn" id="toggleCnBtn">隐藏中文</button>
+          <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
 
-        <!-- looping controls -->
-        <span class="pill" title="播放完最后一句后自动继续">
-          <label for="loopAllToggle">循环整套</label>
-          <input id="loopAllToggle" type="checkbox" />
-          <small>到末尾回到开头</small>
-        </span>
+          <span class="pill" title="播放/朗读时自动滚动到当前高亮段落">
+            <label for="autoFollowToggle">跟随播放</label>
+            <input id="autoFollowToggle" type="checkbox" />
+            <small>自动滚动</small>
+          </span>
 
-        <span class="pill" title="反复循环当前题（优先级高于循环整套）">
-          <label for="loopOneToggle">单题循环</label>
-          <input id="loopOneToggle" type="checkbox" />
-          <small>只循环当前题</small>
-        </span>
+          <span class="pill" title="播放完最后一句后自动继续">
+            <label for="loopAllToggle">循环整套</label>
+            <input id="loopAllToggle" type="checkbox" />
+            <small>到末尾回到开头</small>
+          </span>
+
+          <span class="pill" title="反复循环当前题（优先级高于循环整套）">
+            <label for="loopOneToggle">单题循环</label>
+            <input id="loopOneToggle" type="checkbox" />
+            <small>只循环当前题</small>
+          </span>
+        </div>
       </div>
 
       <div class="list" id="itemList"></div>
@@ -1678,7 +1752,7 @@ Merci de votre attention.`,
           audio: {
             enabled: true,
             type: "mp3",
-            playAllLabel: "播放全部答案（从当前位置开始）",
+            playAllLabel: "播放全部答案",
             // IMPORTANT: keep your own src format
             src: (id) => `assets/tcfEO/mp3/t1a${id}.mp3`,
             range: [1, 9999]
@@ -1693,7 +1767,7 @@ Merci de votre attention.`,
           audio: {
             enabled: true,
             type: "mp3",
-            playAllLabel: "播放全部答案（从当前位置开始）",
+            playAllLabel: "播放全部答案",
             src: (id) => `assets/tcfEO/mp3/t2q${id}.mp3`,
             range: [1, 9999]
           },
@@ -1707,7 +1781,7 @@ Merci de votre attention.`,
           audio: {
             enabled: true,
             type: "mp3",
-            playAllLabel: "播放全部答案（从当前位置开始）",
+            playAllLabel: "播放全部答案",
             src: (id) => `assets/tcfEO/mp3/t3a${id}.mp3`,
             range: [1, 9999]
           },
@@ -1784,6 +1858,20 @@ Merci de votre attention.`,
 
       const autoFollowToggle = document.getElementById("autoFollowToggle");
 
+      const controlsMoreBtn = document.getElementById("controlsMoreBtn");
+
+      const controlsEl = document.querySelector(".controls");
+
+      if (controlsMoreBtn && controlsEl) {
+        controlsMoreBtn.addEventListener("click", () => {
+          const collapsed = controlsEl.classList.toggle("is-collapsed");
+          controlsMoreBtn.textContent = collapsed ? "更多 ▾" : "收起 ▴";
+          // 展开/收起会改变 header 高度，更新 sticky 偏移用的变量
+          requestAnimationFrame(updateHeaderHeightVar);
+        });
+      }
+
+
       function updateHeaderHeightVar() {
         if (!headerSticky) return;
         const h = Math.max(52, headerSticky.offsetHeight || 0);
@@ -1834,21 +1922,27 @@ Merci de votre attention.`,
 
       function scrollToItemId(itemId, behavior = "smooth") {
         const el = document.querySelector(`.item[data-itemid="${Number(itemId)}"]`);
-        if (!el || el.offsetParent === null || el.style.display === "none") return;
+        if (!el) return;
+        if (el.style.display === "none") return; // 搜索过滤隐藏就别滚
 
+        // ✅ 先展开父级 section（关键）
         openParentSections(el);
 
-        // Re-measure after opening details
+        // ✅ 等 <details> 展开后再测量 & 滚动
         requestAnimationFrame(() => {
+          if (el.offsetParent === null) return; // 展开失败/仍不可见就退出
+
           const rect = el.getBoundingClientRect();
           const absoluteTop = window.scrollY + rect.top;
           const targetTop = absoluteTop - getStickyOffsetPx();
+
           window.scrollTo({
             top: Math.max(0, targetTop),
             behavior
           });
         });
       }
+
 
       function maybeAutoFollow(itemId) {
         if (!autoFollowEnabled) return;
@@ -2038,10 +2132,10 @@ Merci de votre attention.`,
       /* =========================
          SECTION RENDER HELPERS
          ========================= */
-      function createSection(titleCn, descFr, descCn) {
+      function createSection(titleCn, descFr, descCn, openByDefault = false) {
         const details = document.createElement("details");
         details.className = "section";
-        details.open = false;
+        details.open = !!openByDefault; // ✅
 
         const summary = document.createElement("summary");
         summary.className = "section-summary";
@@ -2127,7 +2221,7 @@ Merci de votre attention.`,
         const audioOK = partHasAudio();
         playAllBtn.disabled = !audioOK;
         stopBtn.disabled = !audioOK;
-        playAllBtn.textContent = audioOK ? (part.audio.playAllLabel || "播放/朗读全部（从当前位置）") : "本任务无音频";
+        playAllBtn.textContent = audioOK ? (part.audio.playAllLabel || "播放/朗读全部") : "本任务无音频";
         stopBtn.textContent = "停止播放";
 
         // CN toggle visibility rule
@@ -2144,9 +2238,16 @@ Merci de votre attention.`,
         itemList.innerHTML = "";
 
         // create default section
-        let currentSection = createSection(part.subtitle || "Questions", "", "");
-        itemList.appendChild(currentSection.details);
+        const hasExplicitSections = part.items?.some(x => x && x.type === "section");
+        let currentSection = null;
+        let firstSectionOpened = false;
 
+        if (!hasExplicitSections) {
+          // ✅ 没有 SECTION 行：用一个默认 section，并默认展开
+          currentSection = createSection(part.subtitle || "Questions", "", "", true);
+          itemList.appendChild(currentSection.details);
+          firstSectionOpened = true;
+        }
         // If no items, show a hint
         if (!part.items?.length) {
           const hint = document.createElement("div");
@@ -2162,10 +2263,14 @@ Merci de votre attention.`,
         for (const it of part.items) {
           if (!it) continue;
           if (it.type === "section") {
-            currentSection = createSection(it.titleCn || "Section", it.descFr || "", it.descCn || "");
+            const shouldOpen = !firstSectionOpened; // ✅ 第一组默认展开
+            firstSectionOpened = true;
+
+            currentSection = createSection(it.titleCn || "Section", it.descFr || "", it.descCn || "", shouldOpen);
             itemList.appendChild(currentSection.details);
             continue;
           }
+
 
           const card = document.createElement("div");
           card.className = "item";
