@@ -750,15 +750,16 @@
         <div class="controls-row">
           <input id="searchInput" class="input" placeholder="Rechercher (FR / 中文)..." />
 
-          <button class="btn" id="playAllBtn">播放/朗读全部</button>
-          <button class="btn" id="stopBtn">停止播放</button>
-
           <!-- NEW: 更多/收起 -->
           <button class="btn btn-ghost" id="controlsMoreBtn" type="button">更多 ▾</button>
         </div>
 
         <!-- 默认折叠：不常用的都放这里 -->
         <div class="controls-more" id="controlsMore">
+
+          <button class="btn" id="playAllBtn">播放/朗读全部</button>
+          <button class="btn" id="stopBtn">停止播放</button>
+
           <!-- Optional TTS voice UI -->
           <select id="voiceSelect" class="input" style="flex:0 1 320px; min-width:240px; display:none;"></select>
           <button class="btn" id="testVoiceBtn" style="display:none;">测试声音</button>
