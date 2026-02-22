@@ -1,22 +1,124 @@
 ﻿tache,kind,idx,text
-1,a,1,"Bonjour madame/ monsieur, je m’appelle Haoyan."
-1,a,2,J’ai vingt et un ans.
-1,a,3,"Je suis de nationalité chinoise. Actuellement, je suis étudiant international et je vis à Toronto avec mes amis."
-1,a,4,"Je suis quelqu’un d’introverti, calme, et réfléchi. Mes amis me trouvent poli et généreux."
-1,a,5,"Ma langue maternelle est le mandarin. Je parle couramment l’anglais et un peu de japonais. J’aime apprendre de nouvelles langues, parce que cela me permet de mieux comprendre d’autres cultures et de voir le monde sous un autre angle."
-1,a,6,"J’étudie le génie robotique à l’université de Toronto et je suis actuellement en quatrième année. C’est un domaine difficile, mais je vois les grands changements que les robots apporteront à nos vies dans le futur. Je pense aussi qu’il y aura une forte demande sur le marché du travail et beaucoup de valeur à créer. C’est donc, à mon avis, un diplôme très prometteur."
-1,a,7,"Pendant mes études, j’ai eu l’occasion de faire plusieurs stages et travaux pratiques. L’an dernier, j’ai fait un stage au ministère des Transports de l’Ontario, où j’ai participé à l’inspection des autoroutes et j’ai suivi des travaux d’entretien. En parallèle, je travaille à l’Hôpital Général de Toronto, ce qui m’aide à développer mes compétences en communication et en organisation."
-1,a,8,"J’ai beaucoup de centres d’intérêt. J’aime le sport, surtout le badminton et la randonnée. J’aime aussi lire et j’écoute souvent les informations pour améliorer mon français. Ces activités m’aident à rester motivé et à garder un bon équilibre."
-1,a,9,"Mes parents sont commerçants en Chine et je suis enfant unique. Ça fait un an que je n’ai pas vu mes parents, mais on fait un appel vidéo chaque mois."
-1,a,10,"Dans le futur, je souhaite continuer mes études et développer ma carrière au Canada. Je veux améliorer mon français et mon anglais pour m’intégrer facilement dans la société canadienne et réussir mes projets professionnels. Je suis motivé, curieux et prêt à relever de nouveaux défis."
-1,a,11,"J’ai voyagé à Montréal l’année dernière, et cela m’a laissé un souvenir inoubliable. La ville a une ambiance différente grâce à sa culture francophone. J’ai beaucoup aimé la nourriture, le système de transport et l’architecture. Après l’obtention de mon diplôme, je prévois de m’y installer."
-1,a,12,"J’habite à Toronto, une ville moderne connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique."
-1,a,13,"Je loue une maison de quatre chambres avec des amis de l’université, située dans le quartier de Chinatown, juste en face de mon université. Le loyer est relativement abordable, ce qui est un avantage important pour moi. En revanche, le quartier est parfois bruyant et très fréquenté."
-1,a,14,"De temps en temps, il y a des événements culturels chinois dans mon quartier, surtout pendant les fêtes comme le Nouvel An chinois. Ces activités permettent aux habitants de se retrouver et de découvrir la culture. Cependant, comme je suis souvent occupé par mes études et mon travail, je participe rarement aux événements du quartier."
-1,a,15,"Comme je vis au centre-ville, il y a des tramways sur presque toutes les grandes rues. De plus, mon université est située près de plusieurs stations de métro, ce qui rend les déplacements très pratiques. En général, je peux facilement me déplacer dans le centre-ville sans avoir besoin de voiture."
-1,a,16,"L’été est ma saison préférée à Toronto, car le climat est agréable et confortable. Pendant les journées les plus chaudes, je reste généralement au travail ou à la maison, et je préfère sortir marcher ou faire de la randonnée le matin ou en soirée, quand la température est plus douce. Il y a souvent un peu de vent, ce qui rend l’ambiance encore plus agréable."
-1,a,17,"L’hiver est la saison que j’aime le moins à Toronto, car il est rude et glacial, ce qui rend la vie quotidienne plus difficile. Je dois porter un bonnet, des gants et un manteau d’hiver pour rester au chaud, surtout lorsque les températures sont très basses. Malgré cela, les déplacements restent souvent compliqués à cause du vent et de la neige présents chaque année."
-1,a,18,"J’ai beaucoup d’amis de l’université avec qui je reste en contact tout au long de l’année. Nous échangeons régulièrement des nouvelles et nous discutons aussi de nos difficultés, comme la recherche d’emploi, les candidatures aux études supérieures ou des questions liées à la vie quotidienne. C’est pour moi une excellente façon de rester informé et de suivre l’actualité en technologie, en politique et en économie."
-1,a,19,"Comme je suis étudiant international au Canada, je ne possède pas de gros meubles ni d’objets de grande valeur. Je garde seulement l’essentiel, c’est-à-dire des affaires utiles et peu coûteuses, afin de pouvoir déménager facilement pour mes études ou pour le travail. Pour moi, les objets les plus importants sont mes outils de communication et de travail, notamment mon téléphone et mon iPad."
-1,a,20,"Le pays que j’aimerais le plus visiter est l’Islande. Je privilégie un mode de vie calme et un bon équilibre entre la vie professionnelle et la vie personnelle, et l’Islande correspond bien à ces valeurs grâce à sa nature préservée. De plus, le climat hivernal y est généralement plus doux qu’à Toronto et le pays dispose d’un système de protection sociale fiable."
-1,a,21,"Je pense que l’inclusivité, la protection de l’environnement et la qualité de vie sont les principales raisons pour lesquelles je souhaite vivre au Canada. Le pays offre une nature exceptionnelle, et comme j’aime beaucoup la nature, j’apprécie passer du temps près de l’océan, en montagne et observer les animaux. Enfin, le Canada est un pays multiculturel où différentes cultures et valeurs sont généralement respectées et bien accueillies."
+1,a,1,"Cher Hao,
+Je t’écris pour te recommander de passer tes prochaines vacances à Toronto, au Canada, en été, parce que dans ta dernière lettre tu as mentionné que tu voulais découvrir un nouveau pays. Cette ville offre de nombreux sites qui valent le détour, comme la tour CN,  l’Université de Toronto et le Musée royal de l’Ontario. Nous pourrions y découvrir l’histoire et les cultures du Canada. En juillet, tu pourras aussi célébrer la fête du Canada avec ses feux d’artifice et ses concerts.
+Si tu veux, je viendrai te chercher à l’aéroport et nous pourrons loger ensemble, car les hôtels du centre-ville sont chers.
+Écris-moi si cette proposition t’intéresse, pour que je puisse mieux organiser ce voyage pour toi.
+Bises,
+Haoyan"
+1,a,2,"Chers proches,
+Je vous écris afin de vous proposer de passer un week-end avec moi le mois prochain. J’aimerais organiser une escapade au parc national de Banff le 5 mars.
+Dans un premier temps, nous nous retrouverons devant mon appartement à 9 h du matin. Puis, nous nous rendrons sur place en transports en commun, notamment en métro et en bus, car c’est pratique et écologique.
+En ce qui concerne les activités prévues, nous pourrons faire de la randonnée, du vélo et du ski. Le soir, nous passerons la nuit à l’hôtel Rose, qui propose des chambres confortables à un prix raisonnable.
+N’hésitez pas à me dire si vous êtes disponibles.
+À bientôt,
+Haoyan"
+1,a,3,"Cher Hao, 
+Je t’écris pour te proposer de passer le week-end prochain chez moi. J’aimerais que nous pratiquions ensemble des activités sportives. 
+Samedi, nous visiterons au centre sportif : nous pourrons faire plusieurs activités, par exemple le tennis, la natation et le yoga. Dimanche, nous ferons une promenade à Queens Park. 
+Tu peux venir chez moi vendredi soir. Pendant le week-end, nous nous déplacerons en transports en commun, un choix à la fois pratique et écologique. 
+Écris-moi dès que possible si tu es disponible, afin que je puisse réserver à l’avance. 
+Haoyan"
+1,a,4,"Cher Hao,
+Je t’écris pour t’inviter à une rencontre avec un écrivain le 1er juillet, organisée par la bibliothèque de ma ville.
+On se retrouvera d’abord devant l’Université de Toronto à 10h du matin. Nous visiterons la bibliothèque dans la matinée. Nous profiterons de cette journée en participant à plusieurs activités culturelles : une discussion avec l’écrivain, et peut-être des expositions. L’après-midi, nous pourrions aller au musée d’histoire en face de la bibliothèque. Si le temps le permet, nous pourrions aussi manger dans un restaurant chinois à Chinatown. Nous nous déplacerons en transports en commun, car c’est un moyen pratique et écologique.
+Écris-moi si tu es disponible pour que je puisse faire des réservations à l’avance.
+À bientôt,
+Haoyan"
+1,a,5,"Cher Hao, 
+Je suis ravi que tu m’accompagnes demain au parc de loisir ! 
+Je te donne les détails suivants : on se retrouvera d’abord devant la bibliothèque municipale à 9 h, puis nous prendrons le métro, un choix à la fois pratique et écologique. Nous arriverons au parc vers 9 h 30. Au programme, il y aura des montagnes russes, la grande roue, des maisons hantées et des spectacles. Nous pourrions déjeuner sur place. Nous quitterons le parc en fin d’après-midi, selon ton énergie. 
+Écris-moi dès que possible pour me confirmer que tout est bon, afin que je puisse réserver les billets à l’avance. 
+Haoyan"
+1,a,6,"Cher Hao,
+Je t'écris pour t'inviter à aller à un festival de films qui se situe à la bibliothèque municipale avec moi le 23 mai.
+Comme il aura lieu de 10h à 18h, on se retrouvera d'abord devant mon appartement à 9h30 et nous nous déplacerons en transports en commun. Pendant ce festival, nous pourrons regarder gratuitement plusieurs films comme <Titanic>. Nous pourrions aussi rencontrer de nombreux acteurs célèbres.  
+Le billet coûte seulement 20 dollars par personne. Je suis sûr que ce sera un événement inoubliable. Écris-moi vite si tu es disponible!
+À bientôt,
+Haoyan"
+1,a,7,"Chers amis,
+Je vous écris pour vous inviter à fêter l'anniversaire surprise de mon meilleur ami, Li Hua, ensemble le 5 mai.
+La soirée se déroulera dans son restaurant préféré, Quanjude. Il se situe au centre-ville de Toronto, à côté du marché Byward. Comme il propose un grand stationnement gratuit juste devant l'entrée, vous pourrez venir en voiture.
+On va tout préparer à l'avance : le menu, la décoration et les activités après le dîner. La fête aura lieu à 20h. Si vous voulez aider à l’organisation, arrivez à 4h de l’après-midi. Gardez bien le secret, parce que c'est un événement surprise !
+Merci de me confirmer votre présence pour que je puisse réserver.
+À bientôt,
+Haoyan"
+1,a,8,"Cher Hao,
+Je t’écris pour te donner des nouvelles de mon nouveau logement.
+J’ai déménagé dans mon nouvel appartement il y a un mois. C’est un deux-pièces situé au centre-ville de Toronto, dans un quartier calme et agréable. Il est entouré de nombreux commerces et services de proximité, comme des cafés, des supermarchés et des parcs.
+L’endroit que je préfère est le café près de chez moi, car il est spacieux et bien décoré. J’aime y passer mes après-midis à lire ou à déguster un café. Mes voisins sont sympathiques et nous nous entendons bien.
+Je t’invite à passer un week-end chez moi. Écris-moi si tu es disponible.
+À bientôt,
+Haoyan"
+1,a,9,"Cher Ali,
+Je t’écris pour te donner des nouvelles de mon nouveau travail.
+J’ai commencé un poste dans une entreprise spécialisée dans la fabrication de meubles. Elle est située à côté d’IKEA,  au centre-ville de Vancouver, ce qui me permet d’y accéder facilement en transports en commun.
+Je suis satisfait de mon nouvel environnement professionnel, car mes collègues et moi nous nous entendons bien. Ils m’aident à améliorer ma technique et je partage parfois mon déjeuner avec eux.
+Je t’invite à passer à mon atelier afin de te faire une petite table. Écris-moi si tu es disponible.
+À bientôt,
+Haoyan"
+1,a,10,"Cher Martin,
+Je t’écris pour te donner de mes nouvelles. Je viens de commencer mes cours dans ma nouvelle université située au centre-ville de Vancouver. Le campus est bien équipé avec une bibliothèque, un centre sportif et une cantine, ce qui me permet de participer à différentes activités pendant mon temps libre: le tennis, la natation et  l’escalade.
+Je suis satisfait de mon nouvel environnement, car mes professeurs, mes camarades et moi, nous nous entendons bien. Au début de mes cours, je n’étais pas capable de les comprendre à 100 % à cause des différences culturelles. Heureusement, ils étaient très patients et ils m’ont beaucoup aidé.
+Et toi, as-tu des nouvelles à me donner ? Écris-moi !
+Haoyan"
+1,a,11,"Cher Hao, 
+Je t’écris pour te donner des détails sur l’hôtel que j’ai repéré.
+Je viens de trouver un hôtel parfait pour nos vacances et je vous recommande vivement de faire une réservation. Il se situe au centre-ville de Toronto, avec beaucoup de commerces et de services à proximité : des parcs, des supermarchés, un grand magasin, un cinéma, des écoles, un centre sportif et une bibliothèque. 
+Le prix est d’environ 500 $ par nuit et par personne. Ce prix inclut l’accès à une salle de sport, un sauna et une piscine, ainsi que trois repas par jour. Il y a aussi un parking sur place. 
+Si tu as d’autres questions, n’hésite pas à m’appeler. 
+Haoyan"
+1,a,12,"Salut Camille,
+Je t’écris pour te répondre à ta question concernant le sport que je pratique maintenant.
+Je viens de commencer mes cours de yoga dans le centre sportif situé au centre-ville de Toronto, près de mon nouvel appartement. Il est ouvert 24 heures sur 24 et 7 jours sur 7. Des cours encadrés par des entraîneurs professionnels sont disponibles à horaires fixes pour optimiser ton expérience sportive.
+Le prix est d'environ 100 dollars par mois par personne. Ce prix inclut l’accès à la salle de sport, au sauna et à la piscine. Il y a aussi un parking sur place.
+Si tu veux, je t’invite à prendre un cours d'essai, car le premier cours est offert.
+Haoyan"
+1,a,13,"Cher Hao,
+Je t’écris pour te répondre à ta question concernant les cours de langue dans mon école. Je viens de commencer mes cours dans une école de langues au centre-ville de Toronto. Comme elle se trouve en plein centre, il est facile d’y accéder en transports en commun. L’école propose plusieurs programmes : l’anglais, le français, le chinois, etc. Les frais s’élèvent à 8 999 $ pour un programme de huit mois. L’ambiance est très bonne : mes camarades et moi, nous nous entendons bien. 
+Si tu as d’autres questions, n’hésite pas à m’appeler. 
+Haoyan"
+1,a,14,"Bonjour,
+Cette annonce a pour but de chercher un colocataire. Je viens d'emménager dans un appartement de deux pièces situé au centre-ville de Toronto, dans un quartier calme. L'appartement fait 800 pieds carrés et comprend deux chambres, une cuisine, un salon ainsi qu'une salle de bains. Le loyer s'élève à 2000 euros par mois par personne, charges comprises. Cet immeuble est entouré par plusieurs commodités publiques, comme les supermarchés et les restaurants.
+J'aimerais que vous soyez une personne sérieuse, propre et non-fumeur. Je préférerais également que nous puissions avoir un rythme de vie similaire : je me lève vers 8h et me couche à minuit.
+Si vous êtes intéressé, veuillez me contacter par courriel : 123@gmail.com.
+Meilleures salutations,
+Haoyan"
+1,a,15,"Bonjour,
+Je vous écris afin de demander votre aide pour chercher un logement. Je prévois de déménager au début mars au centre-ville de Nice, dans un quartier calme. L’appartement devrait faire au moins 800 pieds carrés. Il est préférable qu’il y ait deux chambres, une cuisine, un salon et une salle de bains. Je souhaiterais que le loyer soit entre 1500 et 1800 euros par mois, dépenses incluses. 
+Si vous avez des nouvelles concernant le logement que je cherche, veuillez m’écrire.
+Haoyan"
+1,a,16,"Chers amis, 
+Merci encore d’avoir accepté de m’aider pour mon déménagement, qui aura lieu le 5 mai. Mon nouvel appartement se situe au 1410 et se trouve à environ 20 minutes de mon ancien logement. 
+On se retrouvera à 9 h devant mon ancien appartement. La durée prévue est d’environ 3 à 4 heures. Les tâches à réaliser seront les suivantes : porter les cartons, démonter/porter les meubles, protéger les objets fragiles, puis aider à la mise en place dans le nouvel appartement. 
+Pour vous remercier, je vous invite à dîner dans votre restaurant préféré après le déménagement. 
+À bientôt, 
+Haoyan"
+1,a,17,"Cher Hao,
+Je t’écris pour solliciter ton assistance. Je voudrais changer quelques meubles et décorations anciennes dans mon appartement. Je voudrais aussi repeindre plusieurs pièces comme les deux chambres, le salon et la cuisine. J’aimerais changer la couleur des murs.
+D’abord, j’aurais besoin que tu me conseilles sur les marques de peintures, les outils à préparer et les couleurs à choisir. J’ai un budget de 2000 dollars. Ensuite, comme les travaux sont prévus de se dérouler la première semaine en juin, je souhaiterais que tu m’aides à repeindre les chambres.
+Dis-moi ce que tu en penses.
+À très bientôt,
+Haoyan"
+1,a,18,"Bonjour Mathieu,
+J’espère que vous allez bien ! Je réponds à votre annonce pour l’achat d’un vélo.
+Je vends un vélo de ville de marque Giant, couleur bleu foncé. Il est en bon état, presque neuf. Je l’ai utilisé pendant six mois. Je souhaiterais le laisser à 80 euros.
+Je peux vous proposer un rendez-vous pour un essai ce samedi, devant la station de métro Yonge. Si vous êtes intéressé(e), n’hésitez pas à me contacter !
+Cordialement,
+Haoyan"
+1,a,19,"Cher Thomas,
+Le Nouvel An chinois (Fête du Printemps), célébré fin janvier ou début février, est la fête la plus importante chez moi. Les familles se réunissent pour dîner, nettoient la maison, décorent en rouge et offrent des enveloppes rouges aux enfants. On regarde le gala, puis on assiste aux feux d’artifice et aux danses du lion. On mange des raviolis, du poisson et des gâteaux de riz, symboles de chance et de prospérité.
+À bientôt,
+Haoyan"
+1,a,20,"Cher Cédric,
+Je t’écris afin de te donner des instructions pour que tu puisses mieux prendre soin de ma maison pendant mon absence. Je m’absenterai pour un voyage dès la semaine prochaine et je reviendrai au bout de trois semaines.
+D’abord, je souhaiterais que tu passes chez moi au moins deux fois par semaine. Ensuite, j’aurais besoin que tu arroses les fleurs dans mon jardin chaque samedi. Enfin, il serait préférable de nettoyer la maison une fois par semaine.
+J’écrirai les autres détails sur une feuille et je la déposerai sur la table, à côté des clés. En cas d’urgence, comme une fuite d’eau, appelle ma mère au 000-000-0000 : elle pourra t’aider.
+Merci d’avance.
+Haoyan"
+1,a,21,"À l’attention du service client,
+Je vous contacte à la suite de problèmes rencontrés lors de mon dernier achat sur votre site web, le 30 mai.
+Je suis profondément déçu par le service fourni, notamment concernant le point suivant : à l’ouverture du colis, l’un des articles en porcelaine commandés était cassé, comme en attestent les photos jointes à ce message.
+En conséquence, je demande un remboursement partiel des frais engagés, selon votre procédure, et vous remercie de bien vouloir traiter ma demande dans les plus brefs délais.
+Je reste à votre disposition pour tout complément d’information.
+Meilleures salutations,
+Haoyan"
