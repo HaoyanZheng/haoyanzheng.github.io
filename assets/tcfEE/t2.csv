@@ -1,0 +1,364 @@
+﻿tache,kind,idx,text
+2,q,1,"J’aimerais avoir des détails sur… À ce sujet, j’aimerais vous poser quelques questions, si vous êtes disponible."
+2,q,2,"J’ai entendu parler de… et j’aimerais bien te poser quelques questions à ce sujet, si tu es disponible."
+2,q,3,"Ah, super idée ! Ça me tente bien."
+2,q,4,J’aime bien l’idée.
+2,q,5,Ça a l’air bien.
+2,q,6,Ça semble intéressant.
+2,q,7,C’est intéressant.
+2,q,8,C’est top !
+2,q,9,C’est génial !
+2,q,10,"Ah, d’accord. Je connais cet endroit."
+2,q,11,"Ah, je vois !"
+2,q,12,Ça semble clair.
+2,q,13,Génial ! J’adore la pop.
+2,q,14,"Parfait, je suis libre samedi soir."
+2,q,15,"Super, je vais regarder ça tout à l’heure."
+2,q,16,C’est pratique !
+2,q,17,Ça donne envie !
+2,q,18,Ça a l’air sympa.
+2,q,19,J’ai hâte !
+2,q,20,Ça va être une super soirée.
+2,q,21,"Et puis, pourriez-vous me dire … ?"
+2,q,22,J’aimerais aussi savoir …
+2,q,23,"Concernant …, j’ai une autre question."
+2,q,24,"Et pour compléter, pouvez-vous m’expliquer … ?"
+2,q,25,"Ah, je vois. Et concernant la durée, j’ai une autre question : est-ce que la soirée se prolongera tard ?"
+2,q,26,Génial ! Ça m’aide beaucoup. J’ai encore une question. Et quels sont les tarifs pour les participants ?
+2,q,27,"Et puis, pourriez-vous me dire quels sont les dates disponibles?"
+2,q,28,"Très bien. Et pour compléter, j’aimerais aussi savoir le processus d’inscription. Pouvez-vous m’expliquer quelles sont les informations à fournir ?"
+2,q,29,"Ah, c’est parfait. Est-il possible de faire un cours d’essai gratuit ?"
+2,q,30,C’est intéressant. Et quels sont les tarifs pour les cours individuels comparés aux cours collectifs ?
+2,q,31,Je te remercie pour tes réponses. Elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins.
+2,q,32,Quels types sont disponibles ?
+2,q,33,Quels types de véhicules proposez-vous ?
+2,q,34,Lequel est le plus économique / pratique ?
+2,q,35,Quel est le meilleur moyen de transport ?
+2,q,36,Est-ce que vous avez des destinations populaires pour cette saison ?
+2,q,37,Y a-t-il d'autres pays disponibles au choix ?
+2,q,38,Quel type de travail est le plus demandé ?
+2,q,39,Quel type de travail offre le salaire le plus bas / le plus élevé ?
+2,q,40,Y a-t-il de bons restaurants chinois ou occidentaux ?
+2,q,41,Y a-t-il des restaurants plus économiques / haut de gamme ?
+2,q,42,Quel genre enseignez-vous ?
+2,q,43,Quel genre de musique sera joué au festival ?
+2,q,44,Quel genre de spectacle allons-nous voir ?
+2,q,45,Quel film recommandes-tu ?
+2,q,46,Quel film tu aimes le plus ?
+2,q,47,"Chaque genre a son charme unique, et tu peux expliquer pourquoi tu aimes ce type de film ?"
+2,q,48,Y a-t-il un genre que tu n’aimes pas du tout ?
+2,q,49,Pouvez-vous recommander des films adaptés à toute la famille ?
+2,q,50,Quel est le film qui t’a le plus touché ?
+2,q,51,Préfères-tu les films anciens ou les nouveaux films ?
+2,q,52,Quels sont les contenus des cours ?
+2,q,53,Puis-je personnaliser les contenus des cours ?
+2,q,54,Peut-on apprendre des chansons spécifiques pendant les cours ?
+2,q,55,Quel est ton travail actuel ?
+2,q,56,Quelle est votre mission principale ?
+2,q,57,Comment s’est passé ton premier jour de travail ?
+2,q,58,Où se trouve le siège de l’association / le lieu ?
+2,q,59,Où est-ce que ça se trouve ?
+2,q,60,Où aura lieu le festival ?
+2,q,61,"Y a-t-il des magasins, écoles ou hôpitaux à proximité ?"
+2,q,62,C’est loin d’ici ? / Est-ce que c’est loin d’ici ?
+2,q,63,Comment puis-je m’y rendre ?
+2,q,64,Est-ce que c’est accessible en transports en commun / à pied / en voiture ?
+2,q,65,Est-ce que l’endroit est bien desservi par les transports publics ?
+2,q,66,Est-ce qu’il y a un ascenseur ?
+2,q,67,Y a-t-il un parking à proximité ? / Peut-on se garer facilement dans le coin ?
+2,q,68,Où se trouvent les arrêts de bus les plus proches ?
+2,q,69,Y a-t-il souvent des embouteillages au centre-ville ?
+2,q,70,Comment étaient les plages ? Elles étaient tranquilles ou très fréquentées ?
+2,q,71,"Y a-t-il des bars, restaurants ou lieux de rencontre populaires ici ?"
+2,q,72,"À votre avis, quel est le meilleur endroit pour socialiser dans cette ville ?"
+2,q,73,Ce restaurant est-il bien décoré ? Parce que j’aime prendre des photos.
+2,q,74,Quand se déroulera le festival ?
+2,q,75,À quelle heure commencent les concerts ?
+2,q,76,À quelle heure souhaites-tu commencer ?
+2,q,77,Combien d’heures travailles-tu chaque jour ?
+2,q,78,Combien de temps durera la cérémonie ?
+2,q,79,Quand prévois-tu de faire le déménagement ?
+2,q,80,Ça fait combien de temps pour être bénévole ?
+2,q,81,Puis-je choisir mes horaires de bénévolat ?
+2,q,82,Y a-t-il des engagements à long terme ?
+2,q,83,Combien de fois par semaine recommandez-vous de faire des cours ?
+2,q,84,Quels sont les horaires d’ouverture ?
+2,q,85,À quelle heure est-il préférable de venir pour éviter la foule ?
+2,q,86,Les bus sont-ils ponctuels ?
+2,q,87,Ça fait combien de temps y aller ?
+2,q,88,Combien de temps dois-je attendre le métro ?
+2,q,89,Ce film passe-t-il tous les jours ?
+2,q,90,Combien de séances y a-t-il chaque jour ?
+2,q,91,Combien de participants y a-t-il ?
+2,q,92,Combien de participants y a-t-il en moyenne lors des randonnées ?
+2,q,93,Combien de membres compte le club ?
+2,q,94,Qui peut participer aux activités ?
+2,q,95,Y a-t-il beaucoup de monde ?
+2,q,96,Combien de personnes seront présentes au total ?
+2,q,97,Y a-t-il des végétariens ?
+2,q,98,Est-ce un club où il y a des jeunes ou des personnes plus âgées ?
+2,q,99,Combien de personnes y a-t-il dans l’équipe ?
+2,q,100,Est-ce qu’ils se connaissent bien ?
+2,q,101,Est-ce que les enfants / animaux sont acceptés ?
+2,q,102,Est-ce que d’autres collègues ou amis se joignent à nous ?
+2,q,103,Quel âge a votre enfant ?
+2,q,104,Est-ce que votre enfant est un garçon ou une fille ?
+2,q,105,Comment s’appelle-t-il / elle ?
+2,q,106,"Ton enfant, il est comment ? Plutôt timide ou sociable ?"
+2,q,107,Qui est ton acteur ou ton actrice préféré(e) ?
+2,q,108,"Pourquoi tu l’aimes particulièrement ? Le style, le jeu ou l’apparence ?"
+2,q,109,Est-ce qu’il / elle a été primé(e) ?
+2,q,110,Lequel est le plus connu ?
+2,q,111,As-tu déjà rencontré ton directeur / supérieur dès le premier jour ?
+2,q,112,Est-ce que tes collègues sont accueillants / gentils ?
+2,q,113,Est-ce qu’ils t’ont aidé à t’intégrer ?
+2,q,114,Puis-je personnaliser le menu pour l’anniversaire ?
+2,q,115,Est-ce que les restaurants offrent des desserts spéciaux pour l’anniversaire ?
+2,q,116,Y a-t-il des plats végétariens ?
+2,q,117,Comment sont les saveurs des plats ? Sont-ils épicés ou non ?
+2,q,118,Qu’est-ce que votre enfant aime manger pour le dîner ?
+2,q,119,Je peux le/la laisser manger du chocolat / des bonbons ?
+2,q,120,Est-ce qu’il a des allergies alimentaires ?
+2,q,121,Puis-je apporter des boissons et de la nourriture ?
+2,q,122,Y aura-t-il des stands pour vendre des boissons ?
+2,q,123,Quelles activités puis-je faire pendant le séjour ?
+2,q,124,Quelles activités as-tu faites là-bas ?
+2,q,125,Quelles activités sont organisées lors du mariage ?
+2,q,126,"Dans ces circuits, y a-t-il du temps libre ?"
+2,q,127,Y a-t-il des activités adaptées aux enfants / aux personnes âgées ?
+2,q,128,Y a-t-il des itinéraires pour les débutants ?
+2,q,129,Y a-t-il des ateliers pour les enfants ?
+2,q,130,Y a-t-il des visites à des marchés locaux ou des fermes à visiter dans la région ?
+2,q,131,Proposez-vous des visites guidées en chinois / des audioguides ?
+2,q,132,Quelles sont ses activités préférées ?
+2,q,133,Puis-je le/la laisser regarder la télévision / jouer aux jeux vidéo ?
+2,q,134,Est-ce qu’il aime jouer au foot ?
+2,q,135,Est-ce que je peux l’emmener au parc ?
+2,q,136,Quel est le tarif ? / C’est combien ?
+2,q,137,Quel est le prix moyen par personne dans ce restaurant ?
+2,q,138,Quel est le tarif / le prix pour une séance ?
+2,q,139,Quel est le prix d’une place / d’un billet / d’une séance ?
+2,q,140,Combien coûte l’abonnement ?
+2,q,141,Combien coûte un ticket de métro ?
+2,q,142,Quel est le loyer ?
+2,q,143,Quelle est la caution ?
+2,q,144,Quelle est la cotisation ?
+2,q,145,Peut-on négocier le loyer ?
+2,q,146,Quel est le budget que vous envisagez pour cette fête ?
+2,q,147,Y a-t-il un budget maximal à respecter pour le logement ?
+2,q,148,Est-ce qu’il y a un tarif spécial / particulier pour les groupes ?
+2,q,149,Y a-t-il des réductions pour les enfants / étudiants / personnes âgées ?
+2,q,150,Les repas sont-ils inclus ?
+2,q,151,"Y a-t-il des frais supplémentaires, comme l’assurance ?"
+2,q,152,Le premier cours est-il gratuit ?
+2,q,153,Y a-t-il un abonnement mensuel / annuel ?
+2,q,154,Existe-t-il des cartes de transport ou des abonnements mensuels ?
+2,q,155,"Quels sont les moyens de paiement ? En ligne, en espèces ou par carte ?"
+2,q,156,Peut-on payer en plusieurs fois ?
+2,q,157,Comment puis-je l’acheter ?
+2,q,158,Est-il possible d’acheter le ticket en ligne ?
+2,q,159,Faut-il payer à l’avance ou sur place ?
+2,q,160,"Bonjour ! J’ai entendu dire que tu as changé de travail et j’envisage moi aussi de changer d’emploi. Si tu es disponible, puis-je te poser quelques questions à ce sujet ?"
+2,q,161,Dans quelle entreprise travailles-tu ?
+2,q,162,Quel est le domaine principal de l’entreprise ?
+2,q,163,Quelle est votre mission principale ?
+2,q,164,Où se trouve l’entreprise ?
+2,q,165,Combien d’heures travailles-tu chaque jour ?
+2,q,166,Est-ce que les horaires sont flexibles ?
+2,q,167,Peut-on faire du télétravail ?
+2,q,168,Combien de personnes y a-t-il dans ton équipe ?
+2,q,169,Est-ce qu’ils se connaissent bien ?
+2,q,170,Organisez-vous des activités en dehors du travail ?
+2,q,171,Y a-t-il une cantine dans l’entreprise ?
+2,q,172,Est-ce que le salaire correspond à ce que tu attendais ?
+2,q,173,Y a-t-il des primes ou des avantages en plus du salaire ?
+2,q,174,"Bonjour ! Je m’intéresse au rythme du travail au Canada. Si vous êtes disponible, puis-je vous poser quelques questions à ce sujet ?"
+2,q,175,Est-ce qu’il y a beaucoup d’opportunités de travail pour les jeunes au Canada ?
+2,q,176,Quel type de travail est le plus demandé ?
+2,q,177,Quels sont les horaires de travail habituels au Canada ?
+2,q,178,Est-ce que les heures supplémentaires sont courantes au Canada ?
+2,q,179,Y a-t-il beaucoup de salariés étrangers ?
+2,q,180,Est-ce qu’il est facile de se faire des amis au travail au Canada ?
+2,q,181,Y a-t-il des activités en dehors du travail organisées par les entreprises ?
+2,q,182,Y a-t-il des activités sportives proposées par les entreprises ?
+2,q,183,Y a-t-il des crèches dans les entreprises ?
+2,q,184,Y a-t-il des cantines dans les entreprises en général ?
+2,q,185,Y a-t-il des primes ou des avantages en plus du salaire en général ?
+2,q,186,"Bonjour ! Je suis en train de chercher un emploi. Si tu es disponible, puis-je te poser quelques questions sur l’entretien professionnel ?"
+2,q,187,Comment dois-je m’habiller pour l’entretien ?
+2,q,188,Est-ce qu’il faut porter un costume ?
+2,q,189,Comment montrer que je suis motivé(e) ?
+2,q,190,Que dois-je faire pour bien me préparer ?
+2,q,191,Comment faire des recherches sur l’entreprise ?
+2,q,192,Est-ce qu’il existe des vidéos pour s’entraîner ?
+2,q,193,Quelles sont les questions les plus courantes ?
+2,q,194,Combien de temps à l’avance dois-je arriver ?
+2,q,195,Combien d’étapes peut comporter le processus ?
+2,q,196,Combien de personnes seront présentes pendant l’entretien ?
+2,q,197,Quel est le meilleur conseil que tu puisses me donner ?
+2,q,198,"Bonjour ! Je m’intéresse à votre association. Si vous êtes disponible, puis-je vous poser quelques questions à ce sujet ?"
+2,q,199,Existe-t-il un lieu de rendez-vous pour les bénévoles ?
+2,q,200,Où a lieu la distribution ?
+2,q,201,Quels sont les horaires typiques pour cette mission ?
+2,q,202,Y a-t-il une période d'essai ?
+2,q,203,Que faire si je ne peux pas venir un jour prévu ?
+2,q,204,Qui prépare les repas ?
+2,q,205,Faut-il avoir un âge minimum ?
+2,q,206,Est-ce qu'il y a un âge maximum ?
+2,q,207,Est-ce qu'il faut fournir des documents ?
+2,q,208,Peut-on recevoir un certificat de bénévolat ?
+2,q,209,Combien de repas sont distribués chaque jour ?
+2,q,210,Quel type de repas ?
+2,q,211,"Bonjour ! Si vous êtes disponible, puis-je vous poser quelques questions sur le logement / la maison ?"
+2,q,212,Quels types de logements sont disponibles ?
+2,q,213,Quelle est la surface totale de l'appartement ?
+2,q,214,Combien de pièces y a-t-il ?
+2,q,215,Est-ce que le bien est meublé ?
+2,q,216,Y a-t-il un balcon ou une terrasse ?
+2,q,217,Quelle est l'orientation du logement ?
+2,q,218,Est-ce qu'il y a un hôpital ou une clinique dans les environs ?
+2,q,219,Y a-t-il un parc ou des espaces verts à côté ?
+2,q,220,Y a-t-il un parking inclus avec le logement ?
+2,q,221,Quelle est l'année de construction du bâtiment ?
+2,q,222,Quelle est la durée minimale du bail ?
+2,q,223,Combien de temps à l’avance faut-il résilier le contrat ?
+2,q,224,Est-ce que les voisins sont accueillants / gentils ?
+2,q,225,Quel est le loyer mensuel des appartements ?
+2,q,226,"Y a-t-il des frais supplémentaires à prévoir, comme une caution ?"
+2,q,227,Les cours sont-ils adaptés aux débutants ?
+2,q,228,Est-ce que vous proposez aussi des cours en ligne ?
+2,q,229,Quels sont les contenus des cours ?
+2,q,230,Où se trouve l’école ?
+2,q,231,Proposez-vous des cours à domicile ?
+2,q,232,Quels sont les horaires des cours ?
+2,q,233,Combien de temps dure chaque séance ?
+2,q,234,Combien de fois par semaine recommandez-vous de prendre des cours ?
+2,q,235,Y a-t-il un âge minimum / un niveau minimum requis ?
+2,q,236,Quel est le tarif pour une séance ?
+2,q,237,Le premier cours est-il gratuit ?
+2,q,238,Faut-il payer à l’avance ou sur place ?
+2,q,239,Proposez-vous des réductions pour les étudiants ou les groupes ?
+2,q,240,"Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ton séjour à la montagne / Montréal que tu connais bien ?"
+2,q,241,Quelle est l'attraction la plus populaire ?
+2,q,242,Y a-t-il des quartiers typiques à découvrir ?
+2,q,243,Peut-on faire une balade en bord de mer ou de rivière ?
+2,q,244,Quelles activités puis-je faire pendant ce séjour ?
+2,q,245,Y a-t-il des randonnées à faire autour ?
+2,q,246,Quelles sont les meilleures périodes pour visiter ?
+2,q,247,Est-ce qu’il pleut souvent ?
+2,q,248,Quelle est la température moyenne ?
+2,q,249,Quels sont les plats typiques de la région ?
+2,q,250,Où me conseilles-tu de loger ?
+2,q,251,Est-ce qu’il faut réserver longtemps à l’avance ?
+2,q,252,Quel est le tarif ? / C’est combien ?
+2,q,253,Est-ce qu’il y a un tarif spécial / particulier pour les groupes ?
+2,q,254,Y a-t-il des réductions pour les enfants / étudiants / personnes âgées ?
+2,q,255,Les repas sont-ils inclus ?
+2,q,256,"Y a-t-il des frais supplémentaires, comme l’assurance ?"
+2,q,257,"Bonsoir ! Je suis content(e) de vous rencontrer. Vous venez juste de revenir d’un voyage, non ? Puis-je vous poser quelques questions sur votre séjour ?"
+2,q,258,Où êtes-vous allé(e) exactement ?
+2,q,259,Quel endroit vous a le plus marqué(e) ?
+2,q,260,Combien de temps a duré votre voyage ?
+2,q,261,Est-ce que la durée était suffisante ?
+2,q,262,Vous êtes parti(e) seul(e) ou accompagné(e) ?
+2,q,263,Comment étaient les gens là-bas ?
+2,q,264,Quelles activités avez-vous faites pendant le voyage ?
+2,q,265,Qu’est-ce que vous avez mangé là-bas ?
+2,q,266,Où avez-vous logé pendant votre voyage ?
+2,q,267,Combien a coûté votre voyage ?
+2,q,268,Y a-t-il eu des dépenses imprévues ?
+2,q,269,"Salut ! J’ai entendu parler d’un nouveau restaurant à Ottawa où tu as dîné. Ça m’intéresse beaucoup, pourrais-tu me dire un peu plus sur ce restaurant ?"
+2,q,270,Quel type de restaurant est-ce ?
+2,q,271,Tu as attendu longtemps ?
+2,q,272,Tu recommandes cet endroit ?
+2,q,273,Quels types de plats sont proposés ?
+2,q,274,Les portions sont-elles généreuses ?
+2,q,275,Proposent-ils des plats du jour ?
+2,q,276,Où se trouve le restaurant ?
+2,q,277,Quels sont les horaires d’ouverture ?
+2,q,278,Y avait-il beaucoup de monde ?
+2,q,279,Quel est le prix moyen par personne dans ce restaurant ?
+2,q,280,Est-ce qu’il est nécessaire de réserver à l’avance ?
+2,q,281,Comment puis-je faire une réservation ?
+2,q,282,"Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ta fête d’anniversaire ?"
+2,q,283,Quand se déroulera la fête d’anniversaire ?
+2,q,284,Combien de temps durera la fête d’anniversaire ?
+2,q,285,Où aura lieu la fête ?
+2,q,286,Est-ce que l’endroit est bien desservi par les transports publics ?
+2,q,287,On fait quelque chose de simple ou d'original ?
+2,q,288,Est-ce que la déco doit être faite la veille ?
+2,q,289,Combien de personnes seront invitées ?
+2,q,290,Est-ce que tous les invités se connaissent ?
+2,q,291,Qui va accueillir les invités à l’entrée ?
+2,q,292,Qu’est-ce qu’on va manger à la fête ?
+2,q,293,Est-ce qu’il faut que j’apporte quelque chose à manger ?
+2,q,294,Y a-t-il des jeux ou des animations pendant la fête ?
+2,q,295,Dois-je apporter un cadeau ?
+2,q,296,Est-ce qu’il y a un vestiaire ?
+2,q,297,Salut ! Je suis ravi(e) de t’aider à garder ton enfant. Est-ce que je pourrais te demander plus d’informations ?
+2,q,298,Quel âge a ton enfant ?
+2,q,299,Est-ce que ton enfant est un garçon ou une fille ?
+2,q,300,Comment s’appelle-t-il / elle ?
+2,q,301,Comment est ton enfant ? Ton enfant est-il plutôt timide ou sociable ?
+2,q,302,Est-ce que tu préfères que je garde ton enfant chez toi ou à un autre endroit ?
+2,q,303,Combien de temps dois-je m'occuper de ton enfant ?
+2,q,304,À quelle heure prend-il ses repas ?
+2,q,305,Est-ce qu’il a des allergies ?
+2,q,306,Est-ce qu’il mange seul ou dois-je l’aider ?
+2,q,307,Que faire s’il refuse de manger ?
+2,q,308,Quelles sont ses activités préférées ?
+2,q,309,Puis-je le/la laisser regarder la télévision / jouer aux jeux vidéo / utiliser le téléphone ?
+2,q,310,Combien coûte ce meuble ?
+2,q,311,Y a-t-il des frais de livraison ?
+2,q,312,Peut-on payer en plusieurs fois ?
+2,q,313,Faut-il verser un acompte lors de la commande ?
+2,q,314,Combien de temps faut-il pour la livraison ?
+2,q,315,Est-ce que la livraison peut être programmée à une date précise ?
+2,q,316,Les meubles sont-ils livrés par une entreprise spécialisée ?
+2,q,317,Les meubles sont-ils livrés montés ou à assembler soi-même ?
+2,q,318,Puis-je suivre la livraison en temps réel ?
+2,q,319,Le livreur aide-t-il à monter le meuble ?
+2,q,320,Puis-je refuser la livraison si le meuble est endommagé ?
+2,q,321,Y a-t-il une garantie en cas de problème ?
+2,q,322,Que faire si une pièce manque ?
+2,q,323,"Salut ! J’ai envie de commencer une série, mais je suis indécis(e). Est-ce que je pourrais te demander des informations pour faire mon choix ?"
+2,q,324,Quelle série recommandes-tu ?
+2,q,325,Chaque genre a son charme unique. Peux-tu m’expliquer pourquoi tu aimes cette série ?
+2,q,326,De quoi parle la série ?
+2,q,327,Quand est-ce que la série est diffusée ?
+2,q,328,Combien d’épisodes sont diffusés par semaine ?
+2,q,329,Y aura-t-il une prochaine saison ?
+2,q,330,Qui sont les acteurs principaux ?
+2,q,331,Pourquoi tu l’aimes particulièrement ?
+2,q,332,Sur quelle plateforme la série est-elle diffusée ?
+2,q,333,Combien coûte l’abonnement ?
+2,q,334,Existe-t-il une période d’essai gratuite ?
+2,q,335,Comment puis-je m’abonner ?
+2,q,336,Salut ! J’ai entendu dire que tu viens de voir un film au cinéma. Est-ce que je pourrais te demander des informations sur ce film ?
+2,q,337,Quel genre de film est-ce ?
+2,q,338,"Est-ce un film comique, dramatique, d’action ou un film d’horreur ?"
+2,q,339,De quoi parle le film ?
+2,q,340,Ce film est-il fidèle à un livre ou une histoire vraie ?
+2,q,341,Le film est-il plein de suspense ou plutôt prévisible ?
+2,q,342,Qui sont les acteurs principaux ?
+2,q,343,À quelle heure le film est-il diffusé ?
+2,q,344,Combien de temps dure le film ?
+2,q,345,Le film est-il encore à l’affiche ?
+2,q,346,Y a-t-il plusieurs séances par jour ?
+2,q,347,Dans quel cinéma peut-on voir ce film ?
+2,q,348,Combien coûte une place de cinéma ?
+2,q,349,"Y a-t-il des tarifs réduits pour les étudiants, les enfants ou les personnes âgées ?"
+2,q,350,Peut-on acheter les billets en ligne ou seulement sur place ?
+2,q,351,Faut-il réserver à l’avance pour être sûr d’avoir une place ?
+2,q,352,Salut ! Je suis vraiment désolé(e) d’apprendre que tu as eu un accident. Est-ce que ça va ?
+2,q,353,Quel type d’accident as-tu eu ?
+2,q,354,"Est-ce que c’était un accident de voiture, domestique ou au travail ?"
+2,q,355,Comment cela s’est-il produit ?
+2,q,356,Quand l’accident s’est-il produit ?
+2,q,357,Où l’accident s’est-il produit ? Est-ce près de ton domicile ou du travail ?
+2,q,358,Était-ce à l’intérieur ou à l’extérieur ?
+2,q,359,As-tu informé la police ou un responsable ?
+2,q,360,As-tu eu des frais médicaux ?
+2,q,361,Est-ce que l’assurance couvre cet accident ?
+2,q,362,Dois-tu rester au repos ou arrêter de travailler temporairement ?
+2,q,363,"Si tu as besoin de quelque chose, n’hésite pas à me le dire.Prends bien soin de toi et repose-toi bien ! À bientôt !"
