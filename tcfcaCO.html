@@ -715,7 +715,7 @@
   <header id="headerSticky" class="header-sticky">
     <div class="topbar">
       <div id="backIcon" class="topbar-back hidden">&larr;</div>
-      <div id="topbarTitle" class="topbar-title">TCF - Compréhension Écrite</div>
+      <div id="topbarTitle" class="topbar-title">TCF - Compréhension Orale</div>
     </div>
 
     <div id="progressTop" class="progress-top" aria-label="Progress">
@@ -730,7 +730,7 @@
     <!-- PART SELECTION -->
     <section id="partSelectScreen" class="page-wrap">
       <div class="hero">
-        <div class="hero-title">TCF – Compréhension Écrite</div>
+        <div class="hero-title">TCF – Compréhension Orale</div>
         <div class="hero-sub">
           选择任务（3 tâches）。支持：逐题播放、播放全部、连续循环（整套/单题）。<br>
           ✅ 新增：播放时自动跟随当前高亮段落（自动滚动）。
@@ -814,19 +814,27 @@
          ========================= */
       function buildT1Items() {
         return [
-          
+          { type: "section", titleCn: "T1", descFr: "", descCn: "" },
+          {
+            id: 1, topicCn: "",
+            promptFr: "总结",
+            promptCn: "",
+            answerFr: `Dans la pratique, il est crucial d’adopter une approche équilibrée en intégrant les points forts dans les deux documents cités tout en anticipant les risques potentiels liés à chacune des positions. 
+            Cette synthèse permettra de résoudre les problèmes de manière plus efficace et durable.`,
+            answerCn: `在实际操作中，关键在于采取一种平衡的方法，既要整合上述两份文件中的优点，同时也要预先考虑各自立场可能带来的潜在风险。
+            通过这种综合性的方式，可以更有效、更持久地解决问题。`
+          },
         ];
       }
 
       function buildT2Items() {
         return [
-          
+
         ];
       }
 
       function buildT3Items() {
         return [
-         
 
         ];
 
@@ -837,8 +845,9 @@
          ========================= */
       const parts = [
         {
-          label: "Tâche 1",
-          subtitle: "100 mots, general",
+          label: "21分答案汇总",
+          subtitle: "",
+          answersOnly: true,
           display: { question: "both", answer: "both" },
           labels: { question: "Question / 提问", answer: "Réponse / 答案" },
           audio: {
@@ -852,8 +861,9 @@
           items: buildT1Items()
         },
         {
-          label: "Tâche 2",
-          subtitle: "130 mots, décrire l'expérience",
+          label: "26分答案汇总",
+          subtitle: "",
+          answersOnly: true,
           display: { question: "cn", answer: "both" },
           labels: { question: "题目（中文）", answer: "答案（法语原文）" },
           audio: {
@@ -865,20 +875,6 @@
           },
           items: buildT2Items()
         },
-        {
-          label: "Tâche 3",
-          subtitle: "150 mots, comparer deux documents",
-          display: { question: "both", answer: "both" },
-          labels: { question: "Question / 提问", answer: "Réponse / 答案" },
-          audio: {
-            enabled: true,
-            type: "mp3",
-            playAllLabel: "播放全部答案",
-            src: (id) => `assets/tcfEE/mp3/t3a${id}.mp3`,
-            range: [1, 9999]
-          },
-          items: buildT3Items()
-        }
       ];
 
       /* =========================
@@ -1213,7 +1209,7 @@
         practiceScreen.style.display = "none";
         partSelectScreen.style.display = "block";
         backIcon.classList.add("hidden");
-        topbarTitle.textContent = "TCF - Compréhension Écrite";
+        topbarTitle.textContent = "TCF - Compréhension Orale";
         searchInput.value = "";
         if (progressTop) progressTop.style.display = "none";
         updateHeaderHeightVar();
@@ -1305,9 +1301,10 @@
       function renderAllItems() {
         const part = getCurrentPart();
         const display = part.display || { question: "both", answer: "both" };
+        const answersOnly = !!part.answersOnly;
 
         const total = part.items.filter(x => x && x.type !== "section").length;
-        practiceTitle.textContent = `${part.label} — Compréhension Écrite`;
+        practiceTitle.textContent = `${part.label} — Compréhension Orale`;
         practiceMeta.textContent = `${total} item(s)`;
 
         const audioOK = partHasAudio();
@@ -1315,6 +1312,8 @@
         stopBtn.disabled = !audioOK;
         playAllBtn.textContent = audioOK ? (part.audio.playAllLabel || "播放/朗读全部") : "本任务无音频";
         stopBtn.textContent = "停止播放";
+
+        toggleAllAnswersBtn.style.display = answersOnly ? "none" : "";
 
         // CN toggle visibility rule
         const hideCnToggle = (display.question === "cn" && display.answer === "fr");
@@ -1395,21 +1394,24 @@
             playOne(it.id, { fromUser: true });
           });
 
-          const btnToggleAns = document.createElement("button");
-          btnToggleAns.className = "btn";
-          btnToggleAns.type = "button";
-          btnToggleAns.textContent = "显示/隐藏答案";
-          btnToggleAns.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const ans = card.querySelector(".answer");
-            if (!ans) return;
-            const show = ans.style.display !== "block";
-            ans.style.display = show ? "block" : "none";
-          });
-
           actions.appendChild(btnPlayAns);
-          actions.appendChild(btnToggleAns);
+
+          if (!answersOnly) {
+            const btnToggleAns = document.createElement("button");
+            btnToggleAns.className = "btn";
+            btnToggleAns.type = "button";
+            btnToggleAns.textContent = "显示/隐藏答案";
+            btnToggleAns.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const ans = card.querySelector(".answer");
+              if (!ans) return;
+              const show = ans.style.display !== "block";
+              ans.style.display = show ? "block" : "none";
+            });
+
+            actions.appendChild(btnToggleAns);
+          }
 
           head.appendChild(left);
           head.appendChild(actions);
@@ -1430,24 +1432,27 @@
           if (display.answer === "cn") aFr = "";
           if (display.answer === "fr") aCn = "";
 
-          const qBlock = document.createElement("div");
-          qBlock.className = "block";
-          qBlock.innerHTML = `
-            <div class="label">${escapeHtml(qLabel)}</div>
-            ${(qFr ? `<div class="fr">${toHtmlText(qFr)}</div>` : "")}
-            ${(qCn ? `<div class="cn">${toHtmlText(qCn)}</div>` : "")}
-          `;
+          let qBlock = null;
+          if (!answersOnly) {
+            qBlock = document.createElement("div");
+            qBlock.className = "block";
+            qBlock.innerHTML = `
+    <div class="label">${escapeHtml(qLabel)}</div>
+    ${(qFr ? `<div class="fr">${toHtmlText(qFr)}</div>` : "")}
+    ${(qCn ? `<div class="cn">${toHtmlText(qCn)}</div>` : "")}
+  `;
+          }
 
           const aWrap = document.createElement("div");
           aWrap.className = "answer";
-          aWrap.style.display = allAnswersVisible ? "block" : "none";
+          aWrap.style.display = (answersOnly || allAnswersVisible) ? "block" : "none";
           aWrap.innerHTML = `
-            <div class="answer-title">${escapeHtml(aLabel)}</div>
-            ${(aFr ? `<div class="fr">${toHtmlText(aFr)}</div>` : "")}
-            ${(aCn ? `<div class="cn">${toHtmlText(aCn)}</div>` : "")}
-          `;
+  <div class="answer-title">${escapeHtml(aLabel)}</div>
+  ${(aFr ? `<div class="fr">${toHtmlText(aFr)}</div>` : "")}
+  ${(aCn ? `<div class="cn">${toHtmlText(aCn)}</div>` : "")}
+`;
 
-          body.appendChild(qBlock);
+          if (qBlock) body.appendChild(qBlock);
           body.appendChild(aWrap);
 
           card.appendChild(head);
