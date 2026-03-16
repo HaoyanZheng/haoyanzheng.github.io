@@ -56,33 +56,27 @@ def build_auto_id(row: dict) -> str | None:
     return f"t{t}{k}{i}"
 
 
-def ssml_wrap(text: str, rate: int, volume: int, lang: str = "fr-CA") -> str:
-    # rate: -10..10 -> map to +/- %
-    rate_pct = max(-50, min(50, rate * 5))   # 0->0%, 10->50%
-    vol_pct = max(0, min(200, volume))       # 0..200%
+def rate_str(rate: int) -> str:
+    """Convert int -10..10 to edge-tts rate string e.g. '-10%' or '+10%'."""
+    pct = max(-50, min(50, rate * 5))
+    return f"{pct:+d}%"
 
-    escaped = (
-        text.replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
+
+def volume_str(volume: int) -> str:
+    """Convert 0..200 to edge-tts volume string e.g. '+0%' or '+50%'."""
+    pct = max(-100, min(100, volume - 100))
+    return f"{pct:+d}%"
+
+
+async def synth_one(voice: str, text: str, out_path: Path, rate: int, volume: int):
+    """Synthesize using edge-tts Communicate with rate and volume."""
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    communicate = edge_tts.Communicate(
+        text,
+        voice=voice,
+        rate=rate_str(rate),
+        volume=volume_str(volume),
     )
-    return f"""<speak version="1.0" xml:lang="{lang}">
-  <prosody rate="{rate_pct}%" volume="{vol_pct}%">{escaped}</prosody>
-</speak>"""
-
-
-async def synth_one_text(voice: str, text: str, out_path: Path):
-    """Most robust: send plain text (no SSML)."""
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    communicate = edge_tts.Communicate(text, voice=voice)
-    await communicate.save(str(out_path))
-
-
-async def synth_one_ssml(voice: str, text: str, out_path: Path, rate: int, volume: int, lang: str):
-    """Use SSML (rate/volume). IMPORTANT: is_ssml=True."""
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    ssml = ssml_wrap(text, rate=rate, volume=volume, lang=lang)
-    communicate = edge_tts.Communicate(ssml, voice=voice, is_ssml=True)
     await communicate.save(str(out_path))
 
 
@@ -90,16 +84,17 @@ async def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", default="assets/tcfEE/t1.csv")
     ap.add_argument("--outdir", default="assets/tcfEE/mp3")
-    ap.add_argument("--voice", default="fr-CA-AntoineNeural")
-    ap.add_argument("--lang", default="fr-CA")
-    ap.add_argument("--rate", type=int, default=0)       # -10..10 (approx)
-    ap.add_argument("--volume", type=int, default=100)   # 0..200 (%)
+
+    # ── Expression Écrite optimized ─────────────────────────────────────────
+    # Denise: clearest, most neutral French — ideal for memorizing written text
+    ap.add_argument("--voice", default="fr-FR-DeniseNeural")
+    ap.add_argument("--lang", default="fr-FR")
+    # Slightly slower (-3) so each word is clearly heard for memorization
+    ap.add_argument("--rate", type=int, default=-3)      # -10..10
+    ap.add_argument("--volume", type=int, default=100)   # 0..200
+    # ────────────────────────────────────────────────────────────────────────
+
     ap.add_argument("--concurrency", type=int, default=4)
-    ap.add_argument(
-        "--use-ssml",
-        action="store_true",
-        help="Enable SSML prosody so --rate/--volume take effect. If not set, script uses plain text (most robust)."
-    )
     args = ap.parse_args()
 
     csv_path = Path(args.csv)
@@ -108,7 +103,6 @@ async def main():
     if not csv_path.exists():
         raise SystemExit(f"CSV not found: {csv_path}")
 
-    # Read CSV
     with csv_path.open("r", encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f)
         rows = list(reader)
@@ -131,7 +125,6 @@ async def main():
             print(f"Skipping row (no id): {preview}")
             return
 
-        # Ensure uniqueness
         if _id in seen:
             seen[_id] += 1
             out_id = f"{_id}_{seen[_id]}"
@@ -143,17 +136,13 @@ async def main():
         print(f"Generating {out_id}...")
 
         async with sem:
-            if args.use_ssml:
-                await synth_one_ssml(
-                    voice=args.voice,
-                    text=text,
-                    out_path=out_path,
-                    rate=args.rate,
-                    volume=args.volume,
-                    lang=args.lang,
-                )
-            else:
-                await synth_one_text(args.voice, text, out_path)
+            await synth_one(
+                voice=args.voice,
+                text=text,
+                out_path=out_path,
+                rate=args.rate,
+                volume=args.volume,
+            )
 
     for r in rows:
         tasks.append(asyncio.create_task(run_row(r)))

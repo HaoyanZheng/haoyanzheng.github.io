@@ -206,7 +206,7 @@ def extract_answerfr_strings(text: str) -> list[str]:
     Assumes answerFr values use double quotes.
     """
     answers = []
-    key = 'answerFr: "'
+    key = 'answerFr: `'
     i = 0
     n = len(text)
 
@@ -227,7 +227,7 @@ def extract_answerfr_strings(text: str) -> list[str]:
             else:
                 if ch == "\\":
                     esc = True
-                elif ch == '"':
+                elif ch == '`':
                     break
                 else:
                     buf.append(ch)
