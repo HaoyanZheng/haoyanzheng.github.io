@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>TCF – Compréhension Orale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark">
+
+  <style>
+    :root {
+      --header-height: 74px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #222;
+    }
+
+    /* Sticky header wrapper (topbar + progress bar) */
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+    }
+
+    .topbar {
+      background: #0059b3;
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topbar-title {
+      margin: 0 auto;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      flex: 1 1 260px;
+    }
+
+    .topbar-back {
+      font-size: 22px;
+      cursor: pointer;
+      user-select: none;
+      flex: 0 0 auto;
+    }
+
+    .topbar-back.hidden {
+      visibility: hidden;
+    }
+
+    /* Top progress bar */
+    .progress-top {
+      display: none;
+      background: rgba(244, 247, 251, 0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 8px 20px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-top .progress-text {
+      font-size: 12px;
+      font-weight: 900;
+      color: #0c63c7;
+      white-space: nowrap;
+    }
+
+    .progress-top .progress-bar {
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(12, 99, 199, 0.15);
+    }
+
+    .progress-top .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #0c63c7;
+      border-radius: 999px;
+      transition: width 140ms linear;
+    }
+
+    .page-wrap {
+      max-width: 980px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 24px 28px 30px;
+    }
+
+    #partSelectScreen {
+      text-align: center;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .card {
+      width: 170px;
+      min-height: 110px;
+      border-radius: 18px;
+      border: 2px solid #0c63c7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+      background: #f8fbff;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      background: #eaf2ff;
+    }
+
+    .card-label {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0c63c7;
+      margin-bottom: 4px;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: #666;
+    }
+
+    #practiceScreen {
+      display: none;
+    }
+
+    .practice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .practice-title {
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .practice-meta {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      position: sticky;
+      top: var(--header-height);
+      z-index: 20;
+      background: rgba(244, 247, 251, 0.92);
+      backdrop-filter: blur(6px);
+      padding: 10px 0;
+      margin-bottom: 10px;
+    }
+
+    .input {
+      flex: 1 1 240px;
+      min-width: 220px;
+      border: 1px solid #d0d7e2;
+      border-radius: 24px;
+      padding: 10px 14px;
+      outline: none;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .btn {
+      border: none;
+      padding: 10px 14px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      background: #e2efff;
+      color: #0059b3;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+      transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn:focus-visible,
+    .input:focus-visible {
+      outline: 3px solid rgba(12, 99, 199, 0.25);
+      outline-offset: 2px;
+    }
+
+    .pill {
+      border: 1px solid #d0d7e2;
+      border-radius: 999px;
+      padding: 8px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .pill label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0c63c7;
+      user-select: none;
+    }
+
+    .pill input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0c63c7;
+      cursor: pointer;
+    }
+
+    .pill small {
+      font-size: 12px;
+      color: #4b5563;
+      user-select: none;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Collapsible section wrapper */
+    details.section {
+      border-radius: 14px;
+      border: 1px solid #d0d7e2;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    details.section[open] {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+    }
+
+    .section-summary {
+      list-style: none;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      background: #eef5ff;
+      border-left: 6px solid #0c63c7;
+      cursor: pointer;
+    }
+
+    details.section summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .section-title {
+      font-weight: 900;
+      color: #0c63c7;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: #4b5563;
+      margin-top: 2px;
+    }
+
+    .section-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .section-desc {
+      padding: 12px 14px 2px;
+      background: #f8fbff;
+      border-top: 1px solid #e5edf8;
+    }
+
+    .section-items {
+      padding: 12px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .item {
+      border: 1px solid #d0d7e2;
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+      scroll-margin-top: calc(var(--header-height) + 96px);
+    }
+
+    .item.is-active {
+      outline: 3px solid rgba(12, 99, 199, 0.25);
+      outline-offset: -3px;
+    }
+
+    .item.is-playing {
+      border-color: rgba(12, 99, 199, 0.65);
+      box-shadow: 0 10px 28px rgba(12, 99, 199, 0.20);
+    }
+
+    .item-head {
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #f8fbff;
+      border-bottom: 1px solid #e5edf8;
+    }
+
+    .item-num {
+      font-weight: 900;
+      color: #0c63c7;
+    }
+
+    .item-topic {
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .item-body {
+      padding: 14px 14px 16px;
+    }
+
+    .block {
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid #e5edf8;
+      max-width: 860px;
+      margin: 0 auto 10px;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      color: #0c63c7;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .fr {
+      font-size: 16px;
+      line-height: 1.75;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .cn {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #4b5563;
+    }
+
+    .answer {
+      border-radius: 14px;
+      border: 1px solid #d0d7e2;
+      background: #f7fbff;
+      padding: 12px 14px;
+      display: none;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .answer-title {
+      font-size: 12px;
+      font-weight: 900;
+      color: #0c63c7;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .hide-cn .cn {
+      display: none !important;
+    }
+
+    @media (min-width: 900px) {
+      .fr {
+        font-size: 20px;
+      }
+
+      .cn {
+        font-size: 18px;
+      }
+    }
+
+    /* 让 controls-row 真正占满一整行，避免“看起来有空间但实际被收缩” */
+    .controls-row {
+      flex: 1 1 100%;
+      width: 100%;
+    }
+
+    /* 桌面端：尽量不换行，让输入框可以缩，按钮保持一行 */
+    @media (min-width: 641px) {
+      .controls-row {
+        flex-wrap: nowrap;
+      }
+
+      .controls-row .input {
+        min-width: 0;
+        /* 关键：允许 input 缩小，不然会挤掉最后的按钮 */
+        flex: 1 1 auto;
+      }
+
+      .controls-row .btn {
+        flex: 0 0 auto;
+      }
+    }
+
+
+    .controls-more {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .controls.is-collapsed .controls-more {
+      display: none;
+    }
+
+    /* “更多”按钮弱化一点 */
+    .btn-ghost {
+      background: transparent;
+      box-shadow: none;
+      border: 1px solid rgba(12, 99, 199, 0.25);
+    }
+
+    @media (max-width: 640px) {
+      .page-wrap {
+        margin: 12px;
+        padding: 18px 16px 22px;
+      }
+
+      .card {
+        width: 46%;
+        min-width: 160px;
+      }
+
+      .input {
+        min-width: 180px;
+      }
+
+      .controls-row {
+        gap: 8px;
+      }
+
+      .controls-row .input {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+
+      .btn {
+        padding: 8px 10px;
+        font-size: 13px;
+        border-radius: 18px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+      }
+
+      .pill {
+        padding: 6px 8px;
+      }
+
+      .pill label,
+      .pill small {
+        font-size: 11px;
+      }
+    }
+
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #060814;
+        color: #e5e7eb;
+      }
+
+      .topbar {
+        background: #0b3a7a;
+        color: #e5e7eb;
+      }
+
+      .progress-top {
+        background: rgba(6, 8, 20, 0.78);
+        border-bottom-color: #1f2937;
+      }
+
+      .progress-top .progress-text {
+        color: #93c5fd;
+      }
+
+      .progress-top .progress-bar {
+        background: rgba(147, 197, 253, 0.18);
+      }
+
+      .progress-top .progress-fill {
+        background: #93c5fd;
+      }
+
+      .page-wrap {
+        background: #111827;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+      }
+
+      .hero-sub {
+        color: #d1d5db;
+      }
+
+      .card {
+        background: #111827;
+        border-color: #2563eb;
+      }
+
+      .card:hover {
+        background: #1f2937;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.9);
+      }
+
+      .card-label {
+        color: #bfdbfe;
+      }
+
+      .card-sub {
+        color: #9ca3af;
+      }
+
+      .practice-meta {
+        color: #9ca3af;
+      }
+
+      .controls {
+        background: rgba(6, 8, 20, 0.75);
+      }
+
+      .input {
+        background: #0b1120;
+        border-color: #374151;
+        color: #e5e7eb;
+      }
+
+      .btn {
+        background: #1e3a8a;
+        color: #e5e7eb;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      }
+
+      .pill {
+        background: rgba(11, 17, 32, 0.72);
+        border-color: #374151;
+      }
+
+      .pill label {
+        color: #93c5fd;
+      }
+
+      details.section {
+        background: #111827;
+        border-color: #374151;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+      }
+
+      .section-summary {
+        background: #0b1120;
+        border-left-color: #2563eb;
+      }
+
+      .section-title {
+        color: #93c5fd;
+      }
+
+      .section-sub {
+        color: #9ca3af;
+      }
+
+      .section-desc {
+        background: #0b1120;
+        border-top-color: #1f2937;
+      }
+
+      .item {
+        background: #111827;
+        border-color: #374151;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+      }
+
+      .item.is-active {
+        outline-color: rgba(147, 197, 253, 0.22);
+      }
+
+      .item.is-playing {
+        border-color: rgba(147, 197, 253, 0.65);
+        box-shadow: 0 10px 28px rgba(147, 197, 253, 0.12);
+      }
+
+      .item-head {
+        background: #0b1120;
+        border-bottom-color: #1f2937;
+      }
+
+      .item-num {
+        color: #93c5fd;
+      }
+
+      .item-topic {
+        color: #f9fafb;
+      }
+
+      .block {
+        background: rgba(15, 23, 42, 0.92);
+        border-color: #374151;
+      }
+
+      .label {
+        color: #93c5fd;
+      }
+
+      .fr {
+        color: #e5e7eb;
+      }
+
+      .cn {
+        color: #9ca3af;
+      }
+
+      .answer {
+        background: #0b1120;
+        border-color: #374151;
+      }
+
+      .answer-title {
+        color: #93c5fd;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header id="headerSticky" class="header-sticky">
+    <div class="topbar">
+      <div id="backIcon" class="topbar-back hidden">&larr;</div>
+      <div id="topbarTitle" class="topbar-title">TCF - Compréhension Écrite</div>
+    </div>
+
+    <div id="progressTop" class="progress-top" aria-label="Progress">
+      <div id="progressText" class="progress-text">Item -- / --</div>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progressFill" class="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- PART SELECTION -->
+    <section id="partSelectScreen" class="page-wrap">
+      <div class="hero">
+        <div class="hero-title">TCF – Compréhension Écrite</div>
+        <div class="hero-sub">
+          选择任务（3 tâches）。支持：逐题播放、播放全部、连续循环（整套/单题）。<br>
+          ✅ 新增：播放时自动跟随当前高亮段落（自动滚动）。
+        </div>
+      </div>
+      <div id="partGrid" class="grid"></div>
+    </section>
+
+    <!-- PRACTICE SCREEN -->
+    <section id="practiceScreen" class="page-wrap">
+      <div class="practice-header">
+        <div class="practice-title" id="practiceTitle">Tâche</div>
+        <div class="practice-meta" id="practiceMeta"></div>
+      </div>
+
+      <div class="controls is-collapsed">
+        <div class="controls-row">
+          <input id="searchInput" class="input" placeholder="Rechercher (FR / 中文)..." />
+
+          <!-- NEW: 更多/收起 -->
+          <button class="btn btn-ghost" id="controlsMoreBtn" type="button">更多 ▾</button>
+        </div>
+
+        <!-- 默认折叠：不常用的都放这里 -->
+        <div class="controls-more" id="controlsMore">
+
+          <button class="btn" id="playAllBtn">播放/朗读全部</button>
+          <button class="btn" id="stopBtn">停止播放</button>
+
+          <!-- Optional TTS voice UI -->
+          <select id="voiceSelect" class="input" style="flex:0 1 320px; min-width:240px; display:none;"></select>
+          <button class="btn" id="testVoiceBtn" style="display:none;">测试声音</button>
+
+          <button class="btn" id="toggleCnBtn">隐藏中文</button>
+          <button class="btn" id="toggleAllAnswersBtn">显示全部答案</button>
+
+          <span class="pill" title="播放/朗读时自动滚动到当前高亮段落">
+            <label for="autoFollowToggle">跟随播放</label>
+            <input id="autoFollowToggle" type="checkbox" />
+            <small>自动滚动</small>
+          </span>
+
+          <span class="pill" title="播放完最后一句后自动继续">
+            <label for="loopAllToggle">循环整套</label>
+            <input id="loopAllToggle" type="checkbox" />
+            <small>到末尾回到开头</small>
+          </span>
+
+          <span class="pill" title="反复循环当前题（优先级高于循环整套）">
+            <label for="loopOneToggle">单题循环</label>
+            <input id="loopOneToggle" type="checkbox" />
+            <small>只循环当前题</small>
+          </span>
+        </div>
+      </div>
+
+      <div class="list" id="itemList"></div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      /* =========================
+         HELPERS
+         ========================= */
+      function escapeHtml(str) {
+        return String(str ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+      function toHtmlText(str) { return escapeHtml(str).replaceAll("\n", "<br>"); }
+
+      function clamp(n, a, b) { return Math.min(b, Math.max(a, n)); }
+
+      /* =========================
+         CONTENT PLACEHOLDERS
+         - Replace these with your real content
+         ========================= */
+      function buildT1Items() {
+        return [
+          
+        ];
+      }
+
+      function buildT2Items() {
+        return [
+          
+        ];
+      }
+
+      function buildT3Items() {
+        return [
+         
+
+        ];
+
+      }
+
+      /* =========================
+         DATA (wire your mp3 paths here)
+         ========================= */
+      const parts = [
+        {
+          label: "Tâche 1",
+          subtitle: "100 mots, general",
+          display: { question: "both", answer: "both" },
+          labels: { question: "Question / 提问", answer: "Réponse / 答案" },
+          audio: {
+            enabled: true,
+            type: "mp3",
+            playAllLabel: "播放全部答案",
+            // IMPORTANT: keep your own src format
+            src: (id) => `assets/tcfEE/mp3/t1a${id}.mp3`,
+            range: [1, 9999]
+          },
+          items: buildT1Items()
+        },
+        {
+          label: "Tâche 2",
+          subtitle: "130 mots, décrire l'expérience",
+          display: { question: "cn", answer: "both" },
+          labels: { question: "题目（中文）", answer: "答案（法语原文）" },
+          audio: {
+            enabled: true,
+            type: "mp3",
+            playAllLabel: "播放全部答案",
+            src: (id) => `assets/tcfEE/mp3/t2a${id}.mp3`,
+            range: [1, 9999]
+          },
+          items: buildT2Items()
+        },
+        {
+          label: "Tâche 3",
+          subtitle: "150 mots, comparer deux documents",
+          display: { question: "both", answer: "both" },
+          labels: { question: "Question / 提问", answer: "Réponse / 答案" },
+          audio: {
+            enabled: true,
+            type: "mp3",
+            playAllLabel: "播放全部答案",
+            src: (id) => `assets/tcfEE/mp3/t3a${id}.mp3`,
+            range: [1, 9999]
+          },
+          items: buildT3Items()
+        }
+      ];
+
+      /* =========================
+         STATE
+         ========================= */
+      let currentPartIndex = null;
+
+      // MP3 player
+      const audioPlayer = new Audio();
+      audioPlayer.preload = "metadata";
+
+      // Auto-play state
+      let isAllPlaying = false;
+      let currentPlayingId = null;
+
+      // TTS state (kept, in case you switch to TTS later)
+      let currentUtterance = null;
+
+      // Anti-race tokens
+      let ttsSeq = 0;
+      let playSeq = 0;
+
+      // Current "active" question in viewport
+      let currentActiveId = null;
+
+      // Looping state (persisted)
+      const STORAGE_LOOP_ALL = "tcf_loop_all";
+      const STORAGE_LOOP_ONE = "tcf_loop_one";
+      let loopAllEnabled = false;
+      let loopOneEnabled = false;
+
+      // NEW: Auto-follow state (persisted)
+      const STORAGE_AUTO_FOLLOW = "tcf_auto_follow";
+      let autoFollowEnabled = true;
+      let lastAutoFollowId = null;
+      let lastAutoFollowAt = 0;
+
+      /* =========================
+         DOM
+         ========================= */
+      const headerSticky = document.getElementById("headerSticky");
+      const progressTop = document.getElementById("progressTop");
+      const progressText = document.getElementById("progressText");
+      const progressFill = document.getElementById("progressFill");
+
+      const partSelectScreen = document.getElementById("partSelectScreen");
+      const practiceScreen = document.getElementById("practiceScreen");
+
+      const backIcon = document.getElementById("backIcon");
+      const topbarTitle = document.getElementById("topbarTitle");
+      const partGrid = document.getElementById("partGrid");
+
+      const practiceTitle = document.getElementById("practiceTitle");
+      const practiceMeta = document.getElementById("practiceMeta");
+      const itemList = document.getElementById("itemList");
+
+      const toggleCnBtn = document.getElementById("toggleCnBtn");
+      const toggleAllAnswersBtn = document.getElementById("toggleAllAnswersBtn");
+      const searchInput = document.getElementById("searchInput");
+
+      const playAllBtn = document.getElementById("playAllBtn");
+      const stopBtn = document.getElementById("stopBtn");
+
+      const voiceSelect = document.getElementById("voiceSelect");
+      const testVoiceBtn = document.getElementById("testVoiceBtn");
+
+      const loopAllToggle = document.getElementById("loopAllToggle");
+      const loopOneToggle = document.getElementById("loopOneToggle");
+
+      const autoFollowToggle = document.getElementById("autoFollowToggle");
+
+      const controlsMoreBtn = document.getElementById("controlsMoreBtn");
+
+      const controlsEl = document.querySelector(".controls");
+
+      if (controlsMoreBtn && controlsEl) {
+        controlsMoreBtn.addEventListener("click", () => {
+          const collapsed = controlsEl.classList.toggle("is-collapsed");
+          controlsMoreBtn.textContent = collapsed ? "更多 ▾" : "收起 ▴";
+          // 展开/收起会改变 header 高度，更新 sticky 偏移用的变量
+          requestAnimationFrame(updateHeaderHeightVar);
+        });
+      }
+
+
+      function updateHeaderHeightVar() {
+        if (!headerSticky) return;
+        const h = Math.max(52, headerSticky.offsetHeight || 0);
+        document.documentElement.style.setProperty("--header-height", `${h}px`);
+      }
+      window.addEventListener("resize", updateHeaderHeightVar);
+
+      /* =========================
+         LOCAL STORAGE
+         ========================= */
+      function safeGetLS(key) {
+        try { return localStorage.getItem(key); } catch { return null; }
+      }
+      function safeSetLS(key, val) {
+        try { localStorage.setItem(key, String(val)); } catch { }
+      }
+
+      /* =========================
+         AUTO-FOLLOW (NEW)
+         - Scroll screen to the current playing/highlighted paragraph
+         - Accounts for sticky header
+         - Opens collapsed <details> automatically
+         ========================= */
+      function setAutoFollow(val) {
+        autoFollowEnabled = !!val;
+        safeSetLS(STORAGE_AUTO_FOLLOW, autoFollowEnabled ? "1" : "0");
+        if (autoFollowToggle) autoFollowToggle.checked = autoFollowEnabled;
+      }
+
+      function loadAutoFollowPref() {
+        const v = safeGetLS(STORAGE_AUTO_FOLLOW);
+        // default ON if not set
+        autoFollowEnabled = (v == null) ? true : (v === "1");
+        if (autoFollowToggle) autoFollowToggle.checked = autoFollowEnabled;
+      }
+
+      function openParentSections(el) {
+        const details = el?.closest?.("details.section");
+        if (details && !details.open) details.open = true;
+      }
+
+      function getStickyOffsetPx() {
+        const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 74;
+        // extra padding because controls bar is also sticky below header
+        const extra = 92; // safe constant; you can tune
+        return headerH + extra;
+      }
+
+      function scrollToItemId(itemId, behavior = "smooth") {
+        const el = document.querySelector(`.item[data-itemid="${Number(itemId)}"]`);
+        if (!el) return;
+        if (el.style.display === "none") return; // 搜索过滤隐藏就别滚
+
+        // ✅ 先展开父级 section（关键）
+        openParentSections(el);
+
+        // ✅ 等 <details> 展开后再测量 & 滚动
+        requestAnimationFrame(() => {
+          if (el.offsetParent === null) return; // 展开失败/仍不可见就退出
+
+          const rect = el.getBoundingClientRect();
+          const absoluteTop = window.scrollY + rect.top;
+          const targetTop = absoluteTop - getStickyOffsetPx();
+
+          window.scrollTo({
+            top: Math.max(0, targetTop),
+            behavior
+          });
+        });
+      }
+
+
+      function maybeAutoFollow(itemId) {
+        if (!autoFollowEnabled) return;
+        const id = Number(itemId);
+        if (!id) return;
+
+        // throttle + avoid repeating same id
+        const now = performance.now();
+        if (lastAutoFollowId === id && (now - lastAutoFollowAt) < 350) return;
+        lastAutoFollowId = id;
+        lastAutoFollowAt = now;
+
+        scrollToItemId(id, "smooth");
+      }
+
+      if (autoFollowToggle) {
+        autoFollowToggle.addEventListener("change", () => setAutoFollow(autoFollowToggle.checked));
+      }
+
+      /* =========================
+         LOOPING (persist + behavior)
+         ========================= */
+      function loadLoopPrefs() {
+        loopAllEnabled = safeGetLS(STORAGE_LOOP_ALL) === "1";
+        loopOneEnabled = safeGetLS(STORAGE_LOOP_ONE) === "1";
+        if (loopAllToggle) loopAllToggle.checked = loopAllEnabled;
+        if (loopOneToggle) loopOneToggle.checked = loopOneEnabled;
+      }
+
+      function setLoopAll(val) {
+        loopAllEnabled = !!val;
+        safeSetLS(STORAGE_LOOP_ALL, loopAllEnabled ? "1" : "0");
+        if (loopAllToggle) loopAllToggle.checked = loopAllEnabled;
+      }
+
+      function setLoopOne(val) {
+        loopOneEnabled = !!val;
+        safeSetLS(STORAGE_LOOP_ONE, loopOneEnabled ? "1" : "0");
+        if (loopOneToggle) loopOneToggle.checked = loopOneEnabled;
+      }
+
+      if (loopAllToggle) {
+        loopAllToggle.addEventListener("change", () => setLoopAll(loopAllToggle.checked));
+      }
+      if (loopOneToggle) {
+        loopOneToggle.addEventListener("change", () => setLoopOne(loopOneToggle.checked));
+      }
+
+      /* =========================
+         PART HELPERS
+         ========================= */
+      function getCurrentPart() { return parts[currentPartIndex]; }
+      function partHasAudio() { return Boolean(getCurrentPart()?.audio?.enabled); }
+      function isTTSPart() { return Boolean(getCurrentPart()?.audio?.enabled && getCurrentPart()?.audio?.type === "tts"); }
+      function isMP3Part() { return Boolean(getCurrentPart()?.audio?.enabled && getCurrentPart()?.audio?.type === "mp3"); }
+
+      function findItemById(itemId) {
+        const part = getCurrentPart();
+        if (!part) return null;
+        const id = Number(itemId);
+        return part.items.find(x => x && x.type !== "section" && Number(x.id) === id) || null;
+      }
+
+      function getAllNonSectionIds() {
+        const part = getCurrentPart();
+        if (!part) return [];
+        return part.items
+          .filter(x => x && x.type !== "section")
+          .map(x => Number(x.id))
+          .filter(Boolean)
+          .sort((a, b) => a - b);
+      }
+
+      function hasAudioForItem(itemId) {
+        const part = getCurrentPart();
+        if (!partHasAudio()) return false;
+        const it = findItemById(itemId);
+        if (!it) return false;
+
+        if (part.audio?.type === "tts") {
+          const txt = (typeof part.audio?.getText === "function") ? part.audio.getText(it) : (it.answerFr || "");
+          return Boolean(String(txt || "").trim());
+        }
+
+        const id = Number(itemId);
+        if (Array.isArray(part.audio?.range)) {
+          const [minId, maxId] = part.audio.range;
+          if (id < minId || id > maxId) return false;
+        }
+        return true;
+      }
+
+      function audioSrcForItem(itemId) {
+        const part = getCurrentPart();
+        const id = Number(itemId);
+        if (typeof part.audio?.src === "function") return part.audio.src(id);
+        return String(part.audio?.src || "").replaceAll("{id}", String(id));
+      }
+
+      function ttsTextForItem(itemId) {
+        const part = getCurrentPart();
+        const it = findItemById(itemId);
+        if (!it) return "";
+        if (typeof part.audio?.getText === "function") return String(part.audio.getText(it) || "");
+        return String(it.answerFr || "");
+      }
+
+      /* =========================
+         TOP PROGRESS BAR
+         ========================= */
+      function getVisibleNonSectionIds() {
+        return Array.from(document.querySelectorAll(".item"))
+          .filter(el => el.offsetParent !== null && el.style.display !== "none")
+          .map(el => Number(el.dataset.itemid))
+          .filter(Boolean)
+          .sort((a, b) => a - b);
+      }
+
+      function updateProgressUI() {
+        if (!progressTop || !progressText || !progressFill) return;
+        if (currentPartIndex == null) { progressTop.style.display = "none"; return; }
+
+        const ids = getVisibleNonSectionIds();
+        const total = ids.length;
+        if (!total) {
+          progressTop.style.display = "flex";
+          progressText.textContent = "Item 0 / 0";
+          progressFill.style.width = "0%";
+          progressTop.querySelector(".progress-bar")?.setAttribute("aria-valuenow", "0");
+          return;
+        }
+
+        let cur = Number(currentActiveId);
+        if (!cur || !ids.includes(cur)) cur = ids[0];
+
+        const idx = ids.indexOf(cur);
+        const done = idx + 1;
+        const pct = Math.round((done / total) * 100);
+
+        progressTop.style.display = "flex";
+        progressText.textContent = `Item ${done} / ${total} (ID ${cur})`;
+        progressFill.style.width = `${pct}%`;
+        progressTop.querySelector(".progress-bar")?.setAttribute("aria-valuenow", String(pct));
+      }
+
+      /* =========================
+         PART SELECTION UI
+         ========================= */
+      function buildPartGrid() {
+        partGrid.innerHTML = "";
+        parts.forEach((p, idx) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.addEventListener("click", () => startPart(idx));
+
+          const label = document.createElement("div");
+          label.className = "card-label";
+          label.textContent = p.label;
+
+          const sub = document.createElement("div");
+          sub.className = "card-sub";
+          sub.textContent = p.subtitle || "";
+
+          card.appendChild(label);
+          card.appendChild(sub);
+          partGrid.appendChild(card);
+        });
+      }
+
+      function exitPart() {
+        stopAudio(true);
+        currentPartIndex = null;
+        currentActiveId = null;
+        currentPlayingId = null;
+        itemList.innerHTML = "";
+        practiceScreen.style.display = "none";
+        partSelectScreen.style.display = "block";
+        backIcon.classList.add("hidden");
+        topbarTitle.textContent = "TCF - Compréhension Écrite";
+        searchInput.value = "";
+        if (progressTop) progressTop.style.display = "none";
+        updateHeaderHeightVar();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      backIcon.addEventListener("click", exitPart);
+
+      /* =========================
+         SECTION RENDER HELPERS
+         ========================= */
+      function createSection(titleCn, descFr, descCn, openByDefault = false) {
+        const details = document.createElement("details");
+        details.className = "section";
+        details.open = !!openByDefault; // ✅
+
+        const summary = document.createElement("summary");
+        summary.className = "section-summary";
+
+        const left = document.createElement("div");
+        left.className = "section-left";
+        left.innerHTML = `
+          <div class="section-title">${toHtmlText(titleCn || "Section")}</div>
+          <div class="section-sub">Cliquez pour replier/déplier</div>
+        `;
+
+        const actions = document.createElement("div");
+        actions.className = "section-actions";
+
+        summary.appendChild(left);
+        summary.appendChild(actions);
+        details.appendChild(summary);
+
+        if (descFr || descCn) {
+          const desc = document.createElement("div");
+          desc.className = "section-desc";
+          desc.innerHTML = `
+            <div class="block" style="margin:0 auto 10px;">
+              <div class="label">Contexte / 场景</div>
+              ${(descFr ? `<div class="fr">${toHtmlText(descFr)}</div>` : "")}
+              ${(descCn ? `<div class="cn">${toHtmlText(descCn)}</div>` : "")}
+            </div>
+          `;
+          details.appendChild(desc);
+        }
+
+        const container = document.createElement("div");
+        container.className = "section-items";
+        details.appendChild(container);
+
+        details.addEventListener("toggle", () => {
+          requestAnimationFrame(() => {
+            updateCurrentActiveFromViewport();
+            updateProgressUI();
+            updateHeaderHeightVar();
+          });
+        });
+
+        return { details, container };
+      }
+
+      /* =========================
+         ANSWER VISIBILITY
+         ========================= */
+      let allAnswersVisible = false;
+
+      function setAllAnswersVisible(val) {
+        allAnswersVisible = !!val;
+        toggleAllAnswersBtn.textContent = allAnswersVisible ? "隐藏全部答案" : "显示全部答案";
+        document.querySelectorAll(".answer").forEach(a => {
+          a.style.display = allAnswersVisible ? "block" : "none";
+        });
+      }
+
+      function updateGlobalAnswerToggle() {
+        toggleAllAnswersBtn.textContent = allAnswersVisible ? "隐藏全部答案" : "显示全部答案";
+      }
+
+      toggleAllAnswersBtn.addEventListener("click", () => setAllAnswersVisible(!allAnswersVisible));
+
+      toggleCnBtn.addEventListener("click", () => {
+        document.body.classList.toggle("hide-cn");
+        const hiding = document.body.classList.contains("hide-cn");
+        toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
+      });
+
+      /* =========================
+         RENDER
+         ========================= */
+      function renderAllItems() {
+        const part = getCurrentPart();
+        const display = part.display || { question: "both", answer: "both" };
+
+        const total = part.items.filter(x => x && x.type !== "section").length;
+        practiceTitle.textContent = `${part.label} — Compréhension Écrite`;
+        practiceMeta.textContent = `${total} item(s)`;
+
+        const audioOK = partHasAudio();
+        playAllBtn.disabled = !audioOK;
+        stopBtn.disabled = !audioOK;
+        playAllBtn.textContent = audioOK ? (part.audio.playAllLabel || "播放/朗读全部") : "本任务无音频";
+        stopBtn.textContent = "停止播放";
+
+        // CN toggle visibility rule
+        const hideCnToggle = (display.question === "cn" && display.answer === "fr");
+        toggleCnBtn.style.display = "";
+        if (!hideCnToggle) {
+          const hiding = document.body.classList.contains("hide-cn");
+          toggleCnBtn.textContent = hiding ? "显示中文" : "隐藏中文";
+        }
+
+        const qLabel = part.labels?.question || "Question / 提问";
+        const aLabel = part.labels?.answer || "Réponse / 答案";
+
+        itemList.innerHTML = "";
+
+        // create default section
+        const hasExplicitSections = part.items?.some(x => x && x.type === "section");
+        let currentSection = null;
+        let firstSectionOpened = false;
+
+        if (!hasExplicitSections) {
+          // ✅ 没有 SECTION 行：用一个默认 section，并默认展开
+          currentSection = createSection(part.subtitle || "Questions", "", "", true);
+          itemList.appendChild(currentSection.details);
+          firstSectionOpened = true;
+        }
+        // If no items, show a hint
+        if (!part.items?.length) {
+          const hint = document.createElement("div");
+          hint.className = "block";
+          hint.innerHTML = `
+            <div class="label">提示</div>
+            <div class="fr">Aucun contenu (你把内容省略了). Remplis buildT1Items/buildT2Items/buildT3Items 再用。</div>
+            <div class="cn">当前任务内容为空。把你的 items 填回去即可。</div>
+          `;
+          currentSection.container.appendChild(hint);
+        }
+
+        for (const it of part.items) {
+          if (!it) continue;
+          if (it.type === "section") {
+            const shouldOpen = !firstSectionOpened; // ✅ 第一组默认展开
+            firstSectionOpened = true;
+
+            currentSection = createSection(it.titleCn || "Section", it.descFr || "", it.descCn || "", shouldOpen);
+            itemList.appendChild(currentSection.details);
+            continue;
+          }
+
+
+          const card = document.createElement("div");
+          card.className = "item";
+          card.dataset.itemid = it.id;
+          card.tabIndex = 0;
+
+          card.addEventListener("pointerdown", () => setCurrentActiveId(it.id, { follow: false }));
+          card.addEventListener("focusin", () => setCurrentActiveId(it.id, { follow: false }));
+
+          const head = document.createElement("div");
+          head.className = "item-head";
+
+          const left = document.createElement("div");
+          left.innerHTML = `
+            <div class="item-num">Item ${it.id}</div>
+            <div class="item-topic">${toHtmlText(it.topicCn || "")}</div>
+          `;
+
+          const actions = document.createElement("div");
+          actions.className = "item-actions";
+
+          const btnPlayAns = document.createElement("button");
+          btnPlayAns.className = "btn";
+          btnPlayAns.type = "button";
+          btnPlayAns.textContent = hasAudioForItem(it.id) ? (isTTSPart() ? "朗读答案" : "播放答案") : "无音频";
+          btnPlayAns.disabled = !hasAudioForItem(it.id);
+          btnPlayAns.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            playOne(it.id, { fromUser: true });
+          });
+
+          const btnToggleAns = document.createElement("button");
+          btnToggleAns.className = "btn";
+          btnToggleAns.type = "button";
+          btnToggleAns.textContent = "显示/隐藏答案";
+          btnToggleAns.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const ans = card.querySelector(".answer");
+            if (!ans) return;
+            const show = ans.style.display !== "block";
+            ans.style.display = show ? "block" : "none";
+          });
+
+          actions.appendChild(btnPlayAns);
+          actions.appendChild(btnToggleAns);
+
+          head.appendChild(left);
+          head.appendChild(actions);
+
+          const body = document.createElement("div");
+          body.className = "item-body";
+
+          // Build question HTML
+          let qFr = it.promptFr ?? "";
+          let qCn = it.promptCn ?? it.promptCn ?? "";
+          // (T2 uses promptCn as question, answerFr as answer)
+          if (display.question === "cn") qFr = "";
+          if (display.question === "fr") qCn = "";
+
+          // Build answer HTML
+          let aFr = it.answerFr ?? "";
+          let aCn = it.answerCn ?? "";
+          if (display.answer === "cn") aFr = "";
+          if (display.answer === "fr") aCn = "";
+
+          const qBlock = document.createElement("div");
+          qBlock.className = "block";
+          qBlock.innerHTML = `
+            <div class="label">${escapeHtml(qLabel)}</div>
+            ${(qFr ? `<div class="fr">${toHtmlText(qFr)}</div>` : "")}
+            ${(qCn ? `<div class="cn">${toHtmlText(qCn)}</div>` : "")}
+          `;
+
+          const aWrap = document.createElement("div");
+          aWrap.className = "answer";
+          aWrap.style.display = allAnswersVisible ? "block" : "none";
+          aWrap.innerHTML = `
+            <div class="answer-title">${escapeHtml(aLabel)}</div>
+            ${(aFr ? `<div class="fr">${toHtmlText(aFr)}</div>` : "")}
+            ${(aCn ? `<div class="cn">${toHtmlText(aCn)}</div>` : "")}
+          `;
+
+          body.appendChild(qBlock);
+          body.appendChild(aWrap);
+
+          card.appendChild(head);
+          card.appendChild(body);
+
+          currentSection.container.appendChild(card);
+        }
+
+        // default active = first visible
+        const ids = getVisibleNonSectionIds();
+        if (ids.length) setCurrentActiveId(ids[0], { follow: false });
+
+        updateProgressUI();
+        updateHeaderHeightVar();
+      }
+
+      /* =========================
+         ACTIVE + PLAYING HIGHLIGHT
+         ========================= */
+      function setCurrentActiveId(id, opts = {}) {
+        const follow = !!opts.follow;
+        const next = Number(id);
+        if (!next) return;
+        currentActiveId = next;
+
+        document.querySelectorAll(".item.is-active").forEach(el => el.classList.remove("is-active"));
+        const el = document.querySelector(`.item[data-itemid="${next}"]`);
+        if (el) el.classList.add("is-active");
+
+        updateProgressUI();
+
+        if (follow) maybeAutoFollow(next);
+      }
+
+      function setCurrentPlayingId(id) {
+        const next = Number(id);
+        currentPlayingId = next || null;
+
+        document.querySelectorAll(".item.is-playing").forEach(el => el.classList.remove("is-playing"));
+        if (!next) return;
+
+        const el = document.querySelector(`.item[data-itemid="${next}"]`);
+        if (el) el.classList.add("is-playing");
+
+        // When something is playing, also treat it as active
+        setCurrentActiveId(next, { follow: true });
+
+        // NEW: follow screen to current playing paragraph
+        maybeAutoFollow(next);
+      }
+
+      /* =========================
+         VIEWPORT-BASED ACTIVE ITEM (for progress)
+         ========================= */
+      let scrollTicking = false;
+
+      function updateCurrentActiveFromViewport() {
+        const items = Array.from(document.querySelectorAll(".item"))
+          .filter(el => el.offsetParent !== null && el.style.display !== "none");
+
+        if (!items.length) return;
+
+        const offset = getStickyOffsetPx() - 20;
+        let best = null;
+        let bestScore = Infinity;
+
+        for (const el of items) {
+          const r = el.getBoundingClientRect();
+          const score = Math.abs((r.top - offset));
+          if (score < bestScore) {
+            bestScore = score;
+            best = el;
+          }
+        }
+
+        const id = best ? Number(best.dataset.itemid) : null;
+        if (id && id !== currentActiveId && !currentPlayingId) {
+          // only update active from scroll when not playing
+          setCurrentActiveId(id, { follow: false });
+        }
+      }
+
+      window.addEventListener("scroll", () => {
+        if (currentPartIndex == null) return;
+        if (scrollTicking) return;
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+          updateCurrentActiveFromViewport();
+          scrollTicking = false;
+        });
+      }, { passive: true });
+
+      /* =========================
+         SEARCH FILTER
+         ========================= */
+      function normalizeText(s) {
+        return String(s || "")
+          .toLowerCase()
+          .normalize("NFKD")
+          .replace(/[\u0300-\u036f]/g, "");
+      }
+
+      function applySearchFilter() {
+        const q = normalizeText(searchInput.value || "").trim();
+        const items = Array.from(document.querySelectorAll(".item"));
+        for (const el of items) {
+          const id = Number(el.dataset.itemid);
+          const it = findItemById(id);
+          if (!it) { el.style.display = ""; continue; }
+
+          const hay = normalizeText([
+            it.topicCn, it.promptFr, it.promptCn, it.answerFr, it.answerCn
+          ].join(" "));
+
+          const show = !q || hay.includes(q);
+          el.style.display = show ? "" : "none";
+        }
+
+        // If active becomes hidden, move to first visible
+        const ids = getVisibleNonSectionIds();
+        if (ids.length) {
+          if (!currentActiveId || !ids.includes(Number(currentActiveId))) {
+            setCurrentActiveId(ids[0], { follow: false });
+          }
+        } else {
+          currentActiveId = null;
+          updateProgressUI();
+        }
+      }
+
+      searchInput.addEventListener("input", () => {
+        applySearchFilter();
+        updateProgressUI();
+      });
+
+      /* =========================
+         AUDIO CONTROL
+         ========================= */
+      function stopAudio(silent = false) {
+        isAllPlaying = false;
+        playSeq++;
+        ttsSeq++;
+
+        try { audioPlayer.pause(); } catch { }
+        try { audioPlayer.currentTime = 0; } catch { }
+
+        if ("speechSynthesis" in window) {
+          try { window.speechSynthesis.cancel(); } catch { }
+        }
+        currentUtterance = null;
+
+        if (!silent) setCurrentPlayingId(null);
+        else {
+          currentPlayingId = null;
+          document.querySelectorAll(".item.is-playing").forEach(el => el.classList.remove("is-playing"));
+        }
+      }
+
+      function playOne(itemId, opts = {}) {
+        const id = Number(itemId);
+        if (!id) return;
+        if (!hasAudioForItem(id)) return;
+
+        isAllPlaying = false;
+        playSeq++;
+
+        setCurrentPlayingId(id);
+
+        // auto open answer panel while playing (optional, helps)
+        const card = document.querySelector(`.item[data-itemid="${id}"]`);
+        const ans = card?.querySelector?.(".answer");
+        if (ans) ans.style.display = "block";
+
+        if (isMP3Part()) {
+          const src = audioSrcForItem(id);
+          audioPlayer.src = src;
+          audioPlayer.onended = () => {
+            if (loopOneEnabled) {
+              playOne(id, { fromUser: false });
+            } else {
+              setCurrentPlayingId(null);
+            }
+          };
+          audioPlayer.onerror = () => {
+            // if a file is missing, just stop highlight
+            setCurrentPlayingId(null);
+          };
+          audioPlayer.play().catch(() => {
+            // autoplay restrictions etc.
+          });
+        } else {
+          // TTS (if you later enable)
+          speakText(ttsTextForItem(id), () => {
+            if (loopOneEnabled) playOne(id, { fromUser: false });
+            else setCurrentPlayingId(null);
+          });
+        }
+      }
+
+      function getStartIdForPlayAll() {
+        const ids = getVisibleNonSectionIds();
+        if (!ids.length) return null;
+        const cur = Number(currentActiveId);
+        if (cur && ids.includes(cur)) return cur;
+        return ids[0];
+      }
+
+      function getNextId(currentId) {
+        const ids = getVisibleNonSectionIds();
+        if (!ids.length) return null;
+        const idx = ids.indexOf(Number(currentId));
+        if (idx < 0) return ids[0];
+        if (idx + 1 < ids.length) return ids[idx + 1];
+
+        // reached end
+        if (loopAllEnabled) return ids[0];
+        return null;
+      }
+
+      function playAllFrom(itemId) {
+        const startId = Number(itemId);
+        if (!startId) return;
+
+        isAllPlaying = true;
+        const token = ++playSeq;
+
+        const step = (id) => {
+          if (!isAllPlaying || token !== playSeq) return;
+
+          // if item has no audio, skip
+          if (!hasAudioForItem(id)) {
+            const nextSkip = getNextId(id);
+            if (nextSkip == null) { setCurrentPlayingId(null); isAllPlaying = false; return; }
+            step(nextSkip);
+            return;
+          }
+
+          setCurrentPlayingId(id);
+
+          // open answer panel while playing
+          const card = document.querySelector(`.item[data-itemid="${id}"]`);
+          const ans = card?.querySelector?.(".answer");
+          if (ans) ans.style.display = "block";
+
+          const onDone = () => {
+            if (!isAllPlaying || token !== playSeq) return;
+
+            // loopOne has priority (repeat same id)
+            if (loopOneEnabled) {
+              step(id);
+              return;
+            }
+
+            const next = getNextId(id);
+            if (next == null) {
+              setCurrentPlayingId(null);
+              isAllPlaying = false;
+              return;
+            }
+            step(next);
+          };
+
+          if (isMP3Part()) {
+            audioPlayer.src = audioSrcForItem(id);
+            audioPlayer.onended = onDone;
+            audioPlayer.onerror = onDone; // missing file -> skip forward
+            audioPlayer.play().catch(() => { /* ignore */ });
+          } else {
+            speakText(ttsTextForItem(id), onDone);
+          }
+        };
+
+        step(startId);
+      }
+
+      playAllBtn.addEventListener("click", () => {
+        if (!partHasAudio()) return;
+        // If already playing-all, restart from current active
+        stopAudio(true);
+        const start = getStartIdForPlayAll();
+        if (start != null) playAllFrom(start);
+      });
+
+      stopBtn.addEventListener("click", () => stopAudio(false));
+
+      /* =========================
+         TTS (optional)
+         ========================= */
+      function speakText(text, onDone) {
+        if (!("speechSynthesis" in window)) return;
+        const t = String(text || "").trim();
+        if (!t) { onDone?.(); return; }
+
+        const token = ++ttsSeq;
+        try { window.speechSynthesis.cancel(); } catch { }
+
+        const u = new SpeechSynthesisUtterance(t);
+        currentUtterance = u;
+
+        u.lang = (getCurrentPart()?.audio?.lang || "fr-FR");
+        u.onend = () => { if (token === ttsSeq) onDone?.(); };
+        u.onerror = () => { if (token === ttsSeq) onDone?.(); };
+
+        try { window.speechSynthesis.speak(u); } catch { onDone?.(); }
+      }
+
+      /* =========================
+         START PART
+         ========================= */
+      function startPart(idx) {
+        stopAudio(true);
+        currentPartIndex = idx;
+
+        partSelectScreen.style.display = "none";
+        practiceScreen.style.display = "block";
+
+        backIcon.classList.remove("hidden");
+        topbarTitle.textContent = parts[idx].label;
+
+        // reset toggles
+        setAllAnswersVisible(false);
+        searchInput.value = "";
+
+        // render
+        renderAllItems();
+
+        // show progress bar
+        if (progressTop) progressTop.style.display = "flex";
+        updateHeaderHeightVar();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
+      /* =========================
+         INIT
+         ========================= */
+      buildPartGrid();
+      loadLoopPrefs();
+      loadAutoFollowPref();
+      updateHeaderHeightVar();
+
+      // If user clicks anywhere while playing and wants manual control, we do nothing.
+      // Auto-follow only triggers on item changes (playing/highlight updates).
+    })();
+  </script>
+</body>
+
+</html>
