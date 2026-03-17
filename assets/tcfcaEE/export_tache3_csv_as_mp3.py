@@ -82,15 +82,15 @@ async def synth_one(voice: str, text: str, out_path: Path, rate: int, volume: in
 
 async def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default="assets/tcfEE/t3.csv")
-    ap.add_argument("--outdir", default="assets/tcfEE/mp3")
+    ap.add_argument("--csv", default="assets/tcfcaEE/t3.csv")
+    ap.add_argument("--outdir", default="assets/tcfcaEE/mp3")
 
     # ── Expression Écrite optimized ─────────────────────────────────────────
     # Denise: clearest, most neutral French — ideal for memorizing written text
-    ap.add_argument("--voice", default="fr-FR-DeniseNeural")
-    ap.add_argument("--lang", default="fr-FR")
+    ap.add_argument("--voice", default="fr-CA-AntoineNeural")
+    ap.add_argument("--lang", default="fr-CA")
     # Slightly slower (-3) so each word is clearly heard for memorization
-    ap.add_argument("--rate", type=int, default=-3)      # -10..10
+    ap.add_argument("--rate", type=int, default=0)      # -10..10
     ap.add_argument("--volume", type=int, default=100)   # 0..200
     # ────────────────────────────────────────────────────────────────────────
 

@@ -88,9 +88,9 @@ async def main():
     # ── Compréhension Écrite (Reading) optimized ────────────────────────────
     # Denise: clear, neutral, formal — closest to exam recording style
     # Slower rate so keywords register while reading along
-    ap.add_argument("--voice", default="fr-FR-DeniseNeural")
-    ap.add_argument("--lang", default="fr-FR")
-    ap.add_argument("--rate", type=int, default=-3)      # -10..10
+    ap.add_argument("--voice", default="fr-CA-AntoineNeural")
+    ap.add_argument("--lang", default="fr-CA")
+    ap.add_argument("--rate", type=int, default=0)      # -10..10
     ap.add_argument("--volume", type=int, default=100)   # 0..200
     # ────────────────────────────────────────────────────────────────────────
 
