@@ -128,6 +128,8 @@
       justify-content: center;
       gap: 14px;
       margin-top: 18px;
+      overflow-x: hidden;
+      /* ← add this */
     }
 
     .card {
@@ -511,8 +513,12 @@
       }
 
       .card {
-        width: 46%;
-        min-width: 160px;
+        width: calc(50% - 7px);
+        /* exactly half minus half the gap */
+        min-width: 0;
+        /* remove the min-width that causes overflow */
+        max-width: 180px;
+        /* optional: cap on wider phones */
       }
 
       .input {
