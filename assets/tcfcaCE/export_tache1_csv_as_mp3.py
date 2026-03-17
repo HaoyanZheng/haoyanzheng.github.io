@@ -82,15 +82,15 @@ async def synth_one(voice: str, text: str, out_path: Path, rate: int, volume: in
 
 async def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default="assets/tcfEO/t1.csv")
-    ap.add_argument("--outdir", default="assets/tcfEO/mp3")
+    ap.add_argument("--csv", default="assets/tcfcaCE/t1.csv")
+    ap.add_argument("--outdir", default="assets/tcfcaCE/mp3")
 
-    # ── Expression Orale optimized ──────────────────────────────────────────
-    # Vivienne: most natural/conversational French — ideal for shadowing
-    ap.add_argument("--voice", default="fr-FR-VivienneMultilingualNeural")
+    # ── Compréhension Écrite (Reading) optimized ────────────────────────────
+    # Denise: clear, neutral, formal — closest to exam recording style
+    # Slower rate so keywords register while reading along
+    ap.add_argument("--voice", default="fr-FR-DeniseNeural")
     ap.add_argument("--lang", default="fr-FR")
-    # Slightly slower so you can follow and repeat comfortably
-    ap.add_argument("--rate", type=int, default=-2)      # -10..10
+    ap.add_argument("--rate", type=int, default=-3)      # -10..10
     ap.add_argument("--volume", type=int, default=100)   # 0..200
     # ────────────────────────────────────────────────────────────────────────
 
