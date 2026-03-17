@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Paste your JS-style array BELOW, exactly as-is (keys unquoted like id:, topicCn:, answerFr:, etc.)
 RAW_JS = r"""
- [
+ return [
           { type: "section", titleCn: "T1", descFr: "", descCn: "" },
           { id: 1, topicCn: "", answerFr: `La communication avec ses clients.`, answerCn: `与客户沟通。` },
           { id: 2, topicCn: "", answerFr: `De cinéma.`, answerCn: `关于电影。` },
@@ -444,8 +444,12 @@ RAW_JS = r"""
           { id: 7, topicCn: "", answerFr: `Vérifier si un courrier est bien arrivé.`, answerCn: `确认邮件是否到达。` },
           { id: 8, topicCn: "", answerFr: `Elle est la destination d’une population migrante jeune.`, answerCn: `它是年轻移民人口的目的地。` },
           { id: 9, topicCn: "", answerFr: `Elle va attendre un petit peu.`, answerCn: `她会稍等一会儿。` },
-        ]
 
+          { type: "section", titleCn: "新题", descFr: "", descCn: "" },
+          { id: 1, topicCn: "", answerFr: `Elle a réalisé un projet artistique.`, answerCn: `她完成了一个艺术项目。` },
+          { id: 2, topicCn: "", answerFr: `Être ouvert aux autres.`, answerCn: `对他人保持开放、愿意接纳他人。` },
+          { id: 3, topicCn: "", answerFr: `Parce qu'il en reste encore chez elles.`, answerCn: `因为她们那里还剩下一些。` },
+        ];
 """
 
 # ---- Config ----
