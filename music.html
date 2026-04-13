@@ -1,29 +1,27 @@
 <!doctype html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="color-scheme" content="dark light" />
   <title>Music</title>
-
   <link rel="stylesheet" href="assets/css/APlayer.min.css" />
   <script src="assets/js/APlayer.min.js"></script>
 
   <style>
+    /* ═══ TOKENS ═══════════════════════════════════════════════════ */
     :root {
       --bg: #0b1020;
-      --panel: rgba(255, 255, 255, .06);
-      --stroke: rgba(255, 255, 255, .12);
-      --text: rgba(255, 255, 255, .92);
-      --muted: rgba(255, 255, 255, .58);
+      --stroke: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.55);
       --brand: #1db954;
-      --brand-dim: rgba(29, 185, 84, .18);
-      --brand-border: rgba(29, 185, 84, .45);
+      --brand-dim: rgba(29,185,84,.18);
+      --brand-border: rgba(29,185,84,.45);
       --radius: 18px;
-      --tap: 44px;
-      --shadow: 0 18px 50px rgba(0, 0, 0, .55);
-      --playerbar-h: 92px;
+      --tap: 48px;
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --playerbar-h: 100px;
       --dvh: 100vh;
     }
 
@@ -43,30 +41,25 @@
     }
 
     /* ── Background ── */
-    .bg { position: fixed; inset: 0; z-index: -2; background: var(--bg); }
+    .bg { position: fixed; inset: 0; z-index: -2; background: var(--bg) }
     .bg::before {
-      content: "";
-      position: absolute; inset: -40px;
+      content: ""; position: absolute; inset: -40px;
       background-image: var(--cover-url);
       background-size: cover; background-position: center;
-      filter: blur(34px) saturate(1.1) brightness(.65);
-      opacity: .55; transform: scale(1.08);
-      transition: background-image .6s ease;
+      filter: blur(34px) saturate(1.1) brightness(.6);
+      opacity: .5; transform: scale(1.08);
+      transition: background-image .7s ease;
     }
     .bg::after {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg,
-        rgba(11,16,32,.45),
-        rgba(11,16,32,.88) 48%,
-        rgba(11,16,32,.96));
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg,rgba(11,16,32,.5),rgba(11,16,32,.88) 50%,rgba(11,16,32,.97));
     }
 
-    /* ── Layout ── */
+    /* ── App shell ── */
     .app {
       min-height: 100%;
       padding:
-        calc(14px + env(safe-area-inset-top)) 14px
+        calc(10px + env(safe-area-inset-top)) 14px
         calc(14px + var(--playerbar-h) + env(safe-area-inset-bottom)) 14px;
       max-width: 1100px; margin: 0 auto;
     }
@@ -74,145 +67,94 @@
     /* ── Topbar ── */
     .topbar {
       position: sticky; top: env(safe-area-inset-top); z-index: 20;
-      display: flex; align-items: center; gap: 12px; padding: 12px;
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px;
       border: 1px solid var(--stroke);
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,.26); backdrop-filter: blur(14px);
       border-radius: var(--radius);
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      box-shadow: 0 8px 28px rgba(0,0,0,.3);
     }
-    .brand {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 950; letter-spacing: .2px; white-space: nowrap;
-    }
-    .dot {
-      width: 10px; height: 10px; border-radius: 999px;
-      background: var(--brand);
-      box-shadow: 0 0 0 6px rgba(29,185,84,.12);
-      flex: 0 0 auto;
-    }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 950; letter-spacing: .2px; white-space: nowrap; flex: 0 0 auto }
+    .dot { width: 9px; height: 9px; border-radius: 999px; background: var(--brand); box-shadow: 0 0 0 5px rgba(29,185,84,.14); flex: 0 0 auto }
     .search {
-      flex: 1; min-width: 120px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: var(--text); padding: 10px 12px;
-      border-radius: 999px; outline: none;
-      font-weight: 850; font-size: 14px;
-      min-height: var(--tap);
-      transition: border-color .15s ease, background .15s ease;
+      flex: 1; min-width: 100px;
+      border: 1px solid rgba(255,255,255,.13); background: rgba(0,0,0,.22);
+      color: var(--text); padding: 0 14px; border-radius: 999px;
+      outline: none; font-weight: 850; font-size: 14px; height: var(--tap);
+      transition: border-color .15s, background .15s;
     }
-    .search:focus {
-      border-color: rgba(29,185,84,.45);
-      background: rgba(0,0,0,.28);
-    }
-    .search::placeholder { color: rgba(255,255,255,.35) }
-    @media (max-width:720px) { .search { font-size: 16px } }
-
-    .actions {
-      display: flex; gap: 8px; align-items: center;
-      overflow: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-    }
+    .search:focus { border-color: var(--brand-border); background: rgba(0,0,0,.32) }
+    .search::placeholder { color: rgba(255,255,255,.32) }
+    .actions { display: flex; gap: 8px; align-items: center; -webkit-overflow-scrolling: touch; scrollbar-width: none; overflow: auto }
     .actions::-webkit-scrollbar { display: none }
 
-    /* ── Buttons (general) ── */
+    /* ── Generic btn ── */
     .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 6px; min-height: var(--tap); padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      height: var(--tap); padding: 0 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.07);
       color: var(--text); font-weight: 900; font-size: 13px;
       cursor: pointer; user-select: none; white-space: nowrap;
       -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-      transition: transform .08s ease, background .12s ease,
-                  border-color .12s ease, opacity .12s ease;
+      transition: transform .08s, background .12s, border-color .12s;
     }
-    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22) }
-    .btn:active { transform: none }
-    .btn.on {
-      background: var(--brand-dim);
-      border-color: var(--brand-border);
-      color: #fff;
-    }
+    .btn:hover  { transform: translateY(-1px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.22) }
+    .btn:active { transform: scale(.96) }
+    .btn.on { background: var(--brand-dim); border-color: var(--brand-border) }
 
-    /* ── Playlist chip button ── */
+    /* ── Playlist chip ── */
     .plist-btn {
       display: inline-flex; align-items: center; gap: 10px;
-      min-height: var(--tap); padding: 8px 12px 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text); font-weight: 980; cursor: pointer;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-      transition: transform .08s ease, background .12s ease, border-color .12s ease;
-      max-width: 260px;
+      height: var(--tap); padding: 0 14px 0 10px;
+      border-radius: 999px; border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08); color: var(--text); font-weight: 980;
+      cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+      transition: transform .08s, background .12s, border-color .12s; max-width: 260px;
     }
-    .plist-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.20) }
-    .plist-btn:active { transform: none }
-    .plist-ava { width: 28px; height: 28px; border-radius: 999px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); flex: 0 0 auto }
+    .plist-btn:hover  { transform: translateY(-1px); background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.26) }
+    .plist-btn:active { transform: scale(.97) }
+    .plist-ava  { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.07); flex: 0 0 auto }
     .plist-ava img { width: 100%; height: 100%; object-fit: cover; display: block }
     .plist-text { min-width: 0; display: flex; flex-direction: column; gap: 1px; align-items: flex-start }
-    .plist-name { font-size: 13px; font-weight: 980; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px }
-    .plist-sub { font-size: 11px; font-weight: 900; color: rgba(255,255,255,.56) }
-    .caret { opacity: .65; font-weight: 980; flex: 0 0 auto }
+    .plist-name { font-size: 13px; font-weight: 980; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px }
+    .plist-sub  { font-size: 11px; font-weight: 900; color: rgba(255,255,255,.52) }
+    .caret { opacity: .6; font-size: 11px; flex: 0 0 auto }
 
     /* ── Main grid ── */
-    .main { margin-top: 14px; display: grid; grid-template-columns: 1.25fr .95fr; gap: 14px }
+    .main { margin-top: 12px; display: grid; grid-template-columns: 1.25fr .95fr; gap: 12px }
     @media (max-width:980px) { .main { grid-template-columns: 1fr } }
 
     .panel {
-      border: 1px solid var(--stroke);
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
+      border: 1px solid var(--stroke); background: rgba(0,0,0,.24);
+      backdrop-filter: blur(10px); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
     }
 
-    /* ── Now playing card ── */
-    .now { padding: 14px; display: grid; grid-template-columns: 220px 1fr; gap: 14px; align-items: center }
-    @media (max-width:720px) { .now { grid-template-columns: 1fr; padding: 12px } }
-
+    /* ── Now playing (desktop) ── */
+    .now { padding: 14px; display: grid; grid-template-columns: 200px 1fr; gap: 14px; align-items: center }
     .cover {
       width: 100%; border-radius: 16px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      aspect-ratio: 1 / 1;
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
-      transition: box-shadow .3s ease;
+      border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06);
+      aspect-ratio: 1/1; box-shadow: 0 14px 36px rgba(0,0,0,.5); transition: box-shadow .3s;
     }
-    .cover.playing { box-shadow: 0 16px 40px rgba(0,0,0,.45), 0 0 0 3px rgba(29,185,84,.35) }
-    @media (max-width:720px) { .cover { aspect-ratio: 16/10 } }
-    .cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .3s ease }
-
+    .cover.playing { box-shadow: 0 14px 36px rgba(0,0,0,.5), 0 0 0 3px rgba(29,185,84,.4) }
+    .cover img { width: 100%; height: 100%; object-fit: cover; display: block }
     .meta { min-width: 0; display: flex; flex-direction: column; gap: 8px }
-    .title {
-      font-size: 24px; font-weight: 980; letter-spacing: .2px;
-      line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
+    .title  { font-size: 22px; font-weight: 980; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
     .artist { color: var(--muted); font-weight: 900; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-    .subline {
-      color: rgba(255,255,255,.46); font-size: 12px; font-weight: 850;
-      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-    }
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 9px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      font-size: 11px;
-    }
+    .subline { color: rgba(255,255,255,.44); font-size: 12px; font-weight: 850; display: flex; gap: 6px; flex-wrap: wrap; align-items: center }
+    .pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.05); font-size: 11px }
     .pill b { color: var(--text) }
+
+    /* swipe hint (mobile only) */
+    .swipe-hint { display: none }
 
     /* ── Track list ── */
     .list-head {
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.08);
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       background: rgba(0,0,0,.18);
     }
-    .list-title { font-weight: 980; letter-spacing: .2px; font-size: 14px }
-
+    .list-title { font-weight: 980; font-size: 14px; letter-spacing: .2px }
     .tracks {
       list-style: none;
       max-height: calc(var(--dvh) - 260px);
@@ -220,248 +162,231 @@
       padding-bottom: calc(14px + var(--playerbar-h) + env(safe-area-inset-bottom));
       scroll-padding-bottom: calc(14px + var(--playerbar-h) + env(safe-area-inset-bottom));
     }
-    @media (max-width:980px) { .tracks { max-height: 52vh } }
+    @media (max-width:980px) { .tracks { max-height: 48vh } }
 
     .track {
       display: flex; gap: 10px; align-items: center;
-      padding: 10px 12px;
-      border-top: 1px solid rgba(255,255,255,.05);
+      padding: 10px 14px; border-top: 1px solid rgba(255,255,255,.05);
       cursor: pointer; user-select: none;
-      transition: background .12s ease;
+      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+      transition: background .12s;
     }
-    .track:hover { background: rgba(255,255,255,.06) }
-    .track.active {
-      background: rgba(29,185,84,.10);
-      border-top-color: rgba(29,185,84,.15);
-    }
-
+    .track:hover  { background: rgba(255,255,255,.06) }
+    .track.active { background: rgba(29,185,84,.10); border-top-color: rgba(29,185,84,.14) }
     .tcover {
-      width: 42px; height: 42px; border-radius: 10px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06); flex: 0 0 auto;
-      position: relative;
+      width: 44px; height: 44px; border-radius: 10px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.06);
+      flex: 0 0 auto; position: relative;
     }
     .tcover img { width: 100%; height: 100%; object-fit: cover; display: block }
-
-    /* Animated bars for active track */
-    .tcover .bars {
-      display: none;
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,.52);
-      align-items: flex-end; justify-content: center; gap: 2.5px;
-      padding: 10px 8px;
-    }
+    .tcover .bars { display: none; position: absolute; inset: 0; background: rgba(0,0,0,.55); align-items: flex-end; justify-content: center; gap: 3px; padding: 10px 8px }
     .track.active .tcover .bars { display: flex }
-    .bar {
-      width: 3px; border-radius: 2px; background: var(--brand);
-      animation: bounce 0.8s ease-in-out infinite alternate;
-    }
-    .bar:nth-child(1) { height: 40%; animation-delay: 0s }
+    .bar { width: 3px; border-radius: 2px; background: var(--brand); animation: bounce .8s ease-in-out infinite alternate }
+    .bar:nth-child(1) { height: 35%; animation-delay: 0s }
     .bar:nth-child(2) { height: 70%; animation-delay: .15s }
-    .bar:nth-child(3) { height: 55%; animation-delay: .05s }
-    .bar:nth-child(4) { height: 85%; animation-delay: .2s }
-    @keyframes bounce {
-      from { transform: scaleY(.4) }
-      to   { transform: scaleY(1) }
-    }
-    /* Paused state: freeze bars */
+    .bar:nth-child(3) { height: 50%; animation-delay: .05s }
+    .bar:nth-child(4) { height: 85%; animation-delay: .22s }
+    @keyframes bounce { from { transform: scaleY(.35) } to { transform: scaleY(1) } }
     .track.active.paused .bar { animation-play-state: paused }
-
     .tmeta { min-width: 0; flex: 1 }
-    .tname  { font-weight: 950; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+    .tname   { font-weight: 950; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
     .tauthor { color: var(--muted); font-weight: 850; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px }
-
-    .tnum {
-      color: rgba(255,255,255,.30); font-weight: 900; font-size: 12px;
-      min-width: 22px; text-align: right; flex: 0 0 auto;
-    }
+    .tnum { color: rgba(255,255,255,.28); font-weight: 900; font-size: 12px; min-width: 20px; text-align: right; flex: 0 0 auto }
     .track.active .tnum { display: none }
 
-    /* ── Player bar ── */
+    /* ── Player bar (desktop: 3-col grid) ── */
     .playerbar {
-      position: fixed; left: 0; right: 0; bottom: 0;
-      padding: 10px 14px calc(10px + env(safe-area-inset-bottom)) 14px;
-      background: rgba(8,11,22,.75);
-      border-top: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(20px) saturate(1.4);
-      z-index: 60;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom)) 16px;
+      background: rgba(8,11,22,.8); border-top: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(24px) saturate(1.5);
     }
     .playerbar-inner {
       max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; align-items: center;
+      display: grid;
+      grid-template-columns: 220px 1fr 180px;
+      grid-template-rows: auto auto;
+      grid-template-areas: "pb-mini pb-controls pb-right" "pb-mini pb-progress pb-right";
+      column-gap: 16px; row-gap: 6px; align-items: center;
     }
-    @media (max-width:980px) { .playerbar-inner { grid-template-columns: 1fr } }
+    .pb-mini     { grid-area: pb-mini;     align-self: center }
+    .pb-controls { grid-area: pb-controls }
+    .pb-progress { grid-area: pb-progress }
+    .pb-right    { grid-area: pb-right;    align-self: center }
 
     .mini-now { display: flex; align-items: center; gap: 10px; min-width: 0 }
-    .mini-cover {
-      width: 44px; height: 44px; border-radius: 10px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06); flex: 0 0 auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,.4);
-    }
+    .mini-cover { width: 44px; height: 44px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.07); flex: 0 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,.4) }
     .mini-cover img { width: 100%; height: 100%; object-fit: cover; display: block }
     .mini-text { min-width: 0 }
     .mini-title  { font-weight: 950; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
     .mini-artist { color: var(--muted); font-weight: 850; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px }
 
-    /* Controls row */
     .controls { display: flex; align-items: center; justify-content: center; gap: 8px }
-
     .iconbtn {
-      width: 44px; height: 44px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text); font-size: 15px; font-weight: 950;
-      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      width: 46px; height: 46px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.07);
+      color: var(--text); font-size: 16px; font-weight: 950; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
       -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-      transition: transform .08s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease;
+      transition: transform .08s, background .12s, border-color .12s, box-shadow .12s;
     }
-    .iconbtn:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.20) }
-    .iconbtn:active { transform: scale(.94) }
-    .iconbtn.primary {
-      width: 50px; height: 50px; font-size: 18px;
-      background: var(--brand-dim); border-color: var(--brand-border);
-    }
+    .iconbtn:hover  { transform: translateY(-1px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.22) }
+    .iconbtn:active { transform: scale(.92) }
+    .iconbtn.primary { width: 52px; height: 52px; font-size: 20px; background: var(--brand-dim); border-color: var(--brand-border) }
     .iconbtn.primary:hover { background: rgba(29,185,84,.28); box-shadow: 0 0 0 6px rgba(29,185,84,.12) }
 
-    /* Progress */
     .progress { display: flex; align-items: center; gap: 8px }
-    .time { color: rgba(255,255,255,.55); font-weight: 900; font-variant-numeric: tabular-nums; font-size: 11px; width: 38px; text-align: center; flex: 0 0 auto }
+    .time { color: rgba(255,255,255,.5); font-weight: 900; font-size: 11px; font-variant-numeric: tabular-nums; width: 36px; text-align: center; flex: 0 0 auto }
+    input[type="range"] { width: 100%; accent-color: var(--brand); cursor: pointer }
 
-    input[type="range"] {
-      width: 100%; accent-color: var(--brand); cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
+    .pb-right { display: flex; align-items: center; justify-content: flex-end }
+    .vol { display: flex; align-items: center; gap: 8px; width: 100% }
+    .vol-icon { font-size: 13px; color: rgba(255,255,255,.5); flex: 0 0 auto }
 
-    .right { display: flex; align-items: center; justify-content: flex-end; gap: 10px }
-    .vol { display: flex; align-items: center; gap: 8px; min-width: 150px }
-    .vol-icon { color: rgba(255,255,255,.55); font-size: 13px; flex: 0 0 auto }
+    /* ══════════════════════════════════════════════════════════════
+       MOBILE OVERRIDES  (≤ 720px)
+       ══════════════════════════════════════════════════════════════ */
+    @media (max-width:720px) {
 
-    @media (max-width:980px) {
-      .right { justify-content: center }
-      .vol { display: none }
+      /* — Topbar — */
+      .topbar { flex-wrap: wrap; gap: 8px; padding: 10px }
+      .brand  { flex: 1 }
+      .search { order: 10; flex: 1 1 100%; width: 100%; font-size: 16px }
+      .actions {
+        order: 5; width: 100%; overflow: visible;
+        display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+      }
+      #btnPlaylist {
+        grid-column: 1 / -1; width: 100%; max-width: none;
+        height: 52px; border-radius: 14px;
+        border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.10);
+        font-size: 14px;
+      }
+      .actions .btn { height: var(--tap); width: 100%; justify-content: center; border-radius: 12px }
+
+      /* — Now playing: horizontal compact — */
+      .now { grid-template-columns: 86px 1fr; padding: 12px; gap: 12px; align-items: center }
+      .cover { aspect-ratio: 1/1; border-radius: 14px }
+      .title  { font-size: 17px }
+      .artist { font-size: 13px }
+      .subline { gap: 5px }
+      .pill { padding: 4px 8px; font-size: 10px }
+
+      /* Swipe hint strip */
+      .swipe-hint {
+        display: flex; align-items: center; justify-content: center; gap: 6px;
+        padding: 6px 12px 10px;
+        font-size: 11px; font-weight: 900; color: rgba(255,255,255,.28); letter-spacing: .3px;
+      }
+
+      /* — Track list: taller — */
+      .tracks { max-height: 38vh }
+      .track  { padding: 12px 14px }
+      .tcover { width: 48px; height: 48px }
+      .tname  { font-size: 15px }
+      .tauthor { font-size: 13px }
+
+      /* — Player bar: vertical stack — */
+      .playerbar { padding: 12px 16px calc(14px + env(safe-area-inset-bottom)) 16px }
+      .playerbar-inner {
+        /* Replace grid with flex column, reorder with CSS order */
+        display: flex; flex-direction: column; gap: 10px;
+      }
+      .pb-mini     { order: 1 }
+      .pb-progress { order: 2 }
+      .pb-controls { order: 3 }
+      .pb-right    { display: none }
+
+      /* Bigger progress bar touch area */
+      .pb-progress { gap: 8px }
+      .pb-progress input[type="range"] { height: 28px }
+      .time { font-size: 12px; width: 40px }
+
+      /* Bigger play controls */
+      .controls { gap: 18px }
+      .iconbtn         { width: 54px; height: 54px; font-size: 20px }
+      .iconbtn.primary { width: 66px; height: 66px; font-size: 28px }
     }
 
     /* ── Modals ── */
     .modal {
       position: fixed; inset: 0; display: none;
       align-items: center; justify-content: center;
-      background: rgba(0,0,0,.55); backdrop-filter: blur(12px);
+      background: rgba(0,0,0,.58); backdrop-filter: blur(14px);
       z-index: 100; padding: 18px;
     }
     .modal .box {
       width: min(520px, 100%); border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(15,18,28,.85);
+      border: 1px solid rgba(255,255,255,.14); background: rgba(14,17,28,.9);
       box-shadow: var(--shadow); overflow: hidden;
     }
     .modal .hd {
       padding: 14px; border-bottom: 1px solid rgba(255,255,255,.10);
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      background: rgba(0,0,0,.18);
+      background: rgba(0,0,0,.2);
     }
     .modal .hd h3 { font-size: 14px; font-weight: 980; letter-spacing: .2px }
     .modal .bd { padding: 14px }
-
     .modal.sheet { align-items: flex-end; padding: 0 }
-    .modal.sheet .box {
-      width: min(860px, 100%);
-      border-radius: 18px 18px 0 0;
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-    .sheet-handle {
-      width: 46px; height: 5px; border-radius: 999px;
-      background: rgba(255,255,255,.22); margin: 10px auto 0;
-    }
+    .modal.sheet .box { width: min(860px, 100%); border-radius: 20px 20px 0 0; padding-bottom: env(safe-area-inset-bottom) }
+    .sheet-handle { width: 44px; height: 5px; border-radius: 999px; background: rgba(255,255,255,.22); margin: 10px auto 0 }
 
-    /* Timer presets */
-    .preset { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px }
+    .preset { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px }
     .seg {
       min-height: var(--tap); border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06); color: var(--text);
-      font-weight: 980; font-size: 13px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.07);
+      color: var(--text); font-weight: 980; font-size: 13px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       -webkit-tap-highlight-color: transparent; touch-action: manipulation;
       transition: background .12s, border-color .12s;
     }
-    .seg:hover { background: rgba(255,255,255,.10) }
+    .seg:hover { background: rgba(255,255,255,.12) }
     .seg.active { background: var(--brand-dim); border-color: var(--brand-border) }
-
     .row { display: flex; gap: 10px; align-items: center; margin-top: 12px }
     .in {
-      flex: 1; min-height: var(--tap); border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18); color: var(--text);
-      padding: 10px 12px; outline: none; font-weight: 900; font-size: 14px;
+      flex: 1; height: var(--tap); border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.2);
+      color: var(--text); padding: 0 12px; outline: none; font-weight: 900; font-size: 14px;
       transition: border-color .15s;
     }
-    .in:focus { border-color: rgba(29,185,84,.45) }
+    .in:focus { border-color: var(--brand-border) }
     @media (max-width:720px) { .in { font-size: 16px } }
-    .hint { margin-top: 10px; color: rgba(255,255,255,.55); font-size: 12px; font-weight: 850; line-height: 1.5 }
+    .hint { margin-top: 10px; color: rgba(255,255,255,.5); font-size: 12px; font-weight: 850; line-height: 1.5 }
 
-    /* Playlist modal */
     .plist-search {
-      width: 100%; border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18); color: var(--text);
-      padding: 10px 12px; border-radius: 12px; outline: none;
-      font-weight: 900; font-size: 14px; min-height: var(--tap);
+      width: 100%; height: var(--tap); border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.2);
+      color: var(--text); padding: 0 14px; outline: none; font-weight: 900; font-size: 14px;
       transition: border-color .15s;
     }
-    .plist-search:focus { border-color: rgba(29,185,84,.45) }
+    .plist-search:focus { border-color: var(--brand-border) }
     @media (max-width:720px) { .plist-search { font-size: 16px } }
 
     .plist-grid {
-      margin-top: 12px;
-      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+      margin-top: 12px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px;
       max-height: min(62vh, 560px); overflow: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px;
     }
-    @media (min-width:720px) { .plist-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
+    @media (min-width:720px) { .plist-grid { grid-template-columns: repeat(3, minmax(0,1fr)) } }
 
     .plist-card {
       border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06);
-      border-radius: 16px; padding: 10px;
-      display: flex; flex-direction: column; gap: 10px;
+      border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 10px;
       cursor: pointer; user-select: none;
-      transition: transform .08s ease, background .12s ease, border-color .12s ease, opacity .12s ease;
       -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+      transition: transform .08s, background .12s, border-color .12s, opacity .12s;
     }
-    .plist-card:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.18) }
+    .plist-card:hover  { transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.18) }
     .plist-card.active { border-color: var(--brand-border); background: var(--brand-dim) }
-    .plist-card.disabled { opacity: .5; cursor: default; transform: none }
-    .plist-card.disabled:hover { transform: none; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12) }
-
-    .plist-cover { width: 100%; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.18) }
+    .plist-card.disabled { opacity: .5; cursor: default; pointer-events: none }
+    .plist-cover { width: 100%; aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.2) }
     .plist-cover img { width: 100%; height: 100%; object-fit: cover; display: block }
-
     .plist-info .n { font-weight: 980; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-    .plist-info .d { margin-top: 2px; font-weight: 900; font-size: 11px; color: rgba(255,255,255,.55); overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-    .plist-info .c { margin-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11px; font-weight: 900; color: rgba(255,255,255,.55) }
-
-    .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 8px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.12); color: rgba(255,255,255,.60);
-      font-weight: 950; font-size: 11px;
-    }
+    .plist-info .d { margin-top: 2px; font-size: 11px; font-weight: 900; color: rgba(255,255,255,.52); overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+    .plist-info .c { margin-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11px; font-weight: 900; color: rgba(255,255,255,.52) }
+    .badge { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.14); color: rgba(255,255,255,.6); font-weight: 950; font-size: 11px }
     .badge.on { border-color: rgba(29,185,84,.35); background: rgba(29,185,84,.14); color: rgba(255,255,255,.82) }
 
     #aplayerEngine { display: none }
-
-    /* ── Mobile topbar fix ── */
-    @media (max-width:720px) {
-      .topbar { flex-wrap: wrap; gap: 10px }
-      .brand { order: 1 }
-      .actions {
-        order: 2; width: 100%; overflow: visible;
-        display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
-      }
-      #btnPlaylist { grid-column: 1 / -1; width: 100%; max-width: none }
-      .actions .btn { width: 100%; justify-content: center }
-      .search { order: 3; flex: 1 1 100%; width: 100% }
-    }
-    .actions { flex: 0 0 auto }
   </style>
 </head>
 
@@ -472,28 +397,27 @@
     <header class="topbar">
       <div class="brand"><span class="dot"></span><span>Music</span></div>
 
-      <input id="search" class="search" placeholder="搜索歌曲 / 歌手…" />
-
       <div class="actions">
-        <button id="btnPlaylist" class="plist-btn" type="button" aria-label="选择歌单">
+        <button id="btnPlaylist" class="plist-btn" type="button" aria-label="切换歌单">
           <span class="plist-ava"><img id="plistAva" alt="" src="" /></span>
           <span class="plist-text">
             <span class="plist-name" id="plistBtnName">—</span>
-            <span class="plist-sub" id="plistBtnSub">0 首</span>
+            <span class="plist-sub"  id="plistBtnSub">0 首</span>
           </span>
           <span class="caret">▾</span>
         </button>
-
-        <!-- Icons: 🔀 shuffle  🔁 loop-all  🔂 loop-one  ➜ no-loop -->
-        <button id="btnShuffle" class="btn" type="button" title="随机播放">🔀 随机</button>
-        <button id="btnLoop"    class="btn" type="button" title="切换循环模式">🔁 列表循环</button>
-        <button id="btnTimer"   class="btn" type="button" title="定时停止">⏱ 定时</button>
+        <button id="btnShuffle" class="btn" type="button">🔀 随机</button>
+        <button id="btnLoop"    class="btn" type="button">🔁 列表</button>
+        <button id="btnTimer"   class="btn" type="button">⏱ 定时</button>
       </div>
+
+      <input id="search" class="search" placeholder="搜索歌曲 / 歌手…" />
     </header>
 
     <main class="main">
+      <!-- Now playing -->
       <section class="panel">
-        <div class="now">
+        <div class="now" id="nowCard">
           <div class="cover" id="coverWrap"><img id="cover" alt="cover" src="" /></div>
           <div class="meta">
             <div class="title"  id="title">未加载曲目</div>
@@ -506,21 +430,27 @@
             </div>
           </div>
         </div>
+        <!-- Mobile only: swipe affordance -->
+        <div class="swipe-hint" id="swipeHint">← 左右滑动切换歌单 →</div>
       </section>
 
+      <!-- Track list -->
       <section class="panel">
         <div class="list-head">
           <div class="list-title">播放列表</div>
-          <button id="btnClearSearch" class="btn" type="button">✕ 清空搜索</button>
+          <button id="btnClearSearch" class="btn" type="button">✕ 清空</button>
         </div>
         <ul id="tracks" class="tracks"></ul>
       </section>
     </main>
   </div>
 
+  <!-- Player bar -->
   <footer class="playerbar">
     <div class="playerbar-inner">
-      <div class="mini-now">
+
+      <!-- Left (desktop) / top (mobile): mini now-playing -->
+      <div class="pb-mini mini-now">
         <div class="mini-cover"><img id="miniCover" alt="" src="" /></div>
         <div class="mini-text">
           <div class="mini-title"  id="miniTitle">—</div>
@@ -528,37 +458,40 @@
         </div>
       </div>
 
-      <div>
-        <div class="controls">
-          <button id="prev"  class="iconbtn" type="button" aria-label="上一首" title="上一首">⏮</button>
-          <button id="play"  class="iconbtn primary" type="button" aria-label="播放/暂停">▶</button>
-          <button id="next"  class="iconbtn" type="button" aria-label="下一首" title="下一首">⏭</button>
-        </div>
-        <div class="progress" style="margin-top:8px;">
-          <div class="time" id="cur">0:00</div>
-          <input id="seek" type="range" min="0" max="100" value="0" step="0.1" />
-          <div class="time" id="dur">0:00</div>
-        </div>
+      <!-- Center top (desktop) / middle (mobile): controls -->
+      <div class="pb-controls controls">
+        <button id="prev"  class="iconbtn"        type="button" aria-label="上一首">⏮</button>
+        <button id="play"  class="iconbtn primary" type="button" aria-label="播放/暂停">▶</button>
+        <button id="next"  class="iconbtn"        type="button" aria-label="下一首">⏭</button>
       </div>
 
-      <div class="right">
+      <!-- Center bottom (desktop) / second (mobile): progress -->
+      <div class="pb-progress progress">
+        <div class="time" id="cur">0:00</div>
+        <input id="seek" type="range" min="0" max="100" value="0" step="0.1" />
+        <div class="time" id="dur">0:00</div>
+      </div>
+
+      <!-- Right (desktop only): volume -->
+      <div class="pb-right">
         <div class="vol">
           <span class="vol-icon">🔈</span>
           <input id="vol" type="range" min="0" max="1" value="0.85" step="0.01" />
           <span class="vol-icon">🔊</span>
         </div>
       </div>
+
     </div>
   </footer>
 
-  <!-- Playlist Bottom Sheet -->
+  <!-- Playlist bottom sheet -->
   <div id="plistModal" class="modal sheet" role="dialog" aria-modal="true" aria-label="选择歌单">
     <div class="box">
       <div class="sheet-handle"></div>
       <div class="hd" style="padding-top:10px;">
-        <h3>选择歌单</h3>
+        <h3>切换歌单</h3>
         <div style="display:flex;gap:8px;align-items:center;">
-          <span class="badge" id="recentBadge" title="最近使用">最近</span>
+          <span class="badge" id="recentBadge">最近</span>
           <button id="plistClose" class="btn" type="button">关闭</button>
         </div>
       </div>
@@ -566,13 +499,13 @@
         <input id="plistSearch" class="plist-search" placeholder="搜索歌单…" />
         <div class="plist-grid" id="plistGrid"></div>
         <div class="hint" style="margin-top:10px;">
-          维护方式：只改 HTML 里的 <b>PLAYLISTS</b> 字典。每个歌单可选字段：<b>desc</b>、<b>cover</b>。
+          维护方式：只改 HTML 里的 <b>PLAYLISTS</b> 字典。字段：<b>name</b>、<b>desc</b>、<b>cover</b>、<b>tracks[]</b>。
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Sleep Timer Modal -->
+  <!-- Sleep timer -->
   <div id="timerModal" class="modal" role="dialog" aria-modal="true" aria-label="定时停止">
     <div class="box">
       <div class="hd">
@@ -582,11 +515,11 @@
       <div class="bd">
         <div class="preset" id="preset"></div>
         <div class="row">
-          <input id="customMin" class="in" inputmode="numeric" placeholder="自定义分钟（例如 37）" />
-          <button id="setMin" class="btn on" type="button">设置</button>
-          <button id="cancelTimer" class="btn" type="button">取消定时</button>
+          <input id="customMin" class="in" inputmode="numeric" placeholder="自定义分钟，例如 37" />
+          <button id="setMin"      class="btn on" type="button">设置</button>
+          <button id="cancelTimer" class="btn"    type="button">取消</button>
         </div>
-        <div class="hint">到点后会"渐弱 → 暂停"。iOS 不允许网页真正关闭后台，所以用暂停实现。</div>
+        <div class="hint">到点后渐弱 → 暂停。iOS 不允许网页关闭后台，故用暂停代替。</div>
       </div>
     </div>
   </div>
@@ -594,18 +527,18 @@
   <div id="aplayerEngine"></div>
 
   <script>
-    /******************************************************************
-     * PLAYLISTS — edit here to add/remove songs and playlists
-     ******************************************************************/
+    /* ────────────────────────────────────────────────────────────────
+     *  PLAYLISTS — edit here only
+     * ────────────────────────────────────────────────────────────── */
     const PLAYLISTS = {
       "default": {
         name: "修仙",
         desc: "我等修仙之人最讲究念头通达。",
         tracks: [
-          { name:"御剑江湖",     artist:"骆集益",  url:"assets/music/御剑江湖.mp3",     cover:"assets/music/御剑江湖.jpg",     lrc:"assets/music/御剑江湖.lrc" },
-          { name:"水龙吟",       artist:"骆集益",  url:"assets/music/水龙吟.mp3",       cover:"assets/music/水龙吟.jpg",       lrc:"assets/music/水龙吟.lrc" },
-          { name:"His Theme",   artist:"Toby Fox", url:"assets/music/His Theme.mp3",   cover:"assets/music/His Theme.jpg",   lrc:"assets/music/His Theme.lrc" },
-          { name:"天地孤影任我行", artist:"陈勋奇",  url:"assets/music/天地孤影任我行.mp3", cover:"assets/music/天地孤影任我行.jpg", lrc:"assets/music/天地孤影任我行.lrc" },
+          { name:"御剑江湖",      artist:"骆集益",   url:"assets/music/御剑江湖.mp3",      cover:"assets/music/御剑江湖.jpg",      lrc:"assets/music/御剑江湖.lrc" },
+          { name:"水龙吟",        artist:"骆集益",   url:"assets/music/水龙吟.mp3",        cover:"assets/music/水龙吟.jpg",        lrc:"assets/music/水龙吟.lrc" },
+          { name:"His Theme",    artist:"Toby Fox",  url:"assets/music/His Theme.mp3",    cover:"assets/music/His Theme.jpg",    lrc:"assets/music/His Theme.lrc" },
+          { name:"天地孤影任我行", artist:"陈勋奇",   url:"assets/music/天地孤影任我行.mp3", cover:"assets/music/天地孤影任我行.jpg", lrc:"assets/music/天地孤影任我行.lrc" },
         ]
       },
       "dj": {
@@ -623,663 +556,359 @@
         desc: "半睡半醒日复日，花开花落年复年。",
         tracks: [
           { name:"一点点DJ",     artist:"董唧唧&芊芊龍",  url:"assets/music/一点点DJ.mp3",     cover:"assets/music/一点点DJ.jpg",     lrc:"assets/music/一点点DJ.lrc" },
-          { name:"一点",         artist:"Muyoi, Pezzi", url:"assets/music/一点.mp3",         cover:"assets/music/一点.jpg",         lrc:"assets/music/一点.lrc" },
-          { name:"来去曼波",     artist:"王以诺",         url:"assets/music/来去曼波.mp3",     cover:"assets/music/来去曼波.jpg",     lrc:"assets/music/来去曼波.lrc" },
-          { name:"不再曼波",     artist:"TYSM",          url:"assets/music/不再曼波.mp3",     cover:"assets/music/不再曼波.jpg",     lrc:"assets/music/不再曼波.lrc" },
+          { name:"一点",         artist:"Muyoi, Pezzi",  url:"assets/music/一点.mp3",         cover:"assets/music/一点.jpg",         lrc:"assets/music/一点.lrc" },
+          { name:"来去曼波",     artist:"王以诺",          url:"assets/music/来去曼波.mp3",     cover:"assets/music/来去曼波.jpg",     lrc:"assets/music/来去曼波.lrc" },
+          { name:"不再曼波",     artist:"TYSM",           url:"assets/music/不再曼波.mp3",     cover:"assets/music/不再曼波.jpg",     lrc:"assets/music/不再曼波.lrc" },
           { name:"曼波有时哈基米", artist:"みかん箱",     url:"assets/music/曼波有时哈基米.mp3", cover:"assets/music/曼波有时哈基米.jpg", lrc:"assets/music/曼波有时哈基米.lrc" },
-          { name:"绿光",         artist:"孙燕姿",         url:"assets/music/绿光.mp3",         cover:"assets/music/绿光.jpg",         lrc:"assets/music/绿光.lrc" },
+          { name:"绿光",         artist:"孙燕姿",          url:"assets/music/绿光.mp3",         cover:"assets/music/绿光.jpg",         lrc:"assets/music/绿光.lrc" },
         ]
       }
     };
 
-    /* ─── Helpers ──────────────────────────────────────────────── */
-    const $ = (id) => document.getElementById(id);
-    const LS_KEY    = "music_selected_playlist_id_singlefile";
-    const LS_RECENT = "music_recent_playlists_singlefile";
-
-    function normalizeTrack(t) {
-      return {
-        name:   t?.name   ?? t?.title  ?? "",
-        artist: t?.artist ?? t?.author ?? "",
-        url:    t?.url    ?? "",
-        cover:  t?.cover  ?? t?.pic    ?? "",
-        lrc:    t?.lrc    ?? ""
-      };
-    }
-
-    function fmtTime(sec) {
-      sec = Number(sec);
-      if (!Number.isFinite(sec) || sec < 0) sec = 0;
-      const m = Math.floor(sec / 60);
-      const s = Math.floor(sec % 60);
-      return `${m}:${String(s).padStart(2,"0")}`;
-    }
-
-    function setCoverBackground(url) {
-      const safe = url ? `url("${String(url).replaceAll('"','%22')}")` : "none";
-      document.documentElement.style.setProperty("--cover-url", safe);
-    }
-
-    function safeList(obj) { return Array.isArray(obj) ? obj : [] }
-
-    function getRecent() {
-      try { return safeList(JSON.parse(localStorage.getItem(LS_RECENT)||"[]")).filter(k=>PLAYLISTS[k]); }
-      catch { return [] }
-    }
-    function pushRecent(key) {
+    /* ── Helpers ── */
+    const $ = id => document.getElementById(id);
+    const LS_KEY = "music_playlist_id", LS_RECENT = "music_recent_playlists";
+    const normalizeTrack = t => ({
+      name:   t?.name   ?? t?.title  ?? "",
+      artist: t?.artist ?? t?.author ?? "",
+      url:    t?.url    ?? "",
+      cover:  t?.cover  ?? t?.pic    ?? "",
+      lrc:    t?.lrc    ?? ""
+    });
+    const fmtTime = sec => {
+      sec = Math.max(0, Number.isFinite(+sec) ? +sec : 0);
+      return `${Math.floor(sec/60)}:${String(Math.floor(sec%60)).padStart(2,"0")}`;
+    };
+    const setCoverBg = url => {
+      document.documentElement.style.setProperty("--cover-url", url ? `url("${String(url).replaceAll('"','%22')}")` : "none");
+    };
+    const getRecent = () => { try { return JSON.parse(localStorage.getItem(LS_RECENT)||"[]").filter(k=>PLAYLISTS[k]) } catch { return [] } };
+    const pushRecent = key => {
       const next = [key, ...getRecent().filter(x=>x!==key)].slice(0,6);
-      try { localStorage.setItem(LS_RECENT, JSON.stringify(next)); } catch {}
+      try { localStorage.setItem(LS_RECENT, JSON.stringify(next)) } catch {}
       updateRecentBadge();
-    }
-    function updateRecentBadge() {
+    };
+    const updateRecentBadge = () => {
       const b = $("recentBadge"), r = getRecent();
       b.classList.toggle("on", r.length > 0);
       b.textContent = r.length ? `最近 ${r.length}` : "最近";
-    }
+    };
 
-    /* ─── Viewport / layout helpers ────────────────────────────── */
-    function setDvh() {
-      document.documentElement.style.setProperty("--dvh", `${window.innerHeight}px`);
-    }
-    function syncPlayerbarHeight() {
+    /* ── Viewport ── */
+    const setDvh = () => document.documentElement.style.setProperty("--dvh", `${window.innerHeight}px`);
+    const syncBarH = () => {
       const bar = document.querySelector(".playerbar");
-      if (!bar) return;
-      document.documentElement.style.setProperty("--playerbar-h", `${Math.ceil(bar.getBoundingClientRect().height)}px`);
-    }
-    function installLayoutObservers() {
-      setDvh(); syncPlayerbarHeight();
-      window.addEventListener("resize", () => { setDvh(); syncPlayerbarHeight(); }, { passive: true });
-      window.addEventListener("orientationchange", () => setTimeout(() => { setDvh(); syncPlayerbarHeight(); }, 250), { passive: true });
-      try {
-        const bar = document.querySelector(".playerbar");
-        if (bar && "ResizeObserver" in window) new ResizeObserver(() => syncPlayerbarHeight()).observe(bar);
-      } catch {}
+      if (bar) document.documentElement.style.setProperty("--playerbar-h", `${Math.ceil(bar.getBoundingClientRect().height)}px`);
+    };
+    function installLayout() {
+      setDvh(); syncBarH();
+      window.addEventListener("resize", () => { setDvh(); syncBarH() }, { passive:true });
+      window.addEventListener("orientationchange", () => setTimeout(()=>{ setDvh(); syncBarH() }, 250), { passive:true });
+      try { if ("ResizeObserver" in window) new ResizeObserver(syncBarH).observe(document.querySelector(".playerbar")) } catch {}
     }
 
-    /* ─── Media Session ─────────────────────────────────────────── */
-    let mediaSessionInstalled = false;
-
-    function setMediaMetadata(t) {
+    /* ── Media Session ── */
+    let msInstalled = false;
+    const setMediaMeta = t => {
       if (!("mediaSession" in navigator) || !t) return;
-      try {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title:   t.name   || "Music",
-          artist:  t.artist || "",
-          album:   PLAYLISTS[activeKey]?.name || "",
-          artwork: t.cover ? [96,128,192,256,384,512].map(s => ({ src: t.cover, sizes: `${s}x${s}` })) : []
-        });
-      } catch {}
-      document.title = t.name ? `${t.name}${t.artist ? " · "+t.artist : ""}` : "Music";
-    }
-    function setMediaPlaybackState() {
-      if (!("mediaSession" in navigator)) return;
-      try { navigator.mediaSession.playbackState = isPlaying() ? "playing" : "paused"; } catch {}
-    }
-    function installMediaSessionHandlers() {
-      if (mediaSessionInstalled || !("mediaSession" in navigator)) return;
-      mediaSessionInstalled = true;
+      try { navigator.mediaSession.metadata = new MediaMetadata({ title:t.name||"Music", artist:t.artist||"", album:PLAYLISTS[activeKey]?.name||"", artwork: t.cover ? [96,128,192,256,384,512].map(s=>({src:t.cover,sizes:`${s}x${s}`})) : [] }) } catch {}
+      document.title = t.name ? `${t.name}${t.artist?" · "+t.artist:""}` : "Music";
+    };
+    const setMediaState = () => { try { if ("mediaSession" in navigator) navigator.mediaSession.playbackState = isPlaying() ? "playing" : "paused" } catch {} };
+    function installMS() {
+      if (msInstalled || !("mediaSession" in navigator)) return;
+      msInstalled = true;
       const ms = navigator.mediaSession;
-      const safe = (action, fn) => { try { ms.setActionHandler(action, fn); } catch {} };
-      safe("play",          () => { try { ap?.play(); } catch {} });
-      safe("pause",         () => { try { ap?.pause(); } catch {} });
+      const safe = (a,fn) => { try { ms.setActionHandler(a,fn) } catch {} };
+      safe("play",          ()=>{ try { ap?.play() } catch {} });
+      safe("pause",         ()=>{ try { ap?.pause() } catch {} });
       safe("previoustrack", prevTrack);
       safe("nexttrack",     nextTrack);
-      safe("seekto",        ({ seekTime }) => { if (ap?.audio && Number.isFinite(seekTime)) ap.audio.currentTime = Math.max(0, Math.min(ap.audio.duration||0, seekTime)) });
-      safe("seekbackward",  ({ seekOffset=10 }) => { if (ap?.audio) ap.audio.currentTime = Math.max(0, (ap.audio.currentTime||0) - seekOffset) });
-      safe("seekforward",   ({ seekOffset=10 }) => { if (ap?.audio) ap.audio.currentTime = Math.min(ap.audio.duration||0, (ap.audio.currentTime||0) + seekOffset) });
+      safe("seekto",        ({seekTime})=>{ if (ap?.audio && Number.isFinite(seekTime)) ap.audio.currentTime = Math.max(0, Math.min(ap.audio.duration||0, seekTime)) });
+      safe("seekbackward",  ({seekOffset=10})=>{ if (ap?.audio) ap.audio.currentTime = Math.max(0,(ap.audio.currentTime||0)-seekOffset) });
+      safe("seekforward",   ({seekOffset=10})=>{ if (ap?.audio) ap.audio.currentTime = Math.min(ap.audio.duration||0,(ap.audio.currentTime||0)+seekOffset) });
     }
 
-    /* ─── DOM refs ──────────────────────────────────────────────── */
-    const elCover    = $("cover");
-    const coverWrap  = $("coverWrap");
-    const elTitle    = $("title");
-    const elArtist   = $("artist");
-    const elIdx      = $("idx");
-    const elTotal    = $("total");
-    const elState    = $("state");
-    const elPname    = $("plistName");
-    const miniCover  = $("miniCover");
-    const miniTitle  = $("miniTitle");
-    const miniArtist = $("miniArtist");
-    const tracksEl   = $("tracks");
-    const searchEl   = $("search");
-    const btnClearSearch = $("btnClearSearch");
-    const btnShuffle = $("btnShuffle");
-    const btnLoop    = $("btnLoop");
-    const btnTimer   = $("btnTimer");
-    const prevBtn    = $("prev");
-    const playBtn    = $("play");
-    const nextBtn    = $("next");
-    const curEl      = $("cur");
-    const durEl      = $("dur");
-    const seekEl     = $("seek");
-    const volEl      = $("vol");
-    const btnPlaylist  = $("btnPlaylist");
-    const plistAva     = $("plistAva");
-    const plistBtnName = $("plistBtnName");
-    const plistBtnSub  = $("plistBtnSub");
-    const plistModal   = $("plistModal");
-    const plistClose   = $("plistClose");
-    const plistSearch  = $("plistSearch");
-    const plistGrid    = $("plistGrid");
-    const timerModal   = $("timerModal");
-    const timerClose   = $("timerClose");
-    const presetEl     = $("preset");
-    const customMinEl  = $("customMin");
-    const setMinBtn    = $("setMin");
-    const cancelTimerBtn = $("cancelTimer");
-    const timerPill    = $("timerPill");
-    const timerLeft    = $("timerLeft");
+    /* ── DOM refs ── */
+    const elCover = $("cover"), coverWrap = $("coverWrap");
+    const elTitle = $("title"), elArtist = $("artist"), elIdx = $("idx"), elTotal = $("total");
+    const elState = $("state"), elPname = $("plistName");
+    const miniCover = $("miniCover"), miniTitle = $("miniTitle"), miniArtist = $("miniArtist");
+    const tracksEl = $("tracks"), searchEl = $("search");
+    const btnShuffle = $("btnShuffle"), btnLoop = $("btnLoop"), btnTimer = $("btnTimer");
+    const prevBtn = $("prev"), playBtn = $("play"), nextBtn = $("next");
+    const curEl = $("cur"), durEl = $("dur"), seekEl = $("seek"), volEl = $("vol");
+    const timerPill = $("timerPill"), timerLeft = $("timerLeft");
+    const plistModal = $("plistModal"), plistClose = $("plistClose");
+    const plistSearch = $("plistSearch"), plistGrid = $("plistGrid");
+    const timerModal = $("timerModal"), timerClose = $("timerClose");
+    const presetEl = $("preset"), customMinEl = $("customMin");
+    const nowCard = $("nowCard");
 
-    /* ─── State ─────────────────────────────────────────────────── */
-    let ap          = null;
-    let playlist    = [];
-    let activeKey   = null;
-    let shuffleOn   = false;
-    let loopMode    = "all"; // "all" | "one" | "none"
-    let sleep       = { endAt: null, tick: null };
-    let userSeeking = false;
+    /* ── State ── */
+    let ap = null, playlist = [], activeKey = null;
+    let shuffleOn = false, loopMode = "all";
+    let sleep = { endAt:null, tick:null }, userSeeking = false;
 
-    /* ─── Loop button ───────────────────────────────────────────── */
     function updateLoopBtn() {
-      if (loopMode === "all") {
-        btnLoop.textContent = "🔁 列表循环";
-        btnLoop.classList.remove("on");
-        btnLoop.title = "当前：列表循环（点击切换为单曲循环）";
-      } else if (loopMode === "one") {
-        btnLoop.textContent = "🔂 单曲循环";
-        btnLoop.classList.add("on");
-        btnLoop.title = "当前：单曲循环（点击切换为顺序播放）";
-      } else {
-        btnLoop.textContent = "➜ 顺序播放";
-        btnLoop.classList.remove("on");
-        btnLoop.title = "当前：顺序播放不循环（点击切换为列表循环）";
-      }
+      if      (loopMode==="all") { btnLoop.textContent="🔁 列表"; btnLoop.classList.remove("on"); btnLoop.title="列表循环（点击→单曲）" }
+      else if (loopMode==="one") { btnLoop.textContent="🔂 单曲"; btnLoop.classList.add("on");    btnLoop.title="单曲循环（点击→顺序）" }
+      else                       { btnLoop.textContent="➜ 顺序";  btnLoop.classList.remove("on"); btnLoop.title="顺序播放（点击→列表循环）" }
     }
 
-    /* ─── Playback state ────────────────────────────────────────── */
-    function isPlaying() {
-      try { const a = ap?.audio; return !!(a && !a.paused && !a.ended); }
-      catch { return false; }
-    }
-
+    const isPlaying = () => { try { const a=ap?.audio; return !!(a&&!a.paused&&!a.ended) } catch { return false } };
     function updatePlayIcon() {
-      const playing = isPlaying();
-      playBtn.textContent = playing ? "⏸" : "▶";
-      elState.textContent = playing ? "播放中" : "暂停";
-      coverWrap.classList.toggle("playing", playing);
-
-      // Animate bars in track list
+      const p = isPlaying();
+      playBtn.textContent = p ? "⏸" : "▶";
+      elState.textContent = p ? "播放中" : "暂停";
+      coverWrap.classList.toggle("playing", p);
       const active = tracksEl.querySelector(".track.active");
-      if (active) active.classList.toggle("paused", !playing);
-
-      setMediaPlaybackState();
+      if (active) active.classList.toggle("paused", !p);
+      setMediaState();
     }
 
-    function pickRandomIndex(avoid) {
-      if (playlist.length <= 1) return 0;
-      let i, tries = 0;
-      do { i = Math.floor(Math.random() * playlist.length); tries++; }
-      while (i === avoid && tries < 20);
-      return i;
-    }
+    const pickRandom = avoid => {
+      if (playlist.length<=1) return 0;
+      let i,t=0; do { i=Math.floor(Math.random()*playlist.length); t++ } while (i===avoid&&t<20); return i;
+    };
 
-    function highlightActive(activeIdx) {
+    function highlightActive(idx) {
       tracksEl.querySelectorAll(".track").forEach(li => {
-        const isActive = Number(li.dataset.idx) === activeIdx;
-        li.classList.toggle("active", isActive);
-        if (isActive && !isPlaying()) li.classList.add("paused");
-        else if (isActive) li.classList.remove("paused");
+        const on = Number(li.dataset.idx) === idx;
+        li.classList.toggle("active", on);
+        if (on) li.classList.toggle("paused", !isPlaying());
       });
-      // Scroll active item into view smoothly
-      const activeEl = tracksEl.querySelector(".track.active");
-      if (activeEl) activeEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      tracksEl.querySelector(".track.active")?.scrollIntoView({ block:"nearest", behavior:"smooth" });
     }
 
     function updateNow() {
-      if (!ap || !playlist.length) return;
-      const idx = ap.list.index ?? 0;
-      const t   = playlist[idx] || {};
-
-      elTitle.textContent  = t.name   || "—";
-      elArtist.textContent = t.artist || "—";
-      elIdx.textContent    = String(idx + 1);
-      elTotal.textContent  = String(playlist.length);
-
-      elCover.src      = t.cover || "";
-      miniCover.src    = t.cover || "";
-      miniTitle.textContent  = t.name   || "—";
-      miniArtist.textContent = t.artist || "—";
-
-      setCoverBackground(t.cover || "");
-      highlightActive(idx);
-      syncPlaylistButton();
-      setMediaMetadata(t);
-      setMediaPlaybackState();
-      syncPlayerbarHeight();
+      if (!ap||!playlist.length) return;
+      const idx = ap.list.index??0, t = playlist[idx]||{};
+      elTitle.textContent = t.name||"—"; elArtist.textContent = t.artist||"—";
+      elIdx.textContent = String(idx+1); elTotal.textContent = String(playlist.length);
+      elCover.src = miniCover.src = t.cover||"";
+      miniTitle.textContent = t.name||"—"; miniArtist.textContent = t.artist||"—";
+      setCoverBg(t.cover||"");
+      highlightActive(idx); syncPlistBtn(); setMediaMeta(t); setMediaState(); syncBarH();
     }
 
-    /* ─── Search ────────────────────────────────────────────────── */
-    function applySearch() {
+    const applySearch = () => {
       const kw = searchEl.value.trim().toLowerCase();
-      tracksEl.querySelectorAll(".track").forEach(li => {
-        li.style.display = (!kw || li.innerText.toLowerCase().includes(kw)) ? "" : "none";
-      });
-    }
+      tracksEl.querySelectorAll(".track").forEach(li => { li.style.display=(!kw||li.innerText.toLowerCase().includes(kw))?"":"none" });
+    };
 
-    /* ─── Track list render ─────────────────────────────────────── */
     function renderList() {
       tracksEl.innerHTML = "";
-      playlist.forEach((t, i) => {
+      playlist.forEach((t,i) => {
         const li = document.createElement("li");
-        li.className   = "track";
-        li.dataset.idx = String(i);
-        li.innerHTML = `
-          <div class="tcover">
-            <img alt="" src="${t.cover||""}">
-            <div class="bars">
-              <div class="bar"></div><div class="bar"></div>
-              <div class="bar"></div><div class="bar"></div>
-            </div>
-          </div>
-          <div class="tmeta">
-            <div class="tname"></div>
-            <div class="tauthor"></div>
-          </div>
-          <div class="tnum">${i+1}</div>
-        `;
-        li.querySelector(".tname").textContent   = t.name   || "—";
-        li.querySelector(".tauthor").textContent = t.artist || "—";
+        li.className = "track"; li.dataset.idx = String(i);
+        li.innerHTML = `<div class="tcover"><img alt="" src="${t.cover||""}"><div class="bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div><div class="tmeta"><div class="tname"></div><div class="tauthor"></div></div><div class="tnum">${i+1}</div>`;
+        li.querySelector(".tname").textContent = t.name||"—";
+        li.querySelector(".tauthor").textContent = t.artist||"—";
         li.addEventListener("click", () => goIndex(i, true));
         tracksEl.appendChild(li);
       });
-      updateNow();
-      applySearch();
+      updateNow(); applySearch();
     }
 
-    /* ─── Navigation ────────────────────────────────────────────── */
-    function goIndex(i, autoplay = true) {
+    function goIndex(i, autoplay=true) {
       if (!ap) return;
-      ap.list.switch(i);
-      updateNow();
+      ap.list.switch(i); updateNow();
       if (autoplay) ap.play();
     }
-
     function nextTrack() {
       if (!ap) return;
-      const idx = ap.list.index ?? 0;
-
-      // Single-track loop: just restart
-      if (loopMode === "one") {
-        ap.audio.currentTime = 0;
-        ap.play();
-        return;
-      }
-
-      if (shuffleOn) { goIndex(pickRandomIndex(idx), true); return; }
-
-      if (idx + 1 < playlist.length) { goIndex(idx + 1, true); return; }
-
-      // Reached end of list
-      if (loopMode === "all") { goIndex(0, true); return; }
-
-      // loopMode === "none": stop
-      ap.pause();
-      updatePlayIcon();
+      const idx = ap.list.index??0;
+      if (loopMode==="one") { ap.audio.currentTime=0; ap.play(); return }
+      if (shuffleOn) { goIndex(pickRandom(idx),true); return }
+      if (idx+1<playlist.length) { goIndex(idx+1,true); return }
+      if (loopMode==="all") { goIndex(0,true); return }
+      ap.pause(); updatePlayIcon();
     }
-
     function prevTrack() {
       if (!ap) return;
-      const idx = ap.list.index ?? 0;
-      const a   = ap.audio;
-
-      // If > 3s into song, restart current track (standard behaviour)
-      if (a && a.currentTime > 3) {
-        a.currentTime = 0;
-        return;
-      }
-
-      if (shuffleOn) { goIndex(pickRandomIndex(idx), true); return; }
-
-      if (idx - 1 >= 0) { goIndex(idx - 1, true); return; }
-
-      if (loopMode === "all") { goIndex(playlist.length - 1, true); return; }
-
-      // Already at start with no loop: just restart
-      if (a) a.currentTime = 0;
+      const idx=ap.list.index??0, a=ap.audio;
+      if (a&&a.currentTime>3) { a.currentTime=0; return }
+      if (shuffleOn) { goIndex(pickRandom(idx),true); return }
+      if (idx-1>=0) { goIndex(idx-1,true); return }
+      if (loopMode==="all") { goIndex(playlist.length-1,true); return }
+      if (a) a.currentTime=0;
     }
 
-    /* ─── Sleep timer ───────────────────────────────────────────── */
+    /* ── Sleep timer ── */
     function clearTimer() {
-      sleep.endAt = null;
-      if (sleep.tick) { clearInterval(sleep.tick); sleep.tick = null; }
-      btnTimer.textContent = "⏱ 定时";
-      btnTimer.classList.remove("on");
-      timerPill.style.display = "none";
-      timerLeft.textContent   = "--:--";
-      presetEl.querySelectorAll(".seg").forEach(x => x.classList.remove("active"));
+      sleep.endAt=null; if (sleep.tick) { clearInterval(sleep.tick); sleep.tick=null }
+      btnTimer.textContent="⏱ 定时"; btnTimer.classList.remove("on");
+      timerPill.style.display="none"; timerLeft.textContent="--:--";
+      presetEl.querySelectorAll(".seg").forEach(x=>x.classList.remove("active"));
     }
-
-    function msToMMSS(ms) {
-      const s = Math.max(0, Math.floor(ms / 1000));
-      return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
-    }
-
-    async function fadeOutAndPause() {
+    const msToMMSS = ms => { const s=Math.max(0,Math.floor(ms/1000)); return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}` };
+    async function fadeAndPause() {
       if (!ap) return;
-      const a = ap.audio;
-      const oldVol = Number(a.volume ?? 0.85);
-      const steps = 16, totalMs = 3500, stepMs = totalMs / steps;
-      for (let i = steps; i >= 0; i--) {
-        try { ap.volume(oldVol * (i / steps), true); } catch {}
-        await new Promise(r => setTimeout(r, stepMs));
-      }
-      try { ap.pause(); }   catch {}
-      try { ap.volume(oldVol, true); } catch {}
-      updatePlayIcon();
-      alert("定时已到：已暂停播放。");
+      const a=ap.audio, v0=Number(a.volume??0.85), steps=16, ms=3500/steps;
+      for (let i=steps; i>=0; i--) { try { ap.volume(v0*(i/steps),true) } catch {}; await new Promise(r=>setTimeout(r,ms)) }
+      try { ap.pause() } catch {} try { ap.volume(v0,true) } catch {}
+      updatePlayIcon(); alert("定时已到：已暂停播放。");
     }
-
     function startTimer(endAt) {
-      clearTimer();
-      sleep.endAt = endAt;
-      btnTimer.classList.add("on");
-      const tick = () => {
-        const left = sleep.endAt - Date.now();
-        if (left <= 0) { clearTimer(); fadeOutAndPause(); return; }
-        const t = msToMMSS(left);
-        btnTimer.textContent       = `⏱ ${t}`;
-        timerPill.style.display    = "";
-        timerLeft.textContent      = t;
-      };
-      tick();
-      sleep.tick = setInterval(tick, 350);
+      clearTimer(); sleep.endAt=endAt; btnTimer.classList.add("on");
+      const tick=()=>{ const left=sleep.endAt-Date.now(); if (left<=0){clearTimer();fadeAndPause();return} const t=msToMMSS(left); btnTimer.textContent=`⏱ ${t}`; timerPill.style.display=""; timerLeft.textContent=t };
+      tick(); sleep.tick=setInterval(tick,350);
     }
-
-    function setMinutesTimer(min) {
-      const m = Number(min);
-      if (!Number.isFinite(m) || m <= 0) return;
-      startTimer(Date.now() + m * 60_000);
-    }
-
-    const openTimer  = () => { timerModal.style.display = "flex" };
-    const closeTimer = () => { timerModal.style.display = "none" };
-
+    const setMinsTimer = min => { const m=Number(min); if (Number.isFinite(m)&&m>0) startTimer(Date.now()+m*60_000) };
+    const openTimer  = () => timerModal.style.display="flex";
+    const closeTimer = () => timerModal.style.display="none";
     function buildPresets() {
       [5,10,15,25,30,45,60,90].forEach(min => {
-        const b = document.createElement("div");
-        b.className   = "seg";
-        b.textContent = `${min}m`;
-        b.addEventListener("click", () => {
-          presetEl.querySelectorAll(".seg").forEach(x => x.classList.remove("active"));
-          b.classList.add("active");
-          setMinutesTimer(min);
-          closeTimer();
-        });
+        const b=document.createElement("div"); b.className="seg"; b.textContent=`${min}m`;
+        b.addEventListener("click",()=>{ presetEl.querySelectorAll(".seg").forEach(x=>x.classList.remove("active")); b.classList.add("active"); setMinsTimer(min); closeTimer() });
         presetEl.appendChild(b);
       });
     }
 
-    /* ─── iOS autoplay gesture ──────────────────────────────────── */
-    function bindGesturePlayOnce() {
-      const handler = () => { if (!isPlaying()) try { ap?.play(); } catch {} };
-      ["pointerdown","touchstart","click","keydown"].forEach(ev =>
-        window.addEventListener(ev, handler, { once:true, capture:true, passive: ev !== "click" })
-      );
-    }
+    /* ── iOS autoplay ── */
+    const bindGesturePlay=()=>{ const h=()=>{ if (!isPlaying()) try{ap?.play()}catch{} }; ["pointerdown","touchstart","click","keydown"].forEach(ev=>window.addEventListener(ev,h,{once:true,capture:true,passive:ev!=="click"})) };
 
-    /* ─── Player create / destroy ───────────────────────────────── */
+    /* ── Player ── */
     function destroyPlayer() {
-      try { clearTimer(); } catch {}
-      try { if (ap) { ap.pause(); if (typeof ap.destroy === "function") ap.destroy(); } } catch {}
-      ap = null;
-      userSeeking = false;
-      seekEl.value = "0";
-      curEl.textContent = "0:00";
-      durEl.textContent = "0:00";
+      try { clearTimer() } catch {}
+      try { if (ap) { ap.pause(); if (typeof ap.destroy==="function") ap.destroy() } } catch {}
+      ap=null; userSeeking=false; seekEl.value="0"; curEl.textContent="0:00"; durEl.textContent="0:00";
     }
-
     function createPlayer(tracks) {
-      const startVol = Math.max(0, Math.min(1, Number(volEl.value || 0.85)));
-
+      const vol = Math.max(0,Math.min(1,Number(volEl.value||0.85)));
       ap = new APlayer({
-        container: $("aplayerEngine"),
-        lrcType:   3,
-        audio:     tracks.map(t => ({ name:t.name, artist:t.artist, url:t.url, cover:t.cover, lrc:t.lrc })),
-        autoplay:  false,
-        /*
-         * KEY FIX: Use loop:"none" so APlayer never auto-advances on its own.
-         * All loop / next-track logic lives exclusively in our `ended` handler.
-         * This eliminates the double-fire bug that caused songs to jump or
-         * loop-one to not stick.
-         */
-        loop:    "none",
-        order:   "list",
-        preload: "metadata",
-        volume:  startVol,
-        mutex:   true,
-        listFolded: true
+        container: $("aplayerEngine"), lrcType:3,
+        audio: tracks.map(t=>({name:t.name,artist:t.artist,url:t.url,cover:t.cover,lrc:t.lrc})),
+        autoplay:false,
+        /* KEY FIX: loop:"none" — our ended handler owns all navigation */
+        loop:"none", order:"list", preload:"metadata", volume:vol, mutex:true, listFolded:true
       });
-
-      installMediaSessionHandlers();
-      renderList();
-      updateLoopBtn();
-      updateNow();
-      updatePlayIcon();
-
-      ap.on("listswitch", () => { updateNow(); updatePlayIcon(); });
-      ap.on("play",  () => { updatePlayIcon(); highlightActive(ap.list.index??0) });
-      ap.on("pause", () => { updatePlayIcon(); highlightActive(ap.list.index??0) });
-
-      const a = ap.audio;
-
-      a.addEventListener("loadedmetadata", () => {
-        durEl.textContent = fmtTime(a.duration || 0);
-      });
-
-      a.addEventListener("timeupdate", () => {
+      installMS(); renderList(); updateLoopBtn(); updateNow(); updatePlayIcon();
+      ap.on("listswitch",()=>{ updateNow(); updatePlayIcon() });
+      ap.on("play",  ()=>{ updatePlayIcon(); highlightActive(ap.list.index??0) });
+      ap.on("pause", ()=>{ updatePlayIcon(); highlightActive(ap.list.index??0) });
+      const a=ap.audio;
+      a.addEventListener("loadedmetadata",()=>{ durEl.textContent=fmtTime(a.duration||0) });
+      a.addEventListener("timeupdate",()=>{
         if (userSeeking) return;
-        const d = a.duration || 0, c = a.currentTime || 0;
-        curEl.textContent = fmtTime(c);
-        durEl.textContent = fmtTime(d);
-        if (d > 0) seekEl.value = String((c / d) * 100);
+        const d=a.duration||0, c=a.currentTime||0;
+        curEl.textContent=fmtTime(c); durEl.textContent=fmtTime(d);
+        if (d>0) seekEl.value=String((c/d)*100);
       });
-
-      /*
-       * KEY FIX: The `ended` event is our single source of truth for
-       * what happens when a track finishes. APlayer (with loop:"none")
-       * will simply stop — it will NOT auto-advance. We decide what to
-       * do based on loopMode and shuffleOn.
-       */
-      a.addEventListener("ended", () => {
-        if (loopMode === "one") {
-          // Restart exact same track
-          a.currentTime = 0;
-          ap.play();
-          return;
-        }
-        nextTrack(); // handles "all" (wrap) and "none" (stop)
-      });
-
-      prevBtn.onclick = prevTrack;
-      nextBtn.onclick = nextTrack;
-      playBtn.onclick = () => { ap.toggle(); updatePlayIcon(); };
-
-      seekEl.onpointerdown = () => { userSeeking = true };
-      seekEl.onpointerup   = () => { userSeeking = false };
-      seekEl.oninput = () => {
-        const d = a.duration || 0;
-        if (d > 0) {
-          a.currentTime = d * (Number(seekEl.value) / 100);
-          curEl.textContent = fmtTime(a.currentTime);
-        }
-      };
-
-      volEl.oninput = () => {
-        try { ap.volume(Math.max(0, Math.min(1, Number(volEl.value))), true); } catch {}
-      };
-
-      syncPlayerbarHeight();
+      /* KEY FIX: sole source of truth for what happens when a track ends */
+      a.addEventListener("ended",()=>{ if (loopMode==="one"){a.currentTime=0;ap.play();return} nextTrack() });
+      prevBtn.onclick=prevTrack; nextBtn.onclick=nextTrack;
+      playBtn.onclick=()=>{ ap.toggle(); updatePlayIcon() };
+      seekEl.onpointerdown=()=>userSeeking=true; seekEl.onpointerup=()=>userSeeking=false;
+      seekEl.oninput=()=>{ const d=a.duration||0; if (d>0){a.currentTime=d*(Number(seekEl.value)/100);curEl.textContent=fmtTime(a.currentTime)} };
+      volEl.oninput=()=>{ try{ap.volume(Math.max(0,Math.min(1,Number(volEl.value))),true)}catch{} };
+      syncBarH();
     }
 
-    /* ─── Playlist UI ───────────────────────────────────────────── */
-    function getPlaylistCover(key) {
-      const p = PLAYLISTS[key]; if (!p) return "";
-      if (p.cover) return p.cover;
-      const t0 = p.tracks?.[0] ? normalizeTrack(p.tracks[0]) : null;
-      return t0?.cover || "";
+    /* ── Playlist UI ── */
+    const getPlaylistCover = key => { const p=PLAYLISTS[key]; if(!p)return""; if(p.cover)return p.cover; const t0=p.tracks?.[0]?normalizeTrack(p.tracks[0]):null; return t0?.cover||"" };
+    const getPlaylistCount = key => { const p=PLAYLISTS[key]; return (p&&Array.isArray(p.tracks))?p.tracks.filter(x=>normalizeTrack(x).url).length:0 };
+    function syncPlistBtn() {
+      const p=PLAYLISTS[activeKey], n=getPlaylistCount(activeKey);
+      $("plistBtnName").textContent=p?.name||"—"; $("plistBtnSub").textContent=`${n} 首`;
+      $("plistAva").src=getPlaylistCover(activeKey)||""; elPname.textContent=p?.name||"—";
+      buildPlistGrid();
     }
-    function getPlaylistCount(key) {
-      const p = PLAYLISTS[key];
-      return (p && Array.isArray(p.tracks)) ? p.tracks.filter(x => normalizeTrack(x).url).length : 0;
-    }
-
-    function syncPlaylistButton() {
-      const p = PLAYLISTS[activeKey], n = getPlaylistCount(activeKey);
-      plistBtnName.textContent = p?.name || "—";
-      plistBtnSub.textContent  = `${n} 首`;
-      plistAva.src = getPlaylistCover(activeKey) || "";
-      elPname.textContent = p?.name || "—";
-      buildPlaylistGrid();
-    }
-
-    const openPlaylist  = () => { plistModal.style.display = "flex"; plistSearch.value = ""; buildPlaylistGrid(); plistSearch.focus({ preventScroll: true }); };
-    const closePlaylist = () => { plistModal.style.display = "none" };
-
-    function buildPlaylistGrid() {
-      const kw = plistSearch.value.trim().toLowerCase();
-      const recent = getRecent();
-      const keys   = Object.keys(PLAYLISTS);
-      const ordered = [...recent, ...keys.filter(k => !recent.includes(k))];
-
-      plistGrid.innerHTML = "";
-      ordered.forEach(key => {
-        const p = PLAYLISTS[key]; if (!p) return;
-        const name  = p.name || key;
-        const count = getPlaylistCount(key);
-        if (kw && !`${name} ${p.desc||""}`.toLowerCase().includes(kw)) return;
-
-        const cover = getPlaylistCover(key);
-        const card  = document.createElement("div");
-        card.className = "plist-card" + (key === activeKey ? " active" : "") + (count === 0 ? " disabled" : "");
-        card.innerHTML = `
-          <div class="plist-cover"><img alt="" src="${cover||""}"></div>
-          <div class="plist-info">
-            <div class="n"></div>
-            <div class="d"></div>
-            <div class="c">
-              <span class="badge ${key===activeKey?"on":""}">${key===activeKey?"▶ 当前":"歌单"}</span>
-              <span>${count} 首</span>
-            </div>
-          </div>
-        `;
-        card.querySelector(".n").textContent = name;
-        card.querySelector(".d").textContent = p.desc || " ";
-        card.addEventListener("click", () => {
-          if (count === 0) { if (!confirm("这个歌单目前是空的。仍然切换吗？")) return; }
-          switchPlaylist(key, true);
-          closePlaylist();
-        });
+    const openPlaylist  = ()=>{ plistModal.style.display="flex"; plistSearch.value=""; buildPlistGrid(); plistSearch.focus({preventScroll:true}) };
+    const closePlaylist = ()=>  plistModal.style.display="none";
+    function buildPlistGrid() {
+      const kw=plistSearch.value.trim().toLowerCase();
+      const recent=getRecent(), keys=Object.keys(PLAYLISTS);
+      const ordered=[...recent,...keys.filter(k=>!recent.includes(k))];
+      plistGrid.innerHTML="";
+      ordered.forEach(key=>{
+        const p=PLAYLISTS[key]; if(!p)return;
+        const name=p.name||key, count=getPlaylistCount(key);
+        if (kw&&!`${name} ${p.desc||""}`.toLowerCase().includes(kw)) return;
+        const card=document.createElement("div");
+        card.className="plist-card"+(key===activeKey?" active":"")+(count===0?" disabled":"");
+        card.innerHTML=`<div class="plist-cover"><img alt="" src="${getPlaylistCover(key)||""}"></div><div class="plist-info"><div class="n"></div><div class="d"></div><div class="c"><span class="badge ${key===activeKey?"on":""}">${key===activeKey?"▶ 当前":"歌单"}</span><span>${count} 首</span></div></div>`;
+        card.querySelector(".n").textContent=name; card.querySelector(".d").textContent=p.desc||" ";
+        card.addEventListener("click",()=>{ if (count===0&&!confirm("歌单为空，仍然切换？"))return; switchPlaylist(key,true); closePlaylist() });
         plistGrid.appendChild(card);
       });
     }
 
-    /* ─── Playlist switching ────────────────────────────────────── */
+    /* ── Playlist switch ── */
     function switchPlaylist(key, recordRecent) {
-      const p = PLAYLISTS[key]; if (!p) return;
-      const wasPlaying = isPlaying();
-      destroyPlayer();
-
-      activeKey = key;
-      try { localStorage.setItem(LS_KEY, key); } catch {}
+      const p=PLAYLISTS[key]; if(!p)return;
+      const wasPlaying=isPlaying(); destroyPlayer();
+      activeKey=key; try{localStorage.setItem(LS_KEY,key)}catch{}
       if (recordRecent) pushRecent(key);
-
-      searchEl.value = "";
-      applySearch();
-
-      playlist = (p.tracks || []).map(normalizeTrack).filter(t => t.url);
-      syncPlaylistButton();
-
+      searchEl.value=""; applySearch();
+      playlist=(p.tracks||[]).map(normalizeTrack).filter(t=>t.url); syncPlistBtn();
       if (!playlist.length) {
-        elTitle.textContent  = "此歌单为空";
-        elArtist.textContent = "请在 PLAYLISTS 里添加 tracks";
-        elIdx.textContent    = "0";
-        elTotal.textContent  = "0";
-        elCover.src = miniCover.src = "";
-        miniTitle.textContent = miniArtist.textContent = "—";
-        setCoverBackground(getPlaylistCover(key) || "");
-        tracksEl.innerHTML = "";
-        updatePlayIcon();
-        setMediaMetadata({ name:"Music", artist:"", cover: getPlaylistCover(key)||"" });
-        return;
+        elTitle.textContent="此歌单为空"; elArtist.textContent="请添加 tracks";
+        elIdx.textContent=elTotal.textContent="0"; elCover.src=miniCover.src="";
+        miniTitle.textContent=miniArtist.textContent="—"; setCoverBg(getPlaylistCover(key)||"");
+        tracksEl.innerHTML=""; updatePlayIcon(); return;
       }
-
-      createPlayer(playlist);
-      if (wasPlaying) try { ap.play(); } catch {}
+      createPlayer(playlist); if (wasPlaying) try{ap.play()}catch{}
     }
 
-    /* ─── Init ──────────────────────────────────────────────────── */
+    /* ── Swipe to switch playlists (mobile) ── */
+    function installSwipe() {
+      let x0=0, y0=0, moved=false;
+      nowCard.addEventListener("touchstart", e=>{ x0=e.touches[0].clientX; y0=e.touches[0].clientY; moved=false }, {passive:true});
+      nowCard.addEventListener("touchmove",  e=>{ const dx=e.touches[0].clientX-x0, dy=e.touches[0].clientY-y0; if (Math.abs(dx)>Math.abs(dy)+8) moved=true }, {passive:true});
+      nowCard.addEventListener("touchend",   e=>{
+        if (!moved) return;
+        const dx = e.changedTouches[0].clientX-x0;
+        if (Math.abs(dx) < 55) return;
+        const keys=Object.keys(PLAYLISTS), cur=keys.indexOf(activeKey);
+        const next = dx<0 ? keys[(cur+1)%keys.length] : keys[(cur-1+keys.length)%keys.length];
+        switchPlaylist(next, true);
+        nowCard.style.transition="opacity .1s"; nowCard.style.opacity=".55";
+        setTimeout(()=>{ nowCard.style.opacity="1" }, 160);
+      }, {passive:true});
+    }
+
+    /* ── Init ── */
     function init() {
-      installLayoutObservers();
-      buildPresets();
-      updateRecentBadge();
+      installLayout(); buildPresets(); updateRecentBadge();
+      const saved=localStorage.getItem(LS_KEY);
+      const initial=(saved&&PLAYLISTS[saved])?saved:Object.keys(PLAYLISTS)[0];
+      switchPlaylist(initial, false); pushRecent(initial);
 
-      const saved   = localStorage.getItem(LS_KEY);
-      const initial = (saved && PLAYLISTS[saved]) ? saved : Object.keys(PLAYLISTS)[0];
-      switchPlaylist(initial, false);
-      pushRecent(initial);
-
-      // Search
       searchEl.addEventListener("input", applySearch);
-      btnClearSearch.addEventListener("click", () => { searchEl.value = ""; applySearch(); });
+      $("btnClearSearch").addEventListener("click", ()=>{ searchEl.value=""; applySearch() });
+      $("btnPlaylist").addEventListener("click",    openPlaylist);
+      plistClose.addEventListener("click",          closePlaylist);
+      plistModal.addEventListener("click",  e=>{ if(e.target===plistModal) closePlaylist() });
+      plistSearch.addEventListener("input",         buildPlistGrid);
 
-      // Playlist modal
-      btnPlaylist.addEventListener("click", openPlaylist);
-      plistClose.addEventListener("click",  closePlaylist);
-      plistModal.addEventListener("click",  e => { if (e.target === plistModal) closePlaylist(); });
-      plistSearch.addEventListener("input", buildPlaylistGrid);
-
-      // Shuffle / Loop / Timer
-      btnShuffle.addEventListener("click", () => {
-        shuffleOn = !shuffleOn;
-        btnShuffle.classList.toggle("on", shuffleOn);
-        btnShuffle.textContent = shuffleOn ? "🔀 随机 ON" : "🔀 随机";
+      btnShuffle.addEventListener("click", ()=>{
+        shuffleOn=!shuffleOn;
+        btnShuffle.classList.toggle("on",shuffleOn);
+        btnShuffle.textContent=shuffleOn?"🔀 随机 ON":"🔀 随机";
       });
-
-      btnLoop.addEventListener("click", () => {
-        loopMode = loopMode === "all" ? "one" : loopMode === "one" ? "none" : "all";
-        updateLoopBtn();
-      });
-
+      btnLoop.addEventListener("click", ()=>{ loopMode=loopMode==="all"?"one":loopMode==="one"?"none":"all"; updateLoopBtn() });
       btnTimer.addEventListener("click", openTimer);
       timerClose.addEventListener("click", closeTimer);
-      timerModal.addEventListener("click", e => { if (e.target === timerModal) closeTimer(); });
+      timerModal.addEventListener("click", e=>{ if(e.target===timerModal) closeTimer() });
+      $("setMin").addEventListener("click", ()=>{ setMinsTimer(customMinEl.value.trim()); closeTimer() });
+      customMinEl.addEventListener("keydown", e=>{ if(e.key==="Enter"){setMinsTimer(customMinEl.value.trim());closeTimer()} });
+      $("cancelTimer").addEventListener("click", ()=>{ clearTimer(); closeTimer() });
 
-      setMinBtn.addEventListener("click", () => {
-        setMinutesTimer(customMinEl.value.trim());
-        closeTimer();
-      });
-      customMinEl.addEventListener("keydown", e => {
-        if (e.key === "Enter") { setMinutesTimer(customMinEl.value.trim()); closeTimer(); }
-      });
-      cancelTimerBtn.addEventListener("click", () => { clearTimer(); closeTimer(); });
-
-      // Keyboard shortcuts
-      window.addEventListener("keydown", e => {
-        const tag = e.target?.tagName?.toLowerCase();
-        if (tag === "input" || tag === "textarea") return;
-        if      (e.code === "Space")      { e.preventDefault(); ap?.toggle(); }
-        else if (e.code === "ArrowRight") { e.preventDefault(); nextTrack(); }
-        else if (e.code === "ArrowLeft")  { e.preventDefault(); prevTrack(); }
-        else if (e.code === "Escape")     { closePlaylist(); closeTimer(); }
+      window.addEventListener("keydown", e=>{
+        const tag=e.target?.tagName?.toLowerCase();
+        if (tag==="input"||tag==="textarea") return;
+        if      (e.code==="Space")      { e.preventDefault(); ap?.toggle(); updatePlayIcon() }
+        else if (e.code==="ArrowRight") { e.preventDefault(); nextTrack() }
+        else if (e.code==="ArrowLeft")  { e.preventDefault(); prevTrack() }
+        else if (e.code==="Escape")     { closePlaylist(); closeTimer() }
       });
 
-      // iOS autoplay fallback
-      bindGesturePlayOnce();
-      setTimeout(() => { try { ap?.play(); } catch {} }, 250);
-
-      syncPlaylistButton();
-      syncPlayerbarHeight();
+      installSwipe();
+      bindGesturePlay();
+      setTimeout(()=>{ try{ap?.play()}catch{} }, 250);
+      syncPlistBtn(); syncBarH();
     }
 
     init();
