@@ -654,6 +654,17 @@
       if      (loopMode==="all") { btnLoop.textContent="🔁 列表"; btnLoop.classList.remove("on"); btnLoop.title="列表循环（点击→单曲）" }
       else if (loopMode==="one") { btnLoop.textContent="🔂 单曲"; btnLoop.classList.add("on");    btnLoop.title="单曲循环（点击→顺序）" }
       else                       { btnLoop.textContent="➜ 顺序";  btnLoop.classList.remove("on"); btnLoop.title="顺序播放（点击→列表循环）" }
+      syncPlaybackPolicy();
+    }
+
+    function syncPlaybackPolicy() {
+      const a = ap?.audio;
+      if (!a) return;
+      const single = loopMode === "one";
+      a.loop = single;
+      try {
+        if (ap?.options) ap.options.loop = single ? "one" : "none";
+      } catch {}
     }
 
     const isPlaying = () => { try { const a=ap?.audio; return !!(a&&!a.paused&&!a.ended) } catch { return false } };
@@ -716,23 +727,70 @@
       ap.list.switch(i); updateNow();
       if (autoplay) ap.play();
     }
+    function handleTrackEnd() {
+      if (!ap) return;
+      const a = ap.audio;
+      if (loopMode === "one") {
+        a.currentTime = 0;
+        ap.play();
+        return;
+      }
+      if (shuffleOn) {
+        goIndex(pickRandom(ap.list.index ?? 0), true);
+        return;
+      }
+      const idx = ap.list.index ?? 0;
+      if (idx + 1 < playlist.length) {
+        goIndex(idx + 1, true);
+        return;
+      }
+      if (loopMode === "all") {
+        goIndex(0, true);
+        return;
+      }
+      a.currentTime = 0;
+      ap.pause();
+      updatePlayIcon();
+    }
+
     function nextTrack() {
       if (!ap) return;
-      const idx = ap.list.index??0;
-      if (loopMode==="one") { ap.audio.currentTime=0; ap.play(); return }
-      if (shuffleOn) { goIndex(pickRandom(idx),true); return }
-      if (idx+1<playlist.length) { goIndex(idx+1,true); return }
-      if (loopMode==="all") { goIndex(0,true); return }
-      ap.pause(); updatePlayIcon();
+      const idx = ap.list.index ?? 0;
+      if (shuffleOn) {
+        goIndex(pickRandom(idx), true);
+        return;
+      }
+      if (idx + 1 < playlist.length) {
+        goIndex(idx + 1, true);
+        return;
+      }
+      if (loopMode === "all") {
+        goIndex(0, true);
+        return;
+      }
+      goIndex(idx, true);
     }
+
     function prevTrack() {
       if (!ap) return;
-      const idx=ap.list.index??0, a=ap.audio;
-      if (a&&a.currentTime>3) { a.currentTime=0; return }
-      if (shuffleOn) { goIndex(pickRandom(idx),true); return }
-      if (idx-1>=0) { goIndex(idx-1,true); return }
-      if (loopMode==="all") { goIndex(playlist.length-1,true); return }
-      if (a) a.currentTime=0;
+      const idx = ap.list.index ?? 0, a = ap.audio;
+      if (a && a.currentTime > 3) {
+        a.currentTime = 0;
+        return;
+      }
+      if (shuffleOn) {
+        goIndex(pickRandom(idx), true);
+        return;
+      }
+      if (idx - 1 >= 0) {
+        goIndex(idx - 1, true);
+        return;
+      }
+      if (loopMode === "all") {
+        goIndex(playlist.length - 1, true);
+        return;
+      }
+      goIndex(0, true);
     }
 
     /* ── Sleep timer ── */
@@ -784,7 +842,7 @@
         /* KEY FIX: loop:"none" — our ended handler owns all navigation */
         loop:"none", order:"list", preload:"metadata", volume:vol, mutex:true, listFolded:true
       });
-      installMS(); renderList(); updateLoopBtn(); updateNow(); updatePlayIcon();
+      installMS(); renderList(); updateLoopBtn(); syncPlaybackPolicy(); updateNow(); updatePlayIcon();
       ap.on("listswitch",()=>{ updateNow(); updatePlayIcon() });
       ap.on("play",  ()=>{ updatePlayIcon(); highlightActive(ap.list.index??0) });
       ap.on("pause", ()=>{ updatePlayIcon(); highlightActive(ap.list.index??0) });
@@ -796,8 +854,11 @@
         curEl.textContent=fmtTime(c); durEl.textContent=fmtTime(d);
         if (d>0) seekEl.value=String((c/d)*100);
       });
-      /* KEY FIX: sole source of truth for what happens when a track ends */
-      a.addEventListener("ended",()=>{ if (loopMode==="one"){a.currentTime=0;ap.play();return} nextTrack() });
+      /* KEY FIX: keep the engine and UI on the same repeat policy */
+      a.onended = () => {
+        if (a.loop) return;
+        handleTrackEnd();
+      };
       prevBtn.onclick=prevTrack; nextBtn.onclick=nextTrack;
       playBtn.onclick=()=>{ ap.toggle(); updatePlayIcon() };
       seekEl.onpointerdown=()=>userSeeking=true; seekEl.onpointerup=()=>userSeeking=false;
@@ -888,7 +949,10 @@
         btnShuffle.classList.toggle("on",shuffleOn);
         btnShuffle.textContent=shuffleOn?"🔀 随机 ON":"🔀 随机";
       });
-      btnLoop.addEventListener("click", ()=>{ loopMode=loopMode==="all"?"one":loopMode==="one"?"none":"all"; updateLoopBtn() });
+      btnLoop.addEventListener("click", ()=>{
+        loopMode = loopMode === "all" ? "one" : loopMode === "one" ? "none" : "all";
+        updateLoopBtn();
+      });
       btnTimer.addEventListener("click", openTimer);
       timerClose.addEventListener("click", closeTimer);
       timerModal.addEventListener("click", e=>{ if(e.target===timerModal) closeTimer() });

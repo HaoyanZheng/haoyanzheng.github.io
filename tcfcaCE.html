@@ -812,7 +812,7 @@
          CONTENT PLACEHOLDERS
          - Replace these with your real content
          ========================= */
-      function buildT1Items() {
+      function buildT2Items() {
         return [
           { type: "section", titleCn: "T1", descFr: "", descCn: "" },
           { id: 1, topicCn: "", answerFr: `Faire la preuve de son désir de travailler`, answerCn: `证明自己有工作的意愿` },
@@ -1296,7 +1296,7 @@
         ];
       }
 
-      function buildT2Items() {
+      function buildT3Items() {
         return [
           { type: "section", titleCn: "T1", descFr: "", descCn: "" },
           { id: 1, topicCn: "", answerFr: `Le système génétique est affecté`, answerCn: `遗传系统受到影响` },
@@ -1624,6 +1624,21 @@
          DATA (wire your mp3 paths here)
          ========================= */
       const parts = [
+                {
+          label: "15分答案汇总",
+          subtitle: "",
+          answersOnly: true,
+          display: { question: "cn", answer: "both" },
+          labels: { question: "题目（中文）", answer: "答案（法语原文）" },
+          audio: {
+            enabled: true,
+            type: "mp3",
+            playAllLabel: "播放全部答案",
+            src: (id) => `assets/tcfcaCE/mp3/t2a${id}.mp3`,
+            range: [1, 9999]
+          },
+          items: buildT1Items()
+        },
         {
           label: "21分答案汇总",
           subtitle: "",
@@ -1638,7 +1653,7 @@
             src: (id) => `assets/tcfcaCE/mp3/t1a${id}.mp3`,
             range: [1, 9999]
           },
-          items: buildT1Items()
+          items: buildT2Items()
         },
         {
           label: "26分答案汇总",
@@ -1653,7 +1668,7 @@
             src: (id) => `assets/tcfcaCE/mp3/t2a${id}.mp3`,
             range: [1, 9999]
           },
-          items: buildT2Items()
+          items: buildT3Items()
         },
       ];
 
