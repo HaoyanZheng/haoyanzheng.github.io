@@ -1,34 +1,412 @@
 import csv
 import re
+import ast
+import os
 
-# 用于判断“看起来像法语/拉丁字母文本”
+raw = r"""
+
+
+["SECTION", "A. 开场引入（正式）"],
+          ["开场-正式", "我想了解关于……的详细信息，您能为我解释一下吗？", "J’aimerais avoir des détails sur… À ce sujet, j’aimerais vous poser quelques questions, si vous êtes disponible."],
+
+          ["SECTION", "A. 开场引入（非正式）"],
+          ["开场-非正式", "我听说了……，关于这个我想问你几个问题，如果你方便的话。", "J’ai entendu parler de… et j’aimerais bien te poser quelques questions à ce sujet, si tu es disponible."],
+
+          ["SECTION", "B. 中间衔接（积极回应/继续提问）"],
+          ["衔接-表达兴趣和接受建议", "好主意！我很感兴趣。", "Ah, super idée ! Ça me tente bien."],
+          ["衔接-表达兴趣和接受建议", "我喜欢这个主意。", "J’aime bien l’idée."],
+          ["衔接-表达兴趣和接受建议", "看起来不错。", "Ça a l’air bien."],
+          ["衔接-表达兴趣和接受建议", "听起来很有意思。", "Ça semble intéressant."],
+          ["衔接-表达兴趣和接受建议", "这很有趣。", "C’est intéressant."],
+          ["衔接-表达兴趣和接受建议", "太棒了！", "C’est top !"],
+          ["衔接-表达兴趣和接受建议", "太棒了！", "C’est génial !"],
+          ["衔接-确认和做出积极回应", "好的。我知道这个地方。", "Ah, d’accord. Je connais cet endroit."],
+          ["衔接-确认和做出积极回应", "哦，我明白了！", "Ah, je vois !"],
+          ["衔接-确认和做出积极回应", "听起来很清楚。", "Ça semble clair."],
+          ["衔接-表达愉快的心情和期待", "太好了！我喜欢流行音乐。", "Génial ! J’adore la pop."],
+          ["衔接-表达愉快的心情和期待", "太好了，我周六晚上有空。", "Parfait, je suis libre samedi soir."],
+          ["衔接-表示行动", "太好了，我稍后会看一下。", "Super, je vais regarder ça tout à l’heure."],
+          ["衔接-表示方便或实用", "这很方便！", "C’est pratique !"],
+          ["衔接-表示方便或实用", "让人很想参与！", "Ça donne envie !"],
+          ["衔接-表达对事情的积极评价", "看起来很不错。", "Ça a l’air sympa."],
+          ["衔接-表达对事情的积极评价", "我很期待！", "J’ai hâte !"],
+          ["衔接-表达对事情的积极评价", "这会是一个很棒的晚上。", "Ça va être une super soirée."],
+
+          ["SECTION", "B. 继续提问模板"],
+          ["提问模板", "另外，您能告诉我……吗？", "Et puis, pourriez-vous me dire … ?"],
+          ["提问模板", "我也想知道……", "J’aimerais aussi savoir …"],
+          ["提问模板", "关于……，我还有一个问题。", "Concernant …, j’ai une autre question."],
+          ["提问模板", "此外，您能解释一下……吗？", "Et pour compléter, pouvez-vous m’expliquer … ?"],
+          ["提问模板", "啊，我明白了。关于时长，我还有一个问题：晚会会持续到很晚吗？", "Ah, je vois. Et concernant la durée, j’ai une autre question : est-ce que la soirée se prolongera tard ?"],
+          ["提问模板", "很好，这对我很有帮助。那么参加者的费用是多少？", "Génial ! Ça m’aide beaucoup. J’ai encore une question. Et quels sont les tarifs pour les participants ?"],
+          ["提问模板", "另外，您能告诉我哪些日期是可预约的吗？", "Et puis, pourriez-vous me dire quels sont les dates disponibles?"],
+          ["提问模板", "好的。此外，我也想了解一下报名流程。您能说明一下需要提供哪些信息吗？", "Très bien. Et pour compléter, j’aimerais aussi savoir le processus d’inscription. Pouvez-vous m’expliquer quelles sont les informations à fournir ?"],
+          ["提问模板", "啊，太好了。有可能免费试听一节课吗？", "Ah, c’est parfait. Est-il possible de faire un cours d’essai gratuit ?"],
+          ["提问模板", "这很有意思。那么一对一的课程和集体课程的价格相比如何？", "C’est intéressant. Et quels sont les tarifs pour les cours individuels comparés aux cours collectifs ?"],
+
+          ["SECTION", "C. 结束语（正式）"],
+          ["结束", "谢谢你的回答，它们对我帮助很大！如果我有其他问题，会再联系你，回头见！", "Je te remercie pour tes réponses. Elles m’ont beaucoup aidé ! À bientôt si j’ai d’autres besoins."],
+
+          ["SECTION", "E. 场景：工作（正式）", "Je suis votre ancien(ne) collègue. Je viens de commencer un nouveau travail. Vous souhaitez changer d’emploi. Vous me posez des questions pour avoir des informations sur mon travail et mon entreprise (activités, salaire, collègues, etc.).", "我是你以前的同事。我刚开始了一份新工作。你想换工作。你向我提问，想了解我现在的工作和公司情况（例如业务内容、薪资、同事等）。"],
+          ["开场", "你好！我听说你换了工作，我也打算换工作。如果你方便的话，我可以关于这个问你几个问题吗？",
+            "Bonjour ! J’ai entendu dire que tu as changé de travail et j’envisage moi aussi de changer d’emploi. Si tu es disponible, puis-je te poser quelques questions à ce sujet ?"],
+
+          ["类型", "你在哪家公司工作？", "Dans quelle entreprise travailles-tu ?"],
+          ["类型", "公司的主要业务领域是？", "Quel est le domaine principal de l’entreprise ?"],
+
+          ["内容", "你的主要任务是什么？", "Quelle est votre mission principale ?"],
+
+          ["地点", "公司地点在哪里？", "Où se trouve l’entreprise ?"],
+
+          ["时间", "你每天工作多少小时？", "Combien d’heures travailles-tu chaque jour ?"],
+          ["时间", "工作时间是否灵活？", "Est-ce que les horaires sont flexibles ?"],
+          ["时间", "你可以远程办公吗？", "Peut-on faire du télétravail ?"],
+
+          ["人物", "你的团队有多少人？", "Combien de personnes y a-t-il dans ton équipe ?"],
+          ["人物", "他们彼此很熟吗？", "Est-ce qu’ils se connaissent bien ?"],
+
+          ["活动", "你们会在工作之外组织活动吗？", "Organisez-vous des activités en dehors du travail ?"],
+
+          ["吃喝", "公司里有食堂吗？", "Y a-t-il une cantine dans l’entreprise ?"],
+
+          ["工资", "工资符合你的预期吗？", "Est-ce que le salaire correspond à ce que tu attendais ?"],
+          ["工资", "除了工资，还有奖金或其他福利吗？", "Y a-t-il des primes ou des avantages en plus du salaire ?"],
+
+          ["SECTION", "F. 场景：工作文化（正式）", "Vous vous intéressez au rythme du travail au Canada. Interrogez-moi sur les horaires de travail et les jours de congé au Canada. Comparez avec la situation dans votre pays.", "你对加拿大的工作节奏感兴趣。请就加拿大的工作时间和休假天数向我提问，并与您国家的情况进行比较。"],
+          ["开场", "你好！我对加拿大的工作节奏很感兴趣。如果您方便的话，我可以关于这个问几个问题吗？",
+            "Bonjour ! Je m’intéresse au rythme du travail au Canada. Si vous êtes disponible, puis-je vous poser quelques questions à ce sujet ?"],
+
+          ["类型", "在加拿大年轻人有很多工作机会吗？", "Est-ce qu’il y a beaucoup d’opportunités de travail pour les jeunes au Canada ?"],
+          ["类型", "哪种工作最受需求？", "Quel type de travail est le plus demandé ?"],
+
+          ["时间", "加拿大通常的工作时间是怎样的？", "Quels sont les horaires de travail habituels au Canada ?"],
+          ["时间", "加班在加拿大普遍吗？", "Est-ce que les heures supplémentaires sont courantes au Canada ?"],
+
+          ["人物", "有很多外国员工吗？", "Y a-t-il beaucoup de salariés étrangers ?"],
+          ["人物", "在加拿大工作中容易交朋友吗？", "Est-ce qu’il est facile de se faire des amis au travail au Canada ?"],
+
+          ["活动", "公司会在工作之外组织活动吗？", "Y a-t-il des activités en dehors du travail organisées par les entreprises ?"],
+          ["活动", "公司是否提供体育活动？", "Y a-t-il des activités sportives proposées par les entreprises ?"],
+          ["活动", "公司里有托儿所吗？", "Y a-t-il des crèches dans les entreprises ?"],
+
+          ["吃喝", "通常公司里有食堂吗？", "Y a-t-il des cantines dans les entreprises en général ?"],
+
+          ["工资", "一般来说，除了工资，还有奖金或其他福利吗？", "Y a-t-il des primes ou des avantages en plus du salaire en général ?"],
+
+          ["SECTION", "G. 场景：面试准备（正式）", "Je suis un(e) ami(e). Vous cherchez un emploi. Vous allez à un entretien professionnel la semaine prochaine. Demandez-moi des conseils pour réussir votre entretien (comportement, vêtements, préparatifs, etc.).", "我是你的朋友。你正在找工作。你下周要参加一场求职面试。请向我询问一些成功通过面试的建议（比如行为举止、着装、准备事项等）。"],
+          ["开场", "你好！我正在找工作。如果你有时间的话，我可以向你请教一些关于求职面试的问题吗？",
+            "Bonjour ! Je suis en train de chercher un emploi. Si tu es disponible, puis-je te poser quelques questions sur l’entretien professionnel ?"],
+
+          ["面试-穿着", "面试我应该怎么穿着？", "Comment dois-je m’habiller pour l’entretien ?"],
+          ["面试-穿着", "是否一定要穿西装？", "Est-ce qu’il faut porter un costume ?"],
+
+          ["面试-举止", "如何表现出我很有积极性/动力？", "Comment montrer que je suis motivé(e) ?"],
+
+          ["面试-准备", "我该怎么做才能更好地准备？", "Que dois-je faire pour bien me préparer ?"],
+          ["面试-准备", "如何对公司进行调查？", "Comment faire des recherches sur l’entreprise ?"],
+          ["面试-准备", "有没有可以用来练习的视频？", "Est-ce qu’il existe des vidéos pour s’entraîner ?"],
+
+          ["面试-内容", "面试中最常见的问题有哪些？", "Quelles sont les questions les plus courantes ?"],
+
+          ["面试-流程时间", "我需要提前多久到达？", "Combien de temps à l’avance dois-je arriver ?"],
+          ["面试-流程时间", "面试流程可能有多少个环节？", "Combien d’étapes peut comporter le processus ?"],
+          ["面试-流程时间", "面试时会有多少人在场？", "Combien de personnes seront présentes pendant l’entretien ?"],
+
+          ["面试-其他", "你能给我的最大建议是什么？", "Quel est le meilleur conseil que tu puisses me donner ?"],
+
+          ["SECTION", "H. 场景：志愿者分发餐食（正式）", "Vous êtes intéressé à devenir bénévole dans une association qui distribue des repas aux sans-abris, et vous avez des questions sur l’organisation, les conditions de bénévolat et l’emploi du temps requis.", "你有兴趣成为一个向无家可归者提供餐食的协会的志愿者，并且你对协会的组织、志愿服务条件以及所需时间安排有一些问题。"],
+          ["开场", "你好！我对你们的协会很感兴趣。如果您方便的话，我可以就这个问题向您请教几个问题吗？",
+            "Bonjour ! Je m’intéresse à votre association. Si vous êtes disponible, puis-je vous poser quelques questions à ce sujet ?"],
+
+          ["地点", "是否有志愿者的集合地点？", "Existe-t-il un lieu de rendez-vous pour les bénévoles ?"],
+          ["地点", "分发地点在哪里？", "Où a lieu la distribution ?"],
+
+          ["时间", "这项工作的典型时间安排是怎样的？", "Quels sont les horaires typiques pour cette mission ?"],
+          ["时间", "是否有试用期？", "Y a-t-il une période d'essai ?"],
+          ["时间", "如果在预定的某天我不能来，该怎么办？", "Que faire si je ne peux pas venir un jour prévu ?"],
+
+          ["人物", "谁来准备餐食？", "Qui prépare les repas ?"],
+          ["人物", "是否有最低年龄？", "Faut-il avoir un âge minimum ?"],
+          ["人物", "是否有最高年龄？", "Est-ce qu'il y a un âge maximum ?"],
+          ["人物", "是否需要提供一些文件？", "Est-ce qu'il faut fournir des documents ?"],
+          ["人物", "是否可以获得志愿者证书？", "Peut-on recevoir un certificat de bénévolat ?"],
+
+          ["吃喝", "每天分发多少份餐食？", "Combien de repas sont distribués chaque jour ?"],
+          ["吃喝", "什么类型的餐食？", "Quel type de repas ?"],
+
+          ["SECTION", "I. 租房场景：公寓本身（小地点 / Le logement）,", "Je travaille dans une agence de location. Vous venez d’arriver au Québec et vous cherchez un logement. Vous me posez des questions pour trouver un appartement (démarches, quartier, type de logement, etc.).", "我在一家租赁机构工作。您刚来到魁北克，正在寻找住房。您向我询问有关找公寓的问题（流程、街区、住房类型等）。"],
+
+          ["开场", "你好！如果您方便的话，我可以就住房/房子这个问题向您请教几个问题吗？",
+            "Bonjour ! Si vous êtes disponible, puis-je vous poser quelques questions sur le logement / la maison ?"],
+
+          ["住房", "现在有哪些类型的住房？", "Quels types de logements sont disponibles ?"],
+          ["住房", "公寓的总面积是多少？", "Quelle est la surface totale de l'appartement ?"],
+          ["住房", "有多少个房间？", "Combien de pièces y a-t-il ?"],
+          ["住房", "房子是带家具的吗？", "Est-ce que le bien est meublé ?"],
+          ["住房", "有没有阳台或露台？", "Y a-t-il un balcon ou une terrasse ?"],
+          ["住房", "房子的朝向是什么？", "Quelle est l'orientation du logement ?"],
+
+          ["地点", "附​​近有医院或诊所吗？", "Est-ce qu'il y a un hôpital ou une clinique dans les environs ?"],
+          ["地点", "附近有公园或绿地吗？", "Y a-t-il un parc ou des espaces verts à côté ?"],
+          ["地点", "房子是否含停车位？", "Y a-t-il un parking inclus avec le logement ?"],
+
+          ["时间", "这栋楼的建造年份是哪一年？", "Quelle est l'année de construction du bâtiment ?"],
+          ["时间", "最短租期是多久？", "Quelle est la durée minimale du bail ?"],
+          ["时间", "需要提前多久解约？", "Combien de temps à l’avance faut-il résilier le contrat ?"],
+
+          ["人物", "邻居友好吗？", "Est-ce que les voisins sont accueillants / gentils ?"],
+
+          ["价格", "公寓每月租金多少？", "Quel est le loyer mensuel des appartements ?"],
+          ["价格", "有没有其他费用，比如押金？", "Y a-t-il des frais supplémentaires à prévoir, comme une caution ?"],
+
+          ["SECTION", "J. 场景：课程咨询（类型 / 内容 / 地点 / 时间 / 人物 / 价格）", "Je suis votre voisin(e). Je suis professeur de piano, je donne des cours dans une école de musique de notre quartier. Vous êtes intéressé(e). Vous me posez des questions sur l’école de musique dans laquelle je travaille (cours, tarifs, horaires, etc.).", "我是您的邻居。我是钢琴老师，在我们社区的一所音乐学校授课。您对此感兴趣。您会向我询问我工作的那所音乐学校的信息（课程、价格、时间安排等）。"],
+
+          ["类型", "课程适合初学者吗？", "Les cours sont-ils adaptés aux débutants ?"],
+          ["类型", "您也提供在线课程吗？", "Est-ce que vous proposez aussi des cours en ligne ?"],
+
+          ["内容", "课程内容有哪些？", "Quels sont les contenus des cours ?"],
+
+          ["地点", "学校在哪里？", "Où se trouve l’école ?"],
+          ["地点", "您是否提供上门授课？", "Proposez-vous des cours à domicile ?"],
+
+          ["时间", "课程时间是？", "Quels sont les horaires des cours ?"],
+          ["时间", "每节课持续多长时间？", "Combien de temps dure chaque séance ?"],
+          ["时间", "您建议每周上几次课？", "Combien de fois par semaine recommandez-vous de prendre des cours ?"],
+
+          ["人物", "有最低年龄/水平要求吗？", "Y a-t-il un âge minimum / un niveau minimum requis ?"],
+
+          ["价格", "（一节课）价格是多少？", "Quel est le tarif pour une séance ?"],
+          ["价格", "第一节课免费吗？", "Le premier cours est-il gratuit ?"],
+          ["价格", "需要提前付款还是现场付款？", "Faut-il payer à l’avance ou sur place ?"],
+          ["价格", "是否对学生或团体提供优惠？", "Proposez-vous des réductions pour les étudiants ou les groupes ?"],
+
+          ["SECTION", "K. 场景：询问旅游规划", "Je suis votre collègue. Vous voulez partir en vacances dans une région que je connais bien. Vous me posez des questions sur cette région (activités, lieux touristiques, climat, etc.).", "我是你的同事。你想去一个我很熟悉的地区度假。你会向我询问关于这个地区的问题（活动、旅游景点、气候等）。"],
+          ["开场", "你好！如果你方便的话，我可以向你请教几个关于你很熟悉的山里度假/蒙特利尔的问题吗？", "Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ton séjour à la montagne / Montréal que tu connais bien ?"],
+
+          ["地点", "最受欢迎的景点是什么？", "Quelle est l'attraction la plus populaire ?"],
+          ["地点", "有典型的街区值得探索吗？", "Y a-t-il des quartiers typiques à découvrir ?"],
+          ["地点", "可以在海边或河边散步吗？", "Peut-on faire une balade en bord de mer ou de rivière ?"],
+
+          ["活动", "在这次行程中我可以做哪些活动？", "Quelles activités puis-je faire pendant ce séjour ?"],
+          ["活动", "周边有可以徒步的路线吗？", "Y a-t-il des randonnées à faire autour ?"],
+
+          ["时间", "什么时候是参观的最佳时间？", "Quelles sont les meilleures périodes pour visiter ?"],
+          ["时间", "经常下雨吗？", "Est-ce qu’il pleut souvent ?"],
+          ["时间", "平均气温是多少？", "Quelle est la température moyenne ?"],
+
+          ["吃喝", "这个地区的特色菜是什么？", "Quels sont les plats typiques de la région ?"],
+
+          ["住宿", "你建议我住在哪里？", "Où me conseilles-tu de loger ?"],
+          ["住宿", "需要提前很久预订吗？", "Est-ce qu’il faut réserver longtemps à l’avance ?"],
+
+          ["价格", "价格是多少？", "Quel est le tarif ? / C’est combien ?"],
+          ["价格", "团体有特别价格吗？", "Est-ce qu’il y a un tarif spécial / particulier pour les groupes ?"],
+          ["价格", "儿童 / 学生 / 老人有折扣吗？", "Y a-t-il des réductions pour les enfants / étudiants / personnes âgées ?"],
+          ["价格", "餐费包括在内吗？", "Les repas sont-ils inclus ?"],
+          ["价格", "有额外费用吗，比如保险费？", "Y a-t-il des frais supplémentaires, comme l’assurance ?"],
+
+          ["SECTION", "L. 场景：询问旅游经历（过去时）", "Nous sommes dans une soirée, nous nous rencontrons pour la première fois. Je rentre d’un voyage. Vous me posez des questions sur le voyage que j’ai fait (durée, lieux, impressions, etc.).", "我们在一个聚会上第一次见面。我刚旅行回来。你会问我一些关于我这次旅行的问题（比如旅行时长、地点、感受/印象等）。"],
+          ["开场", "晚上好！很高兴认识您。您刚旅行回来，对吗？我可以向您问几个关于您这次行程的问题吗？", "Bonsoir ! Je suis content(e) de vous rencontrer. Vous venez juste de revenir d’un voyage, non ? Puis-je vous poser quelques questions sur votre séjour ?"],
+
+          ["地点", "您去了哪里？", "Où êtes-vous allé(e) exactement ?"],
+          ["地点", "哪个地方给您留下了最深的印象？", "Quel endroit vous a le plus marqué(e) ?"],
+
+          ["时间", "您的旅行持续了多久？", "Combien de temps a duré votre voyage ?"],
+          ["时间", "旅行的时长是否足够？", "Est-ce que la durée était suffisante ?"],
+
+          ["人物", "您是独自出行还是和人一起去的？", "Vous êtes parti(e) seul(e) ou accompagné(e) ?"],
+          ["人物", "那里的居民怎么样？", "Comment étaient les gens là-bas ?"],
+
+          ["活动", "您在旅行中做了哪些活动？", "Quelles activités avez-vous faites pendant le voyage ?"],
+
+          ["吃喝", "您在那里吃了什么？", "Qu’est-ce que vous avez mangé là-bas ?"],
+
+          ["住宿", "您在旅行期间住在哪里？", "Où avez-vous logé pendant votre voyage ?"],
+
+          ["价格", "这次旅行花了多少钱？", "Combien a coûté votre voyage ?"],
+          ["价格", "是否有意外的费用？", "Y a-t-il eu des dépenses imprévues ?"],
+
+          ["SECTION", "L. 场景：询问餐厅", "Je suis votre ami(e). J’ai dîné dans un nouveau restaurant à Ottawa. Vous souhaitez y aller. Vous me posez des questions sur ce nouveau restaurant (menu, prix, appréciation, etc.).", "我是你的朋友。我在渥太华的一家新餐厅吃过饭。你也想去。你会向我询问这家新餐厅的情况（菜单、价格、我的评价等）。"],
+          ["开场", "你好！我听说你在渥太华一家新餐厅吃过饭。我对它很感兴趣，你能跟我多介绍一下这家餐厅吗？", "Salut ! J’ai entendu parler d’un nouveau restaurant à Ottawa où tu as dîné. Ça m’intéresse beaucoup, pourrais-tu me dire un peu plus sur ce restaurant ?"],
+
+          ["类型", "这是什么类型的餐厅？", "Quel type de restaurant est-ce ?"],
+          ["类型", "你等了很久吗？", "Tu as attendu longtemps ?"],
+          ["类型", "你会推荐这个地方吗？", "Tu recommandes cet endroit ?"],
+
+          ["吃喝", "提供什么类型的菜品？", "Quels types de plats sont proposés ?"],
+          ["吃喝", "份量足吗？", "Les portions sont-elles généreuses ?"],
+          ["吃喝", "有每日特餐吗？", "Proposent-ils des plats du jour ?"],
+
+          ["地点", "餐厅在哪里？", "Où se trouve le restaurant ?"],
+
+          ["时间", "营业时间是几点？", "Quels sont les horaires d’ouverture ?"],
+
+          ["人物", "人多吗？", "Y avait-il beaucoup de monde ?"],
+
+          ["价格", "这家餐厅的人均价格是多少？", "Quel est le prix moyen par personne dans ce restaurant ?"],
+          ["价格", "是否需要提前预定？", "Est-ce qu’il est nécessaire de réserver à l’avance ?"],
+          ["价格", "我应该怎么预定？", "Comment puis-je faire une réservation ?"],
+
+          ["SECTION", "M. 场景：询问生日派对", "Je suis votre ami(e). J’organise ma fête d’anniversaire. Vous voulez m’aider. Vous me posez des questions sur la préparation de la fête (repas, décoration, invités, etc.).", "我是你的朋友。我正在筹办我的生日聚会。你想帮我。你会问我一些关于聚会准备的问题（餐饮、装饰、邀请名单等）。"],
+          ["开场", "你好！如果你方便的话，我可以问你几个关于你生日聚会的问题吗？", "Bonjour ! Si tu es disponible, puis-je te poser quelques questions sur ta fête d’anniversaire ?"],
+
+          ["时间", "生日聚会什么时候举行？", "Quand se déroulera la fête d’anniversaire ?"],
+          ["时间", "生日聚会将持续多久？", "Combien de temps durera la fête d’anniversaire ?"],
+
+          ["地点", "派对将在什么地方举行？", "Où aura lieu la fête ?"],
+          ["地点", "这个地方的公共交通方便吗？", "Est-ce que l’endroit est bien desservi par les transports publics ?"],
+
+          ["装饰", "我们做简单还是特别的布置？", "On fait quelque chose de simple ou d'original ?"],
+          ["装饰", "装饰需要提前一天布置吗？", "Est-ce que la déco doit être faite la veille ?"],
+
+          ["人物", "会邀请多少人？", "Combien de personnes seront invitées ?"],
+          ["人物", "所有客人之间都认识吗？", "Est-ce que tous les invités se connaissent ?"],
+          ["人物", "谁来迎接客人？", "Qui va accueillir les invités à l’entrée ?"],
+
+          ["吃喝", "我们在派对上会吃什么？", "Qu’est-ce qu’on va manger à la fête ?"],
+          ["吃喝", "我需要带点吃的吗？", "Est-ce qu’il faut que j’apporte quelque chose à manger ?"],
+
+          ["活动", "派对期间会有游戏或娱乐活动吗？", "Y a-t-il des jeux ou des animations pendant la fête ?"],
+
+          ["礼物", "我需要带礼物吗？", "Dois-je apporter un cadeau ?"],
+
+          ["着装", "有衣物寄存处吗？", "Est-ce qu’il y a un vestiaire ?"],
+
+          ["SECTION", "N. 场景：询问照顾孩子", "Nous sommes voisin(e)s. Je vous demande de garder mon enfant le week-end prochain. Vous acceptez. Vous me demandez ce que vous devez faire (horaires, activités, repas, etc.).", "我们是邻居。我请您下个周末帮我照看孩子。您答应了。您会问我需要做些什么（时间安排、活动、餐食等）。"],
+          ["开场", "你好！我很高兴能帮你照看孩子。我可以向你问一些更多的细节信息吗？", "Salut ! Je suis ravi(e) de t’aider à garder ton enfant. Est-ce que je pourrais te demander plus d’informations ?"],
+
+          ["人物-孩子", "您的孩子几岁？", "Quel âge a ton enfant ?"],
+          ["人物-孩子", "您的孩子是男孩还是女孩？", "Est-ce que ton enfant est un garçon ou une fille ?"],
+          ["人物-孩子", "他 / 她叫什么名字？", "Comment s’appelle-t-il / elle ?"],
+          ["人物-孩子", "你的孩子怎么样？比较害羞还是比较外向？", "Comment est ton enfant ? Ton enfant est-il plutôt timide ou sociable ?"],
+
+          ["地点", "你希望在你家照看孩子还是其他地方？", "Est-ce que tu préfères que je garde ton enfant chez toi ou à un autre endroit ?"],
+
+          ["时间", "我要照看你的孩子多久？", "Combien de temps dois-je m'occuper de ton enfant ?"],
+          ["时间", "他几点吃饭？", "À quelle heure prend-il ses repas ?"],
+
+          ["吃喝", "他有过敏史吗？", "Est-ce qu’il a des allergies ?"],
+          ["吃喝", "他能自己吃饭吗，还是需要我帮忙？", "Est-ce qu’il mange seul ou dois-je l’aider ?"],
+          ["吃喝", "如果他不吃东西，我该怎么办？", "Que faire s’il refuse de manger ?"],
+
+          ["活动", "他最喜欢的活动是什么？", "Quelles sont ses activités préférées ?"],
+          ["活动", "我可以让他 / 她看电视 / 玩游戏 / 用手机吗？", "Puis-je le/la laisser regarder la télévision / jouer aux jeux vidéo / utiliser le téléphone ?"],
+
+          ["SECTION", "O. 场景：询问预定家具", "Je travaille dans un magasin de meubles. Vous souhaitez faire livrer votre meuble. Vous m’interrogez sur les conditions proposées par notre magasin (tarifs, délais, mode de transport, etc.).", "我在一家家具店工作。你希望家具送货上门。你向我询问我们店提供的条件（费用、时限、运输方式等）。"],
+
+          ["价格", "这件家具多少钱？", "Combien coûte ce meuble ?"],
+          ["价格", "有送货费吗？", "Y a-t-il des frais de livraison ?"],
+          ["价格", "可以分期付款吗？", "Peut-on payer en plusieurs fois ?"],
+          ["价格", "下订单时需要付定金吗？", "Faut-il verser un acompte lors de la commande ?"],
+
+          ["时间", "送货需要多长时间？", "Combien de temps faut-il pour la livraison ?"],
+          ["时间", "可以预约具体送货日期吗？", "Est-ce que la livraison peut être programmée à une date précise ?"],
+
+          ["运输方式", "家具是由专业公司配送吗？", "Les meubles sont-ils livrés par une entreprise spécialisée ?"],
+          ["运输方式", "家具是送货后已经组装好，还是需要自己组装？", "Les meubles sont-ils livrés montés ou à assembler soi-même ?"],
+
+          ["送货条件", "我可以实时追踪送货吗？", "Puis-je suivre la livraison en temps réel ?"],
+          ["送货条件", "送货员会帮忙组装家具吗？", "Le livreur aide-t-il à monter le meuble ?"],
+          ["送货条件", "如果家具有损坏我可以拒收吗？", "Puis-je refuser la livraison si le meuble est endommagé ?"],
+          ["送货条件", "如果有问题，有保修吗？", "Y a-t-il une garantie en cas de problème ?"],
+          ["送货条件", "如果缺少零件怎么办？", "Que faire si une pièce manque ?"],
+
+          ["SECTION", "P. 场景：询问电视剧", "Je suis un(e) ami(e). Vous avez envie de commencer une série, mais vous êtes indécis(e). Vous me demandez des informations pour faire votre choix (catégorie, acteurs, plateforme de streaming, etc.).", "我是你的一个朋友。你想开始看一部电视剧，但还拿不定主意。你向我询问一些信息，帮助你做出选择（类型、演员、流媒体平台等）。"],
+          ["开场", "嗨！我想开始追一部剧，但我有点拿不定主意。我可以问你一些信息来帮助我做决定吗？", "Salut ! J’ai envie de commencer une série, mais je suis indécis(e). Est-ce que je pourrais te demander des informations pour faire mon choix ?"],
+
+          ["类型", "你推荐哪部电视剧？", "Quelle série recommandes-tu ?"],
+          ["类型", "每种类型都有独特的魅力，你能解释一下你为什么喜欢这部电视剧吗？", "Chaque genre a son charme unique. Peux-tu m’expliquer pourquoi tu aimes cette série ?"],
+
+          ["内容", "这部剧讲什么？", "De quoi parle la série ?"],
+
+          ["时间", "这部电视剧什么时候播放？", "Quand est-ce que la série est diffusée ?"],
+          ["时间", "一周放几集？", "Combien d’épisodes sont diffusés par semaine ?"],
+          ["时间", "还有下一季吗？", "Y aura-t-il une prochaine saison ?"],
+
+          ["人物", "主要演员是谁？", "Qui sont les acteurs principaux ?"],
+          ["人物", "你为什么特别喜欢他/她？", "Pourquoi tu l’aimes particulièrement ?"],
+
+          ["平台", "这部剧在哪个平台播出？", "Sur quelle plateforme la série est-elle diffusée ?"],
+
+          ["价格", "会员费用是多少？", "Combien coûte l’abonnement ?"],
+          ["价格", "有免费试用期吗？", "Existe-t-il une période d’essai gratuite ?"],
+          ["价格", "我怎么订阅？", "Comment puis-je m’abonner ?"],
+
+          ["SECTION", "Q. 场景：询问电影（过去时）", "Je suis un(e) collègue de travail. Je viens de voir un film au cinéma. Vous me posez des questions sur ce film pour décider si vous irez le voir (thème, acteurs principaux, horaires des séances, etc.).", "我是你的同事。我刚在电影院看了一部电影。你会向我询问这部电影的信息，以便决定你是否要去看（主题、主要演员、放映时间等）。"],
+          ["开场", "嗨！我听说你刚在电影院看了一部电影。我可以向你打听一些关于这部电影的信息吗？", "Salut ! J’ai entendu dire que tu viens de voir un film au cinéma. Est-ce que je pourrais te demander des informations sur ce film ?"],
+
+          ["类型", "这是什么类型的电影？", "Quel genre de film est-ce ?"],
+          ["类型", "是喜剧、剧情、动作还是恐怖片？", "Est-ce un film comique, dramatique, d’action ou un film d’horreur ?"],
+
+          ["内容", "电影讲什么内容？", "De quoi parle le film ?"],
+          ["内容", "这部电影是改编自书还是根据真实故事改编的？", "Ce film est-il fidèle à un livre ou une histoire vraie ?"],
+          ["内容", "电影紧张刺激还是比较容易猜到剧情？", "Le film est-il plein de suspense ou plutôt prévisible ?"],
+
+          ["人物", "主演是谁？", "Qui sont les acteurs principaux ?"],
+
+          ["时间", "电影什么时候放映？", "À quelle heure le film est-il diffusé ?"],
+          ["时间", "电影多长时间？", "Combien de temps dure le film ?"],
+          ["时间", "电影还在上映吗？", "Le film est-il encore à l’affiche ?"],
+          ["时间", "每天有多少场放映？", "Y a-t-il plusieurs séances par jour ?"],
+
+          ["地点", "在哪家电影院可以看这部电影？", "Dans quel cinéma peut-on voir ce film ?"],
+
+          ["价格", "电影票多少钱？", "Combien coûte une place de cinéma ?"],
+          ["价格", "学生、儿童或老人有折扣吗？", "Y a-t-il des tarifs réduits pour les étudiants, les enfants ou les personnes âgées ?"],
+          ["价格", "票可以在线买还是只能现场买？", "Peut-on acheter les billets en ligne ou seulement sur place ?"],
+          ["价格", "需要提前预订才能确保有座位吗？", "Faut-il réserver à l’avance pour être sûr d’avoir une place ?"],
+
+          ["SECTION", "R. 场景：询问事故（过去时）", "Je suis votre collègue de travail. Je viens d’avoir un léger accident. Vous me rendez visite et vous me posez des questions sur ce qui m’est arrivé (lieu, moment, contexte, etc.).", "我是你的同事。我刚发生了一起轻微事故。你来看望我，并问我发生了什么（地点、时间、经过等）。"],
+          ["开场", "嗨！听说你出了事故我很难过。你还好吗？", "Salut ! Je suis vraiment désolé(e) d’apprendre que tu as eu un accident. Est-ce que ça va ?"],
+
+          ["类型/情况", "你发生了什么类型的事故？", "Quel type d’accident as-tu eu ?"],
+          ["类型/情况", "是交通事故、家里事故还是工作中发生的？", "Est-ce que c’était un accident de voiture, domestique ou au travail ?"],
+
+          ["经过", "事故是怎么发生的？", "Comment cela s’est-il produit ?"],
+
+          ["时间", "事故是什么时候发生的？", "Quand l’accident s’est-il produit ?"],
+
+          ["地点", "事故发生在哪里？是在你家附近还是在工作地点附近？", "Où l’accident s’est-il produit ? Est-ce près de ton domicile ou du travail ?"],
+          ["地点", "是在室内还是室外？", "Était-ce à l’intérieur ou à l’extérieur ?"],
+
+          ["人物", "你有通知警察或负责人吗？", "As-tu informé la police ou un responsable ?"],
+
+          ["费用/后果", "你有医疗费用吗？", "As-tu eu des frais médicaux ?"],
+          ["费用/后果", "保险能覆盖这次事故吗？", "Est-ce que l’assurance couvre cet accident ?"],
+          ["费用/后果", "你需要休息或暂时停工吗？", "Dois-tu rester au repos ou arrêter de travailler temporairement ?"],
+
+          ["结束", "谢谢你跟我解释这一切。如果你需要什么，别犹豫告诉我。好好照顾自己，好好休息！回头见！", "Si tu as besoin de quelque chose, n’hésite pas à me le dire.Prends bien soin de toi et repose-toi bien ! À bientôt !"],
+        
+
+"""
+
 LATIN_RE = re.compile(r"[A-Za-zÀ-ÖØ-öø-ÿŒœÆæ]")
 
-def extract_french_paragraphs(raw):
+# 把多行 row 文本变成真正的 Python list
+rows = ast.literal_eval("[" + raw + "]")
+
+def extract_french_paragraphs(rows):
     out = []
-    for row in raw:
+    for row in rows:
         if not isinstance(row, (list, tuple)) or len(row) < 3:
             continue
-        # 跳过 SECTION 行（通常 ["SECTION", ...] 或 ["SECTION", ..., ...]）
         if isinstance(row[0], str) and row[0].strip().upper() == "SECTION":
             continue
 
         fr = row[-1]
         if isinstance(fr, str):
             fr = fr.strip()
-            if fr and LATIN_RE.search(fr):  # 确保不是空/纯中文
+            if fr and LATIN_RE.search(fr):
                 out.append(fr)
     return out
 
-french_paragraphs = extract_french_paragraphs(raw)
+french_paragraphs = extract_french_paragraphs(rows)
 
-# 2) 导出 CSV
-output_path = "assets/tcfEO/t2_french.csv"
+output_path = "assets/tcfcaEO/t2.csv"
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
 with open(output_path, "w", encoding="utf-8-sig", newline="") as f:
     w = csv.writer(f)
-    # 如需表头就取消注释下一行
-    # w.writerow(["task", "q", "index", "paragraph"])
-
     for i, para in enumerate(french_paragraphs, start=1):
         w.writerow([2, "q", i, para])
 

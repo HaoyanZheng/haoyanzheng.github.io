@@ -82,8 +82,8 @@ async def synth_one(voice: str, text: str, out_path: Path, rate: int, volume: in
 
 async def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default="assets/tcfEO/t2.csv")
-    ap.add_argument("--outdir", default="assets/tcfEO/mp3")
+    ap.add_argument("--csv", default="assets/tcfcaEO/t2.csv")
+    ap.add_argument("--outdir", default="assets/tcfcaEO/mp3")
 
     # ── Expression Orale optimized ──────────────────────────────────────────
     # Vivienne: most natural/conversational French — ideal for shadowing
