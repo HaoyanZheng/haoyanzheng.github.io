@@ -82,15 +82,15 @@ async def synth_one(voice: str, text: str, out_path: Path, rate: int, volume: in
 
 async def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", default="assets/tcfEO/t1.csv")
-    ap.add_argument("--outdir", default="assets/tcfEO/mp3")
+    ap.add_argument("--csv", default="assets/tcfcaEO/t1.csv")
+    ap.add_argument("--outdir", default="assets/tcfcaEO/mp3")
 
     # ── Expression Orale optimized ──────────────────────────────────────────
-    # Vivienne: most natural/conversational French — ideal for shadowing
-    ap.add_argument("--voice", default="fr-FR-VivienneMultilingualNeural")
-    ap.add_argument("--lang", default="fr-FR")
-    # Slightly slower so you can follow and repeat comfortably
-    ap.add_argument("--rate", type=int, default=-2)      # -10..10
+    # Denise: clearest, most neutral French — closest to real TCF exam audio
+    ap.add_argument("--voice", default="fr-CA-AntoineNeural")
+    ap.add_argument("--lang", default="fr-CA")
+    # Normal speed (0) — train your ear at real exam pace, not slowed down
+    ap.add_argument("--rate", type=int, default=0)       # -10..10
     ap.add_argument("--volume", type=int, default=100)   # 0..200
     # ────────────────────────────────────────────────────────────────────────
 
