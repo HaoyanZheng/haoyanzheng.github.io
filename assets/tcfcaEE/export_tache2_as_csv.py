@@ -169,7 +169,7 @@ Si vous êtes intéressé, merci de me contacter par courriel : avfindg@gmail.co
 # ---- Config ----
 TACHE = 2             # change to 2/3 if you want
 KIND = "a"               # "a" for answers; if you insist, change to "q"
-OUT_CSV = Path("assets/tcfEE/t2.csv")
+OUT_CSV = Path("assets/tcfcaEE/t2.csv")
 # ----------------
 
 import re

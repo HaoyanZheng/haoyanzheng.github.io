@@ -1,5 +1,32 @@
 ﻿tache,kind,idx,text
-2,a,1,"À l’attention du service client,
+2,a,1,"Bonjour tout le monde, j’espère que vous allez bien. 
+Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. La semaine dernière, j’ai participé à une activité bénévole dans une association qui soutient les personnes âgées. Cette activité était organisée pour cultiver la solidarité et sensibiliser le public à l’importance du bien-être physique et moral. Concrètement, j’ai accompagné une personne âgée lors d’une promenade, puis nous avons discuté autour d’un café ; j’ai aussi aidé à organiser une petite activité de groupe pour créer du lien. 
+Ayant participé à cette activité, je trouve que mon expérience s’est considérablement enrichie. Elle m’a permis d’améliorer ma communication, mon écoute et mon empathie, tout en renforçant ma confiance en moi. S’engager, même une heure par semaine, peut vraiment faire une différence dans la vie de quelqu’un. 
+En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci. 
+Haoyan"
+2,a,2,"Bonjour tout le monde, j’espère que vous allez bien. 
+Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. La semaine dernière, j’ai voyagé à Toronto grâce à une agence de voyages. Toronto est une ville moderne, connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique. Au total, j’ai visité la tour CN, l’Université de Toronto et le Musée royal de l’Ontario. L’organisation était claire et le programme bien rythmé, ce qui m’a permis de profiter pleinement du séjour. Pendant ce voyage, j’ai découvert une nouvelle culture, pratiqué la langue au quotidien et goûté à des spécialités étrangères, ce qui m’a vraiment ouvert l’esprit. Cette expérience m’a aussi donné plus de confiance en moi et m’a rendu plus autonome. 
+En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci. 
+Haoyan"
+2,a,3,"Bonjour tout le monde, j’espère que vous allez bien. 
+Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. Le samedi dernier, j’ai passé une journée à la campagne avec mes amis, dans une ferme. Au programme, il y avait plusieurs activités : arroser les plantes, nourrir les animaux (poules, chèvres et vaches) et nettoyer les enclos. Entre deux tâches, nous avons aussi fait une petite promenade au milieu des champs et profité du calme et de l’air frais. 
+Ayant participé à cette expérience, je trouve que cette journée m’a beaucoup apporté. Tout d’abord, après ces activités, mon stress a fortement diminué. De plus, cette sortie m’a rappelé l’importance de protéger l’environnement et la biodiversité. 
+En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci. 
+Haoyan"
+2,a,4,"Bonjour tout le monde, j’espère que vous allez bien. 
+Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. Vendredi dernier, dès 9 h, je suis allé à l’école de musique de ma ville. Au programme : ateliers de chant et de piano, un concert rock gratuit, un concert classique et un quiz sur les comédies musicales. 
+Ayant participé à cet événement, je trouve que mon expérience s’est considérablement enrichie. Tout d'abord, après avoir assisté à ces concerts, mon stress a fortement diminué. Ensuite, en participant à cette activité, j’ai découvert un univers musical différent et cela m’a ouvert l’esprit. De plus, ce genre d’activité nous offre une belle opportunité pour partager un moment inoubliable avec nos proches. 
+En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci.
+Haoyan"
+2,a,5,"Bonjour tout le monde, j’espère que vous allez bien. 
+Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. La semaine dernière, j’ai participé à un marché d’occasion dans ma ville. Au programme, il y avait la vente d’objets de seconde main, la réutilisation de vieux objets et la sensibilisation à l’environnement. J’ai parcouru plusieurs stands, discuté avec des vendeurs, comparé les prix et même négocié pour certains articles. 
+Ayant participé à cet événement, je trouve que mon expérience s’est considérablement enrichie. Tout d’abord, j’ai pu faire des économies tout en trouvant des objets utiles. Ensuite, l’ambiance conviviale m’a aidé à améliorer ma communication et mon sens de la négociation. Finalement, cette journée m’a donné plus de confiance en moi et m’a rendu plus autonome dans mes choix de consommation. En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci.
+Haoyan"
+2,a,6,"Bonjour tout le monde, j’espère que vous allez bien. Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous.
+La semaine dernière, j’ai participé avec ma famille à une compétition culinaire. Au programme, il y avait les cuisines traditionnelles de différents pays et cultures et la dégustation du vin rouge et du fromage.  
+Ayant participé à ce concours, je trouve que mon expérience s’est considérablement enrichie. Tout d’abord, j’ai goûté des spécialités étrangères et acquis une meilleure compréhension du monde. Ensuite, grâce aux échanges avec les nouveaux amis que j’ai rencontrés, j’ai découvert des perspectives différentes et cela m’a permis d’élargir mon horizon. Finalement, cette expérience m’a permis de gagner en confiance en moi et de devenir plus autonome.
+En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci."
+2,a,7,"À l’attention du service client,
 Je vous contacte suite aux problèmes rencontrés lors de mon dernier séjour organisé par votre agence de voyage du 7 au 10 mars.
 Je suis profondément déçu par la situation rencontrée, notamment en ce qui concerne les aspects suivants :
 Premièrement, l’hôtel réservé ne correspondait pas à la description. La piscine annoncée était en travaux et les chambres manquaient de propreté, ce qui a affecté mon séjour.
@@ -7,39 +34,12 @@ Deuxièmement, le guide est arrivé avec au moins 30 minutes de retard. Malgré 
 Compte tenu de ces désagréments, je vous demande un remboursement partiel des frais engagés.
 Dans l’attente de votre réponse, je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.
 Haoyan"
-2,a,2,"Bonjour à tous,
+2,a,8,"Bonjour à tous,
 Pour le concours « Mon artiste préféré », je voudrais vous parler d’Omar Sy, acteur français que j’admire énormément. 
 Dans le film Intouchables, il incarne Driss, un jeune homme sans emploi qui devient l’aide à domicile de Philippe, un aristocrate devenu tétraplégique. Entre eux naît une amitié inattendue : humour, confiance et respect transforment leur quotidien et montrent que la dignité n’a pas de classe sociale. 
 Omar Sy me touche par son énergie positive et son jeu naturel : il fait rire sans mépriser personne et il donne du courage face aux difficultés. Son parcours prouve qu’on peut réussir en restant simple. 
 Et vous, quel artiste vous inspire ?"
-2,a,3,"Bonjour tout le monde, j’espère que vous allez bien. Ce message a pour but de chercher un(e) camarade pour faire du sport ensemble.
+2,a,9,"Bonjour tout le monde, j’espère que vous allez bien. Ce message a pour but de chercher un(e) camarade pour faire du sport ensemble.
 Je viens de commencer mes cours de yoga dans le centre sportif situé au centre-ville de Toronto, près de notre université. Des cours encadrés par des entraîneurs professionnels sont disponibles à horaires fixes pour optimiser l’expérience sportive. Le prix est d'environ 50 dollars par mois par personne. Ce prix inclut l’accès à la salle de sport, au sauna et à la piscine. Il y a aussi un parking sur place.
 Je serai libre le mardi, le jeudi et le week-end de 9 h du matin à 4 h de l’après-midi. Il est préférable que vous soyez étudiant(e) en commerce.
 Si vous êtes intéressé, merci de me contacter par courriel : avfindg@gmail.com ou par téléphone : 514-000-0000."
-2,a,4,"Bonjour tout le monde, j’espère que vous allez bien. 
-Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. La semaine dernière, j’ai participé à une activité bénévole dans une association qui soutient les personnes âgées. Cette activité était organisée pour cultiver la solidarité et sensibiliser le public à l’importance du bien-être physique et moral. Concrètement, j’ai accompagné une personne âgée lors d’une promenade, puis nous avons discuté autour d’un café ; j’ai aussi aidé à organiser une petite activité de groupe pour créer du lien. 
-Ayant participé à cette activité, je trouve que mon expérience s’est considérablement enrichie. Elle m’a permis d’améliorer ma communication, mon écoute et mon empathie, tout en renforçant ma confiance en moi. S’engager, même une heure par semaine, peut vraiment faire une différence dans la vie de quelqu’un. 
-En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci. 
-Haoyan"
-2,a,5,"Bonjour tout le monde, j’espère que vous allez bien. 
-Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. La semaine dernière, j’ai voyagé à Toronto grâce à une agence de voyages. Toronto est une ville moderne, connue pour ses gratte-ciels, sa diversité culturelle et sa vitalité économique. Au total, j’ai visité la tour CN, l’Université de Toronto et le Musée royal de l’Ontario. L’organisation était claire et le programme bien rythmé, ce qui m’a permis de profiter pleinement du séjour. Pendant ce voyage, j’ai découvert une nouvelle culture, pratiqué la langue au quotidien et goûté à des spécialités étrangères, ce qui m’a vraiment ouvert l’esprit. Cette expérience m’a aussi donné plus de confiance en moi et m’a rendu plus autonome. 
-En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci. 
-Haoyan"
-2,a,6,"Bonjour tout le monde, j’espère que vous allez bien. 
-Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. Le samedi dernier, j’ai passé une journée à la campagne avec mes amis, dans une ferme. Au programme, il y avait plusieurs activités : arroser les plantes, nourrir les animaux (poules, chèvres et vaches) et nettoyer les enclos. Entre deux tâches, nous avons aussi fait une petite promenade au milieu des champs et profité du calme et de l’air frais. 
-Ayant participé à cette expérience, je trouve que cette journée m’a beaucoup apporté. Tout d’abord, après ces activités, mon stress a fortement diminué. De plus, cette sortie m’a rappelé l’importance de protéger l’environnement et la biodiversité. 
-En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci. 
-Haoyan"
-2,a,7,"Bonjour tout le monde, j’espère que vous allez bien. 
-Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. Vendredi dernier, dès 9 h, je suis allé à l’école de musique de ma ville. Au programme : ateliers de chant et de piano, un concert rock gratuit, un concert classique et un quiz sur les comédies musicales. 
-Ayant participé à cet événement, je trouve que mon expérience s’est considérablement enrichie. Tout d'abord, après avoir assisté à ces concerts, mon stress a fortement diminué. Ensuite, en participant à cette activité, j’ai découvert un univers musical différent et cela m’a ouvert l’esprit. De plus, ce genre d’activité nous offre une belle opportunité pour partager un moment inoubliable avec nos proches. 
-En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci.
-Haoyan"
-2,a,8,"Bonjour tout le monde, j’espère que vous allez bien. 
-Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous. La semaine dernière, j’ai participé à un marché d’occasion dans ma ville. Au programme, il y avait la vente d’objets de seconde main, la réutilisation de vieux objets et la sensibilisation à l’environnement. J’ai parcouru plusieurs stands, discuté avec des vendeurs, comparé les prix et même négocié pour certains articles. 
-Ayant participé à cet événement, je trouve que mon expérience s’est considérablement enrichie. Tout d’abord, j’ai pu faire des économies tout en trouvant des objets utiles. Ensuite, l’ambiance conviviale m’a aidé à améliorer ma communication et mon sens de la négociation. Finalement, cette journée m’a donné plus de confiance en moi et m’a rendu plus autonome dans mes choix de consommation. En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci.
-Haoyan"
-2,a,9,"Bonjour tout le monde, j’espère que vous allez bien. Aujourd’hui, je voudrais partager une expérience inoubliable et enrichissante avec vous.
-La semaine dernière, j’ai participé avec ma famille à une compétition culinaire. Au programme, il y avait les cuisines traditionnelles de différents pays et cultures et la dégustation du vin rouge et du fromage.  
-Ayant participé à ce concours, je trouve que mon expérience s’est considérablement enrichie. Tout d’abord, j’ai goûté des spécialités étrangères et acquis une meilleure compréhension du monde. Ensuite, grâce aux échanges avec les nouveaux amis que j’ai rencontrés, j’ai découvert des perspectives différentes et cela m’a permis d’élargir mon horizon. Finalement, cette expérience m’a permis de gagner en confiance en moi et de devenir plus autonome.
-En conclusion, je recommande vivement à tout le monde de vivre une expérience comme celle-ci."
