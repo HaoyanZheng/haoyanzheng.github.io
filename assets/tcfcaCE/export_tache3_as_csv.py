@@ -330,7 +330,7 @@ RAW_JS = r"""
 """
 
 # ---- Config ----
-TACHE = 2             # change to 2/3 if you want
+TACHE = 3             # change to 2/3 if you want
 KIND = "a"               # "a" for answers; if you insist, change to "q"
 OUT_CSV = Path("assets/tcfcaCE/t3.csv")
 # ----------------
