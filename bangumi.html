@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#151f2e">
+  <title>我的百合榜单｜动画・漫画・轻小说</title>
+  <meta name="description" content="江海寄余生的动画、漫画与轻小说私人排名：甜、笑、亲、刀与综合评分。">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/inner-rankings.css" rel="stylesheet">
+  <script src="assets/js/main.js?v=20260909" defer></script>
+  <script src="assets/js/inner-rankings.js" defer></script>
+</head>
+<body class="anime-page ranking-page" data-site="inner">
+  <header id="header" class="header d-flex align-items-center fixed-top"></header>
+
+  <main>
+    <section class="page-heading" aria-labelledby="page-title">
+      <div>
+        <nav class="breadcrumbs" aria-label="当前位置">
+          <a href="anime.html">内站首页</a><span>/</span><span>Bangumi 榜</span>
+        </nav>
+        <h1 id="page-title">我的百合榜单</h1>
+        <p>按个人综合体验排序，记录动画、漫画与轻小说中的甜、笑、亲与刀。</p>
+      </div>
+      <div class="archive-count" aria-label="榜单共收录 83 部作品">
+        <strong>83</strong>
+        <span>部作品</span>
+      </div>
+    </section>
+
+    <section class="ranking-shell" aria-label="榜单内容">
+      <div class="ranking-toolbar">
+        <div class="tabs" role="tablist" aria-label="选择榜单">
+          <button class="tab is-active" type="button" role="tab" aria-selected="true" data-list="anime">动画 <span>32</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-list="manga">漫画 <span>40</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-list="novel">轻小说 <span>11</span></button>
+        </div>
+        <label class="search-box">
+          <i class="bi bi-search" aria-hidden="true"></i>
+          <span class="visually-hidden">搜索作品</span>
+          <input id="ranking-search" type="search" placeholder="找一部作品…" autocomplete="off">
+        </label>
+      </div>
+
+      <div class="list-heading">
+        <div>
+          <h2 id="list-title">动画榜</h2>
+          <p id="list-kicker">ANIME RANKING</p>
+        </div>
+        <p id="result-count" aria-live="polite">共 32 部</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">作品</th>
+              <th scope="col"><span class="metric sweet">甜</span></th>
+              <th scope="col"><span class="metric funny">笑</span></th>
+              <th scope="col"><span class="metric close">亲</span></th>
+              <th scope="col"><span class="metric pain">刀</span></th>
+              <th scope="col">评分</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-body"></tbody>
+        </table>
+        <div id="empty-state" class="empty-state" hidden>
+          <span aria-hidden="true">(｡•́︿•̀｡)</span>
+          <p>没有找到这部作品，换个关键词试试吧。</p>
+        </div>
+      </div>
+
+      <div class="ranking-notes">
+        <div class="score-key" aria-label="评分指标说明">
+          <span><b>甜</b> 心动糖分</span>
+          <span><b>笑</b> 欢乐浓度</span>
+          <span><b>亲</b> 亲密程度</span>
+          <span><b>刀</b> 心痛指数</span>
+        </div>
+        <div class="legend">
+          <span>⚠️胃：感情波折</span>
+          <span>🌶️：成人向表达</span>
+          <span>🔞：成人 OVA，单列</span>
+          <span>＊：原榜特别标记</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ranking-footer">
+    <p>个人观看与阅读记录 · 更新于 2026 年 9 月</p>
+    <a href="anime.html">返回内站首页 <span aria-hidden="true">→</span></a>
+  </footer>
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" aria-label="回到顶部"><i class="bi bi-arrow-up-short"></i></a>
+</body>
+</html>

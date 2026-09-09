@@ -5,17 +5,15 @@
    * Highlight the current page link in the navigation menu
    */
   function highlightCurrentPage() {
-    // Get the current page name (without trailing slash)
     const currentPage = window.location.pathname.split("/").pop().replace(/\/$/, "") || "index.html";
-    console.log("Current page:", currentPage); // Debugging log
 
-    // Select all nav links
     const navLinks = document.querySelectorAll("#navmenu a");
     navLinks.forEach((link) => {
-      const linkHref = link.getAttribute("href").replace(/\/$/, "");
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      const linkHref = href.replace(/\/$/, "");
       if (linkHref === currentPage) {
         link.classList.add("active");
-        console.log(`Active link set: ${linkHref}`); // Debugging log
       } else {
         link.classList.remove("active");
       }
@@ -28,10 +26,10 @@
   async function loadHeader() {
     try {
       // pick the right header file based on page
-      const headerFile = document.body.classList.contains('anime-page')
+      const headerFile = document.body.dataset.site === 'inner' || document.body.classList.contains('anime-page')
         ? 'headerme.html'
         : 'header.html';
-      const response = await fetch(headerFile);
+      const response = await fetch(headerFile, { cache: 'no-cache' });
       if (!response.ok) throw new Error(`Failed to load header: ${response.statusText}`);
       const headerHTML = await response.text();
       document.querySelector('#header').outerHTML = headerHTML;
@@ -48,6 +46,7 @@
 
   // Call Isotope initialization separately
   function initIsotopeLayout() {
+    if (typeof imagesLoaded !== 'function' || typeof Isotope === 'undefined') return;
     document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
       let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
       let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
@@ -82,8 +81,6 @@
    * Initialize all header-related features
    */
   function initializeHeaderFeatures() {
-    console.log("Initializing header features..."); // Debugging log
-
     // Highlight the current page link
     highlightCurrentPage();
 
@@ -176,7 +173,6 @@
   if (preloader) {
     window.addEventListener("load", () => {
       preloader.remove();
-      console.log("Preloader removed"); // Debugging log
     });
   }
 
@@ -199,7 +195,6 @@
         top: 0,
         behavior: "smooth",
       });
-      console.log("Scroll to top"); // Debugging log
     });
 
     window.addEventListener("load", toggleScrollTop);
@@ -210,13 +205,13 @@
    * Animation on scroll function and init
    */
   function aosInit() {
+    if (typeof AOS === "undefined") return;
     AOS.init({
       duration: 600,
       easing: "ease-in-out",
       once: true,
       mirror: false,
     });
-    console.log("AOS Initialized"); // Debugging log
   }
   window.addEventListener("load", aosInit);
 
@@ -227,27 +222,26 @@
   if (selectTyped) {
     let typedStrings = selectTyped.getAttribute("data-typed-items");
     typedStrings = typedStrings.split(",");
-    new Typed(".typed", {
+    if (typeof Typed !== "undefined") new Typed(".typed", {
       strings: typedStrings,
       loop: true,
       typeSpeed: 100,
       backSpeed: 50,
       backDelay: 2000,
     });
-    console.log("Typed.js Initialized"); // Debugging log
   }
 
   /**
    * Initiate Pure Counter
    */
-  new PureCounter();
-  console.log("PureCounter Initialized"); // Debugging log
+  if (typeof PureCounter !== "undefined") new PureCounter();
 
   /**
    * Animate the skills items on reveal
    */
   let skillsAnimation = document.querySelectorAll(".skills-animation");
   skillsAnimation.forEach((item) => {
+    if (typeof Waypoint === "undefined") return;
     new Waypoint({
       element: item,
       offset: "80%",
@@ -256,7 +250,6 @@
         progress.forEach((el) => {
           el.style.width = el.getAttribute("aria-valuenow") + "%";
         });
-        console.log("Skills Animation Triggered"); // Debugging log
       },
     });
   });
@@ -265,6 +258,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
+    if (typeof Swiper === "undefined") return;
     document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
@@ -275,7 +269,6 @@
       } else {
         new Swiper(swiperElement, config);
       }
-      console.log("Swiper Initialized"); // Debugging log
     });
   }
   window.addEventListener("load", initSwiper);
@@ -283,10 +276,9 @@
   /**
    * Initiate GLightbox
    */
-  const glightbox = GLightbox({
-    selector: ".glightbox",
-  });
-  console.log("GLightbox Initialized"); // Debugging log
+  if (typeof GLightbox === "function") {
+    GLightbox({ selector: ".glightbox" });
+  }
 
   /**
    * Example: custom pagination for tabbed swipers
@@ -294,7 +286,6 @@
   function initSwiperWithCustomPagination(swiperElement, config) {
     // Example logic if your "tabbed" swipers need custom pagination or triggers
     new Swiper(swiperElement, config);
-    console.log("Swiper with custom pagination initialized");
   }
 
 })();
