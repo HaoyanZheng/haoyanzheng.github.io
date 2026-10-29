@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>夜雀食堂 · 点菜助手</title><style>
 :root{--bg:#151b25;--panel:#202938;--panel2:#283447;--txt:#f0eee9;--muted:#a8b5c8;--accent:#f3ba69;--green:#7ddaaf;--red:#f3a4aa;--border:#394557}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#2b3548,#151b25 60%);color:var(--txt);font-family:system-ui,-apple-system,'PingFang SC','Microsoft Yahei',sans-serif}header,main,footer{max-width:1120px;margin:auto;padding:0 20px}header{padding-top:38px;padding-bottom:24px}h1{margin:0;font-size:clamp(27px,5vw,42px);letter-spacing:1px}header p{color:var(--muted);line-height:1.6}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:3px}.grid{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px}.panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:21px;margin-bottom:18px;box-shadow:0 12px 40px #0002}h2{margin:0 0 18px;font-size:19px}label{display:block;color:var(--muted);font-size:13px;margin-bottom:8px}select,input[type=text],input[type=number]{width:100%;padding:12px 13px;background:#121924;border:1px solid #465267;border-radius:10px;color:var(--txt);font:inherit;outline:0}input:focus,select:focus{border-color:var(--accent)}.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tag{display:inline-flex;align-items:center;margin:3px 5px 3px 0;padding:5px 9px;border-radius:7px;background:#344254;font-size:12px;white-space:nowrap}.tag.yes{background:#1c503f;color:#c5ffdf}.tag.no{background:#633640;color:#ffd6da}.tag.want{background:#64502e;color:#ffe3ad}.tags{margin:8px 0 16px;min-height:28px}.small{font-size:12px;color:var(--muted);line-height:1.6}.note{padding:12px 14px;border-left:3px solid var(--accent);background:#39352c;border-radius:5px;font-size:13px;line-height:1.6;margin:12px 0}.button{background:var(--accent);border:0;border-radius:9px;padding:11px 15px;font-weight:700;color:#1d2530;cursor:pointer}.button.secondary{background:#354356;color:var(--txt)}.button.slim{padding:7px 10px;font-size:12px}.buttons{display:flex;gap:8px;flex-wrap:wrap}.checks{display:flex;gap:8px;flex-wrap:wrap;max-height:240px;overflow:auto;padding:2px}.checks label{margin:0}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #45566c;border-radius:9px;padding:8px 10px;cursor:pointer;color:#dae3ef;font-size:13px}.pill:has(input:checked){background:#55442b;border-color:var(--accent);color:#ffe3b2}.pill input{accent-color:var(--accent)}.recipe{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:18px 20px;margin-bottom:12px}.recipe.top{border-color:#9b7844}.recipe h3{font-size:18px;margin:0}.recipe-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}.price{color:var(--accent);font-size:17px;font-weight:700;white-space:nowrap}.stats{font-size:13px;color:var(--muted);margin:11px 0}.recipe .tags{margin:7px 0}.badge{font-size:11px;color:#1c2b20;background:#b5e9bf;padding:3px 7px;border-radius:5px;margin-right:6px}.warn{color:var(--red);font-size:13px;margin-top:8px}.good{color:var(--green)}.empty{padding:40px 20px;text-align:center;background:var(--panel);border-radius:16px;color:var(--muted)}details{margin-top:12px}summary{cursor:pointer;color:var(--accent);font-size:13px}.meta{margin:5px 0;color:var(--muted);font-size:12px}footer{padding:12px 20px 45px;color:var(--muted);font-size:12px;line-height:1.8}a{color:var(--accent)}.flex{display:flex;align-items:center;justify-content:space-between;gap:8px}.count{color:var(--muted);font-size:13px}.separator{border:0;border-top:1px solid var(--border);margin:16px 0}@media(max-width:780px){.grid{grid-template-columns:1fr}header{padding-top:25px}.panel{padding:17px}}
- #ingredientChecks .pill{display:flex;align-items:center;gap:5px;flex-wrap:wrap} #ingredientChecks input[type=number]{color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:5px} </style></head><body><header><div class="eyebrow">TOUHOU MYSTIA'S IZAKAYA · OFFLINE HELPER</div><h1>夜雀食堂 <span style="color:var(--accent)">点菜助手 <small style="font-size:14px;color:var(--muted)">v5.9 · 新增十道已解锁料理</small></span></h1><p>按地图筛选角色、输入本次点单要求，一键匹配你已解锁的菜谱。数据保存在此浏览器，本地离线可用。</p></header><main><div class="grid"><section><div class="panel"><h2>① 选择客人</h2><label for="character">地区与角色</label><select id="area" style="margin-bottom:10px"></select><input id="characterSearch" type="text" placeholder="搜索角色名称，例如：爱丽丝" style="margin-bottom:10px"><select id="character"></select><p class="small">喜欢的料理标签</p><div id="likes" class="tags"></div><p class="small">厌恶的料理标签</p><div id="dislikes" class="tags"></div><p class="small">饮料喜好</p><div id="drinks" class="tags"></div><p class="small">饮料厌恶标签</p><div id="drinkHates" class="tags"></div><hr class="separator"><label for="demand">② 本次客人明确要求</label><select id="demand"></select><div class="note">结果分三类：完全满足要求且不踩雷、满足要求但含厌恶 Tag、未满足要求的安全备选。明确解释每道菜的不足。</div><label class="pill"><input id="showUnsafe" type="checkbox">额外显示有厌恶 Tag 的备选菜（新版默认仍显示“满足要求但踩雷”）</label></div><div class="panel"><div class="flex"><h2 style="margin:0">③ 管理已有菜谱</h2><button class="button secondary slim" id="toggleAll">全选／取消</button></div><p class="small">已预选已知解锁料理（可自行取消或追加）。这里始终显示所有菜谱；右侧推荐只显示满足当前点单要求的料理。</p><p class="small" id="recipeHint">例如「手握寿司」在菜谱清单中可勾选；它不带「辣」，因此冴月麟点辣时不会进入推荐。可以把要求改成「水产」或「（不限）」查看。</p><div id="recipeChecks" class="checks"></div><hr class="separator"><div class="buttons"><button class="button secondary slim" id="reset">恢复默认</button><button class="button secondary slim" id="export">导出设置</button><label class="button secondary slim" style="margin:0;cursor:pointer">导入设置<input type="file" id="import" accept=".json,application/json" style="display:none"></label></div></div><div class="panel"><h2>④ 追加食材（无限库存）</h2><p class="small">可以启用最多两种加料，程序根据已查证的食材标签生成候选。但游戏中可能还有菜品禁止标签／食材组合限制；请以烹饪界面的红叉为准。</p><label class="pill"><input id="addons" type="checkbox">启用追加食材建议</label><label class="pill" style="margin-top:8px"><input id="strictInventory" type="checkbox">按库存检查基础食材（可选）</label><p class="small">食材数量视为无限；勾选表示可购买／可使用该食材。不再记录剩余数量。</p><div id="ingredientChecks" class="checks" style="margin-top:12px"></div></div><div class="panel"><h2>⑤ 饮料库存</h2><p class="small">勾选你拥有的饮料；按角色饮料喜好与点单标签推荐。</p><div id="drinkChecks" class="checks"></div></div><div class="panel"><h2>⑥ 自定义菜谱</h2><p class="small">游戏里新解锁的菜可以自己录入，支持编辑价格、标签、必需食材（用逗号分隔），保存在当前浏览器。</p><label>菜名</label><input id="newName" type="text" placeholder="例：炸猪肉排"><div class="pair" style="margin-top:10px"><div><label>价格</label><input id="newPrice" type="number" value="30" min="0"></div><div><label>必需食材</label><input id="newNeeds" type="text" placeholder="猪肉,蜂蜜"></div></div><label style="margin-top:10px">料理标签</label><input id="newTags" type="text" placeholder="肉,家常,重油"><button class="button slim" id="addRecipe" style="margin-top:12px">新增／更新菜谱</button><div id="customRecipes" class="small" style="margin-top:12px"></div></div></section><section><div class="panel"><div class="flex"><h2 style="margin:0">推荐料理</h2><span class="count" id="resultCount"></span></div><p id="summary" class="small"></p><div class="pair"><div><label>搜索菜名</label><input id="search" type="text" placeholder="例如：鳟鱼"></div><div><label>排序</label><select id="sort"><option value="score">匹配分数</option><option value="cheap">售价从低到高</option><option value="expensive">售价从高到低</option></select></div></div></div><div id="results"></div><div class="panel"><div class="flex"><h2 style="margin:0">推荐饮料</h2><span class="count" id="drinkCount"></span></div><label style="margin-top:12px">饮料点单要求</label><select id="drinkDemand"></select><div id="drinkResults"></div></div></section></div></main><footer>DLC2 六位稀客的出没地区、标签与预算已按 THBWiki 核对。角色及地区资料依据：<a href="https://thwiki.cc/index.php?title=东方夜雀食堂_-_Touhou_Mystia%27s_Izakaya/攻略/客人" target="_blank">THBWiki 客人完整列表</a> · 资料依据：<a href="https://wiki.biligame.com/tmi/料理一览" target="_blank">BWIKI 料理一览</a> · <a href="https://moegirl.icu/东方夜雀食堂/登场人物" target="_blank">萌娘百科人物资料</a> · <a href="https://www.bilibili.com/opus/579630987930616350" target="_blank">点菜评分与符卡规则</a>。<br>本工具为玩家自用的非官方速查器。价格为菜品基础售价；追加食材、流行标签、厨具加成及饮料评价另行计算，匹配分数不是符卡的绝对保证。标“待核”的菜谱标签需在游戏中复核。</footer><script>
+ #ingredientChecks .pill{display:flex;align-items:center;gap:5px;flex-wrap:wrap} #ingredientChecks input[type=number]{color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:5px} </style></head><body><header><div class="eyebrow">TOUHOU MYSTIA'S IZAKAYA · OFFLINE HELPER</div><h1>夜雀食堂 <span style="color:var(--accent)">点菜助手 <small style="font-size:14px;color:var(--muted)">v6.0 · DLC3–5 稀客补全</small></span></h1><p>按地图筛选角色、输入本次点单要求，匹配已勾选的菜谱。已补全 DLC3 六位稀客、DLC4、DLC5 稀客；尚未解锁的地区只是预载资料。数据保存在当前浏览器，本地离线可用。</p></header><main><div class="grid"><section><div class="panel"><h2>① 选择客人</h2><label for="character">地区与角色</label><select id="area" style="margin-bottom:10px"></select><input id="characterSearch" type="text" placeholder="搜索角色名称，例如：爱丽丝" style="margin-bottom:10px"><select id="character"></select><p class="small">喜欢的料理标签</p><div id="likes" class="tags"></div><p class="small">厌恶的料理标签</p><div id="dislikes" class="tags"></div><p class="small">饮料喜好</p><div id="drinks" class="tags"></div><p class="small">饮料厌恶标签</p><div id="drinkHates" class="tags"></div><hr class="separator"><label for="demand">② 本次客人明确要求</label><select id="demand"></select><div class="note">结果分三类：完全满足要求且不踩雷、满足要求但含厌恶 Tag、未满足要求的安全备选。明确解释每道菜的不足。</div><label class="pill"><input id="showUnsafe" type="checkbox">额外显示有厌恶 Tag 的备选菜（新版默认仍显示“满足要求但踩雷”）</label></div><div class="panel"><div class="flex"><h2 style="margin:0">③ 管理已有菜谱</h2><button class="button secondary slim" id="toggleAll">全选／取消</button></div><p class="small">已预选已知解锁料理（可自行取消或追加）。这里始终显示所有菜谱；右侧推荐只显示满足当前点单要求的料理。</p><p class="small" id="recipeHint">例如「手握寿司」在菜谱清单中可勾选；它不带「辣」，因此冴月麟点辣时不会进入推荐。可以把要求改成「水产」或「（不限）」查看。</p><div id="recipeChecks" class="checks"></div><hr class="separator"><div class="buttons"><button class="button secondary slim" id="reset">恢复默认</button><button class="button secondary slim" id="export">导出设置</button><label class="button secondary slim" style="margin:0;cursor:pointer">导入设置<input type="file" id="import" accept=".json,application/json" style="display:none"></label></div></div><div class="panel"><h2>④ 追加食材（无限库存）</h2><p class="small">可以启用最多两种加料，程序根据已查证的食材标签生成候选。但游戏中可能还有菜品禁止标签／食材组合限制；请以烹饪界面的红叉为准。</p><label class="pill"><input id="addons" type="checkbox">启用追加食材建议</label><label class="pill" style="margin-top:8px"><input id="strictInventory" type="checkbox">按库存检查基础食材（可选）</label><p class="small">食材数量视为无限；勾选表示可购买／可使用该食材。不再记录剩余数量。</p><div id="ingredientChecks" class="checks" style="margin-top:12px"></div></div><div class="panel"><h2>⑤ 饮料库存</h2><p class="small">勾选你拥有的饮料；按角色饮料喜好与点单标签推荐。</p><div id="drinkChecks" class="checks"></div></div><div class="panel"><h2>⑥ 自定义菜谱</h2><p class="small">游戏里新解锁的菜可以自己录入，支持编辑价格、标签、必需食材（用逗号分隔），保存在当前浏览器。</p><label>菜名</label><input id="newName" type="text" placeholder="例：炸猪肉排"><div class="pair" style="margin-top:10px"><div><label>价格</label><input id="newPrice" type="number" value="30" min="0"></div><div><label>必需食材</label><input id="newNeeds" type="text" placeholder="猪肉,蜂蜜"></div></div><label style="margin-top:10px">料理标签</label><input id="newTags" type="text" placeholder="肉,家常,重油"><button class="button slim" id="addRecipe" style="margin-top:12px">新增／更新菜谱</button><div id="customRecipes" class="small" style="margin-top:12px"></div></div></section><section><div class="panel"><div class="flex"><h2 style="margin:0">推荐料理</h2><span class="count" id="resultCount"></span></div><p id="summary" class="small"></p><div class="pair"><div><label>搜索菜名</label><input id="search" type="text" placeholder="例如：鳟鱼"></div><div><label>排序</label><select id="sort"><option value="score">匹配分数</option><option value="cheap">售价从低到高</option><option value="expensive">售价从高到低</option></select></div></div></div><div id="results"></div><div class="panel"><div class="flex"><h2 style="margin:0">推荐饮料</h2><span class="count" id="drinkCount"></span></div><label style="margin-top:12px">饮料点单要求</label><select id="drinkDemand"></select><div id="drinkResults"></div></div></section></div></main><footer>DLC2–5 稀客的出没地区、标签与预算参照 THBWiki；预载角色不代表存档已解锁。角色及地区资料依据：<a href="https://thwiki.cc/index.php?title=东方夜雀食堂_-_Touhou_Mystia%27s_Izakaya/攻略/客人" target="_blank">THBWiki 客人完整列表</a> · 资料依据：<a href="https://wiki.biligame.com/tmi/料理一览" target="_blank">BWIKI 料理一览</a> · <a href="https://moegirl.icu/东方夜雀食堂/登场人物" target="_blank">萌娘百科人物资料</a> · <a href="https://www.bilibili.com/opus/579630987930616350" target="_blank">点菜评分与符卡规则</a>。<br>本工具为玩家自用的非官方速查器。价格为菜品基础售价；追加食材、流行标签、厨具加成及饮料评价另行计算，匹配分数不是符卡的绝对保证。标“待核”的菜谱标签需在游戏中复核。</footer><script>
 const CHARACTERS=[{"name":"莉格露","areas":["妖怪兽道","魔法森林","太阳花田"],"like":["甜","生","肉","猎奇"],"hate":["素","清淡","凉爽"],"drink":["低酒精","可加冰"]},{"name":"露米娅","areas":["妖怪兽道","魔法森林"],"like":["猎奇","生","饱腹","招牌","肉"],"hate":["下酒","昂贵"],"drink":["苦","气泡"]},{"name":"橙","areas":["妖怪兽道"],"like":["肉","水产","烧烤","甜","重油"],"hate":["素","灼热","猎奇"],"drink":["水果","辛"]},{"name":"稗田阿求","areas":["人间之里","命莲寺"],"like":["和风","甜","文化底蕴","清淡","高级","汤羹"],"hate":["咸","灼热","重油"],"drink":["可加热","清酒"]},{"name":"上白泽慧音","areas":["人间之里","魔法森林","命莲寺"],"like":["清淡","素","家常","和风","中华","文化底蕴"],"hate":["重油","大份","咸"],"drink":["烧酒","清酒","利口酒"]},{"name":"茨木华扇","areas":["人间之里","旧地狱","神灵庙"],"like":["文化底蕴","家常","下酒","和风"],"hate":["实惠","生","辣"],"drink":["中酒精","古典","直饮"]},{"name":"博丽灵梦","areas":["妖怪兽道","人间之里","博丽神社","魔法森林","妖怪之山"],"like":["实惠","饱腹","甜","不可思议","高级"],"hate":["昂贵","下酒"],"drink":["无酒精","可加热","低酒精"]},{"name":"伊吹萃香","areas":["博丽神社","妖怪之山","辉针城"],"like":["肉","下酒","力量涌现","小巧","和风"],"hate":["重油"],"drink":["高酒精","直饮"]},{"name":"比那名居天子","areas":["博丽神社","妖怪之山","旧地狱","神灵庙","太阳花田"],"like":["素","清淡","甜","传说","适合拍照","果味","昂贵"],"hate":["肉","家常","重油"],"drink":["鸡尾酒","高酒精"]},{"name":"红美铃","areas":["红魔馆"],"like":["中华","肉","饱腹","力量涌现"],"hate":["西式","猎奇","果味"],"drink":["提神","可加热","古典"]},{"name":"琪露诺","areas":["红魔馆","妖怪之山"],"like":["凉爽","甜","适合拍照","猎奇"],"hate":["昂贵","文化底蕴","下酒"],"drink":["水果","甘","可加冰"]},{"name":"帕秋莉","areas":["红魔馆","魔法森林","地灵殿"],"like":["适合拍照","西式","甜","梦幻","高级"],"hate":["生","灼热","猎奇","咸"],"drink":["利口酒","鸡尾酒","气泡"]},{"name":"藤原妹红","areas":["妖怪兽道","迷途竹林"],"like":["果味","燃起来了","辣","灼热","烧烤"],"hate":["高级","昂贵","不可思议"],"drink":["烧酒","辛","苦"]},{"name":"蓬莱山辉夜","areas":["迷途竹林","辉针城"],"like":["传说","不可思议","和风","文化底蕴"],"hate":["招牌","大份","猎奇"],"drink":["清酒","现代","古典"]},{"name":"因幡帝","areas":["全地区"],"like":["小巧","甜","传说","凉爽","梦幻"],"hate":["山珍","重油","猎奇"],"drink":["甘","无酒精","水果"]},{"name":"雾雨魔理沙","areas":["全地区"],"like":["和风","菌类","传说","灼热","重油"],"hate":["猎奇"],"drink":["低酒精","可加冰"]},{"name":"矢田寺成美","areas":["魔法森林","命莲寺"],"like":["特产","和风","文化底蕴","山珍","清淡"],"hate":["饱腹","重油"],"drink":["直饮","古典","低酒精","中酒精","可加冰"]},{"name":"爱丽丝","areas":["魔法森林","太阳花田"],"like":["家常","高级","文化底蕴","甜","西式"],"hate":["肉","饱腹","重油","猎奇"],"drink":["低酒精","西洋酒","现代"]},{"name":"东风谷早苗","areas":["魔法森林","妖怪之山","命莲寺","神灵庙"],"like":["和风","梦幻","适合拍照","甜","家常"],"hate":["猎奇","生","重油","灼热"],"drink":["现代","无酒精","水果","清酒","直饮","苦","甘","低酒精","气泡"]},{"name":"犬走椛","areas":["妖怪之山"],"like":["重油","肉","下酒","山珍","大份"],"hate":["清淡","猎奇","素"],"drink":["中酒精","高酒精","直饮"]},{"name":"河城荷取","areas":["妖怪之山"],"like":["高级","下酒","咸","招牌","水产","猎奇"],"hate":["素","文化底蕴","山珍"],"drink":["直饮","高酒精","中酒精","清酒"]},{"name":"森近霖之助","areas":["人间之里","魔法森林","太阳花田"],"like":["鲜","家常","饱腹"],"hate":["下酒","猎奇","重油"],"drink":["烧酒","啤酒"]},{"name":"魂魄妖梦","areas":["妖怪兽道","人间之里","博丽神社","迷途竹林"],"like":["力量涌现","家常","鲜","清淡"],"hate":["重油","猎奇"],"drink":["无酒精","可加热","水果"]},{"name":"西行寺幽幽子","areas":["博丽神社","红魔馆","迷途竹林","神灵庙"],"like":["传说","大份","肉","水产","高级","饱腹","中华","和风"],"hate":["清淡","素","小巧"],"drink":["鸡尾酒","高酒精","可加冰"]},{"name":"萌澄果","areas":["全地区"],"like":["肉","水产","甜","梦幻"],"hate":["猎奇","灼热"],"drink":["可加冰","水果","甘","辛"]},{"name":"蹦蹦跳跳的三妖精","areas":["妖怪兽道","人间之里","博丽神社","红魔馆","迷途竹林","妖怪之山"],"like":["家常","小巧","甜","凉爽","梦幻","菌类"],"hate":["生","猎奇","灼热"],"drink":["无酒精","水果","甘","苦"]},{"name":"冴月麟","areas":["妖怪兽道","人间之里","博丽神社","红魔馆","迷途竹林"],"like":["家常","水产","辣","中华"],"hate":["下酒","重油","生"],"drink":["无酒精","气泡","甘"]},{"name":"立空汐","areas":["妖怪兽道","博丽神社","红魔馆","迷途竹林","妖怪之山"],"like":["昂贵","肉","下酒","山珍","力量涌现","和风"],"hate":["素","清淡"],"drink":["高酒精","可加冰","可加热"]},{"name":"时焉侑","areas":["人间之里","博丽神社"],"like":["下酒","传说","文化底蕴","特产","西式","中华"],"hate":["水产","饱腹","重油"],"drink":["中酒精","可加冰","西洋酒","鸡尾酒"]},{"name":"饕餮尤魔","areas":["全地区"],"like":["不可思议","猎奇","梦幻","生","甜","鲜"],"hate":[],"drink":["高酒精","烧酒","苦","气泡"]},{"name":"古明地恋","areas":["全地区"],"like":["不可思议","猎奇","梦幻","生","甜","鲜","咸"],"hate":[],"drink":["高酒精","烧酒","苦","气泡"]},{"name":"二岩猯藏","areas":["妖怪兽道","人间之里","博丽神社","命莲寺","神灵庙"],"like":["家常","肉","水产","下酒","传说","果味","和风"],"hate":["辣","灼热"],"drink":["高酒精","可加热","烧酒","古典"]},{"name":"八云紫","areas":["全地区"],"like":["适合拍照","高级","传说","猎奇","凉爽","汤羹","家常"],"hate":["饱腹","菌类"],"drink":["中酒精","古典","烧酒","高酒精"]}];
 // v5.9 DLC4: 射命丸文（资料：THBWiki、萌娘百科，2026-10-27 核对）。
 // 她是太阳花田的常驻 NPC，作为稀客会在各地区随机出现。
@@ -10,6 +10,512 @@ CHARACTERS.push({
   hate:['西式','流行·厌恶'],
   drink:['高酒精','可加冰','烧酒','提神']
 });
+// v6.0：补齐 DLC3 全六位、DLC4 缺失的五位、预载 DLC5 六位稀客。
+// 数据源：THBWiki「东方夜雀食堂/攻略/客人」；保留 v5.9 已有的射命丸文及全部旧数据。
+// 未解锁地图的角色只是预载资料，不表示玩家已经解锁。
+const NEW_DLC_CHARACTERS = [
+  {
+    "name": "多多良小伞",
+    "areas": [
+      "命莲寺",
+      "辉针城"
+    ],
+    "budget": "150–300",
+    "like": [
+      "甜",
+      "家常",
+      "饱腹",
+      "适合拍照",
+      "力量涌现",
+      "猎奇",
+      "不可思议",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "灼热",
+      "汤羹",
+      "辣"
+    ],
+    "drink": [
+      "水果",
+      "中酒精",
+      "古典",
+      "可加冰"
+    ],
+    "dlc": 3
+  },
+  {
+    "name": "村纱水蜜",
+    "areas": [
+      "命莲寺"
+    ],
+    "budget": "400–600",
+    "like": [
+      "咸",
+      "特产",
+      "力量涌现",
+      "鲜",
+      "肉",
+      "高级",
+      "饱腹"
+    ],
+    "hate": [
+      "素",
+      "小巧",
+      "猎奇",
+      "酸"
+    ],
+    "drink": [
+      "辛",
+      "高酒精",
+      "可加冰",
+      "西洋酒"
+    ],
+    "dlc": 3
+  },
+  {
+    "name": "封兽鵺",
+    "areas": [
+      "命莲寺",
+      "辉针城"
+    ],
+    "budget": "300–500",
+    "like": [
+      "鲜",
+      "不可思议",
+      "特产",
+      "生",
+      "肉",
+      "招牌",
+      "适合拍照",
+      "猎奇",
+      "流行·厌恶"
+    ],
+    "hate": [
+      "酸",
+      "西式",
+      "流行·喜爱"
+    ],
+    "drink": [
+      "烧酒",
+      "古典",
+      "直饮",
+      "可加热"
+    ],
+    "dlc": 3
+  },
+  {
+    "name": "物部布都",
+    "areas": [
+      "神灵庙"
+    ],
+    "budget": "600–900",
+    "like": [
+      "高级",
+      "传说",
+      "清淡",
+      "燃起来了",
+      "山珍",
+      "和风",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "西式",
+      "生",
+      "流行·厌恶"
+    ],
+    "drink": [
+      "可加热",
+      "中酒精",
+      "气泡",
+      "直饮"
+    ],
+    "dlc": 3
+  },
+  {
+    "name": "霍青娥",
+    "areas": [
+      "神灵庙"
+    ],
+    "budget": "400–900",
+    "like": [
+      "传说",
+      "小巧",
+      "甜",
+      "特产",
+      "素",
+      "不可思议",
+      "中华",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "饱腹",
+      "重油"
+    ],
+    "drink": [
+      "低酒精",
+      "清酒",
+      "水果",
+      "现代"
+    ],
+    "dlc": 3
+  },
+  {
+    "name": "苏我屠自古",
+    "areas": [
+      "神灵庙"
+    ],
+    "budget": "500–600",
+    "like": [
+      "饱腹",
+      "家常",
+      "重油",
+      "烧烤",
+      "力量涌现",
+      "招牌",
+      "和风"
+    ],
+    "hate": [
+      "甜",
+      "凉爽"
+    ],
+    "drink": [
+      "高酒精",
+      "啤酒",
+      "烧酒",
+      "苦"
+    ],
+    "dlc": 3
+  },
+  {
+    "name": "风见幽香",
+    "areas": [
+      "太阳花田"
+    ],
+    "budget": "1200–1800",
+    "like": [
+      "不可思议",
+      "高级",
+      "传说",
+      "清淡",
+      "梦幻",
+      "特产",
+      "西式",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "饱腹",
+      "和风",
+      "灼热",
+      "咸"
+    ],
+    "drink": [
+      "利口酒",
+      "鸡尾酒",
+      "西洋酒",
+      "现代"
+    ],
+    "dlc": 4
+  },
+  {
+    "name": "梅蒂欣",
+    "areas": [
+      "太阳花田"
+    ],
+    "budget": "200–400",
+    "like": [
+      "甜",
+      "适合拍照",
+      "凉爽",
+      "菌类",
+      "梦幻",
+      "小巧",
+      "招牌",
+      "毒"
+    ],
+    "hate": [
+      "文化底蕴"
+    ],
+    "drink": [
+      "无酒精",
+      "甘",
+      "水果",
+      "苦"
+    ],
+    "dlc": 4
+  },
+  {
+    "name": "鬼人正邪",
+    "areas": [
+      "辉针城"
+    ],
+    "budget": "300–600",
+    "like": [
+      "力量涌现",
+      "猎奇",
+      "不可思议",
+      "下酒",
+      "灼热",
+      "燃起来了",
+      "重油",
+      "流行·厌恶"
+    ],
+    "hate": [
+      "高级",
+      "流行·喜爱"
+    ],
+    "drink": [
+      "中酒精",
+      "辛",
+      "直饮",
+      "烧酒"
+    ],
+    "dlc": 4
+  },
+  {
+    "name": "少名针妙丸",
+    "areas": [
+      "辉针城"
+    ],
+    "budget": "600–1200",
+    "like": [
+      "小巧",
+      "和风",
+      "甜",
+      "燃起来了",
+      "传说",
+      "文化底蕴",
+      "流行·喜爱",
+      "适合拍照"
+    ],
+    "hate": [
+      "大份",
+      "西式"
+    ],
+    "drink": [
+      "古典",
+      "低酒精",
+      "气泡",
+      "可加热"
+    ],
+    "dlc": 4
+  },
+  {
+    "name": "今泉影狼",
+    "areas": [
+      "迷途竹林",
+      "辉针城"
+    ],
+    "budget": "300–600",
+    "like": [
+      "适合拍照",
+      "和风",
+      "山珍",
+      "凉爽",
+      "肉",
+      "家常",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "灼热"
+    ],
+    "drink": [
+      "中酒精",
+      "清酒",
+      "可加冰",
+      "直饮"
+    ],
+    "dlc": 4
+  },
+  {
+    "name": "铃仙",
+    "areas": [
+      "月之都"
+    ],
+    "budget": "200–350",
+    "like": [
+      "海味",
+      "家常",
+      "山珍",
+      "特产",
+      "甜",
+      "小巧",
+      "中华"
+    ],
+    "hate": [
+      "昂贵",
+      "不可思议"
+    ],
+    "drink": [
+      "高酒精",
+      "可加热",
+      "烧酒",
+      "啤酒",
+      "苦"
+    ],
+    "dlc": 5
+  },
+  {
+    "name": "绵月丰姬",
+    "areas": [
+      "月之都"
+    ],
+    "budget": "1200–1500",
+    "like": [
+      "高级",
+      "果味",
+      "和风",
+      "凉爽",
+      "素",
+      "甜",
+      "文化底蕴",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "力量涌现",
+      "山珍",
+      "咸"
+    ],
+    "drink": [
+      "高酒精",
+      "可加冰",
+      "清酒",
+      "水果",
+      "古典"
+    ],
+    "dlc": 5
+  },
+  {
+    "name": "绵月依姬",
+    "areas": [
+      "月之都"
+    ],
+    "budget": "1000–1200",
+    "like": [
+      "传说",
+      "高级",
+      "力量涌现",
+      "清淡",
+      "文化底蕴",
+      "小巧",
+      "中华",
+      "灼热"
+    ],
+    "hate": [
+      "菌类",
+      "山珍"
+    ],
+    "drink": [
+      "可加热",
+      "烧酒",
+      "直饮",
+      "辛",
+      "提神"
+    ],
+    "dlc": 5
+  },
+  {
+    "name": "爱莲",
+    "areas": [
+      "魔界"
+    ],
+    "budget": "300–500",
+    "like": [
+      "饱腹",
+      "家常",
+      "凉爽",
+      "梦幻",
+      "甜",
+      "西式",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "生",
+      "水产",
+      "重油"
+    ],
+    "drink": [
+      "低酒精",
+      "可加热",
+      "啤酒",
+      "甘",
+      "古典"
+    ],
+    "dlc": 5
+  },
+  {
+    "name": "魅魔",
+    "areas": [
+      "魔界"
+    ],
+    "budget": "2000–3000",
+    "like": [
+      "菌类",
+      "力量涌现",
+      "猎奇",
+      "山珍",
+      "生",
+      "水产",
+      "鲜"
+    ],
+    "hate": [
+      "高级",
+      "清淡"
+    ],
+    "drink": [
+      "高酒精",
+      "可加冰",
+      "烧酒",
+      "西洋酒",
+      "辛"
+    ],
+    "dlc": 5
+  },
+  {
+    "name": "露易兹",
+    "areas": [
+      "妖怪兽道",
+      "人间之里",
+      "博丽神社",
+      "红魔馆",
+      "迷途竹林",
+      "魔法森林",
+      "妖怪之山",
+      "命莲寺",
+      "神灵庙",
+      "太阳花田",
+      "辉针城",
+      "魔界"
+    ],
+    "budget": "800–1000",
+    "like": [
+      "适合拍照",
+      "水产",
+      "特产",
+      "甜",
+      "西式",
+      "小巧",
+      "流行·喜爱"
+    ],
+    "hate": [
+      "饱腹",
+      "重油"
+    ],
+    "drink": [
+      "中酒精",
+      "可加冰",
+      "鸡尾酒",
+      "啤酒",
+      "现代"
+    ],
+    "dlc": 5
+  }
+];
+for (const person of NEW_DLC_CHARACTERS) {
+  if (!CHARACTERS.some(existing=>existing.name===person.name)) CHARACTERS.push(person);
+}
+
+const CHARACTER_ALIASES={'多多良小伞':['多良良小伞','小伞'],'灵乌路空':['阿空'],'火焰猫燐':['阿燐','阿燐猫'],'射命丸文':['文文','射命丸'],'封兽鵺':['鵺']};
 // v5.7 DLC2：基于 THBWiki 客人完整列表补录旧地狱与地灵殿六位稀客；可跨地图显示。
 CHARACTERS.push(...[
   {
@@ -239,7 +745,7 @@ try{let old=JSON.parse(localStorage.getItem(KEY));if(!old){old=JSON.parse(localS
 function recipes(){return [...ALLRECIPES,...(state.custom||[])]}function need(r){return r.needs||NEEDS[r.name]||[]}function missing(r){return need(r).filter(n=>!state.inventory.includes(n))}function conflict(tags){return []} // 菜品禁止标签需逐菜核实，不能把覆盖关系误判为黑暗料理。
 
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function tag(t,k=''){return `<span class="tag ${k}">${esc(t)}</span>`}function char(){return CHARACTERS.find(c=>c.name===state.character)||CHARACTERS[0]}
-function refreshControls(){const c=char();$('area').innerHTML=AREAS.map(a=>`<option ${a===state.area?'selected':''}>${esc(a)}</option>`).join('');$('characterSearch').value=state.characterSearch||'';let visible=CHARACTERS.filter(x=>(state.area==='全部地区'||x.areas.includes('全地区')||x.areas.includes(state.area))&&x.name.includes(state.characterSearch||''));if(!visible.some(x=>x.name===state.character)) visible=[c,...visible];$('character').innerHTML=visible.map(x=>`<option value="${esc(x.name)}" ${c.name===x.name?'selected':''}>${esc(x.name)}${x.areas.includes('全地区')?' · 全地区':''}</option>`).join('');$('likes').innerHTML='<div class=small>出没：'+c.areas.join('、')+(c.budget?' · 预算：'+c.budget+' 円':'')+'</div>'+c.like.map(t=>tag(t,'yes')).join('');$('dislikes').innerHTML=c.hate.map(t=>tag(t,'no')).join('');$('drinks').innerHTML=c.drink.map(t=>tag(t,'yes')).join('');$('drinkHates').innerHTML=(c.drinkHate||[]).map(t=>tag(t,'no')).join('')||'<span class=small>暂无可靠厌恶数据</span>'; let choices=['（不限）',...new Set([...c.like,...c.hate,...recipes().flatMap(r=>r.tags)])];if(!choices.includes(state.demand))state.demand='（不限）';$('demand').innerHTML=choices.map(t=>`<option ${t===state.demand?'selected':''}>${esc(t)}</option>`).join('');$('showUnsafe').checked=state.showUnsafe;$('addons').checked=state.addons;$('strictInventory').checked=state.strictInventory;$('sort').value=state.sort;$('search').value=state.search;$('recipeChecks').innerHTML=recipes().map(r=>`<label class="pill"><input type="checkbox" data-recipe="${esc(r.name)}" ${state.enabled.includes(r.name)?'checked':''}>${esc(r.name)}</label>`).join('');$('ingredientChecks').innerHTML=INGREDIENTS.map(i=>`<label class="pill"><input type="checkbox" data-ingredient="${esc(i.name)}" ${state.inventory.includes(i.name)?'checked':''}>${esc(i.name)}<span class="small">${esc([i.tag,...(i.extra||[])].join('、'))}</span></label>`).join('');$('drinkChecks').innerHTML=DRINKS.map(d=>`<label class="pill"><input type="checkbox" data-drink="${esc(d.name)}" ${state.drinks.includes(d.name)?'checked':''}>${esc(d.name)}</label>`).join('');$('customRecipes').innerHTML=(state.custom||[]).map(r=>`<div style="margin:6px 0">${esc(r.name)} <button class="button secondary slim" data-remove="${esc(r.name)}">删除</button></div>`).join('');let dchoices=['（不限）',...new Set([...c.drink,...DRINKS.flatMap(x=>x.tags)])];if(!dchoices.includes(state.drinkDemand))state.drinkDemand='（不限）';$('drinkDemand').innerHTML=dchoices.map(t=>`<option ${t===state.drinkDemand?'selected':''}>${esc(t)}</option>`).join('')}
+function refreshControls(){const c=char();$('area').innerHTML=AREAS.map(a=>`<option ${a===state.area?'selected':''}>${esc(a)}</option>`).join('');$('characterSearch').value=state.characterSearch||'';let visible=CHARACTERS.filter(x=>(state.area==='全部地区'||x.areas.includes('全地区')||x.areas.includes(state.area))&&(x.name.includes(state.characterSearch||'')||(CHARACTER_ALIASES[x.name]||[]).some(a=>a.includes(state.characterSearch||''))));if(!visible.some(x=>x.name===state.character)) visible=[c,...visible];$('character').innerHTML=visible.map(x=>`<option value="${esc(x.name)}" ${c.name===x.name?'selected':''}>${esc(x.name)}${x.areas.includes('全地区')?' · 全地区':''}</option>`).join('');$('likes').innerHTML='<div class=small>出没：'+c.areas.join('、')+(c.budget?' · 预算：'+c.budget+' 円':'')+'</div>'+c.like.map(t=>tag(t,'yes')).join('');$('dislikes').innerHTML=c.hate.map(t=>tag(t,'no')).join('');$('drinks').innerHTML=c.drink.map(t=>tag(t,'yes')).join('');$('drinkHates').innerHTML=(c.drinkHate||[]).map(t=>tag(t,'no')).join('')||'<span class=small>暂无可靠厌恶数据</span>'; let choices=['（不限）',...new Set([...c.like,...c.hate,...recipes().flatMap(r=>r.tags)])];if(!choices.includes(state.demand))state.demand='（不限）';$('demand').innerHTML=choices.map(t=>`<option ${t===state.demand?'selected':''}>${esc(t)}</option>`).join('');$('showUnsafe').checked=state.showUnsafe;$('addons').checked=state.addons;$('strictInventory').checked=state.strictInventory;$('sort').value=state.sort;$('search').value=state.search;$('recipeChecks').innerHTML=recipes().map(r=>`<label class="pill"><input type="checkbox" data-recipe="${esc(r.name)}" ${state.enabled.includes(r.name)?'checked':''}>${esc(r.name)}</label>`).join('');$('ingredientChecks').innerHTML=INGREDIENTS.map(i=>`<label class="pill"><input type="checkbox" data-ingredient="${esc(i.name)}" ${state.inventory.includes(i.name)?'checked':''}>${esc(i.name)}<span class="small">${esc([i.tag,...(i.extra||[])].join('、'))}</span></label>`).join('');$('drinkChecks').innerHTML=DRINKS.map(d=>`<label class="pill"><input type="checkbox" data-drink="${esc(d.name)}" ${state.drinks.includes(d.name)?'checked':''}>${esc(d.name)}</label>`).join('');$('customRecipes').innerHTML=(state.custom||[]).map(r=>`<div style="margin:6px 0">${esc(r.name)} <button class="button secondary slim" data-remove="${esc(r.name)}">删除</button></div>`).join('');let dchoices=['（不限）',...new Set([...c.drink,...DRINKS.flatMap(x=>x.tags)])];if(!dchoices.includes(state.drinkDemand))state.drinkDemand='（不限）';$('drinkDemand').innerHTML=dchoices.map(t=>`<option ${t===state.drinkDemand?'selected':''}>${esc(t)}</option>`).join('')}
 function evaluate(r,adds,c){let tags=[...new Set([...r.tags,...adds.flatMap(a=>[a.tag,...(a.extra||[])])])];for(const [winner,loser] of [['肉','素'],['重油','清淡'],['饱腹','下酒'],['大份','小巧']])if(tags.includes(winner))tags=tags.filter(t=>t!==loser);const liked=tags.filter(t=>c.like.includes(t)),hated=tags.filter(t=>c.hate.includes(t)),hasDemand=state.demand==='（不限）'||tags.includes(state.demand);return {tags,liked,hated,hasDemand,score:liked.length-hated.length,adds,conflicts:conflict(tags)}}
 function allCandidates(r,c){
  const options=[evaluate(r,[],c)];
